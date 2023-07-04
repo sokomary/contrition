@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import papaparse from 'papaparse';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Recepie = {
-  name: string;
-  link: string;
-  calories: number;
-  protein: number;
-  fats: number;
-  carbohydrates: number;
-  weight: number;
-};
+import { Button } from 'primereact/button';
+import { FormattedMessage } from 'react-intl';
+import { API } from '../../api';
+import { AddRecipeDialog } from './AddRecipeDialog';
+import { Recipe } from '../domain/Recipe';
 
 const StartPage = () => {
-  const [recepies, setRecepies] = useState<Recepie[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [open, setOpen] = useState(false);
 
-  fetch('recepies.csv')
-    .then((response) => response.text())
-    .then((responseText) => {
-      setRecepies(papaparse.parse(responseText, { header: true }).data as unknown as Recepie[]);
-    });
+  const getRecipes = () => {
+    API.getRecipes().then((res) => setRecipes(res));
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
 
   return (
     <Page>
-      {recepies.map((r, i) => (
+      <AddRecipeDialog
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          getRecipes();
+        }}
+      />
+      <Button onClick={() => setOpen(true)}><FormattedMessage id="recipes.actions.add" /></Button>
+      {recipes.map((r, i) => (
         <div key={i}>
           <div>{r.name}</div>
           <a href={r.link}>{r.link}</a>
@@ -32,7 +36,6 @@ const StartPage = () => {
           <div>{r.protein}</div>
           <div>{r.fats}</div>
           <div>{r.carbohydrates}</div>
-          <div>{r.weight}</div>
           <Divider />
         </div>
       ))}
