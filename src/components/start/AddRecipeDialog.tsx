@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
 import { Button } from 'primereact/button';
 import { API } from '../../api';
 import { Recipe } from '../domain/Recipe';
+import i18next from '../../i18next';
 
 const AddRecipeDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const addRecipe = (values: any) => {
@@ -13,7 +13,7 @@ const AddRecipeDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onC
   };
 
   return (
-    <Dialog header="Новый рецепт" visible={open} onHide={onClose}>
+    <Dialog header={i18next.t('startpage:recipes.new.header')} visible={open} onHide={onClose}>
       <Form
         onSubmit={(values) => addRecipe(values)}
         render={({ handleSubmit }) => (
@@ -37,7 +37,7 @@ const AddRecipeDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onC
               <Field name="carbohydrates">
                 {({ input }) => (<input type="text" {...input} placeholder="carbohydrates" />)}
               </Field>
-              <Button type="submit"><FormattedMessage id="recipes.dialogs.add.actions.save" /></Button>
+              <Button type="submit">{i18next.t('startpage:recipes.actions.save')}</Button>
             </Container>
           </form>
         )}

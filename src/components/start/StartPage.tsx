@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'primereact/button';
-import { FormattedMessage } from 'react-intl';
 import { API } from '../../api';
 import { AddRecipeDialog } from './AddRecipeDialog';
 import { Recipe } from '../domain/Recipe';
+import i18next from '../../i18next';
 
 const StartPage = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -27,7 +27,7 @@ const StartPage = () => {
           getRecipes();
         }}
       />
-      <Button onClick={() => setOpen(true)}><FormattedMessage id="recipes.actions.add" /></Button>
+      <Button onClick={() => setOpen(true)}>{i18next.t('startpage:recipes.actions.add')}</Button>
       {recipes.map((r, i) => (
         <div key={i}>
           <div>{r.name}</div>
