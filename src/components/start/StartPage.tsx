@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Button } from 'primereact/button';
 import { API } from '../../api';
 import { AddRecipeDialog } from './AddRecipeDialog';
-import { Recipe } from '../domain/Recipe';
+import { Recipe } from '../../domain/Recipe';
 import i18next from '../../i18next';
+import { Button } from '../ui/Button';
 
 const StartPage = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
