@@ -3,6 +3,7 @@ import {
 } from 'io-ts';
 
 const RecipeSchema = type({
+  id: number,
   name: string,
   link: string,
   calories: number,

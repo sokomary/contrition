@@ -14,6 +14,10 @@ const StartPage = () => {
     API.getRecipes().then((res) => setRecipes(res));
   };
 
+  const deleteRecipe = (recipe: Recipe) => {
+    API.deleteRecipe(recipe).then(getRecipes);
+  };
+
   useEffect(() => {
     getRecipes();
   }, []);
@@ -36,6 +40,7 @@ const StartPage = () => {
           <div>{r.protein}</div>
           <div>{r.fats}</div>
           <div>{r.carbohydrates}</div>
+          <Button onClick={() => deleteRecipe(r)}>{i18next.t('startpage:recipes.actions.delete')}</Button>
           <Divider />
         </div>
       ))}
