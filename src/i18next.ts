@@ -4,6 +4,23 @@ i18next.init({
   fallbackLng: 'ru',
   resources: {
     ru: {
+      domain: {
+        recipe: {
+          name: 'Название',
+          link: 'Ссылка',
+          calories: 'Калории',
+          protein: 'Белки',
+          fats: 'Жиры',
+          carbohydrates: 'Углеводы',
+        },
+      },
+      forms: {
+        fields: {
+          errors: {
+            required: 'Это обязательное поле',
+          },
+        },
+      },
       startpage: {
         recipes: {
           new: {

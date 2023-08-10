@@ -5,7 +5,7 @@ import {
   Type,
 } from 'io-ts';
 import { PathReporter } from 'io-ts/PathReporter';
-import { Recipe, RecipeSchema } from './components/domain/Recipe';
+import { Recipe, RecipeSchema } from './domain/Recipe';
 
 const instanceAxios = axios.create();
 
