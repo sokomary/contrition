@@ -32,6 +32,8 @@ const StartPage = () => {
         }}
       />
       <Button onClick={() => setOpen(true)}>{i18next.t('startpage:recipes.actions.add')}</Button>
+
+      <Divider />
       {recipes.map((r, i) => (
         <div key={i}>
           <div>{r.name}</div>
@@ -40,6 +42,17 @@ const StartPage = () => {
           <div>{r.protein}</div>
           <div>{r.fats}</div>
           <div>{r.carbohydrates}</div>
+          {!!r.recipeProducts.length && <div>Продукты:</div>}
+          {r.recipeProducts.map((p, index) => (
+            <div style={{ padding: '0 20px' }} key={index}>
+              {p.product.name}
+              ,
+              {' '}
+              {p.quantity}
+            </div>
+          ))}
+          {!!r.tags.length && <div>Теги:</div>}
+          {r.tags.map((t) => <div key={t.id} style={{ padding: '0 20px' }}>{t.name}</div>)}
           <Button onClick={() => deleteRecipe(r)}>{i18next.t('startpage:recipes.actions.delete')}</Button>
           <Divider />
         </div>
