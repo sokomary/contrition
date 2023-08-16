@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
+import { FieldError as Error } from './FieldError';
 import { Container } from '../Container';
 
 const Field: FC<{
-  key?: string;
   name: string;
   register: UseFormRegister<any>;
   placeholder?: string;
@@ -13,22 +13,13 @@ const Field: FC<{
   error?: FieldError;
   errorText?: string;
 }> = ({
-  name, required, key, register, placeholder, error, errorText,
+  name, required, register, placeholder, error, errorText,
 }) => (
   <Container vertical gap={5}>
-    <StyledInput key={key} autoComplete="new-password" {...register(name, { required })} placeholder={placeholder} />
+    <StyledInput autoComplete="new-password" {...register(name, { required })} placeholder={placeholder} />
     {error && <Error text={errorText || ''} />}
   </Container>
 );
-
-const Error: FC<{ text: string }> = ({ text }) => (
-  <ErrorText>{text}</ErrorText>
-);
-
-const ErrorText = styled.span`
-  color: #e54a4a;
-  font-size: 10px;
-`;
 
 const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
   outline: none;
