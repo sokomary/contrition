@@ -20,6 +20,7 @@ const RecipeSchema = type({
   carbohydrates: number,
   tags: array(TagSchema),
   size: number,
+  img: string,
   recipeProducts: array(RecipeProductSchema),
 }, 'RecipeSchema');
 
