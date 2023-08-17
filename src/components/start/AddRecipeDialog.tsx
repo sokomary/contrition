@@ -70,7 +70,7 @@ const AddRecipeDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onC
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container vertical gap={30}>
           <Container vertical gap={15}>
-            {['name', 'link', 'size'].map((key, inedx) => (
+            {['name', 'link', 'size', 'img'].map((key, inedx) => (
               <Field
                 key={inedx.toString()}
                 name={key}
