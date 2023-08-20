@@ -86,7 +86,7 @@ const StartPage = () => {
                   {r.name}
                   <Link style={{ height: 16, alignSelf: 'center' }} to={r.link}><LinkIcon /></Link>
                 </Header>
-                {r.tags.map((t) => (<>{t.name}</>))}
+                {r.tags.map((t) => (<div key={t.id}>{t.name}</div>))}
                 <Container gap={5}>
                   <Element bold>{r.calories.toFixed(2)}</Element>
                   <Element>{r.protein.toFixed(2)}</Element>

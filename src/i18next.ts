@@ -12,6 +12,7 @@ i18next.init({
           protein: 'Белки',
           fats: 'Жиры',
           tags: 'Тэги',
+          img: 'Имя файла картинки',
           recipeProducts: 'Состав',
           carbohydrates: 'Углеводы',
           size: 'Общий вес',
