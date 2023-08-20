@@ -32,6 +32,10 @@ const API = {
 
   getTags: () => instanceAxios.get(`${serverUrl}/tags`).then(decode(array(TagSchema))),
   addTag: (tag: Tag) => instanceAxios.post(`${serverUrl}/tags`, tag),
+
+  getRandomRecipe: (tags?: string[]) => instanceAxios
+    .get(`${serverUrl}/recipes/random`, tags?.length ? { params: { tags: tags.join(',') } } : undefined)
+    .then(decode(RecipeSchema)),
 };
 
 export { API };
