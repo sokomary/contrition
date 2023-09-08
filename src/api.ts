@@ -23,7 +23,10 @@ const decode = <A, O>(type: Type<A, O>) => ({ data }: AxiosResponse<unknown>) =>
 const serverUrl = 'https://localhost:8443';
 
 const API = {
-  getRecipes: () => instanceAxios.get(`${serverUrl}/recipes`).then(decode(array(RecipeSchema))),
+  getRecipes: (tags?: string[]) => instanceAxios.get(
+    `${serverUrl}/recipes`,
+    { params: { tags: tags?.join(',') } },
+  ).then(decode(array(RecipeSchema))),
   addRecipe: (recipe: Recipe) => instanceAxios.post(`${serverUrl}/recipes`, recipe),
   deleteRecipe: (recipe: Recipe) => instanceAxios.delete(`${serverUrl}/recipes/${recipe.id}`),
 

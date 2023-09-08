@@ -27,6 +27,10 @@ i18next.init({
       },
       startpage: {
         recipes: {
+          random: {
+            header: 'Случайный рецепт',
+            actions: { get: 'Получить' },
+          },
           new: {
             header: 'Новый рецепт',
           },
@@ -36,7 +40,6 @@ i18next.init({
             addTag: 'Добавить тэг',
             delete: 'Удалить',
             save: 'Сохранить',
-            random: 'Случайный рецепт',
           },
           errors: {
             noQuantity: 'Для каждого продукта должно быть указано количество',

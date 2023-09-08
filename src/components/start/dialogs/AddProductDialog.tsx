@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { API } from '../../api';
-import i18next from '../../i18next';
-import { Container } from '../ui/Container';
-import { Field } from '../ui/form/Field';
-import { Button } from '../ui/Button';
-import { Product, ProductSchema } from '../../domain/Product';
+import { API } from '../../../api';
+import i18next from '../../../i18next';
+import { Container } from '../../ui/Container';
+import { Field } from '../../ui/form/Field';
+import { Button } from '../../ui/Button';
+import { Product, ProductSchema } from '../../../domain/Product';
 
 const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const addProduct = (values: Product) => {

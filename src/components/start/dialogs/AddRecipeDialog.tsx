@@ -4,18 +4,18 @@ import {
   useForm, SubmitHandler,
 } from 'react-hook-form';
 import styled from 'styled-components';
-import { API } from '../../api';
-import { Recipe } from '../../domain/Recipe';
-import i18next from '../../i18next';
-import { Container } from '../ui/Container';
-import { Field } from '../ui/form/Field';
-import { Product } from '../../domain/Product';
+import { API } from '../../../api';
+import { Recipe } from '../../../domain/Recipe';
+import i18next from '../../../i18next';
+import { Container } from '../../ui/Container';
+import { Field } from '../../ui/form/Field';
+import { Product } from '../../../domain/Product';
 import { AddProductDialog } from './AddProductDialog';
-import { Tag } from '../../domain/Tag';
-import { Button } from '../ui/Button';
+import { Tag } from '../../../domain/Tag';
+import { Button } from '../../ui/Button';
 import { AddTagDialog } from './AddTagDialog';
-import { DropdownField } from '../ui/form/DropdownField';
-import { ProductsField } from './ProductsField';
+import { DropdownField } from '../../ui/form/DropdownField';
+import { ProductsField } from './fields/ProductsField';
 
 const AddRecipeDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const [products, setProducts] = useState<Product[]>([]);
