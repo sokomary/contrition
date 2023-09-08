@@ -4,12 +4,12 @@ import { isEqual } from 'lodash';
 import i18next from 'i18next';
 import styled from 'styled-components';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { Recipe, RecipeProduct } from '../../domain/Recipe';
-import { DropdownField } from '../ui/form/DropdownField';
-import { Product } from '../../domain/Product';
-import { Container } from '../ui/Container';
-import { FieldError } from '../ui/form/FieldError';
-import { ReactComponent as DeleteSvg } from '../../icons/delete-icon.svg';
+import { Recipe, RecipeProduct } from '../../../../domain/Recipe';
+import { DropdownField } from '../../../ui/form/DropdownField';
+import { Product } from '../../../../domain/Product';
+import { Container } from '../../../ui/Container';
+import { FieldError } from '../../../ui/form/FieldError';
+import { ReactComponent as DeleteSvg } from '../../../../assets/icons/delete-icon.svg';
 
 const ProductsField: FC<UseControllerProps<Recipe> & { products: Product[] }> = (props) => {
   const { field, fieldState } = useController({

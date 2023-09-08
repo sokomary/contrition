@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { API } from '../../api';
-import i18next from '../../i18next';
-import { Container } from '../ui/Container';
-import { Field } from '../ui/form/Field';
-import { Button } from '../ui/Button';
-import { Tag, TagSchema } from '../../domain/Tag';
+import { API } from '../../../api';
+import i18next from '../../../i18next';
+import { Container } from '../../ui/Container';
+import { Field } from '../../ui/form/Field';
+import { Button } from '../../ui/Button';
+import { Tag, TagSchema } from '../../../domain/Tag';
 
 const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const addTag = (values: Tag) => {
@@ -23,7 +23,7 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
   const onSubmit: SubmitHandler<Tag> = (data) => addTag(data);
   return (
     <WideDialog
-      header={i18next.t('startpage:tags.new.header')}
+      header={i18next.t('startpage:recipes.random.header')}
       visible={open}
       onHide={onClose}
     >
@@ -41,7 +41,7 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
               required
             />
           ))}
-          <Button type="submit">{i18next.t('startpage:recipes.actions.save')}</Button>
+          <Button type="submit">{i18next.t('startpage:recipes.random.actions.get')}</Button>
         </Container>
       </form>
     </WideDialog>

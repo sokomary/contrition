@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { isEqual } from 'lodash';
-import { ReactComponent as DownSvg } from '../../icons/down.svg';
+import { ReactComponent as DownSvg } from '../../assets/icons/down.svg';
 import { Container } from './Container';
 
 const Dropdown: FC<{
