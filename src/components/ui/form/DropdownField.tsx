@@ -9,12 +9,14 @@ import { Container } from '../Container';
 const DropdownField: FC<UseControllerProps<Recipe> & {
   options: { value: any; label: string }[];
   label?: string;
+  onActive: () => void;
 }> = (props) => {
   const { field } = useController(props);
   return (
     <Container vertical gap={5}>
       <Label>{props.label}</Label>
       <Dropdown
+        onActive={props.onActive}
         options={props.options}
         value={field.value as Tag[]}
         onChange={field.onChange}

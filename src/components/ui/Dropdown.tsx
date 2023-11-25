@@ -1,86 +1,144 @@
-import React, { FC, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
+import styled, { css } from 'styled-components';
 import { isEqual } from 'lodash';
-import { ReactComponent as DownSvg } from '../../assets/icons/down.svg';
 import { Container } from './Container';
+import { theme } from './theme';
+import { ReactComponent as EnterIcon } from '../../assets/icons/enter-icon.svg';
+import { ReactComponent as SearchIcon } from '../../assets/icons/search-icon.svg';
 
 const Dropdown: FC<{
   options: { value: any; label: string }[];
   value: any[];
+  onActive: () => void;
   onChange: (value: any) => void;
 }> = (props) => {
   const [value, setValue] = useState(props.value || []);
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
 
+  const filteredOptions = props.options
+    .filter((option) => (query.length ? option.label.toLowerCase().includes(query.toLowerCase()) : true));
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  document.body.onclick = (e) => {
+    const targetId = (e.target as HTMLElement).id;
+    if (!targetId.includes('products-input') && !targetId.includes('option')) {
+      setOpen(false);
+    }
+  };
+
   return (
-    <Container vertical gap={1}>
-      <DropdownContainer open={open} onClick={() => setOpen(!open)}>
-        <Labels>
-          {props.options
-            .filter((o) => value.find((v) => isEqual(v, o.value)))
-            .map((o) => o.label).join(', ')}
-        </Labels>
-        <StyledIcon open={open} />
+    <StyledContainer vertical gap={1}>
+      <DropdownContainer open={open}>
+        <StyledSearchIcon />
+        <StyledInput
+          autoComplete="off"
+          id="products-input"
+          ref={inputRef}
+          onFocus={async () => {
+            setOpen(true);
+            props.onActive();
+          }}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <StyledEnterIcon />
       </DropdownContainer>
       {open && (
-        <OptionsContainer>
-          {props.options.map((o) => (
-            <Option
-              selected={value.find((v) => isEqual(v, o.value))}
-              key={o.label}
-              onClick={() => {
-                props.onChange(value.find((v) => isEqual(v, o.value))
-                  ? [...value.filter((v) => !isEqual(v, o.value))]
-                  : [...value, o.value]);
-              }}
-            >
-              {o.label}
-            </Option>
-          ))}
-        </OptionsContainer>
+      <DropdownContentContainer open={open} id="options-dropdown-container">
+        {filteredOptions.length ? (
+          <OptionsContainer id="options-container">
+            {filteredOptions.map((o, index) => (
+              <Container key={o.label}>
+                <Option
+                  id={`option-${index}`}
+                  selected={value.find((v) => isEqual(v, o.value))}
+                  onClick={() => {
+                    props.onChange(value.find((v) => isEqual(v, o.value))
+                      ? [...value.filter((v) => !isEqual(v, o.value))]
+                      : [...value, o.value]);
+                    inputRef.current?.focus();
+                  }}
+                >
+                  {o.label}
+                </Option>
+                {value.find((v) => isEqual(v, o.value)) && <Dot />}
+              </Container>
+            ))}
+          </OptionsContainer>
+        ) : (
+          <EmptyState>Нет результатов</EmptyState>
+        )}
+      </DropdownContentContainer>
       )}
-    </Container>
+    </StyledContainer>
   );
 };
 
+const StyledContainer = styled(Container)`
+  position: relative;
+`;
+
 const DropdownContainer = styled.div<{ open: boolean }>`
-  width: 200px;
-  height: 30px;
-  border: solid 1px pink;
-  border-radius: ${({ open }) => (open ? '5px 5px 0 0' : '5px')};
+  width: 333px;
+  height: 34px;
+  z-index: 99;
+  padding: 4px 8px;
+  
+  border-radius: ${({ open }) => (open ? '10px 10px 0 0' : '10px')};
+  background: #FFF;
+  box-shadow: ${({ open }) => (open ? '' : '0 0 20px 5px rgba(8, 8, 8, 0.10);')};
+  
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding-right: 2px;
 `;
 
-const Labels = styled.div`
-  width: 190px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 3px 0 0 8px;
+const StyledInput = styled.input`
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 8px;
 `;
 
-const StyledIcon = styled(DownSvg)<{ open: boolean }>`
+const StyledEnterIcon = styled(EnterIcon)`
   align-self: center;
-  ${(props) => props.open && 'transform: rotate(180deg);'}
 `;
 
-const OptionsContainer = styled.div`
-  width: 200px;
-  border: solid 1px pink;
-  border-radius: 0 0 5px 5px;
-  margin-top: 29px;
+const StyledSearchIcon = styled(SearchIcon)`
+  align-self: center;
+`;
+
+const EmptyState = styled.div`
+  color: ${theme.color.label};
+  font-size: 14px;
+  text-align: center;
+  padding: 18px;
+`;
+
+const DropdownContentContainer = styled.div<{ open?: boolean }>`
+  width: 333px;
+  
+  border-radius: 10px;
+  background: #FFF;
+
+  box-shadow: ${({ open }) => (!open ? '' : '0 0 20px 5px rgba(8, 8, 8, 0.10);')};
+  
   display: flex;
   flex-direction: column;
   gap: 5px;
   position: absolute;
-  z-index: 99;
+  z-index: 98;
+  
+  padding: 34px 8px 8px 8px;
+  
   animation-duration: 0.3s;
   animation-name: itemsappears;
   animation-direction: alternate;
@@ -94,16 +152,61 @@ const OptionsContainer = styled.div`
       transform-origin: top center;
     }
   }
-  max-height: 150px;
+`;
+
+const OptionsContainer = styled.div`
+  max-height: 140px;
   overflow-y: scroll;
-  background-color: rgba(255, 255, 255, 0.9);
 `;
 
 const Option = styled.div<{ selected: boolean }>`
-  color: pink;
-  padding: 0 8px;
+  color: ${theme.color.font};
+  height: 34px;
+  padding: 8px;
   cursor: pointer;
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
+  font-size: 14px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  
+  width: 100%;
+  
+  ${({ selected }) => {
+    if (selected) {
+      return css`
+        color: ${theme.color.label};
+      `;
+    }
+    return {
+
+    };
+  }};
+  
+  &:hover {
+    ${({ selected }) => {
+    if (!selected) {
+      return css`
+        background-color: ${theme.color.secondary};
+        border-radius: 7px;
+        font-size: 15px;
+        color: ${theme.color.primary};
+      `;
+    }
+    return css`
+      font-size: 15px;
+    `;
+  }
+}
+`;
+
+const Dot = styled.div`
+  height: 7px;
+  width: 7px;
+  border-radius: 3.5px;
+  background-color: ${theme.color.accent};
+  align-self: center;
+  margin-right: 4px;
 `;
 
 export { Dropdown };

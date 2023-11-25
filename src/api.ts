@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 import { isRight } from 'fp-ts/These';
 import {
-  array,
+  array, string,
   Type,
 } from 'io-ts';
 import { PathReporter } from 'io-ts/PathReporter';
 import { Recipe, RecipeSchema } from './domain/Recipe';
 import { Product, ProductSchema } from './domain/Product';
 import { Tag, TagSchema } from './domain/Tag';
+import { InstructionSchema } from './domain/Instruction';
 
 const instanceAxios = axios.create();
 
@@ -19,26 +20,39 @@ const decode = <A, O>(type: Type<A, O>) => ({ data }: AxiosResponse<unknown>) =>
   throw new Error(`Decoding error ${PathReporter.report(result)}`);
 };
 
-// const serverUrl = 'https://88.218.61.83:8443';
-const serverUrl = 'https://localhost:8443';
-
 const API = {
-  getRecipes: (tags?: string[]) => instanceAxios.get(
-    `${serverUrl}/recipes`,
+  getRecipes: (tags?: number[]) => instanceAxios.get(
+    '/api/recipes',
     { params: { tags: tags?.join(',') } },
   ).then(decode(array(RecipeSchema))),
-  addRecipe: (recipe: Recipe) => instanceAxios.post(`${serverUrl}/recipes`, recipe),
-  deleteRecipe: (recipe: Recipe) => instanceAxios.delete(`${serverUrl}/recipes/${recipe.id}`),
 
-  getProducts: () => instanceAxios.get(`${serverUrl}/products`).then(decode(array(ProductSchema))),
-  addProduct: (product: Product) => instanceAxios.post(`${serverUrl}/products`, product),
+  getInstructions: (recipeId: number) => instanceAxios.get(
+    `/api/recipes/${recipeId}/instructions`,
+  ).then(decode(array(InstructionSchema))),
 
-  getTags: () => instanceAxios.get(`${serverUrl}/tags`).then(decode(array(TagSchema))),
-  addTag: (tag: Tag) => instanceAxios.post(`${serverUrl}/tags`, tag),
+  addRecipe: (recipe: Recipe) => instanceAxios.post('/api/recipes', recipe),
+  deleteRecipe: (recipe: Recipe) => instanceAxios.delete(`/api/recipes/${recipe.id}`),
 
-  getRandomRecipe: (tags?: string[]) => instanceAxios
-    .get(`${serverUrl}/recipes/random`, tags?.length ? { params: { tags: tags.join(',') } } : undefined)
+  getProducts: () => instanceAxios.get('/api/products').then(decode(array(ProductSchema))),
+  addProduct: (product: Product) => instanceAxios.post('/api/products', product),
+
+  getTags: () => instanceAxios.get('/api/tags').then(decode(array(TagSchema))),
+  addTag: (tag: Tag) => instanceAxios.post('/api/tags', tag),
+
+  getRandomRecipe: (tags?: number[]) => instanceAxios
+    .get('/api/recipes/random', tags?.length ? { params: { tags: tags.join(',') } } : undefined)
     .then(decode(RecipeSchema)),
+
+  upload: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return instanceAxios
+      .post('/api/images', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then(decode(string));
+  },
 };
 
 export { API };
