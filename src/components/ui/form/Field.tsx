@@ -1,46 +1,66 @@
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import styled from 'styled-components';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
 import { FieldError as Error } from './FieldError';
 import { Container } from '../Container';
+import { theme } from '../theme';
 
 const Field: FC<{
+  style?: CSSProperties;
+  className?: string;
+  step?: string;
   name: string;
+  type?: string;
   register: UseFormRegister<any>;
   placeholder?: string;
   required?: boolean;
   error?: FieldError;
   errorText?: string;
+  width?: number;
 }> = ({
-  name, required, register, placeholder, error, errorText,
+  name, type, step, style, className, required, register, placeholder, error, errorText, width,
 }) => (
   <Container vertical gap={5}>
-    <StyledInput autoComplete="new-password" {...register(name, { required })} placeholder={placeholder} />
+    <StyledInput
+      style={style}
+      className={className}
+      type={type || 'text'}
+      step={step}
+      width={width}
+      autoComplete="new-password"
+      {...register(name, { required })}
+      placeholder={placeholder}
+    />
     {error && <Error text={errorText || ''} />}
   </Container>
 );
 
 const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
   outline: none;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgb(115, 107, 150);
   border-radius: 7px;
+  border: none;
+  background-color: ${theme.color.field};
+  color: ${theme.color.font};
+  font-size: 16px;
 
-  color: rgb(66, 61, 86);
-
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  };
+  
   height: ${({ size }) => {
     if (size === 'small') {
       return '24px';
     }
     if (size === 'large') {
-      return '24px';
+      return '42px';
     }
-    return '32px';
+    return '34px';
   }};
 
   padding: 5px 10px;
+
+  ${({ width }) => width && `width: ${width}px`};
 `;
 
 export { Field };

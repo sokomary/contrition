@@ -1,15 +1,19 @@
 import styled, { css } from 'styled-components';
 import React, { FC, PropsWithChildren } from 'react';
 import { CommonProps } from './CommonProps';
+import { theme } from './theme';
 
-const Button: FC<PropsWithChildren & CommonProps & {
+type Props = {
   onClick?: () => void;
+  styleType?: 'primary' | 'accent';
   type?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'regular' | 'large';
   disabled?: boolean;
-}> = (props) => (
+};
+const Button: FC<PropsWithChildren & CommonProps & Props> = (props) => (
   <StyledButton
     style={props.style}
+    styleType={props.styleType}
     className={props.className}
     onClick={props.onClick}
     type={props.type || 'button'}
@@ -20,22 +24,38 @@ const Button: FC<PropsWithChildren & CommonProps & {
   </StyledButton>
 );
 
-const StyledButton = styled.button<{ size?: 'small' | 'regular' | 'large'; disabled?: boolean }>`
+const StyledButton = styled.button<Props>`
   border: none;
   outline: none;
-  border-radius: 7px;
+  border-radius: 15px;
   cursor: pointer;
+  
+  font-size: 17px;
+  
   height: ${({ size }) => {
     if (size === 'small') {
       return '24px';
     }
     if (size === 'large') {
-      return '24px';
+      return '45px';
     }
     return '32px';
   }};
-  color: white;
-  background-color: #ff7a95;
+  
+  ${({ styleType }) => {
+    if (styleType === 'accent') {
+      return css`
+        color: white;
+        background-color: ${theme.color.accent};
+      `;
+    }
+    return css`
+        color: ${theme.color.primary};
+        background-color: ${theme.color.secondary};
+      `;
+  }};
+
+  
   opacity: 80%;
   width: fit-content;
   min-width: fit-content;
@@ -43,7 +63,7 @@ const StyledButton = styled.button<{ size?: 'small' | 'regular' | 'large'; disab
 
   ${(props) => !props.disabled && css`
     &:active {
-      background-color: ${() => '#ff9cb0'};
+      background-color: ${() => (props.styleType === 'accent' ? theme.color.accentLight : 'white')};
       }
     `}
 `;

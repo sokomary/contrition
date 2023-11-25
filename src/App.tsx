@@ -10,18 +10,14 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
-import { BackgroundPage } from './components/BackgroundPage';
-import back from './assets/background.png';
 
 const App: FC = () => (
   <StyledApp>
     <Router>
-      <BackgroundPage background={back}>
-        <Routes>
-          <Route path="*" element={<StartPage />} />
-          <Route path={routs.START} element={<StartPage />} />
-        </Routes>
-      </BackgroundPage>
+      <Routes>
+        <Route path="*" element={<StartPage />} />
+        <Route path={routs.START} element={<StartPage />} />
+      </Routes>
     </Router>
   </StyledApp>
 );
@@ -29,10 +25,8 @@ const App: FC = () => (
 const StyledApp = styled.div`
   height: 100vh;
   overflow: auto;
-
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-
   a {
     color: inherit;
     text-decoration: none;

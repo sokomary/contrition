@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
@@ -7,7 +7,7 @@ import i18next from '../../../i18next';
 import { Container } from '../../ui/Container';
 import { Field } from '../../ui/form/Field';
 import { Button } from '../../ui/Button';
-import { Product, ProductSchema } from '../../../domain/Product';
+import { Product } from '../../../domain/Product';
 
 const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const addProduct = (values: Product) => {
@@ -17,8 +17,15 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState,
+    reset,
   } = useForm<Product>();
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
 
   const onSubmit: SubmitHandler<Product> = (data) => addProduct(data);
   return (
@@ -29,19 +36,59 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container vertical gap={15}>
-          {Object.entries(ProductSchema.props).filter((k) => k[0] !== 'id').map((key) => (
-            <Field
-              key={key[0]}
-              name={key[0]}
+          <Container>
+            <NameField
+              name="name"
               register={register}
-              placeholder={i18next.t(`domain:recipe.${key[0]}`)}
-              // @ts-ignore
-              error={errors[key[0]]}
+              placeholder={i18next.t('domain:recipe.name')}
+              error={formState.errors.name}
               errorText={i18next.t('forms:fields.errors.required')}
               required
             />
-          ))}
-          <Button type="submit">{i18next.t('startpage:recipes.actions.save')}</Button>
+            <NumberField
+              type="number"
+              step="0.01"
+              name="calories"
+              register={register}
+              placeholder={i18next.t('domain:recipe.calories')}
+              error={formState.errors.calories}
+              errorText={i18next.t('forms:fields.errors.required')}
+              required
+            />
+          </Container>
+          <Container>
+            <NumberField
+              type="number"
+              step="0.01"
+              name="protein"
+              register={register}
+              placeholder={i18next.t('domain:recipe.protein')}
+              error={formState.errors.protein}
+              errorText={i18next.t('forms:fields.errors.required')}
+              required
+            />
+            <NumberField
+              type="number"
+              step="0.01"
+              name="fats"
+              register={register}
+              placeholder={i18next.t('domain:recipe.fats')}
+              error={formState.errors.fats}
+              errorText={i18next.t('forms:fields.errors.required')}
+              required
+            />
+            <NumberField
+              type="number"
+              step="0.01"
+              name="carbohydrates"
+              register={register}
+              placeholder={i18next.t('domain:recipe.carbohydrates')}
+              error={formState.errors.carbohydrates}
+              errorText={i18next.t('forms:fields.errors.required')}
+              required
+            />
+          </Container>
+          <Actions><Button type="submit">{i18next.t('startpage:recipes.actions.save')}</Button></Actions>
         </Container>
       </form>
     </WideDialog>
@@ -49,7 +96,30 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
 };
 
 const WideDialog = styled(Dialog)`
-  width: 30%;
+  width: 350px;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+`;
+
+const NameField = styled(Field)`
+  width: 200px;
+  @media (max-width: 700px) {
+    width: 188px;
+  }
+`;
+
+const NumberField = styled(Field)`
+  width: 97px;
+  @media (max-width: 700px) {
+    width: 92px;
+  }
+`;
+
+const Actions = styled(Container)`
+  justify-content: flex-end;
+  padding-top: 15px;
 `;
 
 export { AddProductDialog };

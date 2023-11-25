@@ -15,7 +15,7 @@ i18next.init({
           img: 'Имя файла картинки',
           recipeProducts: 'Состав',
           carbohydrates: 'Углеводы',
-          size: 'Общий вес',
+          size: 'Вес (г)',
         },
       },
       forms: {
