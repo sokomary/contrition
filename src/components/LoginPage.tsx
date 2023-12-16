@@ -10,7 +10,7 @@ const LoginPage = () => {
   const authenticated = useAuthenticate();
 
   const login = () => {
-    window.location.href = `https://${window.location.hostname}:8443/api/private`;
+    window.location.href = `https://${window.location.hostname}:9443/api/private`;
   };
 
   return (

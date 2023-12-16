@@ -108,11 +108,11 @@ const ActionBarContainer = styled(Container)`
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   height: 62px;
 
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     flex-direction: column-reverse;
     height: 80px;
   }
-  @media (max-width: 690px) {
+  @media (max-width: 740px) {
     height: 130px;
     padding-bottom: 10px;
   }
@@ -121,11 +121,14 @@ const ActionBarContainer = styled(Container)`
 const Filters = styled(Container)`
   width: 70%;
   padding: 0 10px;
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     width: 100%;
+    padding: 10px;
   }
-  @media (max-width: 690px) {
+  @media (max-width: 740px) {
     flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
   }
 `;
 const Tags = styled(Container)`
@@ -135,25 +138,25 @@ const Tags = styled(Container)`
   font-size: 18px;
   padding: 0 30px 0 20px;
 
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     width: 50%;
+    padding: 0;
   }
-  @media (max-width: 690px) {
+  @media (max-width: 740px) {
     width: 100%;
-    padding: 10px 0;
+    padding: 0;
   }
 `;
 const TagName = styled.div<{ selected?: boolean }>`
-  height: 45px;
   background-color: ${({ selected }) => (selected ? theme.color.secondary : 'transparent')};
   border-radius: 25px;
   color: ${theme.color.primary};
-  padding: 10px 20px;
+  padding: 0 10px;
   align-self: center;
   font-size: 20px;
   cursor: pointer;
   
-  @media (max-width: 690px) {
+  @media (max-width: 740px) {
     padding: 0 5px;
     height: 25px;
   }
@@ -162,10 +165,10 @@ const Search = styled(Container)`
   width: 30%;
   align-items: center;
 
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     width: 50%;
   }
-  @media (max-width: 690px) {
+  @media (max-width: 740px) {
     width: 100%;
   }
 `;
@@ -181,7 +184,7 @@ const SearchInput = styled.input`
   font-size: 16px;
   width: 100%;
 
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     height: 30px;
   }
 `;
@@ -193,7 +196,7 @@ const PersonalInfo = styled(Container)`
   padding: 0 10px;
   border-radius: inherit;
 
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     width: 100%;
     height: 45px;
   }
@@ -218,7 +221,7 @@ const Circle = styled.img`
 `;
 
 const ButtonText = styled.span`
-  @media (min-width: 707px) {
+  @media (min-width: 810px) {
     display: none;
   }
   @media (min-width: 960px) {
@@ -229,7 +232,7 @@ const ButtonIcon = styled.span`
   @media (min-width: 961px) {
     display: none;
   }
-  @media (max-width: 707px) {
+  @media (max-width: 810px) {
     display: none;
   }
 `;
