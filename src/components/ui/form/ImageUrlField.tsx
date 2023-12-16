@@ -3,17 +3,16 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useController, UseControllerProps } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { Container } from '../Container';
 import { Recipe } from '../../../domain/Recipe';
-import { API } from '../../../api';
 import { theme } from '../theme';
 import { Loading } from '../Loading';
+import { upload } from '../../../api/api';
 
 const ImageUrlField: FC<UseControllerProps<Recipe> & { defaultValue?: string; defaultUrl?: string }> = (props) => {
   const { field } = useController(props);
   const [files, setFiles] = useState<File[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
   const onClear = () => {
@@ -28,19 +27,21 @@ const ImageUrlField: FC<UseControllerProps<Recipe> & { defaultValue?: string; de
     ref.current?.click();
   };
 
+  const uploadMutation = useMutation({
+    mutationFn: upload,
+    onSuccess: (res) => {
+      field.onChange(res);
+    },
+    onError: () => {
+      onClear();
+    },
+  });
+
   const handleChange = () => {
-    setLoading(true);
     if (ref.current?.files?.length) {
       const newFiles = Array.from(ref.current?.files || []);
       setFiles(newFiles);
-      API.upload(newFiles[0]).then((res) => {
-        field.onChange(res);
-        setLoading(false);
-      }).catch(() => {
-        onClear();
-        setError(true);
-        setLoading(false);
-      });
+      uploadMutation.mutate(newFiles[0]);
       field.onChange(newFiles);
     }
   };
@@ -48,12 +49,12 @@ const ImageUrlField: FC<UseControllerProps<Recipe> & { defaultValue?: string; de
   return (
     <div>
       <Container vertical gap={10}>
-        {loading ? (
+        {uploadMutation.isLoading ? (
           <LoadingWrapper><Loading /></LoadingWrapper>
         ) : (
           <>
             {(!files.length && !props.defaultValue) ? (
-              <PhotoInput onClick={handleClick}>{error ? 'Что-то пошло не так' : 'Фото'}</PhotoInput>
+              <PhotoInput onClick={handleClick}>{uploadMutation.error ? 'Что-то пошло не так' : 'Фото'}</PhotoInput>
             ) : (
               <StyledDiv
                 onClick={handleClick}
@@ -83,8 +84,8 @@ const StyledDiv = styled.div<{ background?: any }>`
   display: flex;
   justify-content: center;
   opacity: 30;
-  @media (max-width: 700px) {
-    margin-left: auto;
+  @media (max-width: 890px) {
+    margin-left: 5px;
     margin-right: auto;
   }
   ${(props) => (props.background
@@ -109,9 +110,8 @@ const PhotoInput = styled.div`
   
   cursor: pointer;
 
-  @media (max-width: 700px) {
-    margin-left: auto;
-    margin-right: auto;
+  @media (max-width: 1120px) {
+    margin-left: 5px;
   }
 `;
 
@@ -123,7 +123,7 @@ const LoadingWrapper = styled.div`
   justify-items: center;
   align-items: center;
 
-  @media (max-width: 700px) {
+  @media (max-width: 890px) {
     margin-left: auto;
     margin-right: auto;
   }

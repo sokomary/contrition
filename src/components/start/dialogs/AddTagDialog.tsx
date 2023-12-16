@@ -1,8 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { API } from '../../../api';
+import { useMutation, useQueryClient } from 'react-query';
+import { addTag } from '../../../api/api';
 import i18next from '../../../i18next';
 import { Container } from '../../ui/Container';
 import { Field } from '../../ui/form/Field';
@@ -11,15 +12,14 @@ import { Tag, TagSchema } from '../../../domain/Tag';
 import { Loading } from '../../ui/Loading';
 
 const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
-  const addTag = (values: Tag) => {
-    setLoading(true);
-    API.addTag({ ...values }).then(() => {
+  const queryClient = useQueryClient();
+  const addMutation = useMutation({
+    mutationFn: addTag,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tags'] });
       onClose();
-      setLoading(false);
-    });
-  };
-
-  const [loading, setLoading] = useState(false);
+    },
+  });
 
   const {
     register,
@@ -34,7 +34,7 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
     }
   }, [formState, reset]);
 
-  const onSubmit: SubmitHandler<Tag> = (data) => addTag(data);
+  const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
   return (
     <WideDialog
       header="Новый тег"
@@ -42,7 +42,7 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
       onHide={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        { !loading ? (
+        { !addMutation.isLoading ? (
           <Container vertical gap={15}>
             {Object.entries(TagSchema.props).filter((k) => k[0] !== 'id').map((key) => (
               <Field
@@ -67,7 +67,7 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
 const WideDialog = styled(Dialog)`
   width: 30%;
 
-  @media (max-width: 700px) {
+  @media (max-width: 890px) {
     width: 80%;
   }
 `;

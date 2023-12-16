@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useRef, useState,
+  FC, useRef, useState,
 } from 'react';
 import { Dialog } from 'primereact/dialog';
 import {
@@ -8,12 +8,12 @@ import {
 import styled from 'styled-components';
 import { isEqual } from 'lodash';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { API } from '../../../api';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { addRecipe, getInstructions, getProducts } from '../../../api/api';
 import { Recipe, RecipeProduct } from '../../../domain/Recipe';
 import i18next from '../../../i18next';
 import { Container } from '../../ui/Container';
 import { Field } from '../../ui/form/Field';
-import { Product } from '../../../domain/Product';
 import { AddProductDialog } from './AddProductDialog';
 import { Tag } from '../../../domain/Tag';
 import { Button } from '../../ui/Button';
@@ -29,34 +29,27 @@ import { StepsPartsField } from './fields/StepsPartsField';
 const RecipeDialog: FC<{
   tags: Tag[]; open: boolean; onClose: (result?: Recipe) => void; defaultValues?: Recipe;
 }> = ({
-  tags: initTags, open, onClose, defaultValues,
+  tags, open, onClose, defaultValues,
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [openNewProduct, setOpenNewProduct] = useState(false);
+  console.log(defaultValues);
+  const { data: products, isLoading } = useQuery('products', () => getProducts());
+  const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
+    `instructions-${defaultValues?.id}`,
+    () => getInstructions(defaultValues!.id),
+    { enabled: defaultValues?.id !== undefined, suspense: true },
+  );
 
-  const [tags, setTags] = useState<Tag[]>(initTags);
+  const [openNewProduct, setOpenNewProduct] = useState(false);
   const [openNewTag, setOpenNewTag] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-
-  const addRecipe = (values: Recipe) => {
-    // setLoading(true);
-    API.addRecipe(values).then(() => {
-      onClose(values);
-      setLoading(false);
-    });
-  };
-
-  const getProducts = () => {
-    API.getProducts().then((res) => setProducts(res));
-  };
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getTags = () => {
-    API.getTags().then((res) => setTags(res));
-  };
+  const queryClient = useQueryClient();
+  const addMutation = useMutation({
+    mutationFn: addRecipe,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recipes'] });
+      onClose();
+    },
+  });
 
   const {
     register,
@@ -66,16 +59,18 @@ const RecipeDialog: FC<{
     formState,
     setValue,
   } = useForm<Recipe>({
-    defaultValues: defaultValues || { recipeProducts: [], tags: [] },
+    defaultValues: defaultValues
+      ? { ...defaultValues, instructions }
+      : {
+        recipeProducts: [], tags: [], instructions: [], favorite: false,
+      },
   });
   const selectedProducts = useWatch({
     control,
     name: 'recipeProducts',
   });
 
-  const onSubmit: SubmitHandler<Recipe> = (data) => {
-    addRecipe(data);
-  };
+  const onSubmit: SubmitHandler<Recipe> = (data) => addMutation.mutate(data);
 
   const divRef = useRef<HTMLDivElement>(null);
   const scrollToLastMessage = () => {
@@ -96,13 +91,12 @@ const RecipeDialog: FC<{
     >
       <div
         ref={divRef}
-        style={{
-          height: '100%', overflowY: 'auto',
-        }}
+        style={{ height: '100%', overflowY: 'auto' }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          {!loading ? (
-            <Container vertical gap={30}>
+
+          {!addMutation.isLoading && !areInstructionsLoading ? (
+            <MainContainer vertical gap={30}>
 
               <ContentContainer gap={70}>
 
@@ -154,13 +148,15 @@ const RecipeDialog: FC<{
                 </StepsPartsFieldContainer>
 
                 <ProductsFieldContainer style={{ width: 333 }} vertical gap={20}>
-                  <ProductsField
-                    onActive={scrollToLastMessage}
-                    control={control}
-                    name="recipeProducts"
-                    products={products}
-                    onNewClick={() => setOpenNewProduct(true)}
-                  />
+                  {!isLoading && !!products?.length && (
+                    <ProductsField
+                      onActive={scrollToLastMessage}
+                      control={control}
+                      name="recipeProducts"
+                      products={products}
+                      onNewClick={() => setOpenNewProduct(true)}
+                    />
+                  )}
                   <ProductsContainer gap={5}>
                     {selectedProducts?.sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
                       .map((sp) => (
@@ -208,35 +204,37 @@ const RecipeDialog: FC<{
                   {i18next.t('startpage:recipes.actions.save')}
                 </StyledButton>
               </EndContainer>
-            </Container>
+            </MainContainer>
           ) : (<LoadingWrapper><Loading /></LoadingWrapper>)}
 
         </form>
       </div>
       <AddTagDialog
         open={openNewTag}
-        onClose={() => {
-          setOpenNewTag(false);
-          getTags();
-        }}
+        onClose={() => setOpenNewTag(false)}
       />
       <AddProductDialog
         open={openNewProduct}
-        onClose={() => {
-          setOpenNewProduct(false);
-          getProducts();
-        }}
+        onClose={() => setOpenNewProduct(false)}
       />
+
     </WideDialog>
   );
 };
 
 const WideDialog = styled(Dialog)`
   width: 1120px;
-  height: 645px;
-  @media (max-width: 700px) {
-    max-width: 95%;
-    height: 100%;
+  height: fit-content;
+  @media (max-width: 1120px) {
+    width: fit-content;
+    max-height: 95%;
+    overflow-y: auto;
+  }
+`;
+
+const MainContainer = styled(Container)`
+  @media (max-width: 1120px) {
+    width: 340px;
   }
 `;
 
@@ -269,7 +267,6 @@ const StyledInput = styled.input`
   background-color: ${theme.color.secondary};
   color: ${theme.color.primary};
 `;
-
 const Name = styled.div`
   display: flex;
   align-items: center;
@@ -288,7 +285,6 @@ const NameText = styled.div`
   white-space: nowrap;
   overflow: hidden;
 `;
-
 const AddTagButton = styled.div`
   font-size: 14px;
   color: ${theme.color.accent};
@@ -306,50 +302,50 @@ const LoadingWrapper = styled.div`
 `;
 
 const ContentContainer = styled(Container)`
-  @media (max-width: 700px) {
+  padding-top: 20px;
+  @media (max-width: 1120px) {
     flex-direction: column;
     gap: 20px;
   }
 `;
 
 const EndContainer = styled(Container)`
-  @media (max-width: 700px) {
+  @media (max-width: 1120px) {
     flex-direction: column;
     gap: 20px;
+    padding-left: 13px;
+    width: 340px;
   }
 `;
 
 const StyledButton = styled(Button)`
-  @media (max-width: 700px) {
+  @media (max-width: 1120px) {
     align-self: flex-end;
   }
 `;
 
 const BaseFields = styled(Container)`
-  @media (max-width: 700px) {
-    margin-left: auto;
-    margin-right: auto;
+  @media (max-width: 1120px) {
+    margin-left: 5px;
   }
 `;
 
 const ProductsFieldContainer = styled(Container)`
-  @media (max-width: 700px) {
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
+  @media (max-width: 1120px) {
+    margin-left: 5px;
+    width: 340px;
   }
 `;
 const StepsPartsFieldContainer = styled.div`
-  max-height: 400px;
+  max-height: 438px;
   overflow-y: auto;
-  @media (max-width: 700px) {
-    margin-left: 6px;
+  @media (max-width: 1120px) {
+    width: 340px;
   }
 `;
 
 const TagsFieldContainer = styled(Container)`
-  @media (max-width: 700px) {
-    margin-left: 6px;
+  @media (max-width: 1120px) {
   }
 `;
 

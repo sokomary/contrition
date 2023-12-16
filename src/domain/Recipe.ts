@@ -1,5 +1,5 @@
 import {
-  type, string, number, TypeOf, array, union,
+  type, string, number, TypeOf, array, union, boolean,
 } from 'io-ts';
 import { ProductSchema } from './Product';
 import { TagSchema } from './Tag';
@@ -27,6 +27,7 @@ const RecipeSchema = type({
   pressignedUrl: union([string, UndefinedType]),
   recipeProducts: array(RecipeProductSchema),
   instructions: union([array(InstructionSchema), UndefinedType]),
+  favorite: union([boolean, UndefinedType]),
 }, 'RecipeSchema');
 
 type Recipe = TypeOf<typeof RecipeSchema>;

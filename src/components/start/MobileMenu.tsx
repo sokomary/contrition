@@ -31,9 +31,9 @@ const MenuBar = styled.div`display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 20px 30px 0 30px;
+  padding: 20px 40px 0 40px;
 
-  @media (min-width: 700px) {
+  @media (min-width: 890px) {
     display: none;
   }
 `;
