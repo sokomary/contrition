@@ -103,14 +103,14 @@ const StepsPartsField: FC<UseControllerProps<Recipe>> = (props) => {
   }, [field, parts]);
 
   return (
-    <Container vertical gap={20} style={{ width: 250 }}>
+    <MainContainer vertical gap={10}>
 
-      <Container gap={20}>
-        Приготовление
+      <Container style={{ width: '100%' }}>
+        <div style={{ fontWeight: 'bolder' }}>Приготовление</div>
         <AddPartButton onClick={addPart}>Добавить часть</AddPartButton>
       </Container>
 
-      <Container vertical gap={50} style={{ width: '100%' }}>
+      <Container vertical gap={10} style={{ width: '100%' }}>
         {parts
           .sort((a, b) => (a.number > b.number ? 1 : -1))
           .map((sp, index) => (
@@ -138,7 +138,12 @@ const StepsPartsField: FC<UseControllerProps<Recipe>> = (props) => {
                   )
                   : (
                     <Container style={{ width: '100%' }}>
-                      <PartName onClick={() => setEditablePart(sp)}>{sp.name.length ? sp.name : '-'}</PartName>
+                      <PartName
+                        empty={!sp.name.length}
+                        onClick={() => setEditablePart(sp)}
+                      >
+                        {sp.name.length ? sp.name : 'Введите название'}
+                      </PartName>
                       <AddStepButton onClick={() => addStep(sp)}>Добавить шаг</AddStepButton>
                     </Container>
                   )}
@@ -167,11 +172,11 @@ const StepsPartsField: FC<UseControllerProps<Recipe>> = (props) => {
                           </Container>
                         )
                         : (
-                          <StepName onClick={() => setEditableStep(s)}>
+                          <StepName onClick={() => setEditableStep(s)} empty={!s.description.length}>
                             {sIndex + 1}
                             .
                             {' '}
-                            {s.description}
+                            {s.description.length ? s.description : 'Введите описание'}
                           </StepName>
                         )}
                     </div>
@@ -180,7 +185,7 @@ const StepsPartsField: FC<UseControllerProps<Recipe>> = (props) => {
             </Container>
           ))}
       </Container>
-    </Container>
+    </MainContainer>
   );
 };
 
@@ -190,25 +195,48 @@ const AddPartButton = styled.div`
   font-size: 14px;
   align-self: center;
 `;
+
 const AddStepButton = styled(AddPartButton)`
   font-size: 11px;
 `;
+
 const OkButton = styled(AddPartButton)`
   font-size: 11px;
 `;
-const PartName = styled.div`
+
+const PartName = styled.div<{ empty: boolean }>`
   cursor: pointer;
   font-size: 14px;
-  color: ${theme.color.primary}
+  color: ${({ empty }) => (empty ? theme.color.primaryDisabled : theme.color.primary)};
+  ${({ empty }) => (empty ? 'font-style: italic' : '')}
 `;
-const StepName = styled.div`
+
+const StepName = styled.div<{ empty: boolean }>`
   cursor: pointer;
   font-size: 14px;
+  color: ${({ empty }) => (empty ? theme.color.fontDisabled : '')};
+  ${({ empty }) => (empty ? 'font-style: italic' : '')}
 `;
+
 const StyledInput = styled.input`
   border: none;
   outline: none;
   font-weight: lighter;
+`;
+
+const MainContainer = styled(Container)`
+  width: calc(100% - 20px);
+  overflow-y: auto;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 15px 5px rgba(8, 8, 8, 0.07);
+  padding: 15px;
+  margin: 0 10px;
+  @media (min-width: 890px) {
+    width: calc(100% - 40px);
+    height: calc(100% - 20px);
+    margin: 20px;
+  }
 `;
 
 export { StepsPartsField };

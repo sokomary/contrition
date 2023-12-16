@@ -1,11 +1,15 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
 import { theme } from '../ui/theme';
 import { Tag } from '../../domain/Tag';
 import { ReactComponent as CreateSvg } from '../../assets/icons/create.svg';
 import { ReactComponent as RandomSvg } from '../../assets/icons/random.svg';
+import { logout } from '../../api/api';
+import { useAuthenticate } from '../../hooks/useAuthenticate';
+import { isAdmin } from '../../domain/User';
 
 const ActionBar: FC<{
   tags: Tag[];
@@ -16,8 +20,10 @@ const ActionBar: FC<{
     tags, onNewClick, onRandomClick, onTagChange, onQueryChange,
   },
 ) => {
+  const user = useAuthenticate();
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
   const [q, setQ] = useState('');
+  const [userOptionsOpen, setUserOptionsOpen] = useState(false);
 
   const changeTag = (tag: Tag) => {
     const newTag = selectedTag?.id !== tag.id ? tag : undefined;
@@ -51,10 +57,12 @@ const ActionBar: FC<{
       </Filters>
       <PersonalInfo>
         <Container gap={10}>
+          {isAdmin(user) && (
           <Button onClick={onNewClick}>
             <ButtonText>Новый</ButtonText>
             <ButtonIcon><CreateSvg /></ButtonIcon>
           </Button>
+          )}
           <Button styleType="primary" onClick={onRandomClick}>
             <ButtonText>Случайный</ButtonText>
             <ButtonIcon><RandomSvg /></ButtonIcon>
@@ -62,12 +70,35 @@ const ActionBar: FC<{
         </Container>
         <Container gap={10}>
           <Name>
-            Мария
+            { user?.name }
           </Name>
-          <Circle />
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex,max-len */}
+          <UserInfo tabIndex={0} onBlur={() => setUserOptionsOpen(false)}>
+            <Circle
+              onClick={() => setUserOptionsOpen(true)}
+              src={user?.picture}
+            />
+            {userOptionsOpen && <UserOptions />}
+          </UserInfo>
         </Container>
       </PersonalInfo>
     </ActionBarContainer>
+  );
+};
+
+const UserOptions = () => {
+  const queryClient = useQueryClient();
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      window.location.href = '/login';
+    },
+  });
+  return (
+    <Options>
+      <Option onClick={() => logoutMutation.mutate()}>Выйти</Option>
+    </Options>
   );
 };
 
@@ -117,13 +148,13 @@ const TagName = styled.div<{ selected?: boolean }>`
   background-color: ${({ selected }) => (selected ? theme.color.secondary : 'transparent')};
   border-radius: 25px;
   color: ${theme.color.primary};
-  padding: 10px 5px;
+  padding: 10px 20px;
   align-self: center;
   font-size: 20px;
   cursor: pointer;
   
   @media (max-width: 690px) {
-    padding: 0;
+    padding: 0 5px;
     height: 25px;
   }
 `;
@@ -178,11 +209,12 @@ const Name = styled.div`
     display: none;
   }
 `;
-const Circle = styled.div`
+const Circle = styled.img`
   height: 40px;
   width: 40px;
   border-radius: 20px;
   background-color: white;
+  cursor: pointer;
 `;
 
 const ButtonText = styled.span`
@@ -200,6 +232,38 @@ const ButtonIcon = styled.span`
   @media (max-width: 707px) {
     display: none;
   }
+`;
+
+const Options = styled(Container)`
+  position: absolute;
+  border-radius: 5px;
+  background: #FFF;
+  box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
+  padding: 8px;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  right: 60px;
+  top: 95px;
+`;
+
+const Option = styled.div`
+  width: 70px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  cursor: pointer;
+  &:hover {
+    color: ${theme.color.primary}
+  }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export { ActionBar };

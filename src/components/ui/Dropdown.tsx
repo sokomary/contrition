@@ -65,6 +65,7 @@ const Dropdown: FC<{
                       ? [...value.filter((v) => !isEqual(v, o.value))]
                       : [...value, o.value]);
                     inputRef.current?.focus();
+                    setQuery('');
                   }}
                 >
                   {o.label}
@@ -87,14 +88,14 @@ const StyledContainer = styled(Container)`
 `;
 
 const DropdownContainer = styled.div<{ open: boolean }>`
-  width: 333px;
+  width: 100%;
   height: 34px;
   z-index: 99;
   padding: 4px 8px;
   
   border-radius: ${({ open }) => (open ? '10px 10px 0 0' : '10px')};
   background: #FFF;
-  box-shadow: ${({ open }) => (open ? '' : '0 0 20px 5px rgba(8, 8, 8, 0.10);')};
+  box-shadow: ${({ open }) => (open ? '' : '0 0 10px 5px rgba(8, 8, 8, 0.07);')};
   
   cursor: pointer;
   display: flex;
@@ -124,7 +125,7 @@ const EmptyState = styled.div`
 `;
 
 const DropdownContentContainer = styled.div<{ open?: boolean }>`
-  width: 333px;
+  width: 100%;
   
   border-radius: 10px;
   background: #FFF;

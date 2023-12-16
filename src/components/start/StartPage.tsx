@@ -15,6 +15,10 @@ import { theme } from '../ui/theme';
 import { Button } from '../ui/Button';
 import { AddTagDialog } from './dialogs/AddTagDialog';
 import { AddProductDialog } from './dialogs/AddProductDialog';
+import { useAuthenticate } from '../../hooks/useAuthenticate';
+import { isAdmin } from '../../domain/User';
+import { Product } from '../../domain/Product';
+import { ProductPage } from './dialogs/ProductPage';
 
 const StartPage = () => {
   const [open, setOpen] = useState(false);
@@ -44,6 +48,9 @@ const StartPage = () => {
 
   const [openNewProduct, setOpenNewProduct] = useState(false);
   const [openNewTag, setOpenNewTag] = useState(false);
+  const [productToView, setProductToView] = useState<Product | undefined>(undefined);
+
+  const user = useAuthenticate();
 
   return (
     <Page>
@@ -70,6 +77,9 @@ const StartPage = () => {
         />
       )}
 
+      {productToView
+          && <ProductPage onClose={() => setProductToView(undefined)} product={productToView} open={!!productToView} />}
+
       <AddTagDialog
         open={openNewTag}
         onClose={() => setOpenNewTag(false)}
@@ -93,48 +103,53 @@ const StartPage = () => {
           </ActionBarContainer>
         )}
 
-        <InfoContainer gap={20}>
+        {isAdmin(user) && (
+          <InfoContainer gap={20}>
 
-          <ControlsContainer vertical gap={20}>
-            <TagsControlCard
-              items={tags || []}
-              header="Все теги"
-              onAddClick={() => setOpenNewTag(true)}
-              isLoading={isTagsLoading}
-            />
-            <ProductsControlCard
-              items={products || []}
-              header="Все продукты"
-              onAddClick={() => setOpenNewProduct(true)}
-              isLoading={areProductsLoading}
-            />
-          </ControlsContainer>
+            <ControlsContainer vertical gap={20}>
+              <TagsControlCard
+                items={tags || []}
+                header="Все теги"
+                onAddClick={() => setOpenNewTag(true)}
+                isLoading={isTagsLoading}
+              />
+              <ProductsControlCard
+                onOpenClick={(item) => {
+                  setProductToView(products?.find((p) => p.id === item.id));
+                }}
+                items={products || []}
+                header="Все продукты"
+                onAddClick={() => setOpenNewProduct(true)}
+                isLoading={areProductsLoading}
+              />
+            </ControlsContainer>
 
-          <Favorite vertical gap={20}>
-            <TagsControlHeader style={{ color: theme.color.label }} gap={10}>
-              <div>Избранные рецепты</div>
-              <DotsDivider style={{ backgroundColor: theme.color.label }} />
-              <div>{favoriteRecipes?.length || 'пока нет избранных рецептов'}</div>
-              {isLoading && <Loading />}
-            </TagsControlHeader>
-            <FavoriteRecipesCards>
-              {favoriteRecipes?.map((r) => (
-                <div key={r.id} style={{ justifySelf: 'center' }}>
-                  <RecipeCard
-                    displayInfo={false}
-                    style={{ backgroundColor: theme.color.favorite, boxShadow: 'none' }}
-                    recipe={r}
-                    onDialogOpen={(recipe) => {
-                      setRecipeToEdit(recipe);
-                      setOpen(true);
-                    }}
-                  />
-                </div>
-              ))}
-            </FavoriteRecipesCards>
-          </Favorite>
+            <Favorite vertical gap={20}>
+              <TagsControlHeader style={{ color: theme.color.label }} gap={10}>
+                <div>Избранные рецепты</div>
+                <DotsDivider style={{ backgroundColor: theme.color.label }} />
+                <div>{favoriteRecipes?.length || 'пока нет избранных рецептов'}</div>
+                {isLoading && <Loading />}
+              </TagsControlHeader>
+              <FavoriteRecipesCards>
+                {favoriteRecipes?.map((r) => (
+                  <div key={r.id} style={{ justifySelf: 'center' }}>
+                    <RecipeCard
+                      displayInfo={false}
+                      style={{ backgroundColor: theme.color.favorite, boxShadow: 'none' }}
+                      recipe={r}
+                      onDialogOpen={(recipe) => {
+                        setRecipeToEdit(recipe);
+                        setOpen(true);
+                      }}
+                    />
+                  </div>
+                ))}
+              </FavoriteRecipesCards>
+            </Favorite>
 
-        </InfoContainer>
+          </InfoContainer>
+        )}
 
         <Content>
           {!isLoading
@@ -170,8 +185,9 @@ const StartPage = () => {
 
 const ControlCard: FC<{
   header: string;
-  items: { name: string }[];
+  items: { id: number; name: string }[];
   onAddClick: () => void;
+  onOpenClick?: (item: { id: number }) => void;
   isLoading: boolean;
   style?: CSSProperties;
   className?: string;
@@ -185,7 +201,19 @@ const ControlCard: FC<{
         {props.isLoading && <Loading />}
       </TagsControlHeader>
       <AllTags gap={5}>
-        {props.items.map((t, i) => <TagName key={i}>{t.name}</TagName>)}
+        {props.items.map((t, i) => (
+          <TagName
+            actionable={!!props.onOpenClick}
+            onClick={() => {
+              if (props.onOpenClick) {
+                props.onOpenClick(t);
+              }
+            }}
+            key={i}
+          >
+            {t.name}
+          </TagName>
+        ))}
       </AllTags>
       <TagsActionsContainer>
         <Button onClick={props.onAddClick}>Добавить</Button>
@@ -277,7 +305,7 @@ const AllTags = styled(Container)`
 const TagsActionsContainer = styled(Container)`
   justify-content: flex-end;
 `;
-const TagName = styled(Container)`
+const TagName = styled(Container)<{ actionable: boolean }>`
   height: 30px;
   align-items: center;
   border-radius: 20px;
@@ -285,6 +313,7 @@ const TagName = styled(Container)`
   color: ${theme.color.accent};
   padding: 0 12px;
   font-size: 17px;
+  ${({ actionable }) => (actionable ? 'cursor: pointer' : '')};
 `;
 
 const DotsDivider = styled.div`

@@ -20,35 +20,37 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
   return (
     <WideDialog header={recipe.name} visible={open} onHide={onClose}>
       {!isLoading && (
-        <Container vertical gap={20}>
-          <Title>Список продуктов</Title>
-          <Container gap={5} style={{ paddingLeft: 20 }}>
-            <Container vertical gap={5}>
-              {recipe.recipeProducts.map((rp, index) => (
-                <Quantity key={index}>{rp.quantity}</Quantity>
-              ))}
-            </Container>
-            <Divider count={recipe.recipeProducts.length} />
-            <Container vertical gap={5}>
-              {recipe.recipeProducts.map((rp, index) => (
-                <div key={index}>{rp.product.name}</div>
-              ))}
+        <Container gap={70}>
+          <Container vertical gap={20}>
+            <Title>Список продуктов</Title>
+            <Container gap={5} style={{ paddingLeft: 20 }}>
+              <Container vertical gap={5}>
+                {recipe.recipeProducts.map((rp, index) => (
+                  <Quantity key={index}>{rp.quantity}</Quantity>
+                ))}
+              </Container>
+              <Divider count={recipe.recipeProducts.length} />
+              <Container vertical gap={5}>
+                {recipe.recipeProducts.map((rp, index) => (
+                  <div style={{ whiteSpace: 'nowrap' }} key={index}>{rp.product.name}</div>
+                ))}
+              </Container>
             </Container>
           </Container>
           {!!instructions?.length && (
-          <>
-            <Title>Приготовление</Title>
-            <Container vertical gap={10}>
-              {instructions.map((sp, index) => (
-                <Fragment key={index}>
-                  <PartName>{sp.name}</PartName>
-                  <Container vertical gap={5}>
-                    {sp.steps.map((s, sindex) => <StepDescription key={s.id}>{`${sindex + 1}. ${s.description}`}</StepDescription>)}
-                  </Container>
-                </Fragment>
-              ))}
+            <Container vertical gap={20}>
+              <Title>Приготовление</Title>
+              <Container vertical gap={10}>
+                {instructions.map((sp, index) => (
+                  <Fragment key={index}>
+                    <PartName>{sp.name}</PartName>
+                    <Container vertical gap={5}>
+                      {sp.steps.map((s, sindex) => <StepDescription key={s.id}>{`${sindex + 1}. ${s.description}`}</StepDescription>)}
+                    </Container>
+                  </Fragment>
+                ))}
+              </Container>
             </Container>
-          </>
           )}
         </Container>
       )}
@@ -58,7 +60,7 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
 };
 
 const WideDialog = styled(Dialog)`
-  width: 35%;
+  width: 45%;
 
   @media (max-width: 890px) {
     width: 80%;
@@ -76,7 +78,7 @@ const Quantity = styled.span`
 `;
 
 const Divider = styled.div<{ count: number }>`
-  height: calc(22px * ${({ count }) => count});
+  height: 100%;
   width: 1px;
   background-color: ${theme.color.label};
 `;
