@@ -10,16 +10,19 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
+import { QueryProvider } from './api/QueryProvider';
 
 const App: FC = () => (
-  <StyledApp>
-    <Router>
-      <Routes>
-        <Route path="*" element={<StartPage />} />
-        <Route path={routs.START} element={<StartPage />} />
-      </Routes>
-    </Router>
-  </StyledApp>
+  <QueryProvider>
+    <StyledApp>
+      <Router>
+        <Routes>
+          <Route path="*" element={<StartPage />} />
+          <Route path={routs.START} element={<StartPage />} />
+        </Routes>
+      </Router>
+    </StyledApp>
+  </QueryProvider>
 );
 
 const StyledApp = styled.div`

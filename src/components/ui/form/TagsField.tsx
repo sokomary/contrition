@@ -38,9 +38,10 @@ const TagsField: FC<UseControllerProps<Recipe> & {
 };
 
 const StyledContainer = styled(Container)`
-  @media (max-width: 700px) {
+  @media (max-width: 1120px) {
     flex-wrap: wrap;
-    gap: 5px;
+    padding-right: 20px;
+    justify-content: space-between;
   }
 `;
 

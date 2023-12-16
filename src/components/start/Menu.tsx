@@ -43,8 +43,8 @@ const MenuBar = styled.div`
   border-radius: 25px;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
-
-  @media (max-width: 700px) {
+  
+  @media (max-width: 890px) {
     display: none;
   }
 

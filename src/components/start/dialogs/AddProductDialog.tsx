@@ -2,17 +2,23 @@ import React, { FC, useEffect } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { API } from '../../../api';
+import { useMutation, useQueryClient } from 'react-query';
 import i18next from '../../../i18next';
 import { Container } from '../../ui/Container';
 import { Field } from '../../ui/form/Field';
 import { Button } from '../../ui/Button';
 import { Product } from '../../../domain/Product';
+import { addProduct } from '../../../api/api';
 
 const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
-  const addProduct = (values: Product) => {
-    API.addProduct({ ...values }).then(() => onClose());
-  };
+  const queryClient = useQueryClient();
+  const addMutation = useMutation({
+    mutationFn: addProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      onClose();
+    },
+  });
 
   const {
     register,
@@ -27,7 +33,7 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
     }
   }, [formState, reset]);
 
-  const onSubmit: SubmitHandler<Product> = (data) => addProduct(data);
+  const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
   return (
     <WideDialog
       header={i18next.t('startpage:products.new.header')}
@@ -98,21 +104,21 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
 const WideDialog = styled(Dialog)`
   width: 350px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 890px) {
     width: 80%;
   }
 `;
 
 const NameField = styled(Field)`
   width: 200px;
-  @media (max-width: 700px) {
+  @media (max-width: 890px) {
     width: 188px;
   }
 `;
 
 const NumberField = styled(Field)`
   width: 97px;
-  @media (max-width: 700px) {
+  @media (max-width: 890px) {
     width: 92px;
   }
 `;
