@@ -105,21 +105,21 @@ const WideDialog = styled(Dialog)`
   width: 350px;
 
   @media (max-width: 890px) {
-    width: 80%;
+    width: 90%;
   }
 `;
 
 const NameField = styled(Field)`
   width: 200px;
   @media (max-width: 890px) {
-    width: 188px;
+    width: 201px;
   }
 `;
 
 const NumberField = styled(Field)`
   width: 97px;
   @media (max-width: 890px) {
-    width: 92px;
+    width: 98px;
   }
 `;
 

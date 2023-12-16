@@ -31,7 +31,6 @@ const RecipeDialog: FC<{
 }> = ({
   tags, open, onClose, defaultValues,
 }) => {
-  console.log(defaultValues);
   const { data: products, isLoading } = useQuery('products', () => getProducts());
   const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
     `instructions-${defaultValues?.id}`,
@@ -82,6 +81,7 @@ const RecipeDialog: FC<{
 
   return (
     <WideDialog
+      // contentStyle={{ padding: 10 }}
       header={i18next.t('startpage:recipes.new.header')}
       visible={open}
       onHide={() => {
@@ -93,14 +93,18 @@ const RecipeDialog: FC<{
         ref={divRef}
         style={{ height: '100%', overflowY: 'auto' }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+        >
 
           {!addMutation.isLoading && !areInstructionsLoading ? (
             <MainContainer vertical gap={30}>
 
-              <ContentContainer gap={70}>
+              <ContentContainer gap={10}>
 
-                <Container vertical gap={30}>
+                <Container style={{ marginTop: 20 }} vertical gap={30}>
 
                   <BaseFields vertical gap={7}>
                     <Field
@@ -147,7 +151,7 @@ const RecipeDialog: FC<{
                   <StepsPartsField control={control} name="instructions" />
                 </StepsPartsFieldContainer>
 
-                <ProductsFieldContainer style={{ width: 333 }} vertical gap={20}>
+                <ProductsFieldContainer vertical gap={20}>
                   {!isLoading && !!products?.length && (
                     <ProductsField
                       onActive={scrollToLastMessage}
@@ -302,7 +306,7 @@ const LoadingWrapper = styled.div`
 `;
 
 const ContentContainer = styled(Container)`
-  padding-top: 20px;
+  //padding-top: 20px;
   @media (max-width: 1120px) {
     flex-direction: column;
     gap: 20px;
@@ -331,16 +335,22 @@ const BaseFields = styled(Container)`
 `;
 
 const ProductsFieldContainer = styled(Container)`
+  margin-top: 20px;
+  padding: 0 20px;
+  width: 35%;
   @media (max-width: 1120px) {
-    margin-left: 5px;
+    margin: 0;
     width: 340px;
+    padding: 10px;
   }
 `;
 const StepsPartsFieldContainer = styled.div`
-  max-height: 438px;
-  overflow-y: auto;
+  max-height: 458px;
+  margin-left: 20px;
+  width: 30%;
   @media (max-width: 1120px) {
     width: 340px;
+    margin-left: 0;
   }
 `;
 

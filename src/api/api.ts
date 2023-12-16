@@ -55,3 +55,12 @@ export const upload = (file: File) => {
       },
     }).then(decode(string));
 };
+
+export const getUser = () => instanceAxios.get('/api/user', {
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+}).then((res) => res.data);
+
+export const logout = () => instanceAxios.post('/api/logout');

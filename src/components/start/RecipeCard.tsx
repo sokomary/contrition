@@ -12,6 +12,8 @@ import { ReactComponent as FavoriteSvg } from '../../assets/icons/favorite.svg';
 import { ReactComponent as NonFavoriteSvg } from '../../assets/icons/non-favorite.svg';
 import { theme } from '../ui/theme';
 import { RecipePage } from './dialogs/RecipePage';
+import { useAuthenticate } from '../../hooks/useAuthenticate';
+import { isAdmin } from '../../domain/User';
 
 const VISIBLE_TAGS_COUNT = 2;
 const RecipeCard: FC<{
@@ -21,6 +23,8 @@ const RecipeCard: FC<{
   const [pageOpen, setPageOpen] = useState(false);
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
+
+  const user = useAuthenticate();
 
   const queryClient = useQueryClient();
   const toFavoritesMutation = useMutation({
@@ -51,9 +55,13 @@ const RecipeCard: FC<{
 
         <Header>
           <Container style={{ alignItems: 'center' }} gap={3}>
-            {recipe.favorite
-              ? <FavoriteIcon onClick={() => fromFavoritesMutation.mutate(recipe.id)} />
-              : <NonFavoriteIcon onClick={() => toFavoritesMutation.mutate(recipe.id)} />}
+            {isAdmin(user) && (
+              <>
+                {recipe.favorite
+                  ? <FavoriteIcon onClick={() => fromFavoritesMutation.mutate(recipe.id)} />
+                  : <NonFavoriteIcon onClick={() => toFavoritesMutation.mutate(recipe.id)} />}
+              </>
+            )}
             <RecipeName onClick={() => setPageOpen(true)}>{recipe.name}</RecipeName>
           </Container>
 
@@ -105,7 +113,7 @@ const RecipeCard: FC<{
                   </TagNames>
                 </Container>
               </Container>
-              <Actions recipe={recipe} onDialogOpen={onDialogOpen} />
+              {isAdmin(user) && <Actions recipe={recipe} onDialogOpen={onDialogOpen} />}
             </Container>
           )}
         </Container>

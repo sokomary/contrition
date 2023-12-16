@@ -11,19 +11,33 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import { QueryProvider } from './api/QueryProvider';
+import { useAuthenticate } from './hooks/useAuthenticate';
+import LoginPage from './components/LoginPage';
 
 const App: FC = () => (
-  <QueryProvider>
+  <QueryProvider><Content /></QueryProvider>
+);
+
+const Content = () => {
+  const authenticated = useAuthenticate();
+  return (
     <StyledApp>
       <Router>
         <Routes>
-          <Route path="*" element={<StartPage />} />
-          <Route path={routs.START} element={<StartPage />} />
+          { authenticated ? (
+            <>
+              <Route path="*" element={<StartPage />} />
+              <Route path={routs.START} element={<StartPage />} />
+              <Route path={routs.LOGIN} element={<LoginPage />} />
+            </>
+          ) : (
+            <Route path="*" element={<LoginPage />} />
+          )}
         </Routes>
       </Router>
     </StyledApp>
-  </QueryProvider>
-);
+  );
+};
 
 const StyledApp = styled.div`
   height: 100vh;

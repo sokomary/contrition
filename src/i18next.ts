@@ -4,6 +4,13 @@ i18next.init({
   fallbackLng: 'ru',
   resources: {
     ru: {
+      loginpage: {
+        actions: {
+          login: {
+            google: 'Войти с помощью Google',
+          },
+        },
+      },
       domain: {
         recipe: {
           name: 'Название',
@@ -29,7 +36,7 @@ i18next.init({
         recipes: {
           random: {
             header: 'Случайный рецепт',
-            actions: { get: 'Получить' },
+            actions: { get: 'Обновить' },
           },
           new: {
             header: 'Новый рецепт',
