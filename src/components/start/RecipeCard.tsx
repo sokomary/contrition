@@ -65,24 +65,14 @@ const RecipeCard: FC<{
             <RecipeName onClick={() => setPageOpen(true)}>{recipe.name}</RecipeName>
           </Container>
 
-          <Container gap={5}>
-            <Link style={{ height: 18, alignSelf: 'flex-start', marginTop: '3px' }} to={recipe.link}>
-              <LinkIcon />
-            </Link>
-          </Container>
+          {recipe.link.length > 1 && <LinkToRecipe to={recipe.link}><LinkIcon /></LinkToRecipe>}
         </Header>
 
         <Container vertical gap={10}>
 
-          {recipe.pressignedUrl ? (
-            <div>
-              <StyledImg src={recipe.pressignedUrl} onClick={() => setPageOpen(true)} />
-            </div>
-          ) : (
-            <div>
-              <StyledNoImg onClick={() => setPageOpen(true)} />
-            </div>
-          )}
+          {recipe.pressignedUrl
+            ? <StyledImg src={recipe.pressignedUrl} onClick={() => setPageOpen(true)} />
+            : <StyledNoImg onClick={() => setPageOpen(true)} />}
 
           { localDisplayInfo && (
             <Container>
@@ -222,14 +212,17 @@ const BigElement = styled.div<{ bold?: boolean }>`
   justify-content: center;
 `;
 
-const Img = styled.div<{ src: string }>`
-  width: 230px;
-  height: 230px;
-  background-image: url(${({ src }) => src});
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-
+const StyledImg = styled.img`
+ width: 230px;
+ height: 230px;
+  animation-name: img-appearance;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(.1,-.6,.2,0);
+  @keyframes img-appearance {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  cursor: pointer;
   border-radius: 10px;
 `;
 
@@ -301,10 +294,6 @@ const RecipeName = styled.div`
   width: 197px;
 `;
 
-const StyledImg = styled(Img)`
-  cursor: pointer;
-`;
-
 const TagNames = styled(Container)`
   width: 100%;
 `;
@@ -323,6 +312,12 @@ const RestTagsCount = styled.div`
   font-size: 12px;
   display: flex;
   align-items: center;
+`;
+
+const LinkToRecipe = styled(Link)`
+  height: 18px;
+  align-self: flex-start;
+  margin-top: 3px;
 `;
 
 export { RecipeCard };
