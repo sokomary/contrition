@@ -20,7 +20,7 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
   return (
     <WideDialog header={recipe.name} visible={open} onHide={onClose}>
       {!isLoading && (
-        <Container gap={70}>
+        <MainContainer gap={70}>
           <Container vertical gap={20}>
             <Title>Список продуктов</Title>
             <Container gap={5} style={{ paddingLeft: 20 }}>
@@ -52,7 +52,7 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
               </Container>
             </Container>
           )}
-        </Container>
+        </MainContainer>
       )}
       {isLoading && <Loading />}
     </WideDialog>
@@ -64,6 +64,13 @@ const WideDialog = styled(Dialog)`
 
   @media (max-width: 890px) {
     width: 80%;
+  }
+`;
+
+const MainContainer = styled(Container)`
+  @media (max-width: 1370px) {
+    flex-direction: column;
+    gap: 24px;
   }
 `;
 
