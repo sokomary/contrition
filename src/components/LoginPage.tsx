@@ -1,16 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { toast } from 'react-toastify';
 import { ReactComponent as GoogleIcon } from '../assets/icons/google-icon.svg';
 import { Container } from './ui/Container';
 import { useAuthenticate } from '../hooks/useAuthenticate';
 import i18next from '../i18next';
 import { Button } from './ui/Button';
+import { getLoginUrl } from '../api/api';
 
 const LoginPage = () => {
   const authenticated = useAuthenticate();
 
+  const { data: loginUrl } = useQuery(
+    'login-url',
+    getLoginUrl,
+  );
+
   const login = () => {
-    window.location.href = `https://${window.location.hostname}:9443/api/private`;
+    if (loginUrl) {
+      window.location.href = loginUrl;
+    } else {
+      toast(<>Не удалось получить ссылку</>, { type: 'error' });
+    }
   };
 
   return (

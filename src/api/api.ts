@@ -63,4 +63,6 @@ export const getUser = () => instanceAxios.get('/api/user', {
   },
 }).then((res) => res.data);
 
+export const getLoginUrl = () => instanceAxios.get('/api/login/url').then(decode(string));
+
 export const logout = () => instanceAxios.post('/api/logout');
