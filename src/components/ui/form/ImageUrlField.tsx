@@ -6,7 +6,7 @@ import { useController, UseControllerProps } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { Container } from '../Container';
 import { Recipe } from '../../../domain/Recipe';
-import { theme } from '../theme';
+import { color } from '../theme';
 import { Loading } from '../Loading';
 import { upload } from '../../../api/api';
 
@@ -100,7 +100,8 @@ const StyledDiv = styled.div<{ background?: any }>`
 const PhotoInput = styled.div`
   height: 333px;
   width: 333px;
-  background-color: ${theme.color.field};
+  background-color: ${color('field')};
+  color: ${color('font')};
   border-radius: 20px;
   flex-shrink: 0;
   

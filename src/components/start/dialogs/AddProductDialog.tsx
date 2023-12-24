@@ -9,6 +9,7 @@ import { Field } from '../../ui/form/Field';
 import { Button } from '../../ui/Button';
 import { Product } from '../../../domain/Product';
 import { addProduct } from '../../../api/api';
+import { color } from '../../ui/theme';
 
 const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const queryClient = useQueryClient();
@@ -36,6 +37,12 @@ const AddProductDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, on
   const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
   return (
     <WideDialog
+      headerStyle={{
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('dialog-background') }}
       header={i18next.t('startpage:products.new.header')}
       visible={open}
       onHide={onClose}

@@ -6,7 +6,7 @@ import { Dialog } from 'primereact/dialog';
 import { useQuery } from 'react-query';
 import { Recipe } from '../../../domain/Recipe';
 import { Container } from '../../ui/Container';
-import { theme } from '../../ui/theme';
+import { color } from '../../ui/theme';
 import { getInstructions } from '../../../api/api';
 import { Loading } from '../../ui/Loading';
 
@@ -18,7 +18,21 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
   );
 
   return (
-    <WideDialog header={recipe.name} visible={open} onHide={onClose}>
+    <WideDialog
+      header={recipe.name}
+      visible={open}
+      onHide={onClose}
+      headerStyle={{
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+      contentStyle={{
+        borderRadius: '0px 0px 20px 20px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+    >
       {!isLoading && (
         <MainContainer gap={70}>
           <Container vertical gap={20}>
@@ -87,16 +101,16 @@ const Quantity = styled.span`
 const Divider = styled.div<{ count: number }>`
   height: 100%;
   width: 1px;
-  background-color: ${theme.color.label};
+  background-color: ${color('label')};
 `;
 
 const PartName = styled.div`
- color: ${theme.color.primary};
+ color: ${color('primary')};
   font-size: 17px;
 `;
 
 const StepDescription = styled.div`
- color: ${theme.color.label};
+ color: ${color('label')};
   font-size: 14px;
   margin-left: 30px;
 `;

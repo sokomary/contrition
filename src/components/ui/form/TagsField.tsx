@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Recipe } from '../../../domain/Recipe';
 import { Tag } from '../../../domain/Tag';
 import { Container } from '../Container';
-import { theme } from '../theme';
+import { color } from '../theme';
 
 const TagsField: FC<UseControllerProps<Recipe> & {
   tags: Tag[];
@@ -54,8 +54,8 @@ const TagName = styled.div<{ selected: boolean }>`
   height: 34px;
   border-radius: 7px;
   padding: 5px 10px;
-  background-color: ${({ selected }) => (selected ? theme.color.accentLight : theme.color.field)};
-  color: ${({ selected }) => (selected ? theme.color.accent : theme.color.font)};
+  background-color: ${({ selected }) => (selected ? color('accent-light') : color('field'))};
+  color: ${({ selected }) => (selected ? color('accent') : color('font'))};
   cursor: pointer;
   width: fit-content;
 `;

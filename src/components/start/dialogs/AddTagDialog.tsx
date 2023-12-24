@@ -10,6 +10,7 @@ import { Field } from '../../ui/form/Field';
 import { Button } from '../../ui/Button';
 import { Tag, TagSchema } from '../../../domain/Tag';
 import { Loading } from '../../ui/Loading';
+import { color } from '../../ui/theme';
 
 const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const queryClient = useQueryClient();
@@ -37,6 +38,12 @@ const AddTagDialog: FC<{ open: boolean; onClose: () => void }> = ({ open, onClos
   const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
   return (
     <WideDialog
+      headerStyle={{
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('dialog-background') }}
       header="Новый тег"
       visible={open}
       onHide={onClose}

@@ -20,7 +20,7 @@ import { Button } from '../../ui/Button';
 import { AddTagDialog } from './AddTagDialog';
 import { ProductsField } from './fields/ProductsField';
 import { TagsField } from '../../ui/form/TagsField';
-import { theme } from '../../ui/theme';
+import { color } from '../../ui/theme';
 import { ReactComponent as DeleteSvg } from '../../../assets/icons/delete_icon.svg';
 import { ImageUrlField } from '../../ui/form/ImageUrlField';
 import { Loading } from '../../ui/Loading';
@@ -82,6 +82,12 @@ const RecipeDialog: FC<{
   return (
     <WideDialog
       // contentStyle={{ padding: 10 }}
+      headerStyle={{
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('dialog-background') }}
       header={i18next.t('startpage:recipes.new.header')}
       visible={open}
       onHide={() => {
@@ -229,6 +235,7 @@ const RecipeDialog: FC<{
 const WideDialog = styled(Dialog)`
   width: 1120px;
   height: fit-content;
+  
   @media (max-width: 1120px) {
     width: fit-content;
     max-height: 95%;
@@ -268,8 +275,8 @@ const StyledInput = styled.input`
   padding: 0 25px 0 5px;
   text-align: center;
   outline: none;
-  background-color: ${theme.color.secondary};
-  color: ${theme.color.primary};
+  background-color: ${color('secondary')};
+  color: ${color('primary')};
 `;
 const Name = styled.div`
   display: flex;
@@ -277,8 +284,8 @@ const Name = styled.div`
   height: 34px;
   padding: 0 20px 2px 20px;
   border-radius: 20px;
-  background-color: ${theme.color.accentLight};
-  color: ${theme.color.accent};
+  background-color: ${color('accent-light')};
+  color: ${color('accent')};
   margin-left: -30px;
   cursor: pointer;
   
@@ -291,7 +298,7 @@ const NameText = styled.div`
 `;
 const AddTagButton = styled.div`
   font-size: 14px;
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   cursor: pointer;
 `;
 

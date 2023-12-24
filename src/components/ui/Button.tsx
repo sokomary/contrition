@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import React, { FC, PropsWithChildren } from 'react';
 import { CommonProps } from './CommonProps';
-import { theme } from './theme';
+import { color } from './theme';
 
 type Props = {
   onClick?: () => void;
@@ -46,12 +46,12 @@ const StyledButton = styled.button<Props>`
     if (styleType === 'accent') {
       return css`
         color: white;
-        background-color: ${theme.color.accent};
+        background-color: ${color('accent')};
       `;
     }
     return css`
-        color: ${theme.color.primary};
-        background-color: ${theme.color.secondary};
+        color: ${color('primary')};
+        background-color: ${color('secondary')};
       `;
   }};
 
@@ -63,7 +63,7 @@ const StyledButton = styled.button<Props>`
 
   ${(props) => !props.disabled && css`
     &:active {
-      background-color: ${() => (props.styleType === 'accent' ? theme.color.accentLight : 'white')};
+      background-color: ${() => (props.styleType === 'accent' ? color('accent-light') : color('primary-disabled'))};
       }
     `}
 `;

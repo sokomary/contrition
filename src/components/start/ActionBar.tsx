@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { Container } from '../ui/Container';
 import { Button } from '../ui/Button';
-import { theme } from '../ui/theme';
+import { color } from '../ui/theme';
 import { Tag } from '../../domain/Tag';
 import { ReactComponent as CreateSvg } from '../../assets/icons/create.svg';
 import { ReactComponent as RandomSvg } from '../../assets/icons/random.svg';
@@ -104,7 +104,7 @@ const UserOptions = () => {
 
 const ActionBarContainer = styled(Container)`
   border-radius: 20px;
-  background: #FFF;
+  background-color: ${color('background')};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   height: 62px;
 
@@ -116,6 +116,7 @@ const ActionBarContainer = styled(Container)`
     height: 130px;
     padding-bottom: 10px;
   }
+
 `;
 
 const Filters = styled(Container)`
@@ -134,7 +135,7 @@ const Filters = styled(Container)`
 const Tags = styled(Container)`
   width: 70%;
   align-items: center;
-  color: ${theme.color.primary};
+  color: ${color('primary')};
   font-size: 18px;
   padding: 0 30px 0 20px;
 
@@ -148,9 +149,9 @@ const Tags = styled(Container)`
   }
 `;
 const TagName = styled.div<{ selected?: boolean }>`
-  background-color: ${({ selected }) => (selected ? theme.color.secondary : 'transparent')};
+  background-color: ${({ selected }) => (selected ? color('secondary') : 'transparent')};
   border-radius: 25px;
-  color: ${theme.color.primary};
+  color: ${color('primary')};
   padding: 0 10px;
   align-self: center;
   font-size: 20px;
@@ -175,8 +176,8 @@ const Search = styled(Container)`
 const SearchInput = styled.input`
   height: 42px;
   border-radius: 15px;
-  background-color: ${theme.color.field};
-  color: ${theme.color.label};
+  background-color: ${color('field')};
+  color: ${color('label')};
   outline: none;
   border: none;
   padding: 0 15px;
@@ -191,7 +192,7 @@ const SearchInput = styled.input`
 
 const PersonalInfo = styled(Container)`
   width: 30%; 
-  background-color: ${theme.color.accentLight};
+  background-color: ${color('accent-light')};
   align-items: center;
   padding: 0 10px;
   border-radius: inherit;
@@ -204,7 +205,7 @@ const PersonalInfo = styled(Container)`
 
 const Name = styled.div`
   align-self: center; 
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   font-size: 18px;
   font-weight: bold;
 
@@ -260,7 +261,7 @@ const Option = styled.div`
   padding: 0 4px;
   cursor: pointer;
   &:hover {
-    color: ${theme.color.primary}
+    color: ${color('primary')}
   }
 `;
 

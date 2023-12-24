@@ -8,7 +8,7 @@ import { DropdownField } from '../../../ui/form/DropdownField';
 import { Product } from '../../../../domain/Product';
 import { Container } from '../../../ui/Container';
 import { FieldError } from '../../../ui/form/FieldError';
-import { theme } from '../../../ui/theme';
+import { color, theme } from '../../../ui/theme';
 
 const ProductsField: FC<UseControllerProps<Recipe>
 & { products: Product[]; onNewClick: () => void; onActive: () => void }> = (props) => {
@@ -51,12 +51,12 @@ const ProductsField: FC<UseControllerProps<Recipe>
 
 const Label = styled.div`
   font-size: 17px;
-  color: ${theme.color.font};
+  color: ${color('font')};
 `;
 
 const AddProductButton = styled.div`
   font-size: 14px;
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   cursor: pointer;
   align-self: center;
 `;
