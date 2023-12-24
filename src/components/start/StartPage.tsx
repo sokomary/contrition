@@ -11,7 +11,7 @@ import { GetRandomRecipe } from './dialogs/GetRandomRecipe';
 import { RecipeCard } from './RecipeCard';
 import { Loading } from '../ui/Loading';
 import { ActionBar } from './ActionBar';
-import { theme } from '../ui/theme';
+import { color } from '../ui/theme';
 import { Button } from '../ui/Button';
 import { AddTagDialog } from './dialogs/AddTagDialog';
 import { AddProductDialog } from './dialogs/AddProductDialog';
@@ -125,9 +125,9 @@ const StartPage = () => {
             </ControlsContainer>
 
             <Favorite vertical gap={20}>
-              <TagsControlHeader style={{ color: theme.color.label }} gap={10}>
+              <TagsControlHeader gap={10}>
                 <div>Избранные рецепты</div>
-                <DotsDivider style={{ backgroundColor: theme.color.label }} />
+                <DotsDivider />
                 <div>{favoriteRecipes?.length || 'пока нет избранных рецептов'}</div>
                 {isLoading && <Loading />}
               </TagsControlHeader>
@@ -136,7 +136,7 @@ const StartPage = () => {
                   <div key={r.id} style={{ justifySelf: 'center' }}>
                     <RecipeCard
                       displayInfo={false}
-                      style={{ backgroundColor: theme.color.favorite, boxShadow: 'none' }}
+                      style={{ backgroundColor: color('favorite'), boxShadow: 'none' }}
                       recipe={r}
                       onDialogOpen={(recipe) => {
                         setRecipeToEdit(recipe);
@@ -226,7 +226,7 @@ const Page = styled.div`
   height: 100vh;
 `;
 const TagsControlCard = styled(ControlCard)`
-  background-color: ${theme.color.favorite};
+  background-color: ${color('favorite')};
   height: 160px;
   min-height: 160px;
 
@@ -235,7 +235,7 @@ const TagsControlCard = styled(ControlCard)`
   }
 `;
 const ProductsControlCard = styled(ControlCard)`
-  background-color: ${theme.color.accentLight};
+  background-color: ${color('accent-light')};
   height: 200px;
 
   @media (max-width: 960px) {
@@ -290,7 +290,7 @@ const TagsControlContent = styled(Container)`
   height: 100%;
 `;
 const TagsControlHeader = styled(Container)`
-  color: white;
+  color: ${color('label')};
   align-items: center;
   font-size: 20px;
 `;
@@ -309,8 +309,8 @@ const TagName = styled(Container)<{ actionable: boolean }>`
   height: 30px;
   align-items: center;
   border-radius: 20px;
-  background-color: white;
-  color: ${theme.color.accent};
+  background-color: ${color('background')};
+  color: ${color('accent')};
   padding: 0 12px;
   font-size: 17px;
   ${({ actionable }) => (actionable ? 'cursor: pointer' : '')};
@@ -320,7 +320,7 @@ const DotsDivider = styled.div`
   width: 6px; 
   height: 6px;
   border-radius: 3px;
-  background-color: white;
+  background-color: ${color('label')};
   margin-top: 2px;
 `;
 
@@ -329,7 +329,7 @@ const Favorite = styled(Container)`
   width: calc(70% - 20px);
   flex-shrink: 0;
   border-radius: 20px;
-  background: #FFF;
+  background: ${color('background')};
   padding: 20px 20px 0 20px;
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
 

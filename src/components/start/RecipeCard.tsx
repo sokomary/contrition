@@ -10,7 +10,7 @@ import {
 import { ReactComponent as LinkSvg } from '../../assets/icons/link.svg';
 import { ReactComponent as FavoriteSvg } from '../../assets/icons/favorite.svg';
 import { ReactComponent as NonFavoriteSvg } from '../../assets/icons/non-favorite.svg';
-import { theme } from '../ui/theme';
+import { color } from '../ui/theme';
 import { RecipePage } from './dialogs/RecipePage';
 import { useAuthenticate } from '../../hooks/useAuthenticate';
 import { isAdmin } from '../../domain/User';
@@ -146,9 +146,9 @@ const Card = styled.div<{ localDisplayInfo: boolean }>`
   padding: 15px;
   width: 260px;
   height: ${({ localDisplayInfo }) => (localDisplayInfo ? '353px' : '293px')};
-  
+
   color: #113C0F;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -156,14 +156,14 @@ const Card = styled.div<{ localDisplayInfo: boolean }>`
   flex-shrink: 0;
 
   border-radius: 20px;
-  background: #FFF;
+  background: ${color('background')};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
 `;
 
 const Header = styled(Container)`
   font-size: 20px;
   font-weight: bold;
-  color: ${theme.color.font}
+  color: ${color('font')};
 `;
 const LinkIcon = styled(LinkSvg)`
   height: 16px;
@@ -183,11 +183,10 @@ const NonFavoriteIcon = styled(NonFavoriteSvg)`
 `;
 
 const Element = styled.div<{ bold?: boolean }>`
-  background-color: ${theme.color.secondary};
+  background-color: ${color('secondary')};
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${theme.color.primary};
+  color: ${color('primary')};
 
-  border: solid white 0.5px;
   border-radius: 7px;
   
   height: 25px;
@@ -196,12 +195,11 @@ const Element = styled.div<{ bold?: boolean }>`
 `;
 
 const BigElement = styled.div<{ bold?: boolean }>`
-  background-color: ${theme.color.secondary};
+  background-color: ${color('secondary')};
   font-size: 25px;
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${theme.color.primary};
+  color: ${color('primary')};
 
-  border: solid white 0.5px;
   border-radius: 10px;
   
   height: 50px;
@@ -244,7 +242,7 @@ const Dot = styled.div`
   width: 4px;
   border-radius:  2px;
   flex-shrink: 0;
-  background-color: ${theme.color.primary};
+  background-color: ${color('primary')};
 `;
 
 const Dots = styled(Container)`
@@ -282,7 +280,7 @@ const Option = styled.div`
   align-items: center;
   padding: 0 4px;
   &:hover {
-    color: ${theme.color.primary}
+    color: ${color('primary')}
   }
 `;
 
@@ -299,14 +297,14 @@ const TagNames = styled(Container)`
 `;
 
 const TagName = styled.div`
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   cursor: pointer;
 `;
 
 const RestTagsCount = styled.div`
   border-radius: 5px;
   padding: 0 5px;
-  background-color: ${theme.color.accent};
+  background-color: ${color('accent')};
   color: white;
   font-weight: bold;
   font-size: 12px;

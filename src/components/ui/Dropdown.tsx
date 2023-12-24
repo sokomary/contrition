@@ -4,7 +4,7 @@ import React, {
 import styled, { css } from 'styled-components';
 import { isEqual } from 'lodash';
 import { Container } from './Container';
-import { theme } from './theme';
+import { color } from './theme';
 import { ReactComponent as EnterIcon } from '../../assets/icons/enter-icon.svg';
 import { ReactComponent as SearchIcon } from '../../assets/icons/search-icon.svg';
 
@@ -94,7 +94,8 @@ const DropdownContainer = styled.div<{ open: boolean }>`
   padding: 4px 8px;
   
   border-radius: ${({ open }) => (open ? '10px 10px 0 0' : '10px')};
-  background: #FFF;
+
+  background: ${color('background')};
   box-shadow: ${({ open }) => (open ? '' : '0 0 10px 5px rgba(8, 8, 8, 0.07);')};
   
   cursor: pointer;
@@ -107,6 +108,8 @@ const StyledInput = styled.input`
   outline: none;
   border: none;
   padding: 0 8px;
+
+  background: ${color('background')};
 `;
 
 const StyledEnterIcon = styled(EnterIcon)`
@@ -118,7 +121,7 @@ const StyledSearchIcon = styled(SearchIcon)`
 `;
 
 const EmptyState = styled.div`
-  color: ${theme.color.label};
+  color: ${color('label')};
   font-size: 14px;
   text-align: center;
   padding: 18px;
@@ -128,7 +131,8 @@ const DropdownContentContainer = styled.div<{ open?: boolean }>`
   width: 100%;
   
   border-radius: 10px;
-  background: #FFF;
+
+  background: ${color('background')};
 
   box-shadow: ${({ open }) => (!open ? '' : '0 0 20px 5px rgba(8, 8, 8, 0.10);')};
   
@@ -158,10 +162,11 @@ const DropdownContentContainer = styled.div<{ open?: boolean }>`
 const OptionsContainer = styled.div`
   max-height: 140px;
   overflow-y: scroll;
+
 `;
 
 const Option = styled.div<{ selected: boolean }>`
-  color: ${theme.color.font};
+  color:  ${color('font')};
   height: 34px;
   padding: 8px;
   cursor: pointer;
@@ -176,7 +181,7 @@ const Option = styled.div<{ selected: boolean }>`
   ${({ selected }) => {
     if (selected) {
       return css`
-        color: ${theme.color.label};
+        color: ${color('label')};
       `;
     }
     return {
@@ -188,10 +193,10 @@ const Option = styled.div<{ selected: boolean }>`
     ${({ selected }) => {
     if (!selected) {
       return css`
-        background-color: ${theme.color.secondary};
+        background-color: ${color('secondary')};
         border-radius: 7px;
         font-size: 15px;
-        color: ${theme.color.primary};
+        color: ${color('primary')};
       `;
     }
     return css`
@@ -205,7 +210,7 @@ const Dot = styled.div`
   height: 7px;
   width: 7px;
   border-radius: 3.5px;
-  background-color: ${theme.color.accent};
+  background-color: ${color('accent')};
   align-self: center;
   margin-right: 4px;
 `;

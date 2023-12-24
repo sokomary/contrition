@@ -4,7 +4,7 @@ import { isEqual } from 'lodash';
 import styled from 'styled-components';
 import { Recipe } from '../../../../domain/Recipe';
 import { Container } from '../../../ui/Container';
-import { theme } from '../../../ui/theme';
+import { color } from '../../../ui/theme';
 import { Instruction as OriginalStepsPart } from '../../../../domain/Instruction';
 
 type Step = {
@@ -191,7 +191,7 @@ const StepsPartsField: FC<UseControllerProps<Recipe>> = (props) => {
 
 const AddPartButton = styled.div`
   cursor: pointer;
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   font-size: 14px;
   align-self: center;
 `;
@@ -207,28 +207,31 @@ const OkButton = styled(AddPartButton)`
 const PartName = styled.div<{ empty: boolean }>`
   cursor: pointer;
   font-size: 14px;
-  color: ${({ empty }) => (empty ? theme.color.primaryDisabled : theme.color.primary)};
+  color: ${({ empty }) => (empty ? color('primary-disabled') : color('primary'))};
   ${({ empty }) => (empty ? 'font-style: italic' : '')}
 `;
 
 const StepName = styled.div<{ empty: boolean }>`
   cursor: pointer;
   font-size: 14px;
-  color: ${({ empty }) => (empty ? theme.color.fontDisabled : '')};
+  color:  ${color('font')};
   ${({ empty }) => (empty ? 'font-style: italic' : '')}
 `;
 
 const StyledInput = styled.input`
-  border: none;
   outline: none;
   font-weight: lighter;
+  background-color: ${color('background')};
+  color: ${color('font')};
+  border: solid 1px ${color('label')};
+  border-radius: 5px;
 `;
 
 const MainContainer = styled(Container)`
   width: calc(100% - 20px);
   overflow-y: auto;
   border-radius: 15px;
-  background: rgba(255, 255, 255, 0.95);
+  background: ${color('background')};
   box-shadow: 0 0 15px 5px rgba(8, 8, 8, 0.07);
   padding: 15px;
   margin: 0 10px;

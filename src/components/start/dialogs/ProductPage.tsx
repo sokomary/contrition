@@ -5,9 +5,24 @@ import styled from 'styled-components';
 import { Dialog } from 'primereact/dialog';
 import { Container } from '../../ui/Container';
 import { Product } from '../../../domain/Product';
+import { color } from '../../ui/theme';
 
 const ProductPage: FC<{ open: boolean; onClose: () => void; product: Product }> = ({ open, onClose, product }) => (
-  <WideDialog header={product.name} visible={open} onHide={onClose}>
+  <WideDialog
+    header={product.name}
+    visible={open}
+    onHide={onClose}
+    headerStyle={{
+      borderRadius: '20px 20px 0px 0px',
+      backgroundColor: color('dialog-background'),
+      color: color('font'),
+    }}
+    contentStyle={{
+      borderRadius: '0px 0px 20px 20px',
+      backgroundColor: color('dialog-background'),
+      color: color('font'),
+    }}
+  >
     <Container vertical gap={10}>
       <Container gap={5}>
         <div>Калории: </div>

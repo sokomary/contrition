@@ -4,7 +4,7 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
 import { FieldError as Error } from './FieldError';
 import { Container } from '../Container';
-import { theme } from '../theme';
+import { color, theme } from '../theme';
 
 const Field: FC<{
   style?: CSSProperties;
@@ -40,8 +40,8 @@ const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
   outline: none;
   border-radius: 7px;
   border: none;
-  background-color: ${theme.color.field};
-  color: ${theme.color.font};
+  background-color: ${color('field')};
+  color: ${color('font')};
   font-size: 16px;
 
   &::-webkit-inner-spin-button {

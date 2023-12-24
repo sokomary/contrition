@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Tag } from '../../domain/Tag';
-import { theme } from '../ui/theme';
+import { color, theme } from '../ui/theme';
 
 const Menu: FC<{ tags: Tag[]; onChange: (tag?: Tag) => void }> = ({ tags, onChange }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
@@ -52,9 +52,9 @@ const MenuBar = styled.div`
 
 const TagName = styled.div<{ selected?: boolean }>`
   height: 45px;
-  background-color: ${({ selected }) => (selected ? theme.color.secondary : 'transparent')};
+  background-color: ${({ selected }) => (selected ? color('secondary') : 'transparent')};
   border-radius: 25px;
-  color: ${theme.color.primary};
+  color: ${color('primary')};
   padding: 10px 25px;
   align-self: center;
   font-size: 20px;

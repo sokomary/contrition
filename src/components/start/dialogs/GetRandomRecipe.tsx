@@ -10,7 +10,7 @@ import { Tag } from '../../../domain/Tag';
 import { Button } from '../../ui/Button';
 import { Container } from '../../ui/Container';
 import i18next from '../../../i18next';
-import { theme } from '../../ui/theme';
+import { color } from '../../ui/theme';
 
 const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> = ({ tags, open, onClose }) => {
   const [selectedTags, setSelectedTags] = useState(tags);
@@ -22,6 +22,12 @@ const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> =
 
   return (
     <WideDialog
+      headerStyle={{
+        borderRadius: '20px 20px 0px 0px',
+        backgroundColor: color('dialog-background'),
+        color: color('font'),
+      }}
+      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('dialog-background') }}
       header={i18next.t('startpage:recipes.random.header')}
       visible={open}
       onHide={onClose}
@@ -44,7 +50,7 @@ const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> =
             </TagName>
           ))}
         </Container>
-        <div style={{ height: 30 }}><div>{data?.name}</div></div>
+        <div style={{ height: 30, color: color('font') }}><div>{data?.name}</div></div>
         <Button onClick={refetch}>{i18next.t('startpage:recipes.random.actions.get')}</Button>
       </Content>
     </WideDialog>
@@ -65,7 +71,7 @@ const Content = styled(Container)`
 `;
 
 const TagName = styled.div<{ selected: boolean }>`
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   cursor: pointer;
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')}
 `;

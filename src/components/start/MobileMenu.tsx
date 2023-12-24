@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Tag } from '../../domain/Tag';
-import { theme } from '../ui/theme';
+import { color, theme } from '../ui/theme';
 
 const MobileMenu: FC<{ tags: Tag[]; onChange: (tag?: Tag) => void }> = ({ tags, onChange }) => {
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
@@ -40,7 +40,7 @@ const MenuBar = styled.div`display: flex;
 
 const TagName = styled.div<{ selected?: boolean }>`
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
-  color: ${theme.color.accent};
+  color: ${color('accent')};
   align-self: center;
   font-size: 15px;
   cursor: pointer;

@@ -15,7 +15,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { QueryProvider } from './api/QueryProvider';
 import { useAuthenticate } from './hooks/useAuthenticate';
 import LoginPage from './components/LoginPage';
-import { theme } from './components/ui/theme';
+import { color } from './components/ui/theme';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>
@@ -48,6 +48,7 @@ const StyledApp = styled.div`
   overflow: auto;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  background-color: ${color('background')};
   a {
     color: inherit;
     text-decoration: none;
@@ -61,11 +62,11 @@ const StyledContainer = styled(ToastContainer)`
   }
   .Toastify__toast {
     border-radius: 30px;
-    background-color: ${theme.color.success};
+    background-color: ${color('success')};
   }
   .Toastify__toast--error {
     border-radius: 30px;
-    background-color: ${theme.color.danger};
+    background-color: ${color('danger')};
   }
   .Toastify__toast-body {
     color: white;

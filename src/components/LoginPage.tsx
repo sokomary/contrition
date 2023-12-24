@@ -9,6 +9,7 @@ import { useAuthenticate } from '../hooks/useAuthenticate';
 import i18next from '../i18next';
 import { Button } from './ui/Button';
 import { getLoginUrl } from '../api/api';
+import { color } from './ui/theme';
 
 const LoginPage = () => {
   const authenticated = useAuthenticate();
@@ -45,7 +46,9 @@ const Content = styled(Container)`
   height: 100%;
   justify-content: center;
   align-items: center;
+  background-color: ${color('background')};
 `;
+
 const LoginButton = styled(Button)`
   animation-duration:  1s;
   animation-name: loginButton;
