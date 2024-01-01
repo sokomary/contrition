@@ -8,7 +8,7 @@ import { DropdownField } from '../../../ui/form/DropdownField';
 import { Product } from '../../../../domain/Product';
 import { Container } from '../../../ui/Container';
 import { FieldError } from '../../../ui/form/FieldError';
-import { color, theme } from '../../../ui/theme';
+import { color } from '../../../ui/theme';
 
 const ProductsField: FC<UseControllerProps<Recipe>
 & { products: Product[]; onNewClick: () => void; onActive: () => void }> = (props) => {

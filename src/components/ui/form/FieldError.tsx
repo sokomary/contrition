@@ -7,7 +7,7 @@ const FieldError: FC<{ text: string }> = ({ text }) => (
 );
 
 const ErrorText = styled.span`
-  color: ${color('success')};
+  color: ${color('danger')};
   font-size: 10px;
 `;
 

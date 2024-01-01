@@ -57,7 +57,7 @@ const RecipePage: FC<{ open: boolean; onClose: () => void; recipe: Recipe }> = (
               <Container vertical gap={10}>
                 {instructions.map((sp, index) => (
                   <Fragment key={index}>
-                    <PartName>{sp.name}</PartName>
+                    <InstructionName>{sp.name}</InstructionName>
                     <Container vertical gap={5}>
                       {sp.steps.map((s, sindex) => <StepDescription key={s.id}>{`${sindex + 1}. ${s.description}`}</StepDescription>)}
                     </Container>
@@ -104,7 +104,7 @@ const Divider = styled.div<{ count: number }>`
   background-color: ${color('label')};
 `;
 
-const PartName = styled.div`
+const InstructionName = styled.div`
  color: ${color('primary')};
   font-size: 17px;
 `;
