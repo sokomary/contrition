@@ -10,6 +10,9 @@ i18next.init({
             google: 'Войти с помощью Google',
           },
         },
+        errors: {
+          url: 'Не удалось получить ссылку для входа',
+        },
       },
       domain: {
         recipe: {

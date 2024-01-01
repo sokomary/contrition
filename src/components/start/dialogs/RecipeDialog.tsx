@@ -24,7 +24,7 @@ import { color } from '../../ui/theme';
 import { ReactComponent as DeleteSvg } from '../../../assets/icons/delete_icon.svg';
 import { ImageUrlField } from '../../ui/form/ImageUrlField';
 import { Loading } from '../../ui/Loading';
-import { StepsPartsField } from './fields/StepsPartsField';
+import { InstructionsField } from './fields/InstructionsField';
 
 const RecipeDialog: FC<{
   tags: Tag[]; open: boolean; onClose: (result?: Recipe) => void; defaultValues?: Recipe;
@@ -81,7 +81,6 @@ const RecipeDialog: FC<{
 
   return (
     <WideDialog
-      // contentStyle={{ padding: 10 }}
       headerStyle={{
         borderRadius: '20px 20px 0px 0px',
         backgroundColor: color('dialog-background'),
@@ -153,9 +152,9 @@ const RecipeDialog: FC<{
                     defaultUrl={defaultValues ? defaultValues.pressignedUrl : undefined}
                   />
                 </Container>
-                <StepsPartsFieldContainer>
-                  <StepsPartsField control={control} name="instructions" />
-                </StepsPartsFieldContainer>
+                <InstructionsFieldContainer>
+                  <InstructionsField control={control} register={register} />
+                </InstructionsFieldContainer>
 
                 <ProductsFieldContainer vertical gap={20}>
                   {!isLoading && !!products?.length && (
@@ -189,10 +188,11 @@ const RecipeDialog: FC<{
                             delayShow={600}
                             style={{ backgroundColor: 'white' }}
                           >
-                            <DeleteIcon onClick={() => setValue(
-                              'recipeProducts',
-                              (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
-                            )}
+                            <DeleteIcon
+                              onClick={() => setValue(
+                                'recipeProducts',
+                                (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
+                              )}
                             />
                           </ReactTooltip>
                         </Container>
@@ -204,9 +204,7 @@ const RecipeDialog: FC<{
               <EndContainer>
                 <TagsFieldContainer vertical gap={5}>
                   <TagsField tags={tags} control={control} name="tags" />
-                  <AddTagButton
-                    onClick={() => setOpenNewTag(true)}
-                  >
+                  <AddTagButton onClick={() => setOpenNewTag(true)}>
                     {i18next.t('startpage:recipes.actions.addTag')}
                   </AddTagButton>
                 </TagsFieldContainer>
@@ -278,6 +276,7 @@ const StyledInput = styled.input`
   background-color: ${color('secondary')};
   color: ${color('primary')};
 `;
+
 const Name = styled.div`
   display: flex;
   align-items: center;
@@ -291,11 +290,13 @@ const Name = styled.div`
   
   max-width: 280px;
 `;
+
 const NameText = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `;
+
 const AddTagButton = styled.div`
   font-size: 14px;
   color: ${color('accent')};
@@ -307,13 +308,13 @@ const DeleteIcon = styled(DeleteSvg)`
   width: 15px;
   height: 15px;
 `;
+
 const LoadingWrapper = styled.div`
   height: 100%;
   width: 100%;
 `;
 
 const ContentContainer = styled(Container)`
-  //padding-top: 20px;
   @media (max-width: 1120px) {
     flex-direction: column;
     gap: 20px;
@@ -351,13 +352,15 @@ const ProductsFieldContainer = styled(Container)`
     padding: 10px;
   }
 `;
-const StepsPartsFieldContainer = styled.div`
+
+const InstructionsFieldContainer = styled.div`
   max-height: 458px;
   margin-left: 20px;
   width: 30%;
   @media (max-width: 1120px) {
     width: 340px;
     margin-left: 0;
+    max-height: fit-content;
   }
 `;
 

@@ -110,6 +110,7 @@ const StyledInput = styled.input`
   padding: 0 8px;
 
   background: ${color('background')};
+  color: ${color('font')};
 `;
 
 const StyledEnterIcon = styled(EnterIcon)`

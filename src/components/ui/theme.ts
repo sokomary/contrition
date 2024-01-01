@@ -34,6 +34,9 @@ export const theme: ThemeKey = {
 };
 
 export const color = (value: string) => {
-  const isDark = window.matchMedia('prefers-color-scheme: dark');
+  let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    isDark = event.matches;
+  });
   return theme.color[`${value}-${isDark ? 'dark' : 'light'}`];
 };
