@@ -339,7 +339,6 @@ const BaseFields = styled(Container)`
 `;
 
 const ProductsFieldContainer = styled(Container)`
-  //margin-top: 20px;
   padding: 0 20px;
   width: 35%;
   @media (max-width: 1120px) {
