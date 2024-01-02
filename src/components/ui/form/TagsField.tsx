@@ -41,7 +41,7 @@ const StyledContainer = styled(Container)`
   @media (max-width: 1120px) {
     flex-wrap: wrap;
     padding-right: 20px;
-    justify-content: space-between;
+    //justify-content: space-between;
   }
 `;
 

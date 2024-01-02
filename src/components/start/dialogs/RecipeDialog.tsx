@@ -105,12 +105,11 @@ const RecipeDialog: FC<{
         >
 
           {!addMutation.isLoading && !areInstructionsLoading ? (
-            <MainContainer vertical gap={30}>
+            <MainContainer vertical gap={20}>
 
               <ContentContainer gap={10}>
 
-                <Container style={{ marginTop: 20 }} vertical gap={30}>
-
+                <Container vertical gap={20}>
                   <BaseFields vertical gap={7}>
                     <Field
                       width={332}
@@ -144,7 +143,6 @@ const RecipeDialog: FC<{
                       />
                     </Container>
                   </BaseFields>
-
                   <ImageUrlField
                     name="img"
                     control={control}
@@ -152,9 +150,7 @@ const RecipeDialog: FC<{
                     defaultUrl={defaultValues ? defaultValues.pressignedUrl : undefined}
                   />
                 </Container>
-                <InstructionsFieldContainer>
-                  <InstructionsField control={control} register={register} />
-                </InstructionsFieldContainer>
+                <InstructionsField control={control} register={register} />
 
                 <ProductsFieldContainer vertical gap={20}>
                   {!isLoading && !!products?.length && (
@@ -186,7 +182,7 @@ const RecipeDialog: FC<{
                             id={`product-delete${sp.product.id}`}
                             clickable
                             delayShow={600}
-                            style={{ backgroundColor: 'white' }}
+                            style={{ backgroundColor: color('background'), zIndex: 100 }}
                           >
                             <DeleteIcon
                               onClick={() => setValue(
@@ -202,12 +198,12 @@ const RecipeDialog: FC<{
               </ContentContainer>
 
               <EndContainer>
-                <TagsFieldContainer vertical gap={5}>
+                <Container vertical gap={5}>
                   <TagsField tags={tags} control={control} name="tags" />
                   <AddTagButton onClick={() => setOpenNewTag(true)}>
                     {i18next.t('startpage:recipes.actions.addTag')}
                   </AddTagButton>
-                </TagsFieldContainer>
+                </Container>
                 <StyledButton styleType="accent" size="large" type="submit">
                   {i18next.t('startpage:recipes.actions.save')}
                 </StyledButton>
@@ -343,29 +339,13 @@ const BaseFields = styled(Container)`
 `;
 
 const ProductsFieldContainer = styled(Container)`
-  margin-top: 20px;
+  //margin-top: 20px;
   padding: 0 20px;
   width: 35%;
   @media (max-width: 1120px) {
     margin: 0;
     width: 340px;
     padding: 10px;
-  }
-`;
-
-const InstructionsFieldContainer = styled.div`
-  max-height: 458px;
-  margin-left: 20px;
-  width: 30%;
-  @media (max-width: 1120px) {
-    width: 340px;
-    margin-left: 0;
-    max-height: fit-content;
-  }
-`;
-
-const TagsFieldContainer = styled(Container)`
-  @media (max-width: 1120px) {
   }
 `;
 
