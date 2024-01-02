@@ -32,7 +32,7 @@ const InstructionsField: FC<{ control: Control<Recipe>; register: any }> = (prop
         Приготовление
         <AddInstructionButton onClick={addInstruction}>Добавить часть</AddInstructionButton>
       </Header>
-      <Container vertical gap={30}>
+      <ContentContainer vertical gap={30}>
         {fields.map((field, index) => (
           <InstructionSteps
             key={index}
@@ -48,7 +48,7 @@ const InstructionsField: FC<{ control: Control<Recipe>; register: any }> = (prop
             control={props.control}
           />
         ))}
-      </Container>
+      </ContentContainer>
     </MainContainer>
   );
 };
@@ -76,23 +76,24 @@ const InstructionSteps: FC<{
           {instruction}
           <GhostButton onClick={onDeleteInstruction}>удалить</GhostButton>
         </InstructionHeader>
-        <AddStepButton onClick={addStep}>Добавить шаг</AddStepButton>
       </Container>
       <Container vertical gap={3}>
         {fields.map((field, index) => (
           <Container key={index}>
-            <StepNumber>
-              {index + 1}
-              .
-              {' '}
-            </StepNumber>
-            <StyledInput
-              key={field.id}
-              {...register(`instructions.${instrIndex}.steps.${index}.description`)}
-            />
-            <DeleteStepButton onClick={() => remove(index)}>удалить</DeleteStepButton>
+            <Container gap={1}>
+              <StepNumber>
+                {index + 1}
+                .
+              </StepNumber>
+              <StyledInput
+                key={field.id}
+                {...register(`instructions.${instrIndex}.steps.${index}.description`)}
+              />
+            </Container>
+            <GhostButton onClick={() => remove(index)}>удалить</GhostButton>
           </Container>
         ))}
+        <AddStepButton onClick={addStep}>Добавить шаг</AddStepButton>
       </Container>
     </Container>
   );
@@ -100,7 +101,8 @@ const InstructionSteps: FC<{
 
 const Header = styled(Container)`
   width: 100%;
-  font-weight: bolder;
+  font-size: 17px;
+  color: ${color('font')};
 `;
 
 const AddInstructionButton = styled.div`
@@ -115,17 +117,11 @@ const AddStepButton = styled(AddInstructionButton)`
   font-size: 14px;
   flex-shrink: 0;
   align-self: flex-start;
-  margin-left: 2px;
 `;
 
 const GhostButton = styled(AddInstructionButton)`
   font-size: 14px;
   flex-shrink: 0;
-`;
-
-const DeleteStepButton = styled(GhostButton)`
-  align-self: flex-start;
-  margin-top: 3px;
 `;
 
 const InstructionHeader = styled(Container)`
@@ -151,27 +147,18 @@ const StyledInput = styled(TextareaAutosize)<{ accent?: boolean }>`
 `;
 
 const InstructionName = styled(StyledInput)`
-  max-width: 110px;
   color: ${color('primary')};
+  margin-left: -2px;
 `;
 
 const MainContainer = styled(Container)`
-  width: calc(100% - 20px);
-  overflow-y: auto;
-  max-height: 458px;
-  border-radius: 15px;
-  background: ${color('background')};
-  box-shadow: 0 0 15px 5px rgba(8, 8, 8, 0.07);
-  padding: 15px;
-  margin: 0 10px;
-  
-  @media (min-width: 890px) {
-    width: calc(100% - 40px);
-    height: calc(100% - 20px);
-    margin: 20px;
-  }
-  
+  max-height: 428px;
+  margin-left: 20px;
+  width: 30%;
+  padding: 0 10px;
   @media (max-width: 1120px) {
+    width: 340px;
+    margin-left: 0;
     max-height: fit-content;
   }
 `;
@@ -179,6 +166,15 @@ const MainContainer = styled(Container)`
 const StepNumber = styled.div`
   color: ${color('font')};
   margin-top: 2px;
+`;
+
+const ContentContainer = styled(Container)`
+  background: ${color('background')};
+  box-shadow: 0 0 15px 5px rgba(8, 8, 8, 0.07);
+  min-height: 34px;
+  border-radius: 10px;
+  padding: 15px;
+  overflow-y: auto;
 `;
 
 export { InstructionsField };

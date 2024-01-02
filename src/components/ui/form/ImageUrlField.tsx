@@ -79,7 +79,7 @@ const StyledDiv = styled.div<{ background?: any }>`
   height: 333px;
   width: 333px;
   cursor: pointer;
-  border-radius: 11px;
+  border-radius: 10px;
   background-color: rgba(74, 97, 97, 0.36);
   display: flex;
   justify-content: center;
@@ -102,7 +102,7 @@ const PhotoInput = styled.div`
   width: 333px;
   background-color: ${color('field')};
   color: ${color('font')};
-  border-radius: 20px;
+  border-radius: 10px;
   flex-shrink: 0;
   
   display: flex;

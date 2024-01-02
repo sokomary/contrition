@@ -4,7 +4,7 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
 import { FieldError as Error } from './FieldError';
 import { Container } from '../Container';
-import { color, theme } from '../theme';
+import { color } from '../theme';
 
 const Field: FC<{
   style?: CSSProperties;
