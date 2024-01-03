@@ -134,8 +134,8 @@ const Actions: FC<{ recipe: Recipe; onDialogOpen: (recipe: Recipe) => void }> = 
       <Dot />
       {optionsOpen && (
         <Options>
-          <Option onClick={() => deleteMutation.mutate(recipe)}>Удалить</Option>
           <Option onClick={() => onDialogOpen(recipe)}>Изменить</Option>
+          <Option negative onClick={() => deleteMutation.mutate(recipe)}>Удалить</Option>
         </Options>
       )}
     </Dots>
@@ -273,12 +273,14 @@ const Options = styled(Container)`
   top: -50px;
 `;
 
-const Option = styled.div`
+const Option = styled.div<{ negative?: boolean }>`
   width: 70px;
   height: 25px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   padding: 0 4px;
+  color: ${({ negative }) => (negative ? color('danger') : '')}};
   &:hover {
     color: ${color('primary')}
   }
