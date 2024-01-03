@@ -38,6 +38,7 @@ const InstructionsField: FC<{ control: Control<Recipe>; register: any }> = (prop
             key={index}
             instruction={(
               <InstructionName
+                placeholder="Название"
                 key={field.id}
                 {...props.register(`instructions.${index}.name`)}
               />
@@ -86,6 +87,7 @@ const InstructionSteps: FC<{
                 .
               </StepNumber>
               <StyledInput
+                placeholder="Описание"
                 key={field.id}
                 {...register(`instructions.${instrIndex}.steps.${index}.description`)}
               />
