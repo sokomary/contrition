@@ -20,6 +20,16 @@ const decode = <A, O>(type: Type<A, O>) => ({ data }: AxiosResponse<unknown>) =>
   throw new Error(`Decoding error ${PathReporter.report(result)}`);
 };
 
+instanceAxios.interceptors.response.use(
+  undefined,
+  (response) => {
+    if (response.response.status === 401) {
+      window.location.href = '/login';
+    }
+    return response;
+  },
+);
+
 export const getRecipes = (tags?: number[]) => instanceAxios.get(
   '/api/recipes',
   { params: { tags: tags?.join(',') } },
