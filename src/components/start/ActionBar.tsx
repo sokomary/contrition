@@ -7,6 +7,7 @@ import { color } from '../ui/theme';
 import { Tag } from '../../domain/Tag';
 import { ReactComponent as CreateSvg } from '../../assets/icons/create.svg';
 import { ReactComponent as RandomSvg } from '../../assets/icons/random.svg';
+import { ReactComponent as ClearSvg } from '../../assets/icons/clear_icon.svg';
 import { logout } from '../../api/api';
 import { useAuthenticate } from '../../hooks/useAuthenticate';
 import { isAdmin } from '../../domain/User';
@@ -45,14 +46,23 @@ const ActionBar: FC<{
           ))}
         </Tags>
         <Search>
-          <SearchInput
-            value={q}
-            onChange={(e) => {
-              setQ(e.target.value);
-              onQueryChange(e.target.value);
+          <Container gap={0} style={{ width: '100%', position: 'relative' }}>
+            <SearchInput
+              value={q}
+              onChange={(e) => {
+                setQ(e.target.value);
+                onQueryChange(e.target.value);
+              }}
+              placeholder="Поиск"
+            />
+            <ClearIconContainer onClick={() => {
+              setQ('');
+              onQueryChange('');
             }}
-            placeholder="Поиск"
-          />
+            >
+              <ClearSvg />
+            </ClearIconContainer>
+          </Container>
         </Search>
       </Filters>
       <PersonalInfo>
@@ -268,6 +278,15 @@ const Option = styled.div`
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const ClearIconContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 export { ActionBar };
