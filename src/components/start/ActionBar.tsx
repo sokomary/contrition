@@ -7,6 +7,7 @@ import { color } from '../ui/theme';
 import { Tag } from '../../domain/Tag';
 import { ReactComponent as CreateSvg } from '../../assets/icons/create.svg';
 import { ReactComponent as RandomSvg } from '../../assets/icons/random.svg';
+import { ReactComponent as ClearSvg } from '../../assets/icons/clear_icon.svg';
 import { logout } from '../../api/api';
 import { useAuthenticate } from '../../hooks/useAuthenticate';
 import { isAdmin } from '../../domain/User';
@@ -53,6 +54,14 @@ const ActionBar: FC<{
             }}
             placeholder="Поиск"
           />
+          <ClearIconContainer
+            onClick={() => {
+              setQ('');
+              onQueryChange('');
+            }}
+          >
+            <ClearSvg />
+          </ClearIconContainer>
         </Search>
       </Filters>
       <PersonalInfo>
@@ -165,6 +174,7 @@ const TagName = styled.div<{ selected?: boolean }>`
 const Search = styled(Container)`
   width: 30%;
   align-items: center;
+  position: relative;
 
   @media (max-width: 810px) {
     width: 50%;
@@ -266,6 +276,14 @@ const Option = styled.div`
 `;
 
 const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ClearIconContainer = styled.div`
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
   display: flex;
   align-items: center;
 `;
