@@ -46,23 +46,22 @@ const ActionBar: FC<{
           ))}
         </Tags>
         <Search>
-          <Container gap={0} style={{ width: '100%', position: 'relative' }}>
-            <SearchInput
-              value={q}
-              onChange={(e) => {
-                setQ(e.target.value);
-                onQueryChange(e.target.value);
-              }}
-              placeholder="Поиск"
-            />
-            <ClearIconContainer onClick={() => {
+          <SearchInput
+            value={q}
+            onChange={(e) => {
+              setQ(e.target.value);
+              onQueryChange(e.target.value);
+            }}
+            placeholder="Поиск"
+          />
+          <ClearIconContainer
+            onClick={() => {
               setQ('');
               onQueryChange('');
             }}
-            >
-              <ClearSvg />
-            </ClearIconContainer>
-          </Container>
+          >
+            <ClearSvg />
+          </ClearIconContainer>
         </Search>
       </Filters>
       <PersonalInfo>
@@ -175,6 +174,7 @@ const TagName = styled.div<{ selected?: boolean }>`
 const Search = styled(Container)`
   width: 30%;
   align-items: center;
+  position: relative;
 
   @media (max-width: 810px) {
     width: 50%;
@@ -286,7 +286,6 @@ const ClearIconContainer = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  height: 100%;
 `;
 
 export { ActionBar };
