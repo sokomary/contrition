@@ -5,10 +5,9 @@ import {
   Type,
 } from 'io-ts';
 import { PathReporter } from 'io-ts/PathReporter';
-import { Recipe, RecipeSchema } from '../domain/Recipe';
-import { Product, ProductSchema } from '../domain/Product';
-import { Tag, TagSchema } from '../domain/Tag';
-import { InstructionSchema } from '../domain/Instruction';
+import {
+  Recipe, RecipeSchema, Product, ProductSchema, Tag, TagSchema, InstructionSchema,
+} from 'src/domain';
 
 const instanceAxios = axios.create();
 

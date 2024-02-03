@@ -2,7 +2,7 @@ import {
   number, string, type, TypeOf,
 } from 'io-ts';
 
-const ProductSchema = type({
+export const ProductSchema = type({
   id: number,
   name: string,
   calories: number,
@@ -11,7 +11,4 @@ const ProductSchema = type({
   carbohydrates: number,
 }, 'ProductSchema');
 
-type Product = TypeOf<typeof ProductSchema>;
-
-export type { Product };
-export { ProductSchema };
+export type Product = TypeOf<typeof ProductSchema>;

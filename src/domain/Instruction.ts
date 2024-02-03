@@ -4,12 +4,9 @@ import {
 } from 'io-ts';
 import { StepSchema } from './Step';
 
-const InstructionSchema = type({
+export const InstructionSchema = type({
   id: number,
   name: string,
   steps: array(StepSchema),
 }, 'InstructionSchema');
-type Instruction = TypeOf<typeof InstructionSchema>;
-
-export type { Instruction };
-export { InstructionSchema };
+export type Instruction = TypeOf<typeof InstructionSchema>;

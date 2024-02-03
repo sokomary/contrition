@@ -1,21 +1,20 @@
 import React, { FC } from 'react';
-import './App.css';
+import 'src/App.css';
 import styled from 'styled-components';
 import {
   BrowserRouter as Router, Route, Routes,
 } from 'react-router-dom';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ToastContainer } from 'react-toastify';
-import { StartPage } from './components/start/StartPage';
-import { routs } from './routs';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
-import { QueryProvider } from './api/QueryProvider';
-import { useAuthenticate } from './hooks/useAuthenticate';
-import LoginPage from './components/LoginPage';
-import { color } from './components/ui/theme';
+import { useAuthenticate } from 'src/hooks/useAuthenticate';
+import { QueryProvider } from 'src/api';
+import { routs } from 'src/routs';
+import { MainPage } from 'src/components/pages/main';
+import { LoginPage } from 'src/components/pages/login';
+import { color } from './theme';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>
@@ -30,8 +29,8 @@ const Content = () => {
         <Routes>
           { authenticated ? (
             <>
-              <Route path="*" element={<StartPage />} />
-              <Route path={routs.START} element={<StartPage />} />
+              <Route path="*" element={<MainPage />} />
+              <Route path={routs.START} element={<MainPage />} />
               <Route path={routs.LOGIN} element={<LoginPage />} />
             </>
           ) : (
