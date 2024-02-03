@@ -1,3 +1,11 @@
 {
-  "extends": ["@sokomary"]
+  "extends": ["@sokomary"],
+  "overrides": [
+    {
+      "files": ["src/assets/icons/*.tsx"],
+      "rules": {
+        "max-len": "off"
+      }
+    }
+  ]
 }

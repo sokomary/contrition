@@ -1,6 +1,6 @@
 import { failure, success, Type } from 'io-ts';
 
-const UndefinedType = new Type<undefined, null | undefined, unknown>(
+export const UndefinedType = new Type<undefined, null | undefined, unknown>(
   'undefinedType',
   (custom): custom is undefined => custom === undefined,
   (custom, context) => {
@@ -11,5 +11,3 @@ const UndefinedType = new Type<undefined, null | undefined, unknown>(
   },
   (typeA) => typeA,
 );
-
-export { UndefinedType };
