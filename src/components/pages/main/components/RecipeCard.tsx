@@ -153,14 +153,14 @@ const Card = styled.div<{ localDisplayInfo: boolean }>`
   flex-shrink: 0;
 
   border-radius: 20px;
-  background: ${color('background')};
+  background: ${({ theme }) => color('background', theme)};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
 `;
 
 const Header = styled(Container)`
   font-size: 20px;
   font-weight: bold;
-  color: ${color('font')};
+  color:${({ theme }) => color('font', theme)};
 `;
 const StyledLinkIcon = styled(LinkIcon)`
   height: 16px;
@@ -180,9 +180,9 @@ const StyledNonFavoriteIcon = styled(NonFavoriteIcon)`
 `;
 
 const Element = styled.div<{ bold?: boolean }>`
-  background-color: ${color('secondary')};
+  background-color: ${({ theme }) => color('secondary', theme)};
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${color('primary')};
+  color: ${({ theme }) => color('primary', theme)};
 
   border-radius: 7px;
   
@@ -192,10 +192,10 @@ const Element = styled.div<{ bold?: boolean }>`
 `;
 
 const BigElement = styled.div<{ bold?: boolean }>`
-  background-color: ${color('secondary')};
+  background-color: ${({ theme }) => color('secondary', theme)};
   font-size: 25px;
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${color('primary')};
+  color: ${({ theme }) => color('primary', theme)};
 
   border-radius: 10px;
   
@@ -239,7 +239,7 @@ const Dot = styled.div`
   width: 4px;
   border-radius:  2px;
   flex-shrink: 0;
-  background-color: ${color('primary')};
+  background-color: ${({ theme }) => color('primary', theme)};
 `;
 
 const Dots = styled(Container)`
@@ -277,9 +277,9 @@ const Option = styled.div<{ negative?: boolean }>`
   align-items: center;
   justify-content: flex-end;
   padding: 0 4px;
-  color: ${({ negative }) => (negative ? color('danger') : '')}};
+  color: ${({ theme, negative }) => (negative ? color('danger', theme) : '')}};
   &:hover {
-    color: ${color('primary')}
+    color: ${({ theme }) => color('primary', theme)};
   }
 `;
 
@@ -296,14 +296,14 @@ const TagNames = styled(Container)`
 `;
 
 const TagName = styled.div`
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   cursor: pointer;
 `;
 
 const RestTagsCount = styled.div`
   border-radius: 5px;
   padding: 0 5px;
-  background-color: ${color('accent')};
+  background-color: ${({ theme }) => color('accent', theme)};
   color: white;
   font-weight: bold;
   font-size: 12px;

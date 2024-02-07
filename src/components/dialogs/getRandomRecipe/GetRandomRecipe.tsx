@@ -45,7 +45,7 @@ const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> =
             </TagName>
           ))}
         </Container>
-        <div style={{ height: 30, color: color('font') }}><div>{data?.name}</div></div>
+        <RandomName><div>{data?.name}</div></RandomName>
         <Button onClick={refetch}>{i18next.t('startpage:recipes.random.actions.get')}</Button>
       </Content>
     </Dialog>
@@ -58,9 +58,14 @@ const Content = styled(Container)`
 `;
 
 const TagName = styled.div<{ selected: boolean }>`
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   cursor: pointer;
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')}
+`;
+
+const RandomName = styled.div`
+  height: 30px;
+  color: ${({ theme }) => color('font', theme)};
 `;
 
 export { GetRandomRecipe };

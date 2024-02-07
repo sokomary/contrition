@@ -40,8 +40,8 @@ const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
   outline: none;
   border-radius: 7px;
   border: none;
-  background-color: ${color('field')};
-  color: ${color('font')};
+  background-color: ${({ theme }) => color('field', theme)};
+  color:${({ theme }) => color('font', theme)};
   font-size: 16px;
 
   &::-webkit-inner-spin-button {

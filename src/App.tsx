@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import 'src/App.css';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import {
   BrowserRouter as Router, Route, Routes,
 } from 'react-router-dom';
@@ -15,6 +15,7 @@ import { routs } from 'src/routs';
 import { MainPage } from 'src/components/pages/main';
 import { LoginPage } from 'src/components/pages/login';
 import { color } from './theme';
+import { useSystemThemeMode } from './hooks';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>
@@ -22,23 +23,26 @@ const App: FC = () => (
 
 const Content = () => {
   const authenticated = useAuthenticate();
+  const theme = useSystemThemeMode();
   return (
-    <StyledApp>
-      <StyledContainer position="bottom-center" theme="colored" />
-      <Router>
-        <Routes>
-          { authenticated ? (
-            <>
-              <Route path="*" element={<MainPage />} />
-              <Route path={routs.START} element={<MainPage />} />
-              <Route path={routs.LOGIN} element={<LoginPage />} />
-            </>
-          ) : (
-            <Route path="*" element={<LoginPage />} />
-          )}
-        </Routes>
-      </Router>
-    </StyledApp>
+    <ThemeProvider theme={{ mode: theme }}>
+      <StyledApp>
+        <StyledContainer position="bottom-center" theme="colored" />
+        <Router>
+          <Routes>
+            { authenticated ? (
+              <>
+                <Route path="*" element={<MainPage />} />
+                <Route path={routs.START} element={<MainPage />} />
+                <Route path={routs.LOGIN} element={<LoginPage />} />
+              </>
+            ) : (
+              <Route path="*" element={<LoginPage />} />
+            )}
+          </Routes>
+        </Router>
+      </StyledApp>
+    </ThemeProvider>
   );
 };
 
@@ -47,7 +51,7 @@ const StyledApp = styled.div`
   overflow: auto;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  background-color: ${color('background')};
+  background-color: ${({ theme }) => color('background', theme)};
   a {
     color: inherit;
     text-decoration: none;

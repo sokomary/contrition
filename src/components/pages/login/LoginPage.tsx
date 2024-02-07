@@ -44,7 +44,7 @@ const Content = styled(Container)`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${color('background')};
+  background-color: ${({ theme }) => color('background', theme)};
 `;
 
 const LoginButtonContent = styled(Container)`
