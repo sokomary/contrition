@@ -47,12 +47,12 @@ const StyledButton = styled.button<Props>`
     if (styleType === 'accent') {
       return css`
         color: white;
-        background-color: ${color('accent')};
+        background-color: ${({ theme }) => color('accent', theme)};
       `;
     }
     return css`
-        color: ${color('primary')};
-        background-color: ${color('secondary')};
+        color: ${({ theme }) => color('primary', theme)};
+        background-color: ${({ theme }) => color('secondary', theme)};
       `;
   }};
   
@@ -63,7 +63,7 @@ const StyledButton = styled.button<Props>`
 
   ${(props) => !props.disabled && css`
     &:active {
-      background-color: ${() => (props.styleType === 'accent' ? color('accent-light') : color('primary-disabled'))};
+      background-color: ${({ theme }) => color(props.styleType === 'accent' ? 'accent-light' : 'primary-disabled', theme)};
     }
   `}
 `;

@@ -79,16 +79,16 @@ const Quantity = styled.span`
 const Divider = styled.div<{ count: number }>`
   height: 100%;
   width: 1px;
-  background-color: ${color('label')};
+  background-color:${({ theme }) => color('label', theme)};
 `;
 
 const InstructionName = styled.div`
- color: ${color('primary')};
+ color: ${({ theme }) => color('primary', theme)};
   font-size: 17px;
 `;
 
 const StepDescription = styled.div`
- color: ${color('label')};
+ color:${({ theme }) => color('label', theme)};
   font-size: 14px;
   margin-left: 30px;
 `;

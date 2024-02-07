@@ -174,7 +174,7 @@ const ActionBarContainer = styled.div`
 
 const ActionBarContent = styled(Container)`
   border-radius: 20px;
-  background-color: ${color('background')};
+  background-color: ${({ theme }) => color('background', theme)};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   height: 62px;
   @media (max-width: 810px) {
@@ -204,7 +204,7 @@ const Filters = styled(Container)`
 const TagsContainer = styled(Container)`
   width: 70%;
   align-items: center;
-  color: ${color('primary')};
+  color: ${({ theme }) => color('primary', theme)};
   font-size: 18px;
   padding: 0 30px 0 20px;
   @media (max-width: 810px) {
@@ -218,9 +218,9 @@ const TagsContainer = styled(Container)`
 `;
 
 const TagName = styled.div<{ selected?: boolean }>`
-  background-color: ${({ selected }) => (selected ? color('secondary') : 'transparent')};
+  background-color: ${({ theme, selected }) => (selected ? color('secondary', theme) : 'transparent')};
   border-radius: 25px;
-  color: ${color('primary')};
+  color: ${({ theme }) => color('primary', theme)};
   padding: 0 10px;
   align-self: center;
   font-size: 20px;
@@ -246,8 +246,8 @@ const SearchContainer = styled(Container)`
 const StyledInput = styled.input`
   height: 42px;
   border-radius: 15px;
-  background-color: ${color('field')};
-  color: ${color('label')};
+  background-color: ${({ theme }) => color('field', theme)};
+  color:${({ theme }) => color('label', theme)};
   outline: none;
   border: none;
   padding: 0 15px;
@@ -261,7 +261,7 @@ const StyledInput = styled.input`
 
 const UserBlock = styled(Container)`
   width: 30%; 
-  background-color: ${color('accent-light')};
+  background-color: ${({ theme }) => color('accent-light', theme)};
   align-items: center;
   padding: 0 10px;
   border-radius: inherit;
@@ -273,7 +273,7 @@ const UserBlock = styled(Container)`
 
 const Name = styled.div`
   align-self: center; 
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   font-size: 18px;
   font-weight: bold;
   @media (max-width: 1300px) {
@@ -327,7 +327,7 @@ const Option = styled.div`
   padding: 0 4px;
   cursor: pointer;
   &:hover {
-    color: ${color('primary')}
+    color: ${({ theme }) => color('primary', theme)};
   }
 `;
 

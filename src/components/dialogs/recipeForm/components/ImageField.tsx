@@ -95,8 +95,8 @@ const PhotoPreview = styled.div<{ background?: any }>`
 const PhotoInput = styled.div`
   height: 333px;
   width: 333px;
-  background-color: ${color('field')};
-  color: ${color('font')};
+  background-color:${({ theme }) => color('field', theme)};
+  color: ${({ theme }) => color('font', theme)};
   border-radius: 10px;
   flex-shrink: 0;
   display: flex;

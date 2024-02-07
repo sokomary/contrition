@@ -74,9 +74,8 @@ export const RecipesInfo: FC<Props> = ({ recipes, onRecipeClick }) => {
           <RecipesList>
             {favoriteRecipes?.map((r) => (
               <div key={r.id} style={{ justifySelf: 'center' }}>
-                <RecipeCard
+                <StyledRecipeCard
                   displayInfo={false}
-                  style={{ backgroundColor: color('favorite'), boxShadow: 'none' }}
                   recipe={r}
                   onDialogOpen={onRecipeClick}
                 />
@@ -88,6 +87,11 @@ export const RecipesInfo: FC<Props> = ({ recipes, onRecipeClick }) => {
     </>
   );
 };
+
+const StyledRecipeCard = styled(RecipeCard)`
+  background-color: ${({ theme }) => color('favorite', theme)}; 
+  box-shadow: none;
+`;
 
 type ControlCardItem = {
   id: number;
@@ -158,7 +162,7 @@ const FavoritesContainer = styled(Container)`
   width: calc(70% - 20px);
   flex-shrink: 0;
   border-radius: 20px;
-  background: ${color('background')};
+  background: ${({ theme }) => color('background', theme)};
   padding: 20px 20px 0 20px;
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   @media (max-width: 960px) {
@@ -177,7 +181,7 @@ const RecipesList = styled.div`
 `;
 
 const TagsControlCard = styled(ControlCard)`
-  background-color: ${color('favorite')};
+  background-color:${({ theme }) => color('favorite', theme)};
   height: 160px;
   min-height: 160px;
 
@@ -187,7 +191,7 @@ const TagsControlCard = styled(ControlCard)`
 `;
 
 const ProductsControlCard = styled(ControlCard)`
-  background-color: ${color('accent-light')};
+  background-color: ${({ theme }) => color('accent-light', theme)};
   height: 200px;
   @media (max-width: 960px) {
     height: 180px;
@@ -209,7 +213,7 @@ const ControlContent = styled(Container)`
 `;
 
 const ControlHeader = styled(Container)`
-  color: ${color('label')};
+  color:${({ theme }) => color('label', theme)};
   align-items: center;
   font-size: 20px;
 `;
@@ -231,8 +235,8 @@ const ItemName = styled(Container)<{ actionable: boolean }>`
   height: 30px;
   align-items: center;
   border-radius: 20px;
-  background-color: ${color('background')};
-  color: ${color('accent')};
+  background-color: ${({ theme }) => color('background', theme)};
+  color: ${({ theme }) => color('accent', theme)};
   padding: 0 12px;
   font-size: 17px;
   ${({ actionable }) => (actionable ? 'cursor: pointer' : '')};
@@ -242,6 +246,6 @@ const DotsDivider = styled.div`
   width: 6px; 
   height: 6px;
   border-radius: 3px;
-  background-color: ${color('label')};
+  background-color:${({ theme }) => color('label', theme)};
   margin-top: 2px;
 `;

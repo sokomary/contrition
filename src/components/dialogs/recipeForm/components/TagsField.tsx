@@ -64,15 +64,15 @@ const TagName = styled.div<{ selected: boolean }>`
   height: 34px;
   border-radius: 7px;
   padding: 5px 10px;
-  background-color: ${({ selected }) => (selected ? color('accent-light') : color('field'))};
-  color: ${({ selected }) => (selected ? color('accent') : color('font'))};
+  background-color: ${({ theme, selected }) => color(selected ? 'accent-light' : 'field', theme)};
+  color: ${({ theme, selected }) => color(selected ? 'accent' : 'font', theme)};
   cursor: pointer;
   width: fit-content;
 `;
 
 const AddTagButton = styled.div`
   font-size: 14px;
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   cursor: pointer;
 `;
 

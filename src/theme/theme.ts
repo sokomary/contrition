@@ -58,10 +58,7 @@ export const theme: Theme = {
   },
 };
 
-export const color = (value: ColorSchema) => {
-  let isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-    isDark = event.matches;
-  });
-  return theme.color[isDark ? 'dark' : 'light'][value];
-};
+export const color = (
+  value: ColorSchema,
+  colorTheme?: { mode: 'light' | 'dark' },
+) => theme.color[colorTheme?.mode || 'light'][value];

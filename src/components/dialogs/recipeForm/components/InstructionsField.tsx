@@ -106,12 +106,12 @@ const InstructionSteps: FC<InstructionStepsProps> = (props) => {
 const Header = styled(Container)`
   width: 100%;
   font-size: 17px;
-  color: ${color('font')};
+  color:${({ theme }) => color('font', theme)};
 `;
 
 const AddInstructionButton = styled.div`
   cursor: pointer;
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   font-size: 14px;
   align-self: center;
   font-weight: normal;
@@ -136,21 +136,21 @@ const InstructionHeader = styled(Container)`
 const StyledInput = styled(TextareaAutosize)<{ accent?: boolean }>`
   outline: none;
   border: none;
-  color: ${color('font')};
+  color:${({ theme }) => color('font', theme)};
   resize: none;
-  background-color: ${color('background')};
+  background-color: ${({ theme }) => color('background', theme)};
   font-size: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
   &:focus {
-    border: solid 1px ${color('label')};
+    border: solid 1px${({ theme }) => color('label', theme)};
     border-radius: 5px;
   }
 `;
 
 const InstructionName = styled(StyledInput)`
-  color: ${color('primary')};
+  color: ${({ theme }) => color('primary', theme)};
   margin-left: -2px;
 `;
 
@@ -167,12 +167,12 @@ const MainContainer = styled(Container)`
 `;
 
 const StepNumber = styled.div`
-  color: ${color('font')};
+  color:${({ theme }) => color('font', theme)};
   margin-top: 2px;
 `;
 
 const ContentContainer = styled(Container)`
-  background: ${color('background')};
+  background: ${({ theme }) => color('background', theme)};
   box-shadow: 0 0 15px 5px rgba(8, 8, 8, 0.07);
   min-height: 34px;
   border-radius: 10px;

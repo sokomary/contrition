@@ -81,12 +81,11 @@ const ProductsField: FC<Props> = (props) => {
                   )}
                 />
                 <Name data-tooltip-id={`product-delete${sp.product.id}`}><NameText>{sp.product.name}</NameText></Name>
-                <ReactTooltip
+                <StyledTooltip
                   offset={0}
                   id={`product-delete${sp.product.id}`}
                   clickable
                   delayShow={600}
-                  style={{ backgroundColor: color('background'), zIndex: 100 }}
                 >
                   <StyledDeleteIcon
                     onClick={() => props.setValue(
@@ -94,7 +93,7 @@ const ProductsField: FC<Props> = (props) => {
                       (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
                     )}
                   />
-                </ReactTooltip>
+                </StyledTooltip>
               </Container>
             ))}
         </ProductsContainer>
@@ -103,6 +102,11 @@ const ProductsField: FC<Props> = (props) => {
 
   );
 };
+
+const StyledTooltip = styled(ReactTooltip)`
+  background-color: ${({ theme }) => color('background', theme)};
+  z-index: 150;
+`;
 
 const QuantityInput: FC<{ value: number | undefined; onChange: (value: number | string) => void }> = (props) => (
   <StyledInput
@@ -114,12 +118,12 @@ const QuantityInput: FC<{ value: number | undefined; onChange: (value: number | 
 
 const Label = styled.div`
   font-size: 17px;
-  color: ${color('font')};
+  color: ${({ theme }) => color('font', theme)};
 `;
 
 const AddProductButton = styled.div`
   font-size: 14px;
-  color: ${color('accent')};
+  color: ${({ theme }) => color('accent', theme)};
   cursor: pointer;
   align-self: center;
 `;
@@ -142,8 +146,8 @@ const StyledInput = styled.input`
   padding: 0 25px 0 5px;
   text-align: center;
   outline: none;
-  background-color: ${color('secondary')};
-  color: ${color('primary')};
+  background-color: ${({ theme }) => color('secondary', theme)};
+  color: ${({ theme }) => color('primary', theme)};
 `;
 
 const Name = styled.div`
@@ -152,8 +156,8 @@ const Name = styled.div`
   height: 34px;
   padding: 0 20px 2px 20px;
   border-radius: 20px;
-  background-color: ${color('accent-light')};
-  color: ${color('accent')};
+  background-color: ${({ theme }) => color('accent-light', theme)};
+  color: ${({ theme }) => color('accent', theme)};
   margin-left: -30px;
   cursor: pointer;
   

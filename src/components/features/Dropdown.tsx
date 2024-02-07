@@ -92,7 +92,7 @@ const DropdownContainer = styled.div<{ open: boolean }>`
   z-index: 99;
   padding: 4px 8px;
   border-radius: ${({ open }) => (open ? '10px 10px 0 0' : '10px')};
-  background: ${color('background')};
+  background: ${({ theme }) => color('background', theme)};
   box-shadow: ${({ open }) => (open ? '' : '0 0 10px 5px rgba(8, 8, 8, 0.07);')};
   cursor: pointer;
   display: flex;
@@ -104,8 +104,8 @@ const StyledInput = styled.input`
   outline: none;
   border: none;
   padding: 0 8px;
-  background: ${color('background')};
-  color: ${color('font')};
+  background: ${({ theme }) => color('background', theme)};
+  color:${({ theme }) => color('font', theme)};
 `;
 
 const StyledEnterIcon = styled(EnterIcon)`
@@ -117,7 +117,7 @@ const StyledSearchIcon = styled(SearchIcon)`
 `;
 
 const EmptyState = styled.div`
-  color: ${color('label')};
+  color:${({ theme }) => color('label', theme)};
   font-size: 14px;
   text-align: center;
   padding: 18px;
@@ -126,7 +126,7 @@ const EmptyState = styled.div`
 const DropdownContentContainer = styled.div<{ open?: boolean }>`
   width: 100%;
   border-radius: 10px;
-  background: ${color('background')};
+  background: ${({ theme }) => color('background', theme)};
   box-shadow: ${({ open }) => (!open ? '' : '0 0 20px 5px rgba(8, 8, 8, 0.10);')};
   display: flex;
   flex-direction: column;
@@ -155,7 +155,7 @@ const OptionsContainer = styled.div`
 `;
 
 const Option = styled.div<{ selected: boolean }>`
-  color:  ${color('font')};
+  color: ${({ theme }) => color('font', theme)};
   height: 34px;
   padding: 8px;
   cursor: pointer;
@@ -170,7 +170,7 @@ const Option = styled.div<{ selected: boolean }>`
   ${({ selected }) => {
     if (selected) {
       return css`
-        color: ${color('label')};
+        color:${({ theme }) => color('label', theme)};
       `;
     }
     return {
@@ -182,10 +182,10 @@ const Option = styled.div<{ selected: boolean }>`
     ${({ selected }) => {
     if (!selected) {
       return css`
-        background-color: ${color('secondary')};
+        background-color: ${({ theme }) => color('secondary', theme)};
         border-radius: 7px;
         font-size: 15px;
-        color: ${color('primary')};
+        color: ${({ theme }) => color('primary', theme)};
       `;
     }
     return css`
@@ -199,7 +199,7 @@ const Dot = styled.div`
   height: 7px;
   width: 7px;
   border-radius: 3.5px;
-  background-color: ${color('accent')};
+  background-color: ${({ theme }) => color('accent', theme)};
   align-self: center;
   margin-right: 4px;
 `;

@@ -7,6 +7,6 @@ export const FieldError: FC<{ text: string }> = ({ text }) => (
 );
 
 const ErrorText = styled.span`
-  color: ${color('danger')};
+  color: ${({ theme }) => color('danger', theme)};
   font-size: 10px;
 `;
