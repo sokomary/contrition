@@ -51,7 +51,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky",
+    "check-types": "tsc --noemit",
+    "eslint": "eslint",
+    "lint": "npm run eslint && npm run check-types"
   },
   "eslintConfig": {
     "extends": [
@@ -74,7 +78,8 @@
   "devDependencies": {
     "@types/lodash": "^4.14.197",
     "@types/papaparse": "^5.3.7",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "husky": "^9.0.10"
   },
   "browser": {
     "fs": false,
