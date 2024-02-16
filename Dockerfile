@@ -4,7 +4,6 @@
 #COPY package*.json /app/
 #RUN npm config set registry https://registry.npmjs.org/
 #RUN npm config set @sokomary:registry https://npm.pkg.github.com/
-#RUN npm config set //npm.pkg.github.com/:_authToken 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
 #RUN npm install
 #COPY ./ /app/
 #RUN npm run build
