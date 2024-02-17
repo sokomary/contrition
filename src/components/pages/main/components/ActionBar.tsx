@@ -174,7 +174,7 @@ const ActionBarContainer = styled.div`
 
 const ActionBarContent = styled(Container)`
   border-radius: 20px;
-  background-color: ${({ theme }) => color('background', theme)};
+  background-color: ${({ theme }) => color('basic', theme)};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   height: 62px;
   @media (max-width: 810px) {
@@ -273,9 +273,8 @@ const UserBlock = styled(Container)`
 
 const Name = styled.div`
   align-self: center; 
-  color: ${({ theme }) => color('accent', theme)};
+  color: ${({ theme }) => color('font', theme)};
   font-size: 18px;
-  font-weight: bold;
   @media (max-width: 1300px) {
     display: none;
   }

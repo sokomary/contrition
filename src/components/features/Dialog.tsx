@@ -14,10 +14,10 @@ export const Dialog: FC<{
       width={props.width || 1120}
       headerStyle={{
         borderRadius: '20px 20px 0px 0px',
-        backgroundColor: color('dialog-background', theme),
+        backgroundColor: color('basic', theme),
         color: color('font', theme),
       }}
-      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('dialog-background', theme) }}
+      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('basic', theme) }}
       header={props.header}
       visible={props.visible}
       onHide={() => {
