@@ -153,7 +153,7 @@ const Card = styled.div<{ localDisplayInfo: boolean }>`
   flex-shrink: 0;
 
   border-radius: 20px;
-  background: ${({ theme }) => color('background', theme)};
+  background: ${({ theme }) => color('basic', theme)};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
 `;
 
@@ -180,9 +180,9 @@ const StyledNonFavoriteIcon = styled(NonFavoriteIcon)`
 `;
 
 const Element = styled.div<{ bold?: boolean }>`
-  background-color: ${({ theme }) => color('secondary', theme)};
+  background-color: ${({ theme }) => color('accent-light', theme)};
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${({ theme }) => color('primary', theme)};
+  color: ${({ theme }) => color('accent', theme)};
 
   border-radius: 7px;
   
@@ -192,10 +192,10 @@ const Element = styled.div<{ bold?: boolean }>`
 `;
 
 const BigElement = styled.div<{ bold?: boolean }>`
-  background-color: ${({ theme }) => color('secondary', theme)};
+  background-color: ${({ theme }) => color('accent-light', theme)};
   font-size: 25px;
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
-  color: ${({ theme }) => color('primary', theme)};
+  color: ${({ theme }) => color('accent', theme)};
 
   border-radius: 10px;
   

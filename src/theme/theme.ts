@@ -1,6 +1,6 @@
 type ColorSchema =
+  'basic' |
   'background' |
-  'dialog-background' |
   'primary' |
   'primary-disabled' |
   'favorite' |
@@ -24,36 +24,40 @@ type Theme = {
 export const theme: Theme = {
   color: {
     light: {
-      background: 'white',
-      'dialog-background': 'white',
       primary: '#FF6800',
-      'primary-disabled': 'rgba(255,104,0,0.35)',
-      favorite: '#FFCBCE',
-      secondary: '#FEF1E6',
-      font: '#040404',
-      'font-disabled': 'rgba(4,4,4,0.35)',
       accent: '#9E25FF',
-      'accent-light': '#F3E2FF',
-      label: '#8F8A8A',
-      field: 'rgba(217, 217, 217, 0.54)',
       danger: '#FF4242',
       success: '#02b92e',
+
+      basic: '#FFFFFF',
+      secondary: '#FEF1E6',
+      'accent-light': '#F3E2FF',
+      background: '#FFFFFF',
+      favorite: '#FFCBCE',
+      font: '#131313',
+      label: '#8A8585',
+      field: 'rgba(217, 217, 217, 0.8)',
+
+      'font-disabled': 'rgba(4,4,4,0.35)',
+      'primary-disabled': 'rgba(255,104,0,0.35)',
     },
     dark: {
-      background: 'rgba(0, 0, 0, 0.87)',
-      'dialog-background': 'rgb(42,42,42)',
       primary: '#FF6800',
-      'primary-disabled': 'rgba(255,104,0,0.35)',
-      favorite: 'rgb(77,44,52)',
-      secondary: '#3a2100',
-      font: '#a6a6a6',
-      'font-disabled': 'rgba(4,4,4,0.35)',
       accent: '#9c29f8',
-      'accent-light': 'rgb(66,61,86)',
-      label: '#8F8A8A',
-      field: 'rgb(79,79,79)',
       danger: '#FF4242',
       success: '#02b92e',
+
+      basic: '#2D3237',
+      secondary: '#6B2401',
+      'accent-light': '#3A204E',
+      background: '#16181C',
+      favorite: '#461624',
+      font: '#DDDDDD',
+      label: '#868686',
+      field: 'rgba(30, 30, 30, 0.9)',
+
+      'primary-disabled': 'rgba(255,104,0,0.35)',
+      'font-disabled': 'rgba(4,4,4,0.35)',
     },
   },
 };

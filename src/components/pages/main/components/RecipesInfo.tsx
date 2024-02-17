@@ -162,7 +162,7 @@ const FavoritesContainer = styled(Container)`
   width: calc(70% - 20px);
   flex-shrink: 0;
   border-radius: 20px;
-  background: ${({ theme }) => color('background', theme)};
+  background: ${({ theme }) => color('basic', theme)};
   padding: 20px 20px 0 20px;
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
   @media (max-width: 960px) {
