@@ -1,7 +1,7 @@
 import React, {
   FC, useRef, useState,
 } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { upload } from 'src/api';
@@ -79,17 +79,28 @@ const PhotoPreview = styled.div<{ background?: any }>`
   border-radius: 10px;
   background-color: rgba(74, 97, 97, 0.36);
   opacity: 30;
-  @media (max-width: 890px) {
-    margin-left: 5px;
+  ${({ theme }) => ['iphone', 'ipadv'].includes(theme.screen) && css`
     margin-right: auto;
-  }
+  `}
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 363px;
+    width: 363px;
+  `};
+
+  ${({ theme }) => theme.screen === 'ipadh' && css`
+    height: 123px;
+    width: 123px;
+  `};
+  
   ${(props) => (props.background
     ? `background-image: url(${props.background});
-     background-repeat: no-repeat;
-     background-origin: border-box;
-     background-size: cover;
-     background-position: center center;`
-    : '')}
+   background-repeat: no-repeat;
+   background-origin: border-box;
+   background-size: cover;
+   background-position: center center;`
+    : ''
+  )};
 `;
 
 const PhotoInput = styled.div`
@@ -103,9 +114,16 @@ const PhotoInput = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  @media (max-width: 1120px) {
-    margin-left: 5px;
-  }
+  
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 363px;
+    width: 363px;
+  `};
+  
+  ${({ theme }) => theme.screen === 'ipadh' && css`
+    height: 123px;
+    width: 123px;
+  `};
 `;
 
 const LoadingWrapper = styled.div`
@@ -114,10 +132,11 @@ const LoadingWrapper = styled.div`
   display: flex;
   justify-items: center;
   align-items: center;
-  @media (max-width: 890px) {
+  
+  ${({ theme }) => ['iphone', 'ipadv'].includes(theme.screen) && css`
     margin-left: auto;
     margin-right: auto;
-  }
+  `}
 `;
 
 export { ImageField };

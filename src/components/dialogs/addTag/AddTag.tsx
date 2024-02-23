@@ -8,8 +8,9 @@ import { addTag } from 'src/api';
 import {
   Button, Container, Dialog, Field, Loading,
 } from 'src/components/features';
+import { useMediaQuery } from 'src/hooks';
 
-const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
+export const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addTag,
@@ -32,9 +33,17 @@ const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) =
     }
   }, [formState, reset]);
 
+  const isMobile = useMediaQuery('(max-width: 740px)');
+
   const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
   return (
-    <Dialog width={350} header="Новый тег" visible={open} onClose={onClose}>
+    <Dialog
+      position={isMobile ? 'bottom' : undefined}
+      width={!isMobile ? 350 : undefined}
+      header="Новый тег"
+      visible={open}
+      onClose={onClose}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         { !addMutation.isLoading ? (
           <Container vertical gap={15}>
@@ -61,5 +70,3 @@ const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) =
 const SaveButton = styled(Button)`
   align-self: flex-end;
 `;
-
-export { AddTag };

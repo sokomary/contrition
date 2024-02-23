@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useState } from 'react';
 import { useController, UseControllerProps, useWatch } from 'react-hook-form';
 import { isEqual } from 'lodash';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
 import i18next from 'src/formatter';
@@ -117,13 +117,13 @@ const QuantityInput: FC<{ value: number | undefined; onChange: (value: number | 
 );
 
 const Label = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   color: ${({ theme }) => color('font', theme)};
 `;
 
 const AddProductButton = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => color('accent', theme)};
+  font-size: 16px;
+  color: ${({ theme }) => color('primary', theme)};
   cursor: pointer;
   align-self: center;
 `;
@@ -148,6 +148,7 @@ const StyledInput = styled.input`
   outline: none;
   background-color: ${({ theme }) => color('secondary', theme)};
   color: ${({ theme }) => color('primary', theme)};
+  font-size: 16px;
 `;
 
 const Name = styled.div`
@@ -179,11 +180,16 @@ const StyledDeleteIcon = styled(DeleteIcon)`
 const ProductsFieldContainer = styled(Container)`
   padding: 0 20px;
   width: 35%;
-  @media (max-width: 1120px) {
+
+  ${({ theme }) => !['mac'].includes(theme.screen) && css`
     margin: 0;
-    width: 340px;
+    width: 100%;
     padding: 10px;
-  }
+  `};
+  
+  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
+    padding: 0;
+  `};
 `;
 
 export { ProductsField };

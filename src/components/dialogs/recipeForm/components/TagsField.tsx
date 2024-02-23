@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Recipe, Tag } from 'src/domain';
 import { Container } from 'src/components/features';
 import i18next from 'src/formatter';
@@ -49,10 +49,9 @@ const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
 };
 
 const StyledContainer = styled(Container)`
-  @media (max-width: 1120px) {
+  ${({ theme }) => !['mac'].includes(theme.screen) && css`
     flex-wrap: wrap;
-    padding-right: 20px;
-  }
+  `};
 `;
 
 const Label = styled.div`
@@ -71,8 +70,8 @@ const TagName = styled.div<{ selected: boolean }>`
 `;
 
 const AddTagButton = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => color('accent', theme)};
+  font-size: 16px;
+  color: ${({ theme }) => color('primary', theme)};
   cursor: pointer;
 `;
 

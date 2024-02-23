@@ -1,23 +1,72 @@
-import React, { FC, PropsWithChildren } from 'react';
-import styled from 'styled-components';
+import React, {
+  CSSProperties, FC, PropsWithChildren, ReactNode,
+} from 'react';
+import styled, { css } from 'styled-components';
 import { Dialog as OriginalDialog } from 'primereact/dialog';
 import { color } from 'src/theme';
-import { useSystemThemeMode } from 'src/hooks';
+import { useSystemThemeMode, useDeviceScreen } from 'src/hooks';
+
+type DialogPosition =
+  'center' | 'top'
+  | 'bottom' | 'left'
+  | 'right' | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right';
 
 export const Dialog: FC<{
-  visible: boolean; header: string; onClose: () => void; width?: number;
+  visible: boolean;
+  header: ReactNode;
+  onClose: () => void;
+  width?: number;
+  className?: string;
+  style?: CSSProperties;
+  position?: DialogPosition;
 } & PropsWithChildren> = (props) => {
   const mode = useSystemThemeMode();
   const theme = { mode } as const;
+  const screen = useDeviceScreen();
+
+  const basicContentStyle = {
+    backgroundColor: color('basic', theme),
+    color: color('font', theme),
+    padding: screen !== 'mac' ? 15 : undefined,
+    WebkitScrollbar: {
+      backgroundColor: 'transparent',
+    },
+  };
+
+  const getHeaderStyle = () => {
+    if (props.position === 'bottom') {
+      return { borderRadius: '20px 20px 0px 0px', ...basicContentStyle };
+    }
+    if (props.position === 'right') {
+      return { borderRadius: '20px 0px 0px 0px', ...basicContentStyle };
+    }
+    if (props.position === 'top') {
+      return { borderRadius: '0px', ...basicContentStyle };
+    }
+    return { borderRadius: '20px 20px 0px 0px', ...basicContentStyle };
+  };
+
+  const getContentStyle = () => {
+    if (props.position === 'bottom') {
+      return { borderRadius: '0px', ...basicContentStyle };
+    }
+    if (props.position === 'right') {
+      return { borderRadius: '0px 0px 0px 20px', ...basicContentStyle };
+    }
+    return { borderRadius: '0px 0px 20px 20px', ...basicContentStyle };
+  };
+
   return (
     <WideDialog
+      position={props.position}
+      className={props.className}
+      style={props.style}
       width={props.width || 1120}
-      headerStyle={{
-        borderRadius: '20px 20px 0px 0px',
-        backgroundColor: color('basic', theme),
-        color: color('font', theme),
-      }}
-      contentStyle={{ borderRadius: '0px 0px 20px 20px', backgroundColor: color('basic', theme) }}
+      headerStyle={getHeaderStyle()}
+      contentStyle={getContentStyle()}
       header={props.header}
       visible={props.visible}
       onHide={() => {
@@ -31,11 +80,13 @@ export const Dialog: FC<{
 
 const WideDialog = styled(OriginalDialog)<{ width: number }>`
   width: ${({ width }) => `${width}px`};
-  height: fit-content;
-  
-  @media (max-width: 1120px) {
-    width: fit-content;
-    max-height: 95%;
-    overflow-y: auto;
-  }
+  margin: 0 !important;
+  max-height: 100%;
+
+  ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
+    max-height: 73%;
+  `};
+  ${({ theme }) => ['iphone'].includes(theme.screen) && css`
+    max-height: 85%;
+  `};
 `;

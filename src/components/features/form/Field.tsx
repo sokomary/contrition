@@ -18,11 +18,13 @@ export const Field: FC<{
   error?: FieldError;
   errorText?: string;
   width?: number;
+  size?: 'small' | 'regular' | 'large';
 }> = ({
-  name, type, step, style, className, required, register, placeholder, error, errorText, width,
+  name, type, size, step, style, className, required, register, placeholder, error, errorText, width,
 }) => (
   <Container vertical gap={5}>
     <StyledInput
+      heightSize={size}
       style={style}
       className={className}
       type={type || 'text'}
@@ -36,7 +38,7 @@ export const Field: FC<{
   </Container>
 );
 
-const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
+const StyledInput = styled.input<{ heightSize?: 'small' | 'regular' | 'large' | undefined }>`
   outline: none;
   border-radius: 7px;
   border: none;
@@ -48,11 +50,11 @@ const StyledInput = styled.input<{ size?: 'small' | 'regular' | 'large' }>`
     -webkit-appearance: none;
   };
   
-  height: ${({ size }) => {
-    if (size === 'small') {
+  height: ${({ heightSize }) => {
+    if (heightSize === 'small') {
       return '24px';
     }
-    if (size === 'large') {
+    if (heightSize === 'large') {
       return '42px';
     }
     return '34px';

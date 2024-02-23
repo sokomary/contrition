@@ -31,7 +31,7 @@ const StyledButton = styled.button<Props>`
   border-radius: 15px;
   cursor: pointer;
   
-  font-size: 17px;
+  font-size: 16px;
   
   height: ${({ size }) => {
     if (size === 'small') {
