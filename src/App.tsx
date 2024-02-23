@@ -16,6 +16,7 @@ import { MainPage } from 'src/components/pages/main';
 import { LoginPage } from 'src/components/pages/login';
 import { color } from './theme';
 import { useSystemThemeMode } from './hooks';
+import { useDeviceScreen } from './hooks/useDeviceScreen';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>
@@ -24,8 +25,9 @@ const App: FC = () => (
 const Content = () => {
   const authenticated = useAuthenticate();
   const theme = useSystemThemeMode();
+  const screen = useDeviceScreen();
   return (
-    <ThemeProvider theme={{ mode: theme }}>
+    <ThemeProvider theme={{ mode: theme, screen }}>
       <StyledApp>
         <StyledContainer position="bottom-center" theme="colored" />
         <Router>

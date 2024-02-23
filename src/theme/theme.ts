@@ -1,6 +1,7 @@
 type ColorSchema =
   'basic' |
   'background' |
+  'background-transparent' |
   'primary' |
   'primary-disabled' |
   'favorite' |
@@ -37,6 +38,7 @@ export const theme: Theme = {
       font: '#131313',
       label: '#8A8585',
       field: 'rgba(217, 217, 217, 0.8)',
+      'background-transparent': 'rgba(217, 217, 217, 0.97)',
 
       'font-disabled': 'rgba(4,4,4,0.35)',
       'primary-disabled': 'rgba(255,104,0,0.35)',
@@ -55,6 +57,7 @@ export const theme: Theme = {
       font: '#DDDDDD',
       label: '#868686',
       field: 'rgba(30, 30, 30, 0.9)',
+      'background-transparent': 'rgba(30, 30, 30, 0.9)',
 
       'primary-disabled': 'rgba(255,104,0,0.35)',
       'font-disabled': 'rgba(4,4,4,0.35)',

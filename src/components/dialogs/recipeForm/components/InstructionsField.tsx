@@ -4,7 +4,7 @@ import React, {
 import {
   Control, useFieldArray,
 } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Recipe } from 'src/domain';
 import { Container } from 'src/components/features';
@@ -82,7 +82,7 @@ const InstructionSteps: FC<InstructionStepsProps> = (props) => {
       </Container>
       <Container vertical gap={3}>
         {fields.map((field, index) => (
-          <Container key={index}>
+          <StepContainer key={index}>
             <Container gap={1}>
               <StepNumber>
                 {index + 1}
@@ -95,7 +95,7 @@ const InstructionSteps: FC<InstructionStepsProps> = (props) => {
               />
             </Container>
             <GhostButton onClick={() => remove(index)}>удалить</GhostButton>
-          </Container>
+          </StepContainer>
         ))}
         <AddStepButton onClick={addStep}>Добавить шаг</AddStepButton>
       </Container>
@@ -105,32 +105,32 @@ const InstructionSteps: FC<InstructionStepsProps> = (props) => {
 
 const Header = styled(Container)`
   width: 100%;
-  font-size: 17px;
+  font-size: 16px;
   color:${({ theme }) => color('font', theme)};
 `;
 
 const AddInstructionButton = styled.div`
   cursor: pointer;
-  color: ${({ theme }) => color('accent', theme)};
-  font-size: 14px;
+  color: ${({ theme }) => color('primary', theme)};
+  font-size: 16px;
   align-self: center;
   font-weight: normal;
 `;
 
 const AddStepButton = styled(AddInstructionButton)`
-  font-size: 14px;
+  font-size: 16px;
   flex-shrink: 0;
   align-self: flex-start;
 `;
 
 const GhostButton = styled(AddInstructionButton)`
-  font-size: 14px;
+  font-size: 16px;
   flex-shrink: 0;
 `;
 
 const InstructionHeader = styled(Container)`
   align-items: flex-start;
-  font-size: 15px;
+  font-size: 16px;
 `;
 
 const StyledInput = styled(TextareaAutosize)<{ accent?: boolean }>`
@@ -139,18 +139,25 @@ const StyledInput = styled(TextareaAutosize)<{ accent?: boolean }>`
   color:${({ theme }) => color('font', theme)};
   resize: none;
   background-color: ${({ theme }) => color('background', theme)};
-  font-size: 1rem;
+  font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
+  height: 42px;
+  padding: 7px;
   &:focus {
-    border: solid 1px${({ theme }) => color('label', theme)};
-    border-radius: 5px;
+    background-color: ${({ theme }) => color('field', theme)};
+    border-radius: 10px;
   }
+  
+  ${({ theme }) => ['iphone'].includes(theme.screen) && css`
+    padding: 10px;
+  `};
 `;
 
 const InstructionName = styled(StyledInput)`
-  color: ${({ theme }) => color('primary', theme)};
+  font-size: 16px;
+  color: ${({ theme }) => color('accent', theme)};
   margin-left: -2px;
 `;
 
@@ -159,16 +166,19 @@ const MainContainer = styled(Container)`
   margin-left: 20px;
   width: 30%;
   padding: 0 10px;
-  @media (max-width: 1120px) {
-    width: 340px;
+  
+  ${({ theme }) => !['mac'].includes(theme.screen) && css`
+    width: 100%;
     margin-left: 0;
     max-height: fit-content;
-  }
+  `};
 `;
 
-const StepNumber = styled.div`
+const StepNumber = styled(Container)`
   color:${({ theme }) => color('font', theme)};
-  margin-top: 2px;
+  justify-items: center;
+  align-items: center;
+  font-size: 16px;
 `;
 
 const ContentContainer = styled(Container)`
@@ -178,6 +188,10 @@ const ContentContainer = styled(Container)`
   border-radius: 10px;
   padding: 15px;
   overflow-y: auto;
+`;
+
+const StepContainer = styled(Container)`
+  gap: 3px;
 `;
 
 export { InstructionsField };
