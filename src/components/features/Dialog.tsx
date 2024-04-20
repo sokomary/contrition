@@ -30,7 +30,7 @@ export const Dialog: FC<{
   const basicContentStyle = {
     backgroundColor: color('basic', theme),
     color: color('font', theme),
-    padding: screen !== 'mac' ? 15 : undefined,
+    padding: screen !== 'mac' ? '15px' : undefined,
     WebkitScrollbar: {
       backgroundColor: 'transparent',
     },

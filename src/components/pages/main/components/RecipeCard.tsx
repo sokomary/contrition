@@ -10,25 +10,27 @@ import { Recipe, isAdmin } from 'src/domain';
 import { Container } from 'src/components/features';
 import { useAuthenticate } from 'src/hooks';
 import { color } from 'src/theme';
-import { RecipeInfo } from 'src/components/dialogs';
 import { Confirmation } from 'src/components/dialogs/confirmation';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
 const VISIBLE_TAGS_COUNT = 2;
 
 type Props = {
+  infoOpen?: boolean;
   recipe: Recipe;
   className?: string;
   style?: CSSProperties;
-  onEditClick: (recipe: Recipe) => void;
+  onEditClick: () => void;
+  onViewClick: () => void;
   displayInfo?: boolean;
   small?: boolean;
+  onRecipeInfoOpenChange: (open: boolean) => void;
 };
 
 const RecipeCard: FC<Props> = ({
-  className, recipe, onEditClick, style, displayInfo, small,
+  className, recipe, infoOpen, onViewClick, onRecipeInfoOpenChange, onEditClick, style, displayInfo, small,
 }) => {
-  const [recipeInfoOpen, setRecipeInfoOpen] = useState(false);
+  // const [recipeInfoOpen, setRecipeInfoOpen] = useState(false);
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
 
@@ -38,19 +40,26 @@ const RecipeCard: FC<Props> = ({
   const localDisplayInfo = (displayInfo === undefined || displayInfo)
     && !(['iphone', 'ipadh', 'ipadv'].includes(screen)) && !small;
 
+  const changeRecipeInfoOpen = (open: boolean) => {
+    onRecipeInfoOpenChange(open);
+    onViewClick();
+    // setRecipeInfoOpen(open);
+  };
+
   return (
-    <Card small={small} className={className} localDisplayInfo={localDisplayInfo} style={style}>
-      {recipeInfoOpen && (
-        <RecipeInfo
-          onEditClick={() => {
-            setRecipeInfoOpen(false);
-            onEditClick(recipe);
-          }}
-          recipe={recipe}
-          open={recipeInfoOpen}
-          onClose={() => setRecipeInfoOpen(false)}
-        />
-      )}
+    <Card infoOpen={infoOpen} small={small} className={className} localDisplayInfo={localDisplayInfo} style={style}>
+      {/* {recipeInfoOpen && ( */}
+      {/*  <RecipeInfo */}
+      {/*    inline={['mac', 'ipadh'].includes(screen)} */}
+      {/*    onEditClick={() => { */}
+      {/*      changeRecipeInfoOpen(false); */}
+      {/*      onEditClick(recipe); */}
+      {/*    }} */}
+      {/*    recipe={recipe} */}
+      {/*    open={recipeInfoOpen} */}
+      {/*    onClose={() => changeRecipeInfoOpen(false)} */}
+      {/*  /> */}
+      {/* )} */}
 
       <div style={{ height: '100%', width: '100%' }}>
 
@@ -58,8 +67,8 @@ const RecipeCard: FC<Props> = ({
           {recipe.favorite && <StyledFavoriteIcon />}
           {!localDisplayInfo && <OnImageCalories>{recipe.calories.toFixed(0)}</OnImageCalories>}
           {recipe.pressignedUrl
-            ? <StyledImg src={recipe.pressignedUrl} onClick={() => setRecipeInfoOpen(true)} />
-            : <StyledNoImg onClick={() => setRecipeInfoOpen(true)} />}
+            ? <StyledImg src={recipe.pressignedUrl} onClick={() => changeRecipeInfoOpen(true)} />
+            : <StyledNoImg onClick={() => changeRecipeInfoOpen(true)} />}
           <RecipeNameContainer>
             <Container>
               <RecipeName>{recipe.name}</RecipeName>
@@ -172,7 +181,7 @@ const Actions: FC<{ recipe: Recipe; onEditClick: (recipe: Recipe) => void }> = (
   );
 };
 
-const Card = styled.div<{ localDisplayInfo: boolean; small?: boolean }>`
+const Card = styled.div<{ localDisplayInfo: boolean; small?: boolean; infoOpen?: boolean }>`
   width: 268px;
   height: ${({ localDisplayInfo }) => (localDisplayInfo ? '345px' : '268px')};
   display: flex;
@@ -199,6 +208,11 @@ const Card = styled.div<{ localDisplayInfo: boolean; small?: boolean }>`
     width: 170px;
     height: 170px;
     border-radius: 15px;
+  `};
+  
+  ${({ theme, infoOpen }) => infoOpen && ['ipadh'].includes(theme.screen) && css`
+    width: 242px;
+    height: 242px;
   `};
 `;
 
@@ -331,15 +345,14 @@ const Options = styled(Container)`
   
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   
   right: 10px;
   top: -50px;
 `;
 
 const Option = styled.div<{ negative?: boolean }>`
-  width: 100px;
-  height: 25px;
+  width: 105px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -347,7 +360,7 @@ const Option = styled.div<{ negative?: boolean }>`
   color: ${({ theme, negative }) => (negative ? color('danger', theme) : '')}};
   &:hover {
     color: ${({ theme }) => color('primary', theme)};
-  }
+  };
 `;
 
 const RecipeNameContainer = styled.div`

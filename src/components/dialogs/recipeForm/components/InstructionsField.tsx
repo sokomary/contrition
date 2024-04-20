@@ -113,8 +113,8 @@ const AddInstructionButton = styled.div`
   cursor: pointer;
   color: ${({ theme }) => color('primary', theme)};
   font-size: 16px;
-  align-self: center;
   font-weight: normal;
+  align-self: flex-start;
 `;
 
 const AddStepButton = styled(AddInstructionButton)`
@@ -126,6 +126,7 @@ const AddStepButton = styled(AddInstructionButton)`
 const GhostButton = styled(AddInstructionButton)`
   font-size: 16px;
   flex-shrink: 0;
+  margin-top: 6px;
 `;
 
 const InstructionHeader = styled(Container)`
@@ -143,22 +144,22 @@ const StyledInput = styled(TextareaAutosize)<{ accent?: boolean }>`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
-  height: 42px;
-  padding: 7px;
+  padding: 6px;
+  max-width: 180px;
+  ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
+    max-width: 300px;
+  `}
+  
   &:focus {
     background-color: ${({ theme }) => color('field', theme)};
-    border-radius: 10px;
+    border-radius: 6px;
   }
-  
-  ${({ theme }) => ['iphone'].includes(theme.screen) && css`
-    padding: 10px;
-  `};
 `;
 
 const InstructionName = styled(StyledInput)`
   font-size: 16px;
   color: ${({ theme }) => color('accent', theme)};
-  margin-left: -2px;
+  margin-left: -8px;
 `;
 
 const MainContainer = styled(Container)`
@@ -166,18 +167,25 @@ const MainContainer = styled(Container)`
   margin-left: 20px;
   width: 30%;
   padding: 0 10px;
-  
+
   ${({ theme }) => !['mac'].includes(theme.screen) && css`
     width: 100%;
     margin-left: 0;
     max-height: fit-content;
   `};
+
+  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
+    max-height: 330px;
+  `}
+  ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
+    max-height: 430px;
+  `}
 `;
 
 const StepNumber = styled(Container)`
-  color:${({ theme }) => color('font', theme)};
-  justify-items: center;
-  align-items: center;
+  color: ${({ theme }) => color('font', theme)};
+  margin-top: 6px;
+  margin-right: 3px;
   font-size: 16px;
 `;
 
@@ -192,6 +200,9 @@ const ContentContainer = styled(Container)`
 
 const StepContainer = styled(Container)`
   gap: 3px;
+  border-radius: 5px;
+  padding: 5px 0;
+  align-items: flex-start;
 `;
 
 export { InstructionsField };

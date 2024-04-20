@@ -1,5 +1,5 @@
 import React, {
-  FC, useRef,
+  FC, useRef, useState,
 } from 'react';
 
 import {
@@ -19,6 +19,8 @@ import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
+import { AddProduct } from '../addProduct';
+import { AddTag } from '../addTag';
 
 const AddRecipe: FC<{
   tags: Tag[]; open: boolean; onClose: (result?: Recipe) => void; defaultValues?: Recipe;
@@ -76,20 +78,28 @@ const AddRecipe: FC<{
     return undefined;
   };
 
+  const [openNewProduct, setOpenNewProduct] = useState(false);
+  const [openNewTag, setOpenNewTag] = useState(false);
+
   const screen = useDeviceScreen();
   return (
     <StyledDialog
       position={getPosition()}
-      header={i18next.t('startpage:recipes.new.header')}
+      header={defaultValues ? defaultValues.name : i18next.t('startpage:recipes.new.header')}
       visible={open}
       onClose={() => {
         onClose();
         reset();
       }}
     >
+      <AddProduct
+        open={openNewProduct}
+        onClose={() => setOpenNewProduct(false)}
+      />
+      <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
+
       <div
         ref={divRef}
-        style={{ height: '100%', overflowY: 'auto' }}
       >
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <form
@@ -139,7 +149,8 @@ const AddRecipe: FC<{
                       />
                     </Container>
                   </BaseFields>
-                  {screen === 'iphone' && <TagsField tags={tags} control={control} name="tags" />}
+                  {screen === 'iphone'
+                      && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
                   <ImageField
                     name="img"
                     control={control}
@@ -150,22 +161,21 @@ const AddRecipe: FC<{
 
                 <InteractiveFields>
                   <InstructionsField control={control} register={register} />
-                  {/* // todo перенести продуктс внутрь чтобы кнопка добавить оставалась даже если продуктов нет */}
-                  {products?.length && (
-                    <ProductsField
-                      products={products}
-                      setValue={setValue}
-                      onActive={scrollToLastMessage}
-                      control={control}
-                      name="recipeProducts"
-                    />
-                  )}
+                  <ProductsField
+                    onNewClick={() => setOpenNewProduct(true)}
+                    products={products}
+                    setValue={setValue}
+                    onActive={scrollToLastMessage}
+                    control={control}
+                    name="recipeProducts"
+                  />
                 </InteractiveFields>
 
               </ContentContainer>
 
               <EndContainer>
-                {screen !== 'iphone' && <TagsField tags={tags} control={control} name="tags" />}
+                {screen !== 'iphone'
+                    && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
                 <SubmitButton size="large" type="submit">
                   {i18next.t('startpage:recipes.actions.save')}
                 </SubmitButton>
@@ -191,15 +201,15 @@ const StyledDialog = styled(Dialog)`
  ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
     height: 100%;
-  `}
+  `};
  
  ${({ theme }) => ['ipadh', 'ipadv'].includes(theme.screen) && css`
     width: 100%;
-  `}
+  `};
  
  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
     height: 60%;
-  `}
+  `};
 `;
 
 const LoadingWrapper = styled.div`
@@ -219,8 +229,12 @@ const EndContainer = styled(Container)`
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    padding-bottom: 15px;
   `};
+  padding-bottom: 15px;
+  ${({ theme }) => theme.screen === 'mac' && css`
+    padding: 0;
+  `};
+  
 `;
 
 const SubmitButton = styled(Button)`
@@ -229,6 +243,7 @@ const SubmitButton = styled(Button)`
   ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
   `};
+  align-self: flex-end;
 `;
 
 const BaseFields = styled(Container)`

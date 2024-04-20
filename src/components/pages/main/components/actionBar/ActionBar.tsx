@@ -15,6 +15,7 @@ import { Dialogs } from './components/Dialogs';
 // todo посмотреть где можно использовать Partial
 
 type Props = {
+  recipeInfoOpen: boolean;
   infoOpen: boolean;
   setInfoOpen: (value: boolean) => void;
   onTagChange: (newTag?: Tag) => void;
@@ -23,7 +24,7 @@ type Props = {
 };
 
 const ActionBar: FC<Props> = ({
-  infoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
+  infoOpen, recipeInfoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
 }) => {
   const user = useAuthenticate();
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
@@ -46,8 +47,8 @@ const ActionBar: FC<Props> = ({
             <FiltersContainer>
               <InfoControl>
                 {!infoOpen
-                  ? <StyledDropDownIcon onClick={() => setInfoOpen(!infoOpen)} />
-                  : <StyledDropUpIcon onClick={() => setInfoOpen(!infoOpen)} />}
+                  ? <StyledDropUpIcon onClick={() => setInfoOpen(!infoOpen)} />
+                  : <StyledDropDownIcon onClick={() => setInfoOpen(!infoOpen)} />}
               </InfoControl>
               <Filters>
                 <Tags tags={tags} onTagChange={onTagChange} />
@@ -61,7 +62,7 @@ const ActionBar: FC<Props> = ({
                 onNewClick={onNewClick}
               />
               <Container gap={10}>
-                {screen === 'mac' && <Name>{user?.name}</Name>}
+                {((screen === 'mac' || screen === 'ipadh') && !recipeInfoOpen) && <Name>{user?.name}</Name>}
                 {screen === 'iphone' && <Search onQueryChange={onQueryChange} />}
                 <Photo tabIndex={0} onBlur={() => setUserOptionsOpen(false)}>
                   <Circle onClick={() => setUserOptionsOpen(true)} src={user?.picture} />
@@ -155,7 +156,7 @@ const UserOptions = () => {
 };
 
 const ActionBarContainer = styled.div`
-  padding: 40px;
+  padding: 40px 40px 20px 40px;
 
   ${({ theme }) => ['ipadv', 'ipadh'].includes(theme.screen) && css`
     padding: 20px;
@@ -343,8 +344,8 @@ const Options = styled(Container)`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  right: 60px;
-  top: 95px;
+  right: 0;
+  top: 45px;
 `;
 
 const Option = styled.div`
@@ -362,6 +363,7 @@ const Option = styled.div`
 const Photo = styled.div`
   display: flex;
   align-items: center;
+position: relative;
 `;
 
 const ClearIconContainer = styled.div`

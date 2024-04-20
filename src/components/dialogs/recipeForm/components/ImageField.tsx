@@ -70,60 +70,44 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-const PhotoPreview = styled.div<{ background?: any }>`
-  display: flex;
-  justify-content: center;
+const PhotoInput = styled.div`
+  flex-shrink: 0;
+  align-items: center;
   height: 333px;
   width: 333px;
+
+  display: flex;
+  justify-content: center;
   cursor: pointer;
+  background-color:${({ theme }) => color('field', theme)};
   border-radius: 10px;
-  background-color: rgba(74, 97, 97, 0.36);
-  opacity: 30;
+
   ${({ theme }) => ['iphone', 'ipadv'].includes(theme.screen) && css`
     margin-right: auto;
   `}
-
+  
   ${({ theme }) => theme.screen === 'iphone' && css`
     height: 363px;
     width: 363px;
   `};
 
   ${({ theme }) => theme.screen === 'ipadh' && css`
-    height: 123px;
-    width: 123px;
+    height: 235px;
+    width: 235px;
   `};
-  
-  ${(props) => (props.background
-    ? `background-image: url(${props.background});
-   background-repeat: no-repeat;
-   background-origin: border-box;
-   background-size: cover;
-   background-position: center center;`
-    : ''
-  )};
+
+  opacity: 30;
 `;
 
-const PhotoInput = styled.div`
-  height: 333px;
-  width: 333px;
-  background-color:${({ theme }) => color('field', theme)};
-  color: ${({ theme }) => color('font', theme)};
-  border-radius: 10px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    height: 363px;
-    width: 363px;
-  `};
-  
-  ${({ theme }) => theme.screen === 'ipadh' && css`
-    height: 123px;
-    width: 123px;
-  `};
+const PhotoPreview = styled(PhotoInput)<{ background?: any }>`
+  ${(props) => (props.background
+    ? `background-image: url(${props.background});
+       background-repeat: no-repeat;
+       background-origin: border-box;
+       background-size: cover;
+       background-position: center center;`
+    : ''
+  )};
 `;
 
 const LoadingWrapper = styled.div`
