@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { Recipe, Tag } from 'src/domain';
-import { Container } from 'src/components/features';
+import { Container, FieldError } from 'src/components/features';
 import i18next from 'src/formatter';
 import { color } from 'src/theme';
 
@@ -13,7 +13,12 @@ type Props = {
 };
 
 const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
-  const { field } = useController(props);
+  const { field, fieldState } = useController({
+    ...props,
+    rules: {
+      validate: (v) => (v as any[]).length !== 0,
+    },
+  });
 
   return (
     <Container vertical gap={5}>
@@ -37,6 +42,7 @@ const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
           </TagName>
         ))}
       </StyledContainer>
+      {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.tags')} />}
       <AddTagButton onClick={props.onNewClick}>
         {i18next.t('startpage:recipes.actions.addTag')}
       </AddTagButton>
