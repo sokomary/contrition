@@ -133,7 +133,6 @@ const AddRecipe: FC<{
                         placeholder={i18next.t('domain:recipe.link')}
                         error={formState.errors.link}
                         errorText={i18next.t('forms:fields.errors.required')}
-                        required
                       />
                       <Field
                         size={screen === 'iphone' ? 'large' : undefined}
