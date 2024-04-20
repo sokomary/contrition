@@ -23,7 +23,7 @@ const ProductsField: FC<Props> = (props) => {
   const { field, fieldState } = useController({
     ...props,
     rules: {
-      validate: (v) => !(v as any[]).find((rp) => rp.quantity === '' || rp.quantity <= 0),
+      validate: (v) => (v as any[]).length !== 0 && !(v as any[]).find((rp) => rp.quantity === '' || rp.quantity <= 0),
     },
   });
 
@@ -59,7 +59,7 @@ const ProductsField: FC<Props> = (props) => {
             }
             onChange={field.onChange}
           />
-          {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.noQuantity')} />}
+          {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.products')} />}
         </Container>
       </Container>
       <ProductsContainer gap={5}>
