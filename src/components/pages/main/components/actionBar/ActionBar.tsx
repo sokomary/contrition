@@ -1,54 +1,69 @@
-import React, { FC, Suspense, useState } from 'react';
-import styled from 'styled-components';
+import React, { FC, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getTags, logout } from 'src/api';
-import { CreateIcon, RandomIcon, ClearIcon } from 'src/assets';
+import {
+  CreateIcon, RandomIcon, ClearIcon, DropDownIcon, DropUpIcon,
+} from 'src/assets';
 import { useAuthenticate } from 'src/hooks';
 import { Tag, isAdmin, User } from 'src/domain';
-import { AddRecipe, GetRandomRecipe } from 'src/components/dialogs';
 import { Button, Container } from 'src/components/features';
 import { color } from 'src/theme';
+import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+import { Dialogs } from './components/Dialogs';
+
+// todo посмотреть где можно использовать Partial
 
 type Props = {
+  recipeInfoOpen: boolean;
+  infoOpen: boolean;
+  setInfoOpen: (value: boolean) => void;
   onTagChange: (newTag?: Tag) => void;
   onQueryChange: (newQuery: string) => void;
+  onNewClick: () => void;
 };
 
-const ActionBar: FC<Props> = ({ onTagChange, onQueryChange }) => {
+const ActionBar: FC<Props> = ({
+  infoOpen, recipeInfoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
+}) => {
   const user = useAuthenticate();
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
   const { data: tags } = useQuery('tags', () => getTags());
-
-  const [recipeDialogOpen, setRecipeDialogOpen] = useState(false);
   const [randomDialogOpen, setRandomDialogOpen] = useState(false);
+  const screen = useDeviceScreen();
 
   return (
     <>
       {tags?.length && (
         <Dialogs
           tags={tags}
-          recipeDialogOpen={recipeDialogOpen}
           randomDialogOpen={randomDialogOpen}
-          setRecipeDialogOpen={setRecipeDialogOpen}
           setRandomDialogOpen={setRandomDialogOpen}
         />
       )}
-
       <ActionBarContainer>
         {tags && (
           <ActionBarContent gap={0}>
-            <Filters>
-              <Tags tags={tags} onTagChange={onTagChange} />
-              <Search onQueryChange={onQueryChange} />
-            </Filters>
+            <FiltersContainer>
+              <InfoControl>
+                {!infoOpen
+                  ? <StyledDropUpIcon onClick={() => setInfoOpen(!infoOpen)} />
+                  : <StyledDropDownIcon onClick={() => setInfoOpen(!infoOpen)} />}
+              </InfoControl>
+              <Filters>
+                <Tags tags={tags} onTagChange={onTagChange} />
+                {screen !== 'iphone' && <Search onQueryChange={onQueryChange} />}
+              </Filters>
+            </FiltersContainer>
             <UserBlock>
               <Actions
                 user={user}
                 onRandomClick={() => setRandomDialogOpen(true)}
-                onNewClick={() => setRecipeDialogOpen(true)}
+                onNewClick={onNewClick}
               />
               <Container gap={10}>
-                <Name>{user?.name}</Name>
+                {((screen === 'mac' || screen === 'ipadh') && !recipeInfoOpen) && <Name>{user?.name}</Name>}
+                {screen === 'iphone' && <Search onQueryChange={onQueryChange} />}
                 <Photo tabIndex={0} onBlur={() => setUserOptionsOpen(false)}>
                   <Circle onClick={() => setUserOptionsOpen(true)} src={user?.picture} />
                   {userOptionsOpen && <UserOptions />}
@@ -61,35 +76,6 @@ const ActionBar: FC<Props> = ({ onTagChange, onQueryChange }) => {
     </>
   );
 };
-
-type DialogsProps = {
-  tags: Tag[];
-  recipeDialogOpen: boolean;
-  randomDialogOpen: boolean;
-  setRecipeDialogOpen: (value: boolean) => void;
-  setRandomDialogOpen: (value: boolean) => void;
-};
-
-const Dialogs: FC<DialogsProps> = (props) => (
-  <>
-    {props.recipeDialogOpen && (
-      <Suspense>
-        <AddRecipe
-          tags={props.tags}
-          open={props.recipeDialogOpen}
-          onClose={() => props.setRecipeDialogOpen(false)}
-        />
-      </Suspense>
-    )}
-    {props.randomDialogOpen && (
-      <GetRandomRecipe
-        tags={props.tags}
-        open={props.randomDialogOpen}
-        onClose={() => props.setRandomDialogOpen(false)}
-      />
-    )}
-  </>
-);
 
 const Tags: FC<{ tags: Tag[]; onTagChange: (tag?: Tag) => void }> = (props) => {
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
@@ -113,10 +99,10 @@ const Tags: FC<{ tags: Tag[]; onTagChange: (tag?: Tag) => void }> = (props) => {
   );
 };
 
-const Search: FC<{ onQueryChange: (q: string) => void }> = ({ onQueryChange }) => {
+const Search: FC<{ onQueryChange: (q: string) => void; className?: string }> = ({ onQueryChange, className }) => {
   const [q, setQ] = useState('');
   return (
-    <SearchContainer>
+    <SearchContainer className={className}>
       <StyledInput
         value={q}
         onChange={(e) => {
@@ -137,20 +123,21 @@ const Search: FC<{ onQueryChange: (q: string) => void }> = ({ onQueryChange }) =
   );
 };
 
-const Actions: FC<{ user?: User; onNewClick: () => void; onRandomClick: () => void }> = (props) => (
-  <Container gap={10}>
-    {isAdmin(props.user) && (
-      <Button onClick={props.onNewClick}>
-        <ButtonText>Новый</ButtonText>
-        <ButtonIcon><CreateIcon /></ButtonIcon>
-      </Button>
-    )}
-    <Button styleType="primary" onClick={props.onRandomClick}>
-      <ButtonText>Случайный</ButtonText>
-      <ButtonIcon><RandomIcon /></ButtonIcon>
-    </Button>
-  </Container>
-);
+const Actions: FC<{ user?: User; onNewClick: () => void; onRandomClick: () => void }> = (props) => {
+  const screen = useDeviceScreen();
+  return (
+    <Container gap={10}>
+      {isAdmin(props.user) && (
+        <StyledButton onClick={props.onNewClick}>
+          {screen === 'mac' ? <div>Новый</div> : <StyledCreateIcon /> }
+        </StyledButton>
+      )}
+      <StyledButton styleType="primary" onClick={props.onRandomClick}>
+        {screen === 'mac' ? <div>Случайный</div> : <StyledRandomIcon />}
+      </StyledButton>
+    </Container>
+  );
+};
 
 const UserOptions = () => {
   const queryClient = useQueryClient();
@@ -169,36 +156,71 @@ const UserOptions = () => {
 };
 
 const ActionBarContainer = styled.div`
-  padding: 40px;
+  padding: 40px 40px 20px 40px;
+
+  ${({ theme }) => ['ipadv', 'ipadh'].includes(theme.screen) && css`
+    padding: 20px;
+  `};
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    padding: 15px;
+  `};
+`;
+
+const FiltersContainer = styled(Container)`
+  display: contents;
+  
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    display: flex;
+    width: 100%;
+    padding: 6px 15px;
+    gap: 15px;
+  `};
+`;
+
+const InfoControl = styled(Container)`
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 62px;
+  width: 62px;
+  border-radius: 20px;
+  background-color: ${({ theme }) => color('accent-light', theme)};
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    background-color: transparent;
+    height: fit-content;
+    width: fit-content;
+  `}
+`;
+
+const StyledDropDownIcon = styled(DropDownIcon)`
+  cursor: pointer;
+`;
+const StyledDropUpIcon = styled(DropUpIcon)`
+  cursor: pointer;
 `;
 
 const ActionBarContent = styled(Container)`
   border-radius: 20px;
   background-color: ${({ theme }) => color('basic', theme)};
   box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
-  height: 62px;
-  @media (max-width: 810px) {
+  
+  ${({ theme }) => theme.screen === 'iphone' && css`
     flex-direction: column-reverse;
-    height: 80px;
-  }
-  @media (max-width: 740px) {
-    height: 130px;
-    padding-bottom: 10px;
-  }
+  `}
 `;
 
 const Filters = styled(Container)`
   width: 70%;
   padding: 0 10px;
-  @media (max-width: 810px) {
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
-    padding: 10px;
-  }
-  @media (max-width: 740px) {
-    flex-direction: column;
     gap: 10px;
-    padding: 0 10px;
-  }
+    padding: 0;
+    justify-content: space-between;
+  `}
 `;
 
 const TagsContainer = styled(Container)`
@@ -207,40 +229,36 @@ const TagsContainer = styled(Container)`
   color: ${({ theme }) => color('primary', theme)};
   font-size: 18px;
   padding: 0 30px 0 20px;
-  @media (max-width: 810px) {
-    width: 50%;
-    padding: 0;
-  }
-  @media (max-width: 740px) {
+
+ ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
     padding: 0;
-  }
+  `}
 `;
 
 const TagName = styled.div<{ selected?: boolean }>`
-  background-color: ${({ theme, selected }) => (selected ? color('secondary', theme) : 'transparent')};
+  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   border-radius: 25px;
   color: ${({ theme }) => color('primary', theme)};
-  padding: 0 10px;
+  padding: 3px 10px;
   align-self: center;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
-  @media (max-width: 740px) {
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
     padding: 0 5px;
     height: 25px;
-  }
+  `}
 `;
 
 const SearchContainer = styled(Container)`
   width: 30%;
   align-items: center;
   position: relative;
-  @media (max-width: 810px) {
-    width: 50%;
-  }
-  @media (max-width: 740px) {
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
-  }
+  `}
 `;
 
 const StyledInput = styled.input`
@@ -254,9 +272,11 @@ const StyledInput = styled.input`
   align-self: center;
   font-size: 16px;
   width: 100%;
-  @media (max-width: 810px) {
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
     height: 30px;
-  }
+    border-radius: 10px;
+  `}
 `;
 
 const UserBlock = styled(Container)`
@@ -265,44 +285,54 @@ const UserBlock = styled(Container)`
   align-items: center;
   padding: 0 10px;
   border-radius: inherit;
-  @media (max-width: 810px) {
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
     width: 100%;
-    height: 45px;
-  }
+    height: 58px;
+    padding: 0 15px;
+    gap: 10px
+  `}
 `;
 
 const Name = styled.div`
   align-self: center; 
   color: ${({ theme }) => color('font', theme)};
-  font-size: 18px;
-  @media (max-width: 1300px) {
-    display: none;
-  }
+  font-size: 16px;
 `;
+
 const Circle = styled.img`
   height: 40px;
   width: 40px;
   border-radius: 20px;
   background-color: white;
   cursor: pointer;
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+  `}
 `;
 
-const ButtonText = styled.span`
-  @media (min-width: 810px) {
-    display: none;
-  }
-  @media (min-width: 960px) {
-    display: flex;
-  }
+const StyledButton = styled(Button)`
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    border-radius: 10px;
+    height: 30px;
+  `}
 `;
 
-const ButtonIcon = styled.span`
-  @media (min-width: 961px) {
-    display: none;
-  }
-  @media (max-width: 810px) {
-    display: none;
-  }
+const StyledCreateIcon = styled(CreateIcon)`
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 20px;
+    width: 20px;
+  `}
+`;
+
+const StyledRandomIcon = styled(RandomIcon)`
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 20px;
+    width: 20px;
+  `}
 `;
 
 const Options = styled(Container)`
@@ -314,8 +344,8 @@ const Options = styled(Container)`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  right: 60px;
-  top: 95px;
+  right: 0;
+  top: 45px;
 `;
 
 const Option = styled.div`
@@ -333,6 +363,7 @@ const Option = styled.div`
 const Photo = styled.div`
   display: flex;
   align-items: center;
+position: relative;
 `;
 
 const ClearIconContainer = styled.div`

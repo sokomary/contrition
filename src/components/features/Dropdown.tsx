@@ -97,12 +97,19 @@ const DropdownContainer = styled.div<{ open: boolean }>`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  font-size: 16px;
+  
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 42px;
+    padding: 8px 16px;
+  `};
 `;
 
 const StyledInput = styled.input`
   width: 100%;
   outline: none;
   border: none;
+  font-size: 16px;
   padding: 0 8px;
   background: ${({ theme }) => color('background', theme)};
   color:${({ theme }) => color('font', theme)};
@@ -159,13 +166,17 @@ const Option = styled.div<{ selected: boolean }>`
   height: 34px;
   padding: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   
   width: 100%;
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 42px;
+  `};
   
   ${({ selected }) => {
     if (selected) {
@@ -182,17 +193,17 @@ const Option = styled.div<{ selected: boolean }>`
     ${({ selected }) => {
     if (!selected) {
       return css`
-        background-color: ${({ theme }) => color('secondary', theme)};
-        border-radius: 7px;
-        font-size: 15px;
-        color: ${({ theme }) => color('primary', theme)};
-      `;
+          background-color: ${({ theme }) => color('secondary', theme)};
+          border-radius: 7px;
+          font-size: 17px;
+          color: ${({ theme }) => color('primary', theme)};
+        `;
     }
     return css`
-      font-size: 15px;
-    `;
+        font-size: 17px;
+      `;
   }
-}
+}}
 `;
 
 const Dot = styled.div`

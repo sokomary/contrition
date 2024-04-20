@@ -1,11 +1,11 @@
 import React, {
-  FC, useRef,
+  FC, useRef, useState,
 } from 'react';
 
 import {
   useForm, SubmitHandler,
 } from 'react-hook-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { addRecipe, getInstructions, getProducts } from 'src/api';
 import { Recipe, Tag } from 'src/domain';
@@ -13,10 +13,14 @@ import i18next from 'src/formatter';
 import {
   Container, Field, Button, Loading, Dialog,
 } from 'src/components/features';
+import { useDeviceScreen } from 'src/hooks';
+import { color } from 'src/theme';
 import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
+import { AddProduct } from '../addProduct';
+import { AddTag } from '../addTag';
 
 const AddRecipe: FC<{
   tags: Tag[]; open: boolean; onClose: (result?: Recipe) => void; defaultValues?: Recipe;
@@ -64,18 +68,38 @@ const AddRecipe: FC<{
     });
   };
 
+  const getPosition = () => {
+    if (screen === 'iphone') {
+      return 'bottom';
+    }
+    if (screen === 'ipadv' || screen === 'ipadh') {
+      return 'top';
+    }
+    return undefined;
+  };
+
+  const [openNewProduct, setOpenNewProduct] = useState(false);
+  const [openNewTag, setOpenNewTag] = useState(false);
+
+  const screen = useDeviceScreen();
   return (
-    <Dialog
-      header={i18next.t('startpage:recipes.new.header')}
+    <StyledDialog
+      position={getPosition()}
+      header={defaultValues ? defaultValues.name : i18next.t('startpage:recipes.new.header')}
       visible={open}
       onClose={() => {
         onClose();
         reset();
       }}
     >
+      <AddProduct
+        open={openNewProduct}
+        onClose={() => setOpenNewProduct(false)}
+      />
+      <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
+
       <div
         ref={divRef}
-        style={{ height: '100%', overflowY: 'auto' }}
       >
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <form
@@ -84,14 +108,15 @@ const AddRecipe: FC<{
         >
 
           {!addMutation.isLoading && !areInstructionsLoading ? (
-            <MainContainer vertical gap={20}>
+            <Container vertical gap={20}>
 
               <ContentContainer gap={10}>
 
                 <Container vertical gap={20}>
                   <BaseFields vertical gap={7}>
                     <Field
-                      width={332}
+                      size={screen === 'iphone' ? 'large' : undefined}
+                      width={screen === 'iphone' ? undefined : 332}
                       name="name"
                       register={register}
                       placeholder={i18next.t('domain:recipe.name')}
@@ -99,8 +124,9 @@ const AddRecipe: FC<{
                       errorText={i18next.t('forms:fields.errors.required')}
                       required
                     />
-                    <Container gap={7}>
+                    <Container gap={screen === 'iphone' ? undefined : 7}>
                       <Field
+                        size={screen === 'iphone' ? 'large' : undefined}
                         width={252}
                         name="link"
                         register={register}
@@ -110,7 +136,8 @@ const AddRecipe: FC<{
                         required
                       />
                       <Field
-                        width={72}
+                        size={screen === 'iphone' ? 'large' : undefined}
+                        width={screen === 'iphone' ? 104 : 72}
                         type="number"
                         step="0.01"
                         name="size"
@@ -122,6 +149,8 @@ const AddRecipe: FC<{
                       />
                     </Container>
                   </BaseFields>
+                  {screen === 'iphone'
+                      && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
                   <ImageField
                     name="img"
                     control={control}
@@ -130,42 +159,57 @@ const AddRecipe: FC<{
                   />
                 </Container>
 
-                <InstructionsField control={control} register={register} />
-
-                {/* // todo перенести продуктс внутрь чтобы кнопка добавить оставалась даже если продуктов нет */}
-
-                {products?.length && (
+                <InteractiveFields>
+                  <InstructionsField control={control} register={register} />
                   <ProductsField
+                    onNewClick={() => setOpenNewProduct(true)}
                     products={products}
                     setValue={setValue}
                     onActive={scrollToLastMessage}
                     control={control}
                     name="recipeProducts"
                   />
-                )}
+                </InteractiveFields>
 
               </ContentContainer>
 
               <EndContainer>
-                <TagsField tags={tags} control={control} name="tags" />
-                <SubmitButton styleType="accent" size="large" type="submit">
+                {screen !== 'iphone'
+                    && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
+                <SubmitButton size="large" type="submit">
                   {i18next.t('startpage:recipes.actions.save')}
                 </SubmitButton>
               </EndContainer>
-            </MainContainer>
+            </Container>
           ) : (<LoadingWrapper><Loading /></LoadingWrapper>)}
 
         </form>
       </div>
 
-    </Dialog>
+    </StyledDialog>
   );
 };
 
-const MainContainer = styled(Container)`
-  @media (max-width: 1120px) {
-    width: 340px;
-  }
+const InteractiveFields = styled.div`
+  width: 100%;
+  ${({ theme }) => theme.screen !== 'ipadv' && css`
+    display: contents;
+  `}
+`;
+
+const StyledDialog = styled(Dialog)`
+ ${({ theme }) => theme.screen === 'iphone' && css`
+    width: 100%;
+    height: 100%;
+  `};
+ 
+ ${({ theme }) => ['ipadh', 'ipadv'].includes(theme.screen) && css`
+    width: 100%;
+  `};
+ 
+ ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
+    height: 60%;
+  `};
 `;
 
 const LoadingWrapper = styled.div`
@@ -174,31 +218,39 @@ const LoadingWrapper = styled.div`
 `;
 
 const ContentContainer = styled(Container)`
-  @media (max-width: 1120px) {
+   ${({ theme }) => ['iphone'].includes(theme.screen) && css`
     flex-direction: column;
     gap: 20px;
-  }
+  `}
 `;
 
 const EndContainer = styled(Container)`
-  @media (max-width: 1120px) {
+  ${({ theme }) => theme.screen === 'iphone' && css`
     flex-direction: column;
     gap: 20px;
-    padding-left: 13px;
-    width: 340px;
-  }
+    width: 100%;
+  `};
+  padding-bottom: 15px;
+  ${({ theme }) => theme.screen === 'mac' && css`
+    padding: 0;
+  `};
+  
 `;
 
 const SubmitButton = styled(Button)`
-  @media (max-width: 1120px) {
-    align-self: flex-end;
-  }
+  background-color: ${({ theme }) => color('primary', theme)};
+  color:  ${({ theme }) => color('basic', theme)};
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    width: 100%;
+  `};
+  align-self: flex-end;
 `;
 
 const BaseFields = styled(Container)`
-  @media (max-width: 1120px) {
-    margin-left: 5px;
-  }
+
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    width: 100%;
+  `};
 `;
 
 export { AddRecipe };

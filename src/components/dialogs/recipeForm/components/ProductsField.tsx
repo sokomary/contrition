@@ -1,26 +1,25 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useController, UseControllerProps, useWatch } from 'react-hook-form';
 import { isEqual } from 'lodash';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
 import i18next from 'src/formatter';
 import { Recipe, RecipeProduct, Product } from 'src/domain';
 import {
-  DropdownField, FieldError, Container,
+  FieldError, Container, Dropdown,
 } from 'src/components/features';
-import { AddProduct } from 'src/components/dialogs';
 import { color } from 'src/theme';
 
 type Props = UseControllerProps<Recipe> & {
-  products: Product[];
+  products?: Product[];
   onActive: () => void;
   setValue: (name: any, value: any) => void;
+  onNewClick: () => void;
 };
 
+// todo fieldsArray
 const ProductsField: FC<Props> = (props) => {
-  const [openNewProduct, setOpenNewProduct] = useState(false);
-
   const { field, fieldState } = useController({
     ...props,
     rules: {
@@ -28,7 +27,7 @@ const ProductsField: FC<Props> = (props) => {
     },
   });
 
-  const options = useMemo(() => props.products.map((p) => ({
+  const options = useMemo(() => props.products?.map((p) => ({
     value: {
       product: p,
       quantity: (field.value as RecipeProduct[])?.find((rp) => isEqual(p, rp.product))?.quantity || '',
@@ -42,64 +41,59 @@ const ProductsField: FC<Props> = (props) => {
   });
 
   return (
-    <>
-      <AddProduct
-        open={openNewProduct}
-        onClose={() => setOpenNewProduct(false)}
-      />
-      <ProductsFieldContainer vertical gap={20}>
-        <Container vertical gap={20}>
-          <Container vertical gap={5}>
-            <Container>
-              <Label>{i18next.t('domain:recipe.recipeProducts')}</Label>
-              <AddProductButton onClick={() => setOpenNewProduct(true)}>
-                {i18next.t('startpage:recipes.actions.addProduct')}
-              </AddProductButton>
-            </Container>
-            <DropdownField
-              onActive={props.onActive}
-              control={props.control}
-              name={props.name}
-              rules={{ required: true }}
-              options={options}
-            />
-            {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.noQuantity')} />}
+    <ProductsFieldContainer vertical gap={20}>
+      <Container vertical gap={20}>
+        <Container vertical gap={10}>
+          <Container>
+            <Label>{i18next.t('domain:recipe.recipeProducts')}</Label>
+            <AddProductButton onClick={props.onNewClick}>
+              {i18next.t('startpage:recipes.actions.addProduct')}
+            </AddProductButton>
           </Container>
+          <Dropdown
+            onActive={props.onActive}
+            options={options || []}
+            value={
+            (field.value as { product: Product; quantity: number }[])
+              .map((f) => ({ product: f.product, quantity: f.quantity }))
+            }
+            onChange={field.onChange}
+          />
+          {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.noQuantity')} />}
         </Container>
-        <ProductsContainer gap={5}>
-          {selectedProducts?.sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
-            .map((sp) => (
-              <Container key={sp.product.id} style={{ height: 34 }}>
-                <QuantityInput
-                  value={sp.quantity}
-                  onChange={(quantity) => props.setValue(
+      </Container>
+      <ProductsContainer gap={5}>
+        {selectedProducts?.sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
+          .map((sp) => (
+            <Container key={sp.product.id} style={{ height: 34 }}>
+              <QuantityInput
+                value={sp.quantity}
+                onChange={(quantity) => props.setValue(
+                  'recipeProducts',
+                  [
+                    ...selectedProducts.filter((rp) => !isEqual(rp, sp)),
+                    { id: sp.id, product: sp.product, quantity: parseInt(quantity.toString(), 10) },
+                  ],
+                )}
+              />
+              <Name data-tooltip-id={`product-delete${sp.product.id}`}><NameText>{sp.product.name}</NameText></Name>
+              <StyledTooltip
+                offset={0}
+                id={`product-delete${sp.product.id}`}
+                clickable
+                delayShow={600}
+              >
+                <StyledDeleteIcon
+                  onClick={() => props.setValue(
                     'recipeProducts',
-                    [
-                      ...selectedProducts.filter((rp) => !isEqual(rp, sp)),
-                      { id: sp.id, product: sp.product, quantity: parseInt(quantity.toString(), 10) },
-                    ],
+                    (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
                   )}
                 />
-                <Name data-tooltip-id={`product-delete${sp.product.id}`}><NameText>{sp.product.name}</NameText></Name>
-                <StyledTooltip
-                  offset={0}
-                  id={`product-delete${sp.product.id}`}
-                  clickable
-                  delayShow={600}
-                >
-                  <StyledDeleteIcon
-                    onClick={() => props.setValue(
-                      'recipeProducts',
-                      (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
-                    )}
-                  />
-                </StyledTooltip>
-              </Container>
-            ))}
-        </ProductsContainer>
-      </ProductsFieldContainer>
-    </>
-
+              </StyledTooltip>
+            </Container>
+          ))}
+      </ProductsContainer>
+    </ProductsFieldContainer>
   );
 };
 
@@ -117,13 +111,13 @@ const QuantityInput: FC<{ value: number | undefined; onChange: (value: number | 
 );
 
 const Label = styled.div`
-  font-size: 17px;
+  font-size: 16px;
   color: ${({ theme }) => color('font', theme)};
 `;
 
 const AddProductButton = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => color('accent', theme)};
+  font-size: 16px;
+  color: ${({ theme }) => color('primary', theme)};
   cursor: pointer;
   align-self: center;
 `;
@@ -132,6 +126,16 @@ const ProductsContainer = styled(Container)`
   flex-wrap: wrap;
   height: fit-content;
   max-width: 400px;
+
+  ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
+    max-height: 100px;
+    overflow-y: scroll;
+  `}
+  
+  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
+    max-height: 248px;
+    overflow-y: scroll;
+  `}
 `;
 
 const StyledInput = styled.input`
@@ -148,6 +152,7 @@ const StyledInput = styled.input`
   outline: none;
   background-color: ${({ theme }) => color('secondary', theme)};
   color: ${({ theme }) => color('primary', theme)};
+  font-size: 16px;
 `;
 
 const Name = styled.div`
@@ -179,11 +184,16 @@ const StyledDeleteIcon = styled(DeleteIcon)`
 const ProductsFieldContainer = styled(Container)`
   padding: 0 20px;
   width: 35%;
-  @media (max-width: 1120px) {
+
+  ${({ theme }) => !['mac'].includes(theme.screen) && css`
     margin: 0;
-    width: 340px;
+    width: 100%;
     padding: 10px;
-  }
+  `};
+  
+  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
+    padding: 0;
+  `};
 `;
 
 export { ProductsField };

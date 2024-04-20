@@ -8,6 +8,7 @@ import {
   Container, Button, Dialog, Field,
 } from 'src/components/features';
 import i18next from 'src/formatter';
+import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
 const AddProduct: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const queryClient = useQueryClient();
@@ -32,10 +33,13 @@ const AddProduct: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose 
     }
   }, [formState, reset]);
 
+  const screen = useDeviceScreen();
+
   const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
   return (
     <Dialog
-      width={350}
+      position={screen === 'iphone' ? 'bottom' : undefined}
+      width={screen !== 'iphone' ? 350 : undefined}
       header={i18next.t('startpage:products.new.header')}
       visible={open}
       onClose={onClose}
@@ -103,16 +107,12 @@ const AddProduct: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose 
 
 const NameField = styled(Field)`
   width: 200px;
-  @media (max-width: 890px) {
-    width: 201px;
-  }
+  ${({ theme }) => theme.screen === 'iphone' && 'width: 201px;'};
 `;
 
 const NumberField = styled(Field)`
   width: 97px;
-  @media (max-width: 890px) {
-    width: 98px;
-  }
+  ${({ theme }) => theme.screen === 'iphone' && ' width: 98px'};
 `;
 
 const Actions = styled(Container)`

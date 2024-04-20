@@ -11,6 +11,7 @@ import {
 } from 'src/components/features';
 import i18next from 'src/formatter';
 import { color } from 'src/theme';
+import { useMediaQuery } from 'src/hooks';
 
 const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> = ({ tags, open, onClose }) => {
   const [selectedTags, setSelectedTags] = useState(tags);
@@ -20,9 +21,12 @@ const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> =
     () => getRandomRecipe(selectedTags.map((r) => r.id)),
   );
 
+  const isMobile = useMediaQuery('(max-width: 740px)');
+
   return (
     <Dialog
-      width={350}
+      position={isMobile ? 'bottom' : undefined}
+      width={!isMobile ? 350 : undefined}
       header={i18next.t('startpage:recipes.random.header')}
       visible={open}
       onClose={onClose}
