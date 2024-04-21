@@ -175,7 +175,7 @@ const MainContainer = styled(Container)`
   `};
 
   ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
-    max-height: 330px;
+    max-height: 320px;
   `}
   ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
     max-height: 430px;

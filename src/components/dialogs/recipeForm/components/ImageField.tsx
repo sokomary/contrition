@@ -92,8 +92,8 @@ const PhotoInput = styled.div`
   `};
 
   ${({ theme }) => theme.screen === 'ipadh' && css`
-    height: 235px;
-    width: 235px;
+    height: 170px;
+    width: 170px;
   `};
 
   opacity: 30;
