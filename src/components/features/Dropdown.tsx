@@ -11,7 +11,7 @@ type Props = {
   options: { value: any; label: string }[];
   value: any[];
   onActive: () => void;
-  onChange: (value: any) => void;
+  onSelect: (value: any) => void;
 };
 
 export const Dropdown: FC<Props> = (props) => {
@@ -60,9 +60,7 @@ export const Dropdown: FC<Props> = (props) => {
                     id={`option-${index}`}
                     selected={value.find((v) => isEqual(v, o.value))}
                     onClick={() => {
-                      props.onChange(value.find((v) => isEqual(v, o.value))
-                        ? [...value.filter((v) => !isEqual(v, o.value))]
-                        : [...value, o.value]);
+                      props.onSelect(o.value);
                       inputRef.current?.focus();
                       setQuery('');
                     }}

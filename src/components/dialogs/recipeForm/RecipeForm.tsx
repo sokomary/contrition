@@ -49,7 +49,6 @@ const AddRecipe: FC<{
     control,
     reset,
     formState,
-    setValue,
   } = useForm<Recipe>({
     defaultValues: defaultValues
       ? { ...defaultValues, instructions }
@@ -161,9 +160,9 @@ const AddRecipe: FC<{
                 <InteractiveFields>
                   <InstructionsField control={control} register={register} />
                   <ProductsField
+                    register={register}
                     onNewClick={() => setOpenNewProduct(true)}
                     products={products}
-                    setValue={setValue}
                     onActive={scrollToLastMessage}
                     control={control}
                     name="recipeProducts"
