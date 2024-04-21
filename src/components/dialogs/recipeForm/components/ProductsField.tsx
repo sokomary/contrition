@@ -1,44 +1,45 @@
-import React, { FC, useMemo } from 'react';
-import { useController, UseControllerProps, useWatch } from 'react-hook-form';
-import { isEqual } from 'lodash';
+import React, { FC } from 'react';
+import {
+  useController,
+  UseControllerProps, useFieldArray,
+} from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
 import i18next from 'src/formatter';
-import { Recipe, RecipeProduct, Product } from 'src/domain';
+import { Recipe, Product } from 'src/domain';
 import {
-  FieldError, Container, Dropdown,
+  Container, Dropdown, FieldError,
 } from 'src/components/features';
 import { color } from 'src/theme';
+import { find } from 'lodash';
 
 type Props = UseControllerProps<Recipe> & {
   products?: Product[];
+  register: any;
   onActive: () => void;
-  setValue: (name: any, value: any) => void;
   onNewClick: () => void;
 };
 
-// todo fieldsArray
 const ProductsField: FC<Props> = (props) => {
-  const { field, fieldState } = useController({
+  const { fieldState } = useController({
     ...props,
-    rules: {
-      validate: (v) => (v as any[]).length !== 0 && !(v as any[]).find((rp) => rp.quantity === '' || rp.quantity <= 0),
-    },
   });
 
-  const options = useMemo(() => props.products?.map((p) => ({
-    value: {
-      product: p,
-      quantity: (field.value as RecipeProduct[])?.find((rp) => isEqual(p, rp.product))?.quantity || '',
-    },
-    label: p.name,
-  })), [field.value, props.products]);
-
-  const selectedProducts = useWatch({
+  const {
+    fields, append, remove,
+  } = useFieldArray({
     control: props.control,
     name: 'recipeProducts',
+    rules: {
+      validate: (v) => (v as any[]).length !== 0,
+    },
   });
+
+  const options = props.products?.map((p) => ({
+    value: p,
+    label: p.name,
+  }));
 
   return (
     <ProductsFieldContainer vertical gap={20}>
@@ -53,42 +54,34 @@ const ProductsField: FC<Props> = (props) => {
           <Dropdown
             onActive={props.onActive}
             options={options || []}
-            value={
-            (field.value as { product: Product; quantity: number }[])
-              .map((f) => ({ product: f.product, quantity: f.quantity }))
-            }
-            onChange={field.onChange}
+            value={fields.map((rp) => (rp.product))}
+            onSelect={(product) => !find(fields, { product }) && append({
+              id: undefined as unknown as number, product, quantity: 0,
+            })}
           />
           {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.products')} />}
         </Container>
       </Container>
       <ProductsContainer gap={5}>
-        {selectedProducts?.sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
-          .map((sp) => (
-            <Container key={sp.product.id} style={{ height: 34 }}>
-              <QuantityInput
-                value={sp.quantity}
-                onChange={(quantity) => props.setValue(
-                  'recipeProducts',
-                  [
-                    ...selectedProducts.filter((rp) => !isEqual(rp, sp)),
-                    { id: sp.id, product: sp.product, quantity: parseInt(quantity.toString(), 10) },
-                  ],
-                )}
+        {fields
+          // .sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
+          .map((rp, index) => (
+            <Container key={rp.product.id} style={{ height: 34 }}>
+              <StyledInput
+                key={rp.id}
+                type="number"
+                {...props.register(`recipeProducts.${index}.quantity`)}
               />
-              <Name data-tooltip-id={`product-delete${sp.product.id}`}><NameText>{sp.product.name}</NameText></Name>
+              <Name data-tooltip-id={`product-delete${rp.product.id}`}>
+                <NameText>{rp.product.name}</NameText>
+              </Name>
               <StyledTooltip
                 offset={0}
-                id={`product-delete${sp.product.id}`}
+                id={`product-delete${rp.product.id}`}
                 clickable
                 delayShow={600}
               >
-                <StyledDeleteIcon
-                  onClick={() => props.setValue(
-                    'recipeProducts',
-                    (selectedProducts as RecipeProduct[]).filter((rp) => !isEqual(rp, sp)),
-                  )}
-                />
+                <StyledDeleteIcon onClick={() => remove(index)} />
               </StyledTooltip>
             </Container>
           ))}
@@ -101,14 +94,6 @@ const StyledTooltip = styled(ReactTooltip)`
   background-color: ${({ theme }) => color('background', theme)};
   z-index: 150;
 `;
-
-const QuantityInput: FC<{ value: number | undefined; onChange: (value: number | string) => void }> = (props) => (
-  <StyledInput
-    type="number"
-    value={props.value}
-    onChange={(e) => props.onChange(e.target.value ? e.target.value as unknown as number : '')}
-  />
-);
 
 const Label = styled.div`
   font-size: 16px;
@@ -128,7 +113,7 @@ const ProductsContainer = styled(Container)`
   max-width: 400px;
 
   ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
-    max-height: 100px;
+    max-height: 115px;
     overflow-y: scroll;
   `}
   
@@ -165,7 +150,6 @@ const Name = styled.div`
   color: ${({ theme }) => color('accent', theme)};
   margin-left: -30px;
   cursor: pointer;
-  
   max-width: 280px;
 `;
 
