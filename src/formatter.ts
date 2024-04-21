@@ -31,7 +31,7 @@ i18next.init({
       forms: {
         fields: {
           errors: {
-            required: 'Это обязательное поле',
+            required: 'Oбязательное поле',
           },
         },
       },

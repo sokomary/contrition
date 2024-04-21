@@ -99,15 +99,17 @@ const AddRecipe: FC<{
 
       <div
         ref={divRef}
+        style={{ height: '100%' }}
       >
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <form
+          style={{ height: '100%' }}
           onSubmit={handleSubmit(onSubmit)}
           onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
         >
 
           {!addMutation.isLoading && !areInstructionsLoading ? (
-            <Container vertical gap={20}>
+            <Container vertical style={{ height: '100%', gap: 20 }}>
 
               <ContentContainer gap={10}>
 
@@ -208,6 +210,10 @@ const StyledDialog = styled(Dialog)`
  ${({ theme }) => ['ipadh'].includes(theme.screen) && css`
     height: 60%;
   `};
+  
+  ${({ theme }) => ['mac'].includes(theme.screen) && css`
+    height: 67%;
+  `};
 `;
 
 const LoadingWrapper = styled.div`
@@ -227,12 +233,9 @@ const EndContainer = styled(Container)`
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    padding-bottom: 15px;
   `};
-  padding-bottom: 15px;
-  ${({ theme }) => theme.screen === 'mac' && css`
-    padding: 0;
-  `};
-  
+  margin-bottom: 0;
 `;
 
 const SubmitButton = styled(Button)`
