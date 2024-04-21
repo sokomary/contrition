@@ -110,13 +110,8 @@ const PhotoPreview = styled(PhotoInput)<{ background?: any }>`
   )};
 `;
 
-const LoadingWrapper = styled.div`
-  height: 333px;
-  width: 333px;
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  
+const LoadingWrapper = styled(PhotoInput)`
+  opacity: 1;
   ${({ theme }) => ['iphone', 'ipadv'].includes(theme.screen) && css`
     margin-left: auto;
     margin-right: auto;
