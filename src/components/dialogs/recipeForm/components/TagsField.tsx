@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
-import { useController, UseControllerProps } from 'react-hook-form';
+import {
+  useController, UseControllerProps, useFieldArray,
+} from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { Recipe, Tag } from 'src/domain';
 import { Container, FieldError } from 'src/components/features';
 import i18next from 'src/formatter';
 import { color } from 'src/theme';
+import { find } from 'lodash';
 
 type Props = {
   tags: Tag[];
@@ -13,8 +16,16 @@ type Props = {
 };
 
 const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
-  const { field, fieldState } = useController({
+  const { fieldState } = useController({
     ...props,
+  });
+
+  const {
+    fields, append, remove,
+  } = useFieldArray({
+    control: props.control,
+    name: 'tags',
+    keyName: 'key',
     rules: {
       validate: (v) => (v as any[]).length !== 0,
     },
@@ -24,23 +35,21 @@ const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
     <Container vertical gap={5}>
       {props.label && <Label>{props.label}</Label>}
       <StyledContainer gap={5}>
-        {props.tags.map((t) => (
-          <TagName
-            key={t.id}
-            selected={!!(field.value as Tag[])?.filter((tag) => tag.id === t.id).length}
-            onClick={() => {
-              const includes = (field.value as Tag[])?.filter((tag) => tag.id === t.id).length > 0;
-              if (includes) {
-                field.onChange((field.value as Tag[])?.filter((tag) => tag.id !== t.id) as Tag[]);
-              } else {
-                field.onChange([...(field.value as Tag[]), t]);
-              }
-            }}
-          >
-            #
-            {t.name}
-          </TagName>
-        ))}
+        {fields
+          .map((t, index) => (
+            <TagName key={t.id} selected onClick={() => remove(index)}>
+              #
+              {t.name}
+            </TagName>
+          ))}
+        {props.tags
+          .filter((unselected) => !find(fields, unselected))
+          .map((t) => (
+            <TagName key={t.id} selected={false} onClick={() => append(t)}>
+              #
+              {t.name}
+            </TagName>
+          ))}
       </StyledContainer>
       {fieldState.error && <FieldError text={i18next.t('startpage:recipes.errors.tags')} />}
       <AddTagButton onClick={props.onNewClick}>
