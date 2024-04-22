@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
@@ -8,14 +8,19 @@ import { addTag } from 'src/api';
 import {
   Button, Container, Dialog, Field, Loading,
 } from 'src/components/features';
-import { useMediaQuery } from 'src/hooks';
+import { useDeviceScreen } from 'src/hooks';
 
-export const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
+type Props = {
+  open: boolean; onClose: () => void;
+};
+
+export const AddTag = ({ open, onClose }: Props) => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addTag,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tags'] });
+      reset();
       onClose();
     },
   });
@@ -27,19 +32,13 @@ export const AddTag: FC<{ open: boolean; onClose: () => void }> = ({ open, onClo
     reset,
   } = useForm<Tag>();
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
-    }
-  }, [formState, reset]);
-
-  const isMobile = useMediaQuery('(max-width: 740px)');
+  const screen = useDeviceScreen();
 
   const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
   return (
     <Dialog
-      position={isMobile ? 'bottom' : undefined}
-      width={!isMobile ? 350 : undefined}
+      position={screen === 'iphone' ? 'bottom' : undefined}
+      width={screen !== 'iphone' ? 350 : undefined}
       header="Новый тег"
       visible={open}
       onClose={onClose}

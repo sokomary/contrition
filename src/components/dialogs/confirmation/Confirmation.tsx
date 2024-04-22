@@ -1,36 +1,44 @@
-import React, {
-  FC,
-} from 'react';
+import React from 'react';
 import {
   Button, Container, Dialog,
 } from 'src/components/features';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from 'src/theme';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
-export const Confirmation: FC<{ title: string; text: string; open: boolean; onClose: (result: boolean) => void }> = ({
+type Props = {
+  title: string;
+  text: string;
+  open: boolean;
+  onClose: (result: boolean) => void;
+};
+
+export const Confirmation = ({
   title, text, open, onClose,
-}) => {
+}: Props) => {
   const screen = useDeviceScreen();
   return (
     <>
-      {open && screen === 'iphone'
-        && (
-        <MobileDialog>
-          <ConfirmButton onClick={() => onClose(true)}>Ок</ConfirmButton>
-          <CancelButton onClick={() => onClose(false)}>Отмена</CancelButton>
-        </MobileDialog>
-        )}
+      {open && screen === 'iphone' && (
+        <MobileDialog><Content text={text} onClose={onClose} /></MobileDialog>
+      )}
       <Dialog width={350} header={title} visible={open && screen !== 'iphone'} onClose={() => onClose(false)}>
-        <Container vertical gap={15}>
-          <div>{text}</div>
-          <Container gap={5}>
-            <Button onClick={() => onClose(false)}>Отмена</Button>
-            <Button onClick={() => onClose(true)}>Ок</Button>
-          </Container>
-        </Container>
+        <Content text={text} onClose={onClose} />
       </Dialog>
     </>
+  );
+};
+
+const Content = ({ text, onClose }: { text?: string; onClose: (res: boolean) => void }) => {
+  const screen = useDeviceScreen();
+  return (
+    <Container vertical gap={15}>
+      <div>{text}</div>
+      <Container vertical={screen === 'iphone'} gap={5}>
+        <ConfirmButton onClick={() => onClose(true)}>Ок</ConfirmButton>
+        <CancelButton onClick={() => onClose(false)}>Отмена</CancelButton>
+      </Container>
+    </Container>
   );
 };
 
@@ -50,15 +58,19 @@ const MobileDialog = styled.div`
 `;
 
 const CancelButton = styled(Button)`
-  height: 61px;
-  width: 100%;
-  background-color: ${({ theme }) => color('secondary', theme)};
-  color:  ${({ theme }) => color('primary', theme)};
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 61px;
+    width: 100%;
+    background-color: ${color('secondary', theme)};
+    color:  ${color('primary', theme)};
+  `}
 `;
 
 const ConfirmButton = styled(Button)`
-  height: 61px;
-  width: 100%;
-  background-color: ${({ theme }) => color('primary', theme)};
-  color:  ${({ theme }) => color('basic', theme)};
+  ${({ theme }) => theme.screen === 'iphone' && css`
+    height: 61px;
+    width: 100%;
+    background-color: ${color('primary', theme)};
+    color:  ${color('basic', theme)};
+  `}
 `;

@@ -1,10 +1,14 @@
-import React, {
-  FC,
-} from 'react';
+import React from 'react';
 import { Container, Dialog } from 'src/components/features';
 import { Product } from 'src/domain';
 
-const ProductInfo: FC<{ open: boolean; onClose: () => void; product: Product }> = ({ open, onClose, product }) => (
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  product: Product;
+};
+
+const ProductInfo = ({ open, onClose, product }: Props) => (
   <Dialog
     width={350}
     header={product.name}

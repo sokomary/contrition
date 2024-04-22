@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { color } from 'src/theme';
-import { CommonProps } from './CommonProps';
+import { StyleProps } from './StyleProps';
 
-type Props = {
+type Props = PropsWithChildren & StyleProps & {
   onClick?: () => void;
   styleType?: 'primary' | 'accent';
   type?: 'submit' | 'reset' | 'button';
@@ -11,7 +11,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const Button: FC<PropsWithChildren & CommonProps & Props> = (props) => (
+export const Button = (props: Props) => (
   <StyledButton
     style={props.style}
     styleType={props.styleType}

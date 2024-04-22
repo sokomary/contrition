@@ -10,7 +10,7 @@ import { Tag, isAdmin, User } from 'src/domain';
 import { Button, Container } from 'src/components/features';
 import { color } from 'src/theme';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
-import { Dialogs } from './components/Dialogs';
+import { GetRandomRecipe } from 'src/components/dialogs';
 
 // todo посмотреть где можно использовать Partial
 
@@ -23,9 +23,9 @@ type Props = {
   onNewClick: () => void;
 };
 
-const ActionBar: FC<Props> = ({
+const ActionBar = ({
   infoOpen, recipeInfoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
-}) => {
+}: Props) => {
   const user = useAuthenticate();
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
   const { data: tags } = useQuery('tags', () => getTags());
@@ -34,13 +34,10 @@ const ActionBar: FC<Props> = ({
 
   return (
     <>
-      {tags?.length && (
-        <Dialogs
-          tags={tags}
-          randomDialogOpen={randomDialogOpen}
-          setRandomDialogOpen={setRandomDialogOpen}
-        />
-      )}
+      <GetRandomRecipe
+        open={randomDialogOpen}
+        onClose={() => setRandomDialogOpen(false)}
+      />
       <ActionBarContainer>
         {tags && (
           <ActionBarContent gap={0}>
@@ -99,7 +96,12 @@ const Tags: FC<{ tags: Tag[]; onTagChange: (tag?: Tag) => void }> = (props) => {
   );
 };
 
-const Search: FC<{ onQueryChange: (q: string) => void; className?: string }> = ({ onQueryChange, className }) => {
+type SearchProps = {
+  onQueryChange: (q: string) => void;
+  className?: string;
+};
+
+const Search = ({ onQueryChange, className }: SearchProps) => {
   const [q, setQ] = useState('');
   return (
     <SearchContainer className={className}>

@@ -1,5 +1,5 @@
 import React, {
-  CSSProperties, FC, PropsWithChildren, ReactNode,
+  CSSProperties, PropsWithChildren, ReactNode,
 } from 'react';
 import styled, { css } from 'styled-components';
 import { Dialog as OriginalDialog } from 'primereact/dialog';
@@ -14,7 +14,7 @@ type DialogPosition =
   | 'bottom-left'
   | 'bottom-right';
 
-export const Dialog: FC<{
+type Props = PropsWithChildren & {
   visible: boolean;
   header: ReactNode;
   onClose: () => void;
@@ -22,7 +22,9 @@ export const Dialog: FC<{
   className?: string;
   style?: CSSProperties;
   position?: DialogPosition;
-} & PropsWithChildren> = (props) => {
+};
+
+export const Dialog = (props: Props) => {
   const mode = useSystemThemeMode();
   const theme = { mode } as const;
   const screen = useDeviceScreen();
@@ -69,9 +71,7 @@ export const Dialog: FC<{
       contentStyle={getContentStyle()}
       header={props.header}
       visible={props.visible}
-      onHide={() => {
-        props.onClose();
-      }}
+      onHide={props.onClose}
     >
       {props.children}
     </WideDialog>

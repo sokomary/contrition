@@ -1,29 +1,36 @@
 import React, { FC } from 'react';
 import {
+  Control,
   useController,
-  UseControllerProps, useFieldArray,
+  useFieldArray,
 } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
 import i18next from 'src/formatter';
-import { Recipe, Product } from 'src/domain';
+import { Recipe } from 'src/domain';
 import {
   Container, Dropdown, FieldError,
 } from 'src/components/features';
 import { color } from 'src/theme';
 import { find } from 'lodash';
+import { useQuery } from 'react-query';
+import { getProducts } from 'src/api';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
-type Props = UseControllerProps<Recipe> & {
-  products?: Product[];
-  register: any;
+type Props = {
+  control: Control<Recipe>;
+  register: UseFormRegister<Recipe>;
   onActive: () => void;
   onNewClick: () => void;
 };
 
 const ProductsField: FC<Props> = (props) => {
+  const { data: products } = useQuery('products', () => getProducts());
+
   const { fieldState } = useController({
-    ...props,
+    control: props.control,
+    name: 'recipeProducts',
   });
 
   const {
@@ -36,7 +43,7 @@ const ProductsField: FC<Props> = (props) => {
     },
   });
 
-  const options = props.products?.map((p) => ({
+  const options = products?.map((p) => ({
     value: p,
     label: p.name,
   }));
@@ -64,7 +71,6 @@ const ProductsField: FC<Props> = (props) => {
       </Container>
       <ProductsContainer gap={5}>
         {fields
-          // .sort((rp1, rp2) => (rp1.product.id > rp2.product.id ? 1 : -1))
           .map((rp, index) => (
             <Container key={rp.product.id} style={{ height: 34 }}>
               <StyledInput

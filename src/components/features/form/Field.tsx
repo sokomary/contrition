@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties } from 'react';
 import styled from 'styled-components';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
@@ -6,7 +6,7 @@ import { Container } from 'src/components/features';
 import { color } from 'src/theme';
 import { FieldError as Error } from './FieldError';
 
-export const Field: FC<{
+type Props = {
   style?: CSSProperties;
   className?: string;
   step?: string;
@@ -19,9 +19,11 @@ export const Field: FC<{
   errorText?: string;
   width?: number;
   size?: 'small' | 'regular' | 'large';
-}> = ({
+};
+
+export const Field = ({
   name, type, size, step, style, className, required, register, placeholder, error, errorText, width,
-}) => (
+}: Props) => (
   <Container vertical gap={5}>
     <StyledInput
       heightSize={size}

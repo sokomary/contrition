@@ -1,14 +1,12 @@
-import React, {
-  FC, useRef, useState,
-} from 'react';
+import React, { useRef, useState } from 'react';
 
 import {
   useForm, SubmitHandler,
 } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
-import { addRecipe, getInstructions, getProducts } from 'src/api';
-import { Recipe, Tag } from 'src/domain';
+import { addRecipe, getInstructions } from 'src/api';
+import { Recipe } from 'src/domain';
 import i18next from 'src/formatter';
 import {
   Container, Field, Button, Loading, Dialog,
@@ -22,12 +20,13 @@ import { TagsField } from './components/TagsField';
 import { AddProduct } from '../addProduct';
 import { AddTag } from '../addTag';
 
-const AddRecipe: FC<{
-  tags: Tag[]; open: boolean; onClose: (result?: Recipe) => void; defaultValues?: Recipe;
-}> = ({
-  tags, open, onClose, defaultValues,
-}) => {
-  const { data: products } = useQuery('products', () => getProducts());
+type Props = {
+  open: boolean;
+  onClose: (result?: Recipe) => void;
+  defaultValues?: Recipe;
+};
+
+const AddRecipe = ({ open, onClose, defaultValues }: Props) => {
   const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
     `instructions-${defaultValues?.id}`,
     () => getInstructions(defaultValues!.id),
@@ -60,7 +59,7 @@ const AddRecipe: FC<{
   const onSubmit: SubmitHandler<Recipe> = (data) => addMutation.mutate(data);
 
   const divRef = useRef<HTMLDivElement>(null);
-  const scrollToLastMessage = () => {
+  const scrollToBottom = () => {
     divRef.current?.scroll({
       top: divRef.current.scrollHeight,
       behavior: 'smooth',
@@ -150,12 +149,12 @@ const AddRecipe: FC<{
                     </Container>
                   </BaseFields>
                   {screen === 'iphone'
-                      && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
+                      && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
                   <ImageField
                     name="img"
                     control={control}
-                    defaultValue={defaultValues ? defaultValues.img : undefined}
-                    defaultUrl={defaultValues ? defaultValues.pressignedUrl : undefined}
+                    defaultValue={defaultValues?.img}
+                    defaultUrl={defaultValues?.pressignedUrl}
                   />
                 </Container>
 
@@ -164,10 +163,8 @@ const AddRecipe: FC<{
                   <ProductsField
                     register={register}
                     onNewClick={() => setOpenNewProduct(true)}
-                    products={products}
-                    onActive={scrollToLastMessage}
+                    onActive={scrollToBottom}
                     control={control}
-                    name="recipeProducts"
                   />
                 </InteractiveFields>
 
@@ -175,17 +172,15 @@ const AddRecipe: FC<{
 
               <EndContainer>
                 {screen !== 'iphone'
-                    && <TagsField onNewClick={() => setOpenNewTag(true)} tags={tags} control={control} name="tags" />}
+                  && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
                 <SubmitButton size="large" type="submit">
                   {i18next.t('startpage:recipes.actions.save')}
                 </SubmitButton>
               </EndContainer>
             </Container>
           ) : (<LoadingWrapper><Loading /></LoadingWrapper>)}
-
         </form>
       </div>
-
     </StyledDialog>
   );
 };
