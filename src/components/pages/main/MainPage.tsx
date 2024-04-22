@@ -4,7 +4,7 @@ import React, {
 import styled, { css } from 'styled-components';
 import { useQuery } from 'react-query';
 import { isAdmin, Recipe } from 'src/domain';
-import { getRecipes, getTags } from 'src/api';
+import { getRecipes } from 'src/api';
 import { Container, Loading } from 'src/components/features';
 import { useAuthenticate, useDeviceScreen } from 'src/hooks';
 import { AddRecipe, RecipeInfo } from 'src/components/dialogs';
@@ -15,7 +15,6 @@ import { RecipeCard } from './components/RecipeCard';
 export const MainPage = () => {
   const user = useAuthenticate();
 
-  // todo на телефоне false
   const screen = useDeviceScreen();
 
   const [infoOpen, setInfoOpen] = useState(screen === 'mac');
@@ -27,7 +26,6 @@ export const MainPage = () => {
   const [recipeToEdit, setRecipeToEdit] = useState<Recipe | undefined>(undefined);
   const [q, setQ] = useState('');
 
-  const { data: tags, isLoading: isTagsLoading } = useQuery('tags', () => getTags());
   const { data: recipes, isLoading } = useQuery(
     ['recipes', tagsToFilter],
     () => getRecipes(tagsToFilter),
@@ -39,20 +37,15 @@ export const MainPage = () => {
 
   return (
     <Page recipeInfoOpen={recipeInfoOpen}>
-      {!isTagsLoading && recipeDialogOpen && !!tags?.length && (
-        <Suspense>
-          <AddRecipe
-            key={recipeToEdit?.id || 0}
-            tags={tags}
-            open={recipeDialogOpen}
-            defaultValues={recipeToEdit}
-            onClose={() => {
-              setRecipeDialogOpen(false);
-              setRecipeToEdit(undefined);
-            }}
-          />
-        </Suspense>
-      )}
+      <AddRecipe
+        key={recipeToEdit?.id || 0}
+        open={recipeDialogOpen}
+        defaultValues={recipeToEdit}
+        onClose={() => {
+          setRecipeDialogOpen(false);
+          setRecipeToEdit(undefined);
+        }}
+      />
 
       {recipeInfoOpen && recipeToView && (
         <RecipeInfo
