@@ -1,5 +1,5 @@
 import React, {
-  FC, useRef, useState,
+  useRef, useState,
 } from 'react';
 import styled, { css } from 'styled-components';
 import { useController, UseControllerProps } from 'react-hook-form';
@@ -9,7 +9,12 @@ import { Container, Loading } from 'src/components/features';
 import { Recipe } from 'src/domain/Recipe';
 import { color } from 'src/theme';
 
-const ImageField: FC<UseControllerProps<Recipe> & { defaultValue?: string; defaultUrl?: string }> = (props) => {
+type Props = UseControllerProps<Recipe> & {
+  defaultValue?: string;
+  defaultUrl?: string;
+};
+
+const ImageField = (props: Props) => {
   const { field } = useController(props);
   const [files, setFiles] = useState<File[]>([]);
   const ref = useRef<HTMLInputElement>(null);

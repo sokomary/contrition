@@ -16,14 +16,17 @@ import { ClearIcon, LinkIcon } from 'src/assets';
 import { Confirmation } from 'src/components/dialogs/confirmation';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
-const RecipeInfo: FC<{
+type Props = {
   open: boolean;
   onClose: () => void;
   recipe: Recipe;
   onEditClick: () => void;
-  inline?: boolean; }> = ({
+  inline?: boolean;
+};
+
+const RecipeInfo = ({
   open, onClose, recipe, onEditClick, inline,
-}) => {
+}: Props) => {
   const screen = useDeviceScreen();
   const getWidth = () => {
     if (['mac'].includes(screen)) {

@@ -1,43 +1,48 @@
 import React, {
-  FC, useState,
+  useState,
 } from 'react';
 import styled from 'styled-components';
-import { isEqual } from 'lodash';
 import { useQuery } from 'react-query';
-import { getRandomRecipe } from 'src/api';
-import { Tag } from 'src/domain';
+import { getRandomRecipe, getTags } from 'src/api';
 import {
-  Button, Container, Dialog,
+  Button,
+  Container, Dialog,
 } from 'src/components/features';
 import i18next from 'src/formatter';
 import { color } from 'src/theme';
-import { useMediaQuery } from 'src/hooks';
+import { useDeviceScreen } from 'src/hooks';
+import { find, isEqual } from 'lodash';
 
-const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> = ({ tags, open, onClose }) => {
-  const [selectedTags, setSelectedTags] = useState(tags);
+type Props = {
+  open: boolean; onClose: () => void;
+};
+
+const GetRandomRecipe = ({ open, onClose }: Props) => {
+  const { data: tags } = useQuery('tags', () => getTags());
+  const [selectedTags, setSelectedTags] = useState(tags || []);
 
   const { data, refetch } = useQuery(
     'random-recipe',
     () => getRandomRecipe(selectedTags.map((r) => r.id)),
   );
 
-  const isMobile = useMediaQuery('(max-width: 740px)');
+  const screen = useDeviceScreen();
 
   return (
     <Dialog
-      position={isMobile ? 'bottom' : undefined}
-      width={!isMobile ? 350 : undefined}
+      position={screen === 'iphone' ? 'bottom' : undefined}
+      width={screen !== 'iphone' ? 350 : undefined}
       header={i18next.t('startpage:recipes.random.header')}
       visible={open}
       onClose={onClose}
     >
       <Content vertical gap={30}>
         <Container gap={5}>
-          {tags.map((t, index) => (
+          {tags?.map((t, index) => (
             <TagName
               key={index}
               onClick={() => {
-                if (selectedTags.find((selTag) => isEqual(selTag, t))) {
+                if (find(selectedTags, t)) {
                   setSelectedTags(selectedTags.filter((selTag) => !isEqual(selTag, t)));
                 } else {
                   setSelectedTags([...selectedTags, t]);
@@ -49,7 +54,7 @@ const GetRandomRecipe: FC<{ tags: Tag[]; open: boolean; onClose: () => void }> =
             </TagName>
           ))}
         </Container>
-        <RandomName><div>{data?.name}</div></RandomName>
+        <RandomName>{data?.name}</RandomName>
         <Button onClick={refetch}>{i18next.t('startpage:recipes.random.actions.get')}</Button>
       </Content>
     </Dialog>
@@ -62,14 +67,14 @@ const Content = styled(Container)`
 `;
 
 const TagName = styled.div<{ selected: boolean }>`
+  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')}
   color: ${({ theme }) => color('accent', theme)};
   cursor: pointer;
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')}
 `;
 
 const RandomName = styled.div`
-  height: 30px;
   color: ${({ theme }) => color('font', theme)};
+  height: 30px;
 `;
 
 export { GetRandomRecipe };

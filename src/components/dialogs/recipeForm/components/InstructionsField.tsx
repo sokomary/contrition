@@ -1,20 +1,23 @@
 import React, {
-  FC, ReactNode,
+  ReactNode,
 } from 'react';
 import {
-  Control, useFieldArray,
+  Control,
+  useFieldArray,
 } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Recipe } from 'src/domain';
 import { Container } from 'src/components/features';
 import { color } from 'src/theme';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
 
 type Props = {
   control: Control<Recipe>;
-  register: any;
+  register: UseFormRegister<Recipe>;
 };
-const InstructionsField: FC<Props> = (props) => {
+
+const InstructionsField = (props: Props) => {
   const {
     fields, append, remove,
   } = useFieldArray({
@@ -63,10 +66,10 @@ type InstructionStepsProps = {
   onDeleteInstruction: () => void;
   instrIndex: number;
   register: any;
-  control: Control<Recipe>;
+  control?: Control<Recipe>;
 };
 
-const InstructionSteps: FC<InstructionStepsProps> = (props) => {
+const InstructionSteps = (props: InstructionStepsProps) => {
   const { fields, append, remove } = useFieldArray({
     control: props.control,
     name: `instructions.${props.instrIndex}.steps`,
