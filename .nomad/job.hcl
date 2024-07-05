@@ -1,4 +1,4 @@
-job "taxes-web" {
+job "contrition-web" {
   datacenters = ["dc1"]
   type = "service"
 
