@@ -1,0 +1,46 @@
+name: "Deploy docker images to nomad"
+inputs:
+  nomad-addr:
+    description: "Nomad domain address"
+    required: true
+  nomad-token:
+    description: "Nomad token"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout source code"
+      uses: "actions/checkout@v4"
+
+    - name: Download nomad client
+      run: curl --silent --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
+      shell: bash
+      env:
+        NOMAD_VERSION: "1.8.0"
+
+    - name: Unzip nomad client
+      run: unzip nomad_${NOMAD_VERSION}_linux_amd64.zip
+      shell: bash
+      env:
+        NOMAD_VERSION: "1.8.0"
+
+    - name: Check nomad client
+      run: ./nomad status
+      shell: bash
+      env:
+        NOMAD_ADDR: ${{ inputs.nomad-addr }}
+        NOMAD_TOKEN: ${{ inputs.nomad-token }}
+
+    - name: Stop job
+      run: ./nomad job stop contrition-web
+      shell: bash
+      env:
+        NOMAD_ADDR: ${{ inputs.nomad-addr }}
+        NOMAD_TOKEN: ${{ inputs.nomad-token }}
+
+    - name: Deploy nomad job
+      run: ./nomad job run .nomad/job.hcl
+      shell: bash
+      env:
+        NOMAD_ADDR: ${{ inputs.nomad-addr }}
+        NOMAD_TOKEN: ${{ inputs.nomad-token }}
