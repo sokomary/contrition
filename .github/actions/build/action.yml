@@ -32,7 +32,7 @@ runs:
       with:
         context: .
         push: true
-        tags: msokol1999/taxes-web:latest
+        tags: msokol1999/contrition-web:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
         file: Dockerfile
