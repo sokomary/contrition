@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
+import 'src/index.css';
 import { CookiesProvider } from 'react-cookie';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from 'src/App';
+import reportWebVitals from 'src/reportWebVitals';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <CookiesProvider>
-    {/* <React.StrictMode> */}
-    <App />
-    {/* </React.StrictMode> */}
-  </CookiesProvider>,
+  <div style={{ backgroundColor: 'black' }}>
+    <CookiesProvider>
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
+    </CookiesProvider>
+  </div>,
 );
 
 // If you want to start measuring performance in your app, pass a function

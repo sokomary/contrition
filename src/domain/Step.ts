@@ -3,11 +3,8 @@ import {
   string, type, TypeOf,
 } from 'io-ts';
 
-const StepSchema = type({
+export const StepSchema = type({
   id: number,
   description: string,
 }, 'StepSchema');
-type Step = TypeOf<typeof StepSchema>;
-
-export type { Step };
-export { StepSchema };
+export type Step = TypeOf<typeof StepSchema>;

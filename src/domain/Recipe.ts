@@ -6,14 +6,14 @@ import { TagSchema } from './Tag';
 import { UndefinedType } from './UndefinedType';
 import { InstructionSchema } from './Instruction';
 
-const RecipeProductSchema = type({
+export const RecipeProductSchema = type({
   id: number,
   product: ProductSchema,
   quantity: number,
 }, 'RecipeProductSchema');
-type RecipeProduct = TypeOf<typeof RecipeProductSchema>;
+export type RecipeProduct = TypeOf<typeof RecipeProductSchema>;
 
-const RecipeSchema = type({
+export const RecipeSchema = type({
   id: number,
   name: string,
   link: string,
@@ -30,7 +30,4 @@ const RecipeSchema = type({
   favorite: union([boolean, UndefinedType]),
 }, 'RecipeSchema');
 
-type Recipe = TypeOf<typeof RecipeSchema>;
-
-export type { Recipe, RecipeProduct };
-export { RecipeSchema };
+export type Recipe = TypeOf<typeof RecipeSchema>;

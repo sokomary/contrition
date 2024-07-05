@@ -5,10 +5,9 @@ import {
   Type,
 } from 'io-ts';
 import { PathReporter } from 'io-ts/PathReporter';
-import { Recipe, RecipeSchema } from '../domain/Recipe';
-import { Product, ProductSchema } from '../domain/Product';
-import { Tag, TagSchema } from '../domain/Tag';
-import { InstructionSchema } from '../domain/Instruction';
+import {
+  Recipe, RecipeSchema, Product, ProductSchema, Tag, TagSchema, InstructionSchema,
+} from 'src/domain';
 
 const instanceAxios = axios.create();
 
@@ -19,6 +18,16 @@ const decode = <A, O>(type: Type<A, O>) => ({ data }: AxiosResponse<unknown>) =>
   }
   throw new Error(`Decoding error ${PathReporter.report(result)}`);
 };
+
+instanceAxios.interceptors.response.use(
+  undefined,
+  (response) => {
+    if (response.response.status === 401) {
+      window.location.href = '/login';
+    }
+    return response;
+  },
+);
 
 export const getRecipes = (tags?: number[]) => instanceAxios.get(
   '/api/recipes',

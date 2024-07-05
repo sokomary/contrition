@@ -2,10 +2,7 @@ import {
   string, type, TypeOf,
 } from 'io-ts';
 
-const RoleSchema = type({
+export const RoleSchema = type({
   name: string,
 }, 'RoleSchema');
-type Role = TypeOf<typeof RoleSchema>;
-
-export type { Role };
-export { RoleSchema };
+export type Role = TypeOf<typeof RoleSchema>;
