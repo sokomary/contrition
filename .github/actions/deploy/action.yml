@@ -31,12 +31,12 @@ runs:
         NOMAD_ADDR: ${{ inputs.nomad-addr }}
         NOMAD_TOKEN: ${{ inputs.nomad-token }}
 
-    - name: Stop job
-      run: ./nomad job stop contrition-web
-      shell: bash
-      env:
-        NOMAD_ADDR: ${{ inputs.nomad-addr }}
-        NOMAD_TOKEN: ${{ inputs.nomad-token }}
+#    - name: Stop job
+#      run: ./nomad job stop contrition-web
+#      shell: bash
+#      env:
+#        NOMAD_ADDR: ${{ inputs.nomad-addr }}
+#        NOMAD_TOKEN: ${{ inputs.nomad-token }}
 
     - name: Deploy nomad job
       run: ./nomad job run .nomad/job.hcl
