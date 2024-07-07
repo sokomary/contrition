@@ -32,5 +32,5 @@ jobs:
       - name: "Deploy docker images to nomad"
         uses: "./.github/actions/deploy"
         with:
-          nomad-addr: https://nomad.sokomary.ru/
+          nomad-addr: https://nomad.soko-mary.ru/
           nomad-token: ${{ secrets.NOMAD_TOKEN }}
