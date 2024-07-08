@@ -1,4 +1,6 @@
-import React, { CSSProperties, FC, useState } from 'react';
+import React, {
+  CSSProperties, FC, useRef, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
@@ -12,6 +14,8 @@ import { useAuthenticate } from 'src/hooks';
 import { color } from 'src/theme';
 import { Confirmation } from 'src/components/dialogs/confirmation';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+// @ts-ignore
+import noImage from './no-image.png';
 
 const VISIBLE_TAGS_COUNT = 2;
 
@@ -22,6 +26,7 @@ type Props = {
   style?: CSSProperties;
   onEditClick: () => void;
   onViewClick: () => void;
+
   displayInfo?: boolean;
   small?: boolean;
   onRecipeInfoOpenChange: (open: boolean) => void;
@@ -46,6 +51,7 @@ const RecipeCard: FC<Props> = ({
     // setRecipeInfoOpen(open);
   };
 
+  const ref = useRef<HTMLImageElement>(null);
   return (
     <Card infoOpen={infoOpen} small={small} className={className} localDisplayInfo={localDisplayInfo} style={style}>
       {/* {recipeInfoOpen && ( */}
@@ -66,9 +72,16 @@ const RecipeCard: FC<Props> = ({
         <MainContainer localDisplayInfo={localDisplayInfo}>
           {recipe.favorite && <StyledFavoriteIcon />}
           {!localDisplayInfo && <OnImageCalories>{recipe.calories.toFixed(0)}</OnImageCalories>}
-          {recipe.pressignedUrl
-            ? <StyledImg src={recipe.pressignedUrl} onClick={() => changeRecipeInfoOpen(true)} />
-            : <StyledNoImg onClick={() => changeRecipeInfoOpen(true)} />}
+          <StyledImg
+            ref={ref}
+            onError={() => {
+              if (ref.current) {
+                ref.current.src = noImage;
+              }
+            }}
+            src={recipe.pressignedUrl || noImage}
+            onClick={() => changeRecipeInfoOpen(true)}
+          />
           <RecipeNameContainer>
             <Container>
               <RecipeName>{recipe.name}</RecipeName>
@@ -297,17 +310,6 @@ const StyledImg = styled.img`
   `};
 `;
 
-const StyledNoImg = styled.div`
-  width: 268px;
-  height: 268px;
-  flex-shrink: 0;
-
-  ${({ theme }) => ['ipadv', 'ipadh', 'iphone'].includes(theme.screen) && css`
-    width: 100%;
-    height: 100%;
-  `};
-`;
-
 const TagsContainer = styled(Container)`
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -360,7 +362,7 @@ const Option = styled.div<{ negative?: boolean }>`
   color: ${({ theme, negative }) => (negative ? color('danger', theme) : '')}};
   &:hover {
     color: ${({ theme }) => color('primary', theme)};
-  };
+  }
 `;
 
 const RecipeNameContainer = styled.div`
