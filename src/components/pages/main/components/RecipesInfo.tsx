@@ -160,17 +160,17 @@ const Animated = styled.div<{ open?: boolean }>`
       margin = '-590px';
     }
     const duration = ['ipadv', 'ipadh'].includes(theme.screen) ? '0.5s' : '1s';
-    return open ? css`
-    margin-top: ${margin};
-    visibility: hidden;
-    transition: margin-top ${duration}, visibility 0s 4s;
-  ` : css`
-    visibility: visible;
-    margin-top: 0;
-    transition: margin-top;
-    transition-delay: 0s;
-    transition-duration: ${duration};
-  `;
+    return !open ? css`
+      margin-top: ${margin};
+      visibility: hidden;
+      transition: margin-top ${duration}, visibility 0s 4s;
+    ` : css`
+      visibility: visible;
+      margin-top: 0;
+      transition: margin-top;
+      transition-delay: 0s;
+      transition-duration: ${duration};
+    `;
   }};
 `;
 

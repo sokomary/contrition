@@ -9,14 +9,14 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAuthenticate } from 'src/hooks/useAuthenticate';
 import { QueryProvider } from 'src/api';
 import { routs } from 'src/routs';
 import { MainPage } from 'src/components/pages/main';
 import { LoginPage } from 'src/components/pages/login';
 import { color } from './theme';
-import { useSystemThemeMode } from './hooks';
-import { useDeviceScreen } from './hooks/useDeviceScreen';
+import { useSystemThemeMode, useDeviceScreen } from './hooks';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>

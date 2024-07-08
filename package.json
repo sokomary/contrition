@@ -1,7 +1,7 @@
 {
   "name": "contrition",
   "version": "0.1.0",
-  "proxy": "https://localhost:8443",
+  "proxy": "https://localhost:9443",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
