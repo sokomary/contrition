@@ -25,6 +25,9 @@ jobs:
     runs-on: "ubuntu-latest"
     needs:
       - build
+    permissions:
+      id-token: "write"
+      contents: "read"
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v4"
@@ -33,4 +36,4 @@ jobs:
         uses: "./.github/actions/deploy"
         with:
           nomad-addr: https://nomad.sokomary.ru/
-          nomad-token: ${{ secrets.NOMAD_TOKEN }}
+          nomad-ca-cert: ${{ secrets.NOMAD_CA_CERT }}
