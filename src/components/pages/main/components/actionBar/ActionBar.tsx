@@ -46,7 +46,7 @@ const ActionBar: FC<Props> = ({
           <ActionBarContent gap={0}>
             <FiltersContainer>
               <InfoControl>
-                {!infoOpen
+                {infoOpen
                   ? <StyledDropUpIcon onClick={() => setInfoOpen(!infoOpen)} />
                   : <StyledDropDownIcon onClick={() => setInfoOpen(!infoOpen)} />}
               </InfoControl>
