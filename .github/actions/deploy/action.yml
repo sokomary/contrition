@@ -33,6 +33,11 @@ runs:
       shell: bash
       run: NOMAD_ADDR="${{ inputs.nomad-addr }}" NOMAD_TOKEN="${{ steps.nomad-jwt-auth.outputs.nomadToken }}" nomad status
 
+    - name: Stop job if exists
+      shell: bash
+      run: NOMAD_ADDR="${{ inputs.nomad-addr }}" NOMAD_TOKEN="${{ steps.nomad-jwt-auth.outputs.nomadToken }}" nomad job stop -purge contrition-web
+      continue-on-error: true
+
     - name: Deploy nomad job
       shell: bash
       run: NOMAD_ADDR="${{ inputs.nomad-addr }}" NOMAD_TOKEN="${{ steps.nomad-jwt-auth.outputs.nomadToken }}" nomad job run .nomad/job.hcl
