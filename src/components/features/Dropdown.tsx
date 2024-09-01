@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import styled, { css } from 'styled-components';
 import { isEqual } from 'lodash';
@@ -7,14 +7,14 @@ import { EnterIcon, SearchIcon } from 'src/assets';
 import { color } from 'src/theme';
 import { Container } from './Container';
 
-type Props = {
-  options: { value: any; label: string }[];
-  value: any[];
+type Props<T> = {
+  options: { value: T; label: string }[];
+  value: T[];
   onActive: () => void;
-  onSelect: (value: any) => void;
+  onSelect: (value: T) => void;
 };
 
-export const Dropdown: FC<Props> = (props) => {
+export const Dropdown = <T = unknown>(props: Props<T>) => {
   const [value, setValue] = useState(props.value || []);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -34,9 +34,9 @@ export const Dropdown: FC<Props> = (props) => {
   };
 
   return (
-    <StyledContainer vertical gap={1}>
+    <Root vertical gap={1}>
       <DropdownContainer open={open}>
-        <StyledSearchIcon />
+        <SearchIcon />
         <StyledInput
           autoComplete="off"
           id="products-input"
@@ -48,7 +48,7 @@ export const Dropdown: FC<Props> = (props) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <StyledEnterIcon />
+        <EnterIcon />
       </DropdownContainer>
       {open && (
         <DropdownContentContainer open={open} id="options-dropdown-container">
@@ -58,7 +58,7 @@ export const Dropdown: FC<Props> = (props) => {
                 <Container key={o.label}>
                   <Option
                     id={`option-${index}`}
-                    selected={value.find((v) => isEqual(v, o.value))}
+                    selected={!!value.find((v) => isEqual(v, o.value))}
                     onClick={() => {
                       props.onSelect(o.value);
                       inputRef.current?.focus();
@@ -76,11 +76,11 @@ export const Dropdown: FC<Props> = (props) => {
           )}
         </DropdownContentContainer>
       )}
-    </StyledContainer>
+    </Root>
   );
 };
 
-const StyledContainer = styled(Container)`
+const Root = styled(Container)`
   position: relative;
 `;
 
@@ -96,6 +96,7 @@ const DropdownContainer = styled.div<{ open: boolean }>`
   display: flex;
   justify-content: space-between;
   font-size: 16px;
+  align-items: center;
   
   ${({ theme }) => theme.screen === 'iphone' && css`
     height: 42px;
@@ -110,19 +111,11 @@ const StyledInput = styled.input`
   font-size: 16px;
   padding: 0 8px;
   background: ${({ theme }) => color('background', theme)};
-  color:${({ theme }) => color('font', theme)};
-`;
-
-const StyledEnterIcon = styled(EnterIcon)`
-  align-self: center;
-`;
-
-const StyledSearchIcon = styled(SearchIcon)`
-  align-self: center;
+  color: ${({ theme }) => color('font', theme)};
 `;
 
 const EmptyState = styled.div`
-  color:${({ theme }) => color('label', theme)};
+  color: ${({ theme }) => color('label', theme)};
   font-size: 14px;
   text-align: center;
   padding: 18px;
@@ -165,42 +158,30 @@ const Option = styled.div<{ selected: boolean }>`
   padding: 8px;
   cursor: pointer;
   font-size: 16px;
-
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  
   width: 100%;
 
   ${({ theme }) => theme.screen === 'iphone' && css`
     height: 42px;
   `};
   
-  ${({ selected }) => {
-    if (selected) {
-      return css`
-        color:${({ theme }) => color('label', theme)};
-      `;
-    }
-    return {
-
-    };
-  }};
+  ${({ selected }) => (selected ? css`
+        color: ${({ theme }) => color('label', theme)};
+      ` : '')
+}};
   
   &:hover {
-    ${({ selected }) => {
-    if (!selected) {
-      return css`
+    ${({ selected }) => (!selected
+    ? css`
           background-color: ${({ theme }) => color('secondary', theme)};
           border-radius: 7px;
           font-size: 17px;
           color: ${({ theme }) => color('primary', theme)};
-        `;
-    }
-    return css`
-        font-size: 17px;
-      `;
-  }
+        `
+    : css`font-size: 17px;`
+  )
 }}
 `;
 

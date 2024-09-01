@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
@@ -10,12 +10,18 @@ import {
 import i18next from 'src/formatter';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
-const AddProduct: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
+type Props = {
+  open: boolean;
+  onClose: () => void;
+};
+
+const AddProduct = ({ open, onClose }: Props) => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      reset();
       onClose();
     },
   });
@@ -26,12 +32,6 @@ const AddProduct: FC<{ open: boolean; onClose: () => void }> = ({ open, onClose 
     formState,
     reset,
   } = useForm<Product>();
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
-    }
-  }, [formState, reset]);
 
   const screen = useDeviceScreen();
 

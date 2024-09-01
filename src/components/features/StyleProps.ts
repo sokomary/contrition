@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export type CommonProps = {
+export type StyleProps = {
   className?: string;
   style?: CSSProperties;
 };

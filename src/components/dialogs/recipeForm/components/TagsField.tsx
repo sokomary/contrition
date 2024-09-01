@@ -3,19 +3,21 @@ import {
   useController, UseControllerProps, useFieldArray,
 } from 'react-hook-form';
 import styled, { css } from 'styled-components';
-import { Recipe, Tag } from 'src/domain';
+import { Recipe } from 'src/domain';
 import { Container, FieldError } from 'src/components/features';
 import i18next from 'src/formatter';
 import { color } from 'src/theme';
 import { find } from 'lodash';
+import { useQuery } from 'react-query';
+import { getTags } from 'src/api';
 
 type Props = {
-  tags: Tag[];
-  label?: string;
   onNewClick: () => void;
 };
 
 const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
+  const { data: tags } = useQuery('tags', () => getTags());
+
   const { fieldState } = useController({
     ...props,
   });
@@ -33,7 +35,6 @@ const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
 
   return (
     <Container vertical gap={5}>
-      {props.label && <Label>{props.label}</Label>}
       <StyledContainer gap={5}>
         {fields
           .map((t, index) => (
@@ -42,8 +43,7 @@ const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
               {t.name}
             </TagName>
           ))}
-        {props.tags
-          .filter((unselected) => !find(fields, unselected))
+        {tags?.filter((unselected) => !find(fields, unselected))
           .map((t) => (
             <TagName key={t.id} selected={false} onClick={() => append(t)}>
               #
@@ -63,11 +63,6 @@ const StyledContainer = styled(Container)`
   ${({ theme }) => !['mac'].includes(theme.screen) && css`
     flex-wrap: wrap;
   `};
-`;
-
-const Label = styled.div`
-  color: slategrey;
-  font-size: 12px;
 `;
 
 const TagName = styled.div<{ selected: boolean }>`

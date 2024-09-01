@@ -1,5 +1,5 @@
 export * from './Button';
-export * from './CommonProps';
+export * from './StyleProps';
 export * from './Container';
 export * from './Dialog';
 export * from './Dropdown';
