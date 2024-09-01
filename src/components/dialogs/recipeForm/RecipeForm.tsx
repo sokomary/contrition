@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { Suspense, useRef, useState } from 'react';
 
 import {
   useForm, SubmitHandler,
@@ -30,7 +30,7 @@ const AddRecipe = ({ open, onClose, defaultValues }: Props) => {
   const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
     `instructions-${defaultValues?.id}`,
     () => getInstructions(defaultValues!.id),
-    { enabled: defaultValues?.id !== undefined, suspense: true },
+    { enabled: defaultValues?.id !== undefined, suspense: false },
   );
 
   const queryClient = useQueryClient();
@@ -81,107 +81,110 @@ const AddRecipe = ({ open, onClose, defaultValues }: Props) => {
 
   const screen = useDeviceScreen();
   return (
-    <StyledDialog
-      position={getPosition()}
-      header={defaultValues ? defaultValues.name : i18next.t('startpage:recipes.new.header')}
-      visible={open}
-      onClose={() => {
-        onClose();
-        reset();
-      }}
-    >
-      <AddProduct
-        open={openNewProduct}
-        onClose={() => setOpenNewProduct(false)}
-      />
-      <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
-
-      <div
-        ref={divRef}
-        style={{ height: '100%' }}
+    <Suspense>
+      <StyledDialog
+        position={getPosition()}
+        header={defaultValues ? defaultValues.name : i18next.t('startpage:recipes.new.header')}
+        visible={open}
+        onClose={() => {
+          onClose();
+          reset();
+        }}
       >
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-        <form
+        <AddProduct
+          open={openNewProduct}
+          onClose={() => setOpenNewProduct(false)}
+        />
+        <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
+
+        <div
+          ref={divRef}
           style={{ height: '100%' }}
-          onSubmit={handleSubmit(onSubmit)}
-          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
         >
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+          <form
+            style={{ height: '100%' }}
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+          >
 
-          {!addMutation.isLoading && !areInstructionsLoading ? (
-            <Container vertical style={{ height: '100%', gap: 20 }}>
+            {!addMutation.isLoading && !areInstructionsLoading ? (
+              <Container vertical style={{ height: '100%', gap: 20 }}>
 
-              <ContentContainer gap={10}>
+                <ContentContainer gap={10}>
 
-                <Container vertical gap={20}>
-                  <BaseFields vertical gap={7}>
-                    <Field
-                      size={screen === 'iphone' ? 'large' : undefined}
-                      width={screen === 'iphone' ? undefined : 332}
-                      name="name"
-                      register={register}
-                      placeholder={i18next.t('domain:recipe.name')}
-                      error={formState.errors.name}
-                      errorText={i18next.t('forms:fields.errors.required')}
-                      required
-                    />
-                    <Container gap={screen === 'iphone' ? undefined : 7}>
+                  <Container vertical gap={20}>
+                    <BaseFields vertical gap={7}>
                       <Field
                         size={screen === 'iphone' ? 'large' : undefined}
-                        width={252}
-                        name="link"
+                        width={screen === 'iphone' ? undefined : 332}
+                        name="name"
                         register={register}
-                        placeholder={i18next.t('domain:recipe.link')}
-                        error={formState.errors.link}
-                        errorText={i18next.t('forms:fields.errors.required')}
-                      />
-                      <Field
-                        size={screen === 'iphone' ? 'large' : undefined}
-                        width={screen === 'iphone' ? 104 : 72}
-                        type="number"
-                        step="0.01"
-                        name="size"
-                        register={register}
-                        placeholder={i18next.t('domain:recipe.size')}
-                        error={formState.errors.size}
+                        placeholder={i18next.t('domain:recipe.name')}
+                        error={formState.errors.name}
                         errorText={i18next.t('forms:fields.errors.required')}
                         required
                       />
-                    </Container>
-                  </BaseFields>
-                  {screen === 'iphone'
+                      <Container gap={screen === 'iphone' ? undefined : 7}>
+                        <Field
+                          size={screen === 'iphone' ? 'large' : undefined}
+                          width={252}
+                          name="link"
+                          register={register}
+                          placeholder={i18next.t('domain:recipe.link')}
+                          error={formState.errors.link}
+                          errorText={i18next.t('forms:fields.errors.required')}
+                        />
+                        <Field
+                          size={screen === 'iphone' ? 'large' : undefined}
+                          width={screen === 'iphone' ? 104 : 72}
+                          type="number"
+                          step="0.01"
+                          name="size"
+                          register={register}
+                          placeholder={i18next.t('domain:recipe.size')}
+                          error={formState.errors.size}
+                          errorText={i18next.t('forms:fields.errors.required')}
+                          required
+                        />
+                      </Container>
+                    </BaseFields>
+                    {screen === 'iphone'
                       && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
-                  <ImageField
-                    name="img"
-                    control={control}
-                    defaultValue={defaultValues?.img}
-                    defaultUrl={defaultValues?.pressignedUrl}
-                  />
-                </Container>
+                    <ImageField
+                      name="img"
+                      control={control}
+                      defaultValue={defaultValues?.img}
+                      defaultUrl={defaultValues?.pressignedUrl}
+                    />
+                  </Container>
 
-                <InteractiveFields>
-                  <InstructionsField control={control} register={register} />
-                  <ProductsField
-                    register={register}
-                    onNewClick={() => setOpenNewProduct(true)}
-                    onActive={scrollToBottom}
-                    control={control}
-                  />
-                </InteractiveFields>
+                  <InteractiveFields>
+                    <InstructionsField control={control} register={register} />
+                    <ProductsField
+                      register={register}
+                      onNewClick={() => setOpenNewProduct(true)}
+                      onActive={scrollToBottom}
+                      control={control}
+                    />
+                  </InteractiveFields>
 
-              </ContentContainer>
+                </ContentContainer>
 
-              <EndContainer>
-                {screen !== 'iphone'
+                <EndContainer>
+                  {screen !== 'iphone'
                   && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
-                <SubmitButton size="large" type="submit">
-                  {i18next.t('startpage:recipes.actions.save')}
-                </SubmitButton>
-              </EndContainer>
-            </Container>
-          ) : (<LoadingWrapper><Loading /></LoadingWrapper>)}
-        </form>
-      </div>
-    </StyledDialog>
+                  <SubmitButton size="large" type="submit">
+                    {i18next.t('startpage:recipes.actions.save')}
+                  </SubmitButton>
+                </EndContainer>
+              </Container>
+            ) : (<LoadingWrapper><Loading /></LoadingWrapper>)}
+          </form>
+        </div>
+
+      </StyledDialog>
+    </Suspense>
   );
 };
 

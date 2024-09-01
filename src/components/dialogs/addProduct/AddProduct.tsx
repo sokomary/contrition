@@ -11,7 +11,8 @@ import i18next from 'src/formatter';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 
 type Props = {
-  open: boolean; onClose: () => void;
+  open: boolean;
+  onClose: () => void;
 };
 
 const AddProduct = ({ open, onClose }: Props) => {

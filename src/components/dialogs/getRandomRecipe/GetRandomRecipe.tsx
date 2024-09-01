@@ -14,7 +14,8 @@ import { useDeviceScreen } from 'src/hooks';
 import { find, isEqual } from 'lodash';
 
 type Props = {
-  open: boolean; onClose: () => void;
+  open: boolean;
+  onClose: () => void;
 };
 
 const GetRandomRecipe = ({ open, onClose }: Props) => {
