@@ -11,7 +11,8 @@ import {
 import { useDeviceScreen } from 'src/hooks';
 
 type Props = {
-  open: boolean; onClose: () => void;
+  open: boolean;
+  onClose: () => void;
 };
 
 export const AddTag = ({ open, onClose }: Props) => {

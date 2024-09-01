@@ -9,14 +9,14 @@ import i18next from 'src/formatter';
 import { color } from 'src/theme';
 import { find } from 'lodash';
 import { useQuery } from 'react-query';
-import { getProducts } from 'src/api';
+import { getTags } from 'src/api';
 
 type Props = {
   onNewClick: () => void;
 };
 
 const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
-  const { data: tags } = useQuery('tags', () => getProducts());
+  const { data: tags } = useQuery('tags', () => getTags());
 
   const { fieldState } = useController({
     ...props,

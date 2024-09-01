@@ -8,11 +8,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <div style={{ backgroundColor: 'black' }}>
+  <div>
     <CookiesProvider>
-      {/* <React.StrictMode> */}
-      <App />
-      {/* </React.StrictMode> */}
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     </CookiesProvider>
   </div>,
 );
