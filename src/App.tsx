@@ -13,8 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAuthenticate } from 'src/hooks/useAuthenticate';
 import { QueryProvider } from 'src/api';
 import { routs } from 'src/routs';
-import { MainPage } from 'src/components/pages/main';
-import { LoginPage } from 'src/components/pages/login';
+import { MainPage } from 'src/components/pages/MainPage';
+import { LoginPage } from 'src/components/pages/LoginPage';
 import { color } from './theme';
 import { useSystemThemeMode, useDeviceScreen } from './hooks';
 
