@@ -1,9 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { isRight } from 'fp-ts/These';
-import {
-  array, string,
-  Type,
-} from 'io-ts';
+import { array, string, Type } from 'io-ts';
 import { PathReporter } from 'io-ts/PathReporter';
 import {
   Recipe, RecipeSchema, Product, ProductSchema, Tag, TagSchema, InstructionSchema,

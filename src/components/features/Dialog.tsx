@@ -6,10 +6,13 @@ import { Dialog as OriginalDialog } from 'primereact/dialog';
 import { color } from 'src/theme';
 import { useSystemThemeMode, useDeviceScreen } from 'src/hooks';
 
-type DialogPosition =
-  'center' | 'top'
-  | 'bottom' | 'left'
-  | 'right' | 'top-left'
+export type DialogPosition =
+  | 'center'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top-left'
   | 'top-right'
   | 'bottom-left'
   | 'bottom-right';
@@ -26,39 +29,29 @@ type Props = PropsWithChildren & {
 
 export const Dialog = (props: Props) => {
   const mode = useSystemThemeMode();
-  const theme = { mode } as const;
   const screen = useDeviceScreen();
 
-  const basicContentStyle = {
-    backgroundColor: color('basic', theme),
-    color: color('font', theme),
+  const basicStyle = {
+    backgroundColor: color('basic', { mode }),
+    color: color('font', { mode }),
     padding: screen !== 'mac' ? '15px' : undefined,
     WebkitScrollbar: {
       backgroundColor: 'transparent',
     },
   };
 
-  const getHeaderStyle = () => {
-    if (props.position === 'bottom') {
-      return { borderRadius: '20px 20px 0px 0px', ...basicContentStyle };
-    }
-    if (props.position === 'right') {
-      return { borderRadius: '20px 0px 0px 0px', ...basicContentStyle };
-    }
-    if (props.position === 'top') {
-      return { borderRadius: '0px', ...basicContentStyle };
-    }
-    return { borderRadius: '20px 20px 0px 0px', ...basicContentStyle };
+  const HEADER_STYLES: { [key: string]: CSSProperties } = {
+    bottom: { borderRadius: '20px 20px 0px 0px', ...basicStyle },
+    right: { borderRadius: '20px 0px 0px 0px', ...basicStyle },
+    top: { borderRadius: '0px', ...basicStyle },
+    left: { borderRadius: '20px 20px 0px 0px', ...basicStyle },
   };
 
-  const getContentStyle = () => {
-    if (props.position === 'bottom') {
-      return { borderRadius: '0px', ...basicContentStyle };
-    }
-    if (props.position === 'right') {
-      return { borderRadius: '0px 0px 0px 20px', ...basicContentStyle };
-    }
-    return { borderRadius: '0px 0px 20px 20px', ...basicContentStyle };
+  const CONTENT_STYLES: { [key: string]: CSSProperties } = {
+    bottom: { borderRadius: '0px', ...basicStyle },
+    right: { borderRadius: '0px 0px 0px 20px', ...basicStyle },
+    top: { borderRadius: '0px 0px 20px 20px', ...basicStyle },
+    left: { borderRadius: '0px 0px 20px 20px', ...basicStyle },
   };
 
   return (
@@ -67,8 +60,8 @@ export const Dialog = (props: Props) => {
       className={props.className}
       style={props.style}
       width={props.width || 1120}
-      headerStyle={getHeaderStyle()}
-      contentStyle={getContentStyle()}
+      headerStyle={HEADER_STYLES[props.position || 'left']}
+      contentStyle={CONTENT_STYLES[props.position || 'left']}
       header={props.header}
       visible={props.visible}
       onHide={props.onClose}
@@ -82,7 +75,6 @@ const WideDialog = styled(OriginalDialog)<{ width: number }>`
   width: ${({ width }) => `${width}px`};
   margin: 0 !important;
   max-height: 100%;
-
   ${({ theme }) => ['ipadv'].includes(theme.screen) && css`
     max-height: 73%;
   `};
