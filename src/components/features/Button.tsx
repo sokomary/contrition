@@ -30,8 +30,11 @@ const StyledButton = styled.button<Props>`
   outline: none;
   border-radius: 15px;
   cursor: pointer;
-  
   font-size: 16px;
+  opacity: 80%;
+  width: fit-content;
+  min-width: fit-content;
+  padding: 5px 15px;
   
   height: ${({ size }) => {
     if (size === 'small') {
@@ -51,15 +54,10 @@ const StyledButton = styled.button<Props>`
       `;
     }
     return css`
-        color: ${({ theme }) => color('primary', theme)};
-        background-color: ${({ theme }) => color('secondary', theme)};
-      `;
+      color: ${({ theme }) => color('primary', theme)};
+      background-color: ${({ theme }) => color('secondary', theme)};
+    `;
   }};
-  
-  opacity: 80%;
-  width: fit-content;
-  min-width: fit-content;
-  padding: 5px 15px;
 
   ${(props) => !props.disabled && css`
     &:active {
