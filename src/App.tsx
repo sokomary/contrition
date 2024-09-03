@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import 'src/App.css';
+// import 'src/App.css';
 import styled, { ThemeProvider } from 'styled-components';
 import {
   BrowserRouter as Router, Route, Routes,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { CookiesProvider } from 'react-cookie';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -15,11 +16,26 @@ import { QueryProvider } from 'src/api';
 import { routs } from 'src/routs';
 import { MainPage } from 'src/components/pages/MainPage';
 import { LoginPage } from 'src/components/pages/LoginPage';
+import ReactDOM from 'react-dom/client';
 import { color } from './theme';
 import { useSystemThemeMode, useDeviceScreen } from './hooks';
+// import 'src/index.css';
 
 const App: FC = () => (
   <QueryProvider><Content /></QueryProvider>
+);
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
+root.render(
+  <div>
+    <CookiesProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </CookiesProvider>
+  </div>,
 );
 
 const Content = () => {
