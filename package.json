@@ -6,8 +6,8 @@
   "dependencies": {
     "@json2csv/plainjs": "^6.1.2",
     "@sokomary/eslint-config": "^0.0.2",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.14",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.16.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -40,17 +40,20 @@
     "styled-components": "^5.3.3",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "vite-plugin-pwa": "^0.20.3",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky",
     "check-types": "tsc --noemit",
     "eslint": "eslint",
-    "lint": "npm run eslint && npm run check-types"
+    "lint": "npm run eslint && npm run check-types",
+    "build": "vite build",
+    "dev": "vite serve"
   },
   "eslintConfig": {
     "extends": [
@@ -74,7 +77,11 @@
     "@types/lodash": "^4.14.197",
     "@types/papaparse": "^5.3.7",
     "@types/styled-components": "^5.1.26",
-    "husky": "^9.0.10"
+    "husky": "^9.0.10",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.10",
+    "vite-plugin-simple-html": "^0.1.2"
   },
   "browser": {
     "fs": false,
