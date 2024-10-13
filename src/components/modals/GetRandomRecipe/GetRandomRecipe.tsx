@@ -1,7 +1,7 @@
 import React, {
   useState,
 } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getRandomRecipe, getTags } from 'src/api';
 import {
   Action, ActionBar,
@@ -20,13 +20,13 @@ type Props = {
 export const GetRandomRecipe = ({ open, onClose }: Props) => {
   const screen = useDeviceScreen();
 
-  const { data: tags } = useQuery('tags', () => getTags());
+  const { data: tags } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
   const [selectedTags, setSelectedTags] = useState(tags || []);
 
-  const { data, refetch } = useQuery(
-    'random-recipe',
-    () => getRandomRecipe(selectedTags.map((r) => r.id)),
-  );
+  const { data, refetch } = useQuery({
+    queryKey: ['random-recipe'],
+    queryFn: () => getRandomRecipe(selectedTags.map((r) => r.id)),
+  });
 
   const actions: Action[] = [
     {

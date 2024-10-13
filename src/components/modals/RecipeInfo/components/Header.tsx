@@ -28,8 +28,8 @@ export const Header = ({
       {onClose && <ClearIcon style={{ cursor: 'pointer' }} onClick={onClose} />}
     </div>
     <div className={css.content}>
-      {(['calories', 'protein', 'fats', 'carbohydrates'] as const).map((field) => (
-        <div className={css.element}>
+      {(['calories', 'protein', 'fats', 'carbohydrates'] as const).map((field, i) => (
+        <div key={i} className={css.element}>
           {recipe[field].toFixed(recipe[field] % 1 > 0 ? 0 : undefined)}
         </div>
       ))}

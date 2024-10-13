@@ -1,7 +1,7 @@
 import React, {
   Suspense, useMemo, useState,
 } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { isAdmin, Recipe } from 'src/domain';
 import { getRecipes } from 'src/api';
 import { Loading } from 'src/components/features';
@@ -26,9 +26,10 @@ export const MainPage = () => {
   const [q, setQ] = useState('');
 
   const { data: recipes, isLoading } = useQuery(
-    ['recipes', tagsToFilter],
-    () => getRecipes(tagsToFilter),
-    { keepPreviousData: true, suspense: true },
+    {
+      queryKey: ['recipes', tagsToFilter],
+      queryFn: () => getRecipes(tagsToFilter),
+    },
   );
   const filteredRecipes = useMemo(() => (
     q?.length ? recipes?.filter((r) => r.name.toLowerCase().includes(q.toLowerCase())) : recipes
@@ -48,6 +49,7 @@ export const MainPage = () => {
 
       {recipeInfoOpen && recipeToView && (
         <RecipeInfo
+          key={recipeToView.id}
           onEditClick={() => {
             setRecipeInfoOpen(false);
             setRecipeToEdit(recipeToView);

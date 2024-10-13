@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Recipe } from 'src/domain';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Confirmation } from 'src/components/modals/Confirmation';
 import { Button } from 'src/components/features';
@@ -20,6 +20,7 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
   });
   const toFavoritesMutation = useMutation({
     mutationFn: toFavorites,
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
     },

@@ -12,8 +12,8 @@ export const ActionBar = ({ actions }: Props) => {
   const screen = useDeviceScreen();
   return (
     <div className={css.container}>
-      {actions.map((action) => (
-        <Button size={screen === 'iphone' ? 'large' : 'regular'} {...action} />
+      {actions.map((action, i) => (
+        <Button key={i} size={screen === 'iphone' ? 'large' : 'regular'} {...action} />
       ))}
     </div>
   );

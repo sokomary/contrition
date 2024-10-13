@@ -6,7 +6,7 @@ import { Recipe } from 'src/domain';
 import { Button, FieldError } from 'src/components/features';
 import i18next from 'src/formatter';
 import { find } from 'lodash';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
 import * as css from './TagsField.css';
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
-  const { data: tags } = useQuery('tags', () => getTags());
+  const { data: tags } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
 
   const { fieldState } = useController(props);
 
@@ -40,7 +40,7 @@ export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
           ))}
         {tags?.filter((unselected) => !find(fields, unselected))
           .map((t) => (
-            <div className={css.tag({ selected: false })} key={t.id} onClick={() => append(t)}>
+            <div key={t.id} className={css.tag({ selected: false })} onClick={() => append(t)}>
               #
               {t.name}
             </div>

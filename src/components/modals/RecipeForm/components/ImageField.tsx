@@ -2,7 +2,7 @@ import React, {
   useRef, useState,
 } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { upload } from 'src/api';
 import { Button, Loading } from 'src/components/features';
 import { Recipe } from 'src/domain/Recipe';
@@ -50,7 +50,7 @@ export const ImageField = (props: Props) => {
   return (
     <div>
       <div className={css.container}>
-        {uploadMutation.isLoading ? (
+        {uploadMutation.isPending ? (
           <div className={css.loadingWrapper}><Loading /></div>
         ) : (
           <>

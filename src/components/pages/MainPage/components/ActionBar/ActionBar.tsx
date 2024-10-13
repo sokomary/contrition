@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
 import {
   DropDownIcon, DropUpIcon,
@@ -27,7 +27,7 @@ export const ActionBar = ({
   infoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
 }: Props) => {
   const user = useAuthenticate();
-  const { data: tags } = useQuery('tags', () => getTags());
+  const { data: tags } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
   const [randomDialogOpen, setRandomDialogOpen] = useState(false);
   const screen = useDeviceScreen();

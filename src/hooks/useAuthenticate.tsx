@@ -1,12 +1,13 @@
-import { useQuery } from 'react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getUser } from 'src/api';
 import { User } from 'src/domain';
 
 export const useAuthenticate = () => {
-  const { data: user } = useQuery<User>(
-    ['user'],
-    () => getUser(),
-    { keepPreviousData: true, suspense: true },
+  const { data: user } = useSuspenseQuery<User>(
+    {
+      queryKey: ['user'],
+      queryFn: () => getUser(),
+    },
   );
 
   return user;

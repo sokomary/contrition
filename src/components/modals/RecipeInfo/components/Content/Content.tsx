@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Recipe } from 'src/domain';
 import { getInstructions } from 'src/api';
 import { useDeviceScreen } from 'src/hooks';
@@ -12,9 +12,10 @@ export const Content = ({
   onEditClick,
 }: { recipe: Recipe; onEditClick: () => void }) => {
   const { data: instructions, isLoading } = useQuery(
-    `instructions-${recipe.id}`,
-    () => getInstructions(recipe.id),
-    { keepPreviousData: false },
+    {
+      queryKey: [`instructions-${recipe.id}`],
+      queryFn: () => getInstructions(recipe.id),
+    },
   );
   const screen = useDeviceScreen();
   return (

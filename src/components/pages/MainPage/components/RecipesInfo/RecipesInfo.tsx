@@ -1,7 +1,7 @@
 import React, {
   FC, useMemo, useState,
 } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getProducts, getTags } from 'src/api';
 import { Recipe, Product } from 'src/domain';
 import { AddProduct, AddTag, ProductInfo } from 'src/components/modals';
@@ -24,11 +24,12 @@ export const RecipesInfo: FC<Props> = ({
   const [openNewProduct, setOpenNewProduct] = useState(false);
   const [openNewTag, setOpenNewTag] = useState(false);
 
-  const { data: tags, isLoading: areTagsLoading } = useQuery('tags', () => getTags());
-  const { data: products, isLoading: areProductsLoading } = useQuery(
-    ['products'],
-    () => getProducts(),
-    { keepPreviousData: true, suspense: true },
+  const { data: tags, isLoading: areTagsLoading } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
+  const { data: products, isLoading: areProductsLoading } = useSuspenseQuery(
+    {
+      queryKey: ['products'],
+      queryFn: () => getProducts(),
+    },
   );
 
   const favoriteRecipes = useMemo(() => (

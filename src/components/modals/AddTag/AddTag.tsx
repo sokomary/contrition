@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import i18next from 'src/formatter';
 import { Tag, TagSchema } from 'src/domain';
 import { addTag } from 'src/api';
@@ -51,7 +51,7 @@ export const AddTag = ({ open, onClose }: Props) => {
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        { !addMutation.isLoading ? (
+        { !addMutation.isPending ? (
           <div>
             {Object.entries(TagSchema.props).filter((k) => k[0] !== 'id').map((key) => (
               <Field

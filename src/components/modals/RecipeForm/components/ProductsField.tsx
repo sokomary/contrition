@@ -10,7 +10,7 @@ import {
   Button, Dropdown, FieldError,
 } from 'src/components/features';
 import { find } from 'lodash';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getProducts } from 'src/api';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Tooltip } from 'react-tooltip';
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export const ProductsField: FC<Props> = (props) => {
-  const { data: products } = useQuery('products', () => getProducts());
+  const { data: products } = useQuery({ queryKey: ['products'], queryFn: () => getProducts() });
 
   const { fieldState } = useController({
     control: props.control,

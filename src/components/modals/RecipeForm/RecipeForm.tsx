@@ -3,7 +3,9 @@ import React, { Suspense, useRef, useState } from 'react';
 import {
   useForm, SubmitHandler,
 } from 'react-hook-form';
-import { useMutation, useQueryClient, useQuery } from 'react-query';
+import {
+  useMutation, useQuery, useQueryClient,
+} from '@tanstack/react-query';
 import { addRecipe, getInstructions } from 'src/api';
 import { Recipe } from 'src/domain';
 import i18next from 'src/formatter';
@@ -18,7 +20,7 @@ import { TagsField } from './components/TagsField';
 import { AddProduct } from '../AddProduct';
 import { AddTag } from '../AddTag';
 import * as css from './RecipeForm.css';
-import { ActionBar } from '../../features/modal/components/ActionBar';
+import { ActionBar } from '../../features';
 
 type Props = {
   open: boolean;
@@ -37,9 +39,11 @@ export const RecipeForm = ({
   open, onClose, defaultValues,
 }: Props) => {
   const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
-    `instructions-${defaultValues?.id}`,
-    () => getInstructions(defaultValues!.id),
-    { enabled: defaultValues?.id !== undefined, suspense: false },
+    {
+      queryKey: [`instructions-${defaultValues?.id}`],
+      queryFn: () => (getInstructions(defaultValues!.id)),
+      enabled: defaultValues?.id !== undefined,
+    },
   );
 
   const queryClient = useQueryClient();
@@ -117,7 +121,7 @@ export const RecipeForm = ({
             onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
           >
 
-            {!addMutation.isLoading && !areInstructionsLoading ? (
+            {!addMutation.isPending && !areInstructionsLoading ? (
               <div className={css.container}>
 
                 <div className={css.content}>
