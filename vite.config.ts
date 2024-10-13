@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 // import mkcert from 'vite-plugin-mkcert';
 import { VitePWA } from 'vite-plugin-pwa';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 export default defineConfig({
     server: {
@@ -15,6 +16,7 @@ export default defineConfig({
       },
     },
     plugins: [
+      vanillaExtractPlugin(),
       react({ include: '**/*.{jsx,tsx}' }),
       // mkcert(),
       VitePWA({

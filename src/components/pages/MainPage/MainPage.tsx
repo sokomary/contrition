@@ -1,16 +1,16 @@
 import React, {
   Suspense, useMemo, useState,
 } from 'react';
-import styled, { css } from 'styled-components';
 import { useQuery } from 'react-query';
 import { isAdmin, Recipe } from 'src/domain';
 import { getRecipes } from 'src/api';
-import { Container, Loading } from 'src/components/features';
+import { Loading } from 'src/components/features';
 import { useAuthenticate, useDeviceScreen } from 'src/hooks';
-import { AddRecipe, RecipeInfo } from 'src/components/dialogs';
+import { RecipeForm, RecipeInfo } from 'src/components/modals';
 import { ActionBar } from './components/ActionBar';
 import { RecipesInfo } from './components/RecipesInfo';
 import { RecipeCard } from './components/RecipeCard';
+import * as css from './MainPage.css';
 
 export const MainPage = () => {
   const user = useAuthenticate();
@@ -35,8 +35,8 @@ export const MainPage = () => {
   ), [q, recipes]);
 
   return (
-    <Page recipeInfoOpen={recipeInfoOpen}>
-      <AddRecipe
+    <div className={css.page}>
+      <RecipeForm
         key={recipeToEdit?.id || 0}
         open={recipeDialogOpen}
         defaultValues={recipeToEdit}
@@ -48,7 +48,7 @@ export const MainPage = () => {
 
       {recipeInfoOpen && recipeToView && (
         <RecipeInfo
-          inline={['mac', 'ipadh'].includes(screen)}
+          // inline={['mac', 'ipadh'].includes(screen)}
           onEditClick={() => {
             setRecipeInfoOpen(false);
             setRecipeToEdit(recipeToView);
@@ -63,9 +63,8 @@ export const MainPage = () => {
         />
       )}
 
-      <Container vertical gap={0}>
+      <div>
         <ActionBar
-          recipeInfoOpen={recipeInfoOpen}
           onNewClick={() => setRecipeDialogOpen(true)}
           infoOpen={infoOpen}
           setInfoOpen={setInfoOpen}
@@ -80,7 +79,6 @@ export const MainPage = () => {
                 setRecipeToView(r);
                 setRecipeInfoOpen(true);
               }}
-              recipeInfoOpen={recipeInfoOpen}
               onRecipeInfoOpenChange={setRecipeInfoOpen}
               recipes={recipes}
               onRecipeClick={(recipe) => {
@@ -90,15 +88,14 @@ export const MainPage = () => {
             />
           </Suspense>
         )}
-        <Content>
+        <div className={css.page}>
           {!isLoading
             ? (
               <>
                 {recipes?.length ? (
-                  <Cards>
+                  <div className={css.cards}>
                     {filteredRecipes?.map((r: Recipe, i: number) => (
                       <RecipeCard
-                        infoOpen={recipeInfoOpen}
                         onRecipeInfoOpenChange={setRecipeInfoOpen}
                         onViewClick={() => {
                           setRecipeToView(r);
@@ -112,84 +109,18 @@ export const MainPage = () => {
                         recipe={r}
                       />
                     ))}
-                    <FakeCard />
-                    <FakeCard />
-                    <FakeCard />
-                    <FakeCard />
-                    <FakeCard />
-                  </Cards>
-                ) : <NoRecipes>Пока нет рецептов</NoRecipes>}
+                    <div className={css.fakeCard} />
+                    <div className={css.fakeCard} />
+                    <div className={css.fakeCard} />
+                    <div className={css.fakeCard} />
+                    <div className={css.fakeCard} />
+                  </div>
+                ) : <div className={css.noRecipes}>Пока нет рецептов</div>}
               </>
             )
-            : <ProgressLoading><Loading /></ProgressLoading>}
-        </Content>
-      </Container>
-    </Page>
+            : <div className={css.progressLoading}><Loading /></div>}
+        </div>
+      </div>
+    </div>
   );
 };
-
-const Page = styled.div<{ recipeInfoOpen: boolean }>`
-  height: 100vh;
-  ${({ recipeInfoOpen, theme }) => {
-    if (recipeInfoOpen && theme.screen === 'mac') {
-      return 'width: calc(100vw - 517px);';
-    }
-    if (recipeInfoOpen && theme.screen === 'ipadh') {
-      return 'width: calc(100vw - 367px);';
-    }
-    return 'width: 100%vw';
-  }}
-`;
-
-const Content = styled.div`
-  position: relative;
-`;
-
-const Cards = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px;
-  row-gap: 40px;
-  padding: 20px 40px 0 40px;
-  ${({ theme }) => ['ipadv', 'ipadh'].includes(theme.screen) && css`
-    padding: 20px 20px 0 20px;
-    row-gap: 20px;
-  `};
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    padding: 15px 15px 0 15px;
-    row-gap: 20px;
-  `};
-`;
-
-const ProgressLoading = styled.div`
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const NoRecipes = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${({ theme }) => theme.screen === 'mac' && css`
-    height: 100%;
-  `};
-`;
-
-const FakeCard = styled.div`
-  width: 268px;
-  ${({ theme }) => theme.screen === 'ipadh' && css`
-    width: 268px;
-  `};
-  ${({ theme }) => theme.screen === 'ipadv' && css`
-    width: 242px;
-  `};
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    width: 170px;
-  `};
-`;

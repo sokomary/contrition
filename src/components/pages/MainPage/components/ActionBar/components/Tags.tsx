@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Tag } from 'src/domain';
-import styled, { css } from 'styled-components';
-import { Container } from 'src/components/features';
-import { color } from 'src/theme';
+import { Button } from 'src/components/features';
+import * as css from './Tags.css';
 
 type Props = {
   tags: Tag[];
@@ -18,44 +17,17 @@ export const Tags = (props: Props) => {
   };
 
   return (
-    <TagsContainer>
+    <div className={css.container}>
       {props.tags?.map((t) => (
-        <TagName
-          selected={selectedTag?.id === t.id}
+        <Button
+          kind="ghost"
+          className={css.name({ selected: selectedTag?.id === t.id })}
           onClick={() => selectTag(t)}
           key={t.id}
         >
           {t.name}
-        </TagName>
+        </Button>
       ))}
-    </TagsContainer>
+    </div>
   );
 };
-
-const TagsContainer = styled(Container)`
-  width: 70%;
-  align-items: center;
-  color: ${({ theme }) => color('primary', theme)};
-  font-size: 18px;
-  padding: 0 30px 0 20px;
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    width: 100%;
-    padding: 0;
-  `}
-`;
-
-const TagName = styled.div<{ selected?: boolean }>`
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
-  border-radius: 25px;
-  color: ${({ theme }) => color('primary', theme)};
-  padding: 3px 10px;
-  align-self: center;
-  font-size: 18px;
-  cursor: pointer;
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    padding: 0 5px;
-    height: 25px;
-  `}
-`;

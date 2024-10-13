@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getTags } from 'src/api';
 import {
@@ -7,17 +6,16 @@ import {
 } from 'src/assets';
 import { useAuthenticate } from 'src/hooks';
 import { Tag } from 'src/domain';
-import { Container } from 'src/components/features';
-import { color } from 'src/theme';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
-import { GetRandomRecipe } from 'src/components/dialogs';
+import { GetRandomRecipe } from 'src/components/modals';
+import { Button } from 'src/components/features';
 import { Tags } from './components/Tags';
 import { Search } from './components/Search';
 import { UserOptions } from './components/UserOptions';
 import { Actions } from './components/Actions';
+import * as css from './ActionBar.css';
 
 type Props = {
-  recipeInfoOpen: boolean;
   infoOpen: boolean;
   setInfoOpen: (value: boolean) => void;
   onTagChange: (newTag?: Tag) => void;
@@ -25,8 +23,8 @@ type Props = {
   onNewClick: () => void;
 };
 
-const ActionBar = ({
-  infoOpen, recipeInfoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
+export const ActionBar = ({
+  infoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
 }: Props) => {
   const user = useAuthenticate();
   const { data: tags } = useQuery('tags', () => getTags());
@@ -34,154 +32,64 @@ const ActionBar = ({
   const [randomDialogOpen, setRandomDialogOpen] = useState(false);
   const screen = useDeviceScreen();
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleMenu = () => {
+    setUserOptionsOpen(!userOptionsOpen);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setUserOptionsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
     <>
       <GetRandomRecipe
         open={randomDialogOpen}
         onClose={() => setRandomDialogOpen(false)}
       />
-      <ActionBarContainer>
+      <div className={css.actionBar}>
         {tags && (
-          <ActionBarContent gap={0}>
-            <FiltersContainer>
-              <InfoControl>
+          <div className={css.actionBarContent}>
+            <div className={css.filtersContainer}>
+              <div className={css.infoControl}>
                 {infoOpen
-                  ? <StyledDropUpIcon onClick={() => setInfoOpen(!infoOpen)} />
-                  : <StyledDropDownIcon onClick={() => setInfoOpen(!infoOpen)} />}
-              </InfoControl>
-              <Filters>
+                  ? <DropUpIcon className={css.icon} onClick={() => setInfoOpen(!infoOpen)} />
+                  : <DropDownIcon className={css.icon} onClick={() => setInfoOpen(!infoOpen)} />}
+              </div>
+              <div className={css.filters}>
                 <Tags tags={tags} onSelect={onTagChange} />
                 {screen !== 'iphone' && <Search onQueryChange={onQueryChange} />}
-              </Filters>
-            </FiltersContainer>
-            <UserBlock>
+              </div>
+            </div>
+            <div className={css.userBlock}>
               <Actions
                 user={user}
                 onRandomClick={() => setRandomDialogOpen(true)}
                 onNewClick={onNewClick}
               />
-              <Container gap={10}>
-                {((screen === 'mac' || screen === 'ipadh') && !recipeInfoOpen) && <Name>{user?.name}</Name>}
+              <div className={css.content}>
+                {(screen === 'mac' || screen === 'ipadh') && <div className={css.name}>{user?.name}</div>}
                 {screen === 'iphone' && <Search onQueryChange={onQueryChange} />}
-                <Photo tabIndex={0} onBlur={() => setUserOptionsOpen(false)}>
-                  <Circle onClick={() => setUserOptionsOpen(true)} src={user?.picture} />
-                  {userOptionsOpen && <UserOptions />}
-                </Photo>
-              </Container>
-            </UserBlock>
-          </ActionBarContent>
+                <div className={css.photo}>
+                  <div ref={menuRef}>
+                    <Button kind="ghost" onClick={toggleMenu}>
+                      <img className={css.circleImg} src={user?.picture} alt={user?.email.slice(0, 2).toUpperCase()} />
+                    </Button>
+                    {userOptionsOpen && <UserOptions />}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
-      </ActionBarContainer>
+      </div>
     </>
   );
 };
-
-const ActionBarContainer = styled.div`
-  padding: 40px 40px 20px 40px;
-  ${({ theme }) => ['ipadv', 'ipadh'].includes(theme.screen) && css`
-    padding: 20px;
-  `};
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    padding: 15px;
-  `};
-`;
-
-const FiltersContainer = styled(Container)`
-  display: contents;
-  
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    display: flex;
-    width: 100%;
-    padding: 6px 15px;
-    gap: 15px;
-  `};
-`;
-
-const InfoControl = styled(Container)`
-  justify-items: center;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  height: 62px;
-  width: 62px;
-  border-radius: 20px;
-  background-color: ${({ theme }) => color('accent-light', theme)};
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    background-color: transparent;
-    height: fit-content;
-    width: fit-content;
-  `}
-`;
-
-const StyledDropDownIcon = styled(DropDownIcon)`
-  cursor: pointer;
-`;
-const StyledDropUpIcon = styled(DropUpIcon)`
-  cursor: pointer;
-`;
-
-const ActionBarContent = styled(Container)`
-  border-radius: 20px;
-  background-color: ${({ theme }) => color('basic', theme)};
-  box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
-  
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    flex-direction: column-reverse;
-  `}
-`;
-
-const Filters = styled(Container)`
-  width: 70%;
-  padding: 0 10px;
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    width: 100%;
-    gap: 10px;
-    padding: 0;
-    justify-content: space-between;
-  `}
-`;
-
-const UserBlock = styled(Container)`
-  width: 30%; 
-  background-color: ${({ theme }) => color('accent-light', theme)};
-  align-items: center;
-  padding: 0 10px;
-  border-radius: inherit;
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    width: 100%;
-    height: 58px;
-    padding: 0 15px;
-    gap: 10px
-  `}
-`;
-
-const Name = styled.div`
-  align-self: center; 
-  color: ${({ theme }) => color('font', theme)};
-  font-size: 16px;
-`;
-
-const Circle = styled.img`
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
-  background-color: white;
-  cursor: pointer;
-
-  ${({ theme }) => theme.screen === 'iphone' && css`
-    height: 30px;
-    width: 30px;
-    border-radius: 15px;
-  `}
-`;
-
-const Photo = styled.div`
-  display: flex;
-  align-items: center;
-position: relative;
-`;
-
-export { ActionBar };

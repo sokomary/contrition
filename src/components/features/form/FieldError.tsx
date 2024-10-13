@@ -1,16 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { color } from 'src/theme';
+import * as css from './FieldError.css';
 
 type Props = {
   text: string;
 };
 
 export const FieldError = ({ text }: Props) => (
-  <ErrorText>{text}</ErrorText>
+  <div className={css.text}>{text}</div>
 );
-
-const ErrorText = styled.span`
-  color: ${({ theme }) => color('danger', theme)};
-  font-size: 10px;
-`;
