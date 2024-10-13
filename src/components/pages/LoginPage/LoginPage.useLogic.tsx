@@ -10,7 +10,6 @@ export const useLogic = () => {
   const loginUrl = getLoginUrl();
 
   const login = () => {
-    console.log('loginUrl: ', loginUrl);
     if (loginUrl) {
       window.location.href = loginUrl;
     } else {
