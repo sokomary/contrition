@@ -40,7 +40,6 @@ export const photoInput = style({
   },
 });
 
-// background-image: url(${props.background}
 export const photoPreview = style({
   backgroundColor: color('field'),
   flexShrink: 0,

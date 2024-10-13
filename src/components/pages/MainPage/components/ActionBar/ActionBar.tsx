@@ -36,6 +36,7 @@ export const ActionBar = ({
   const toggleMenu = () => {
     setUserOptionsOpen(!userOptionsOpen);
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -47,6 +48,8 @@ export const ActionBar = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [menuRef]);
+
+  const alt = user?.name.slice(0, 2).toUpperCase();
 
   return (
     <>
@@ -80,7 +83,13 @@ export const ActionBar = ({
                 <div className={css.photo}>
                   <div ref={menuRef}>
                     <Button kind="ghost" onClick={toggleMenu}>
-                      <img className={css.circleImg} src={user?.picture} alt={user?.email.slice(0, 2).toUpperCase()} />
+                      { user?.picture
+                        ? <img className={css.circleImg} src={user?.picture} alt={alt} />
+                        : (
+                          <div className={css.circleImg}>
+                            {alt}
+                          </div>
+                        )}
                     </Button>
                     {userOptionsOpen && <UserOptions />}
                   </div>

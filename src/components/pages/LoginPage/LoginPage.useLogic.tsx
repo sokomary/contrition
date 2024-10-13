@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import { getLoginUrl } from 'src/api';
 import { useAuthenticate } from 'src/hooks';
@@ -8,12 +7,10 @@ import i18next from 'src/formatter';
 export const useLogic = () => {
   const authenticated = useAuthenticate();
 
-  const { data: loginUrl } = useQuery(
-    'login-url',
-    getLoginUrl,
-  );
+  const loginUrl = getLoginUrl();
 
   const login = () => {
+    console.log('loginUrl: ', loginUrl);
     if (loginUrl) {
       window.location.href = loginUrl;
     } else {

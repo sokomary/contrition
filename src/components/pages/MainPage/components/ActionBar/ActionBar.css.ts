@@ -115,6 +115,9 @@ export const circleImg = style({
   borderRadius: '20px',
   backgroundColor: color('background'),
   cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 
   '@media': {
     [MEDIA.iphone]: {

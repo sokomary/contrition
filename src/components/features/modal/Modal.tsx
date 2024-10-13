@@ -5,8 +5,8 @@ import { createPortal } from 'react-dom';
 import { ClearIcon } from 'src/assets';
 import { useLogic } from './Modal.useLogic';
 import { Button } from '../Button';
-import * as css from './Modal.css';
 import { DialogPosition } from './Modal.types';
+import * as css from './Modal.css';
 
 type Props = PropsWithChildren & {
   isActive: boolean;

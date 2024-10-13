@@ -48,7 +48,6 @@ export const MainPage = () => {
 
       {recipeInfoOpen && recipeToView && (
         <RecipeInfo
-          // inline={['mac', 'ipadh'].includes(screen)}
           onEditClick={() => {
             setRecipeInfoOpen(false);
             setRecipeToEdit(recipeToView);

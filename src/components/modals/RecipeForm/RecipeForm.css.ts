@@ -29,7 +29,6 @@ export const nameField = style({
 });
 
 export const linkField = style({
-  // width: 252,
   width: '100%',
   '@media': {
     [MEDIA.iphone]: {

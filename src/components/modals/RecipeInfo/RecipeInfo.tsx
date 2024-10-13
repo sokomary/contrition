@@ -32,5 +32,5 @@ export const RecipeInfo = ({
 
 const WIDTHS: { [key: string]: number } = {
   mac: 500,
-  ipadh: 367,
+  ipadh: 500,
 };

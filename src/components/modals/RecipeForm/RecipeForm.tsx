@@ -18,7 +18,7 @@ import { TagsField } from './components/TagsField';
 import { AddProduct } from '../AddProduct';
 import { AddTag } from '../AddTag';
 import * as css from './RecipeForm.css';
-import { ActionBar } from '../../features/Modal/components/ActionBar';
+import { ActionBar } from '../../features/modal/components/ActionBar';
 
 type Props = {
   open: boolean;

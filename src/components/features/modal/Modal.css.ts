@@ -120,7 +120,6 @@ const disappearAnimation = keyframes({
 export const overlay = recipe({
   base: {
     position: 'fixed',
-    // zIndex: 101,
     top: 0,
     left: 0,
     right: 0,
@@ -141,7 +140,6 @@ export const overlay = recipe({
 export const content = recipe({
   base: {
     position: 'fixed',
-    // zIndex: 102,
     top: 0,
     left: 0,
     right: 0,
