@@ -31,7 +31,6 @@ const Content = () => {
             <>
               <Route path="*" element={<MainPage />} />
               <Route path={routs.START} element={<MainPage />} />
-              <Route path={routs.LOGIN} element={<LoginPage />} />
             </>
           ) : (
             <Route path="*" element={<LoginPage />} />
