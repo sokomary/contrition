@@ -4,7 +4,7 @@ job "contrition-web" {
 
   group "web" {
     network {
-      port "https" {
+      port "http" {
         static = 3002
         to     = 3002
       }
@@ -17,7 +17,7 @@ job "contrition-web" {
 
       config {
         image = "msokol1999/contrition-web:latest"
-        ports = ["https"]
+        ports = ["http"]
       }
     }
   }
