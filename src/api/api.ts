@@ -73,6 +73,6 @@ export const getUser = () => instanceAxios.get('/api/user', {
   },
 }).then((res) => res.data);
 
-export const getLoginUrl = () => `${ENV.VITE_API_URL}/oauth2/authorization/google`;
+export const getLoginUrl = () => `${ENV.VITE_API_URL}/api/private`;
 
 export const logout = () => instanceAxios.post('/api/logout');
