@@ -20,7 +20,5 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY dockerConf/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/build /usr/share/nginx/html
-COPY dockerConf/fullchain.pem /etc/nginx
-COPY dockerConf/privkey.pem /etc/nginx
-EXPOSE 2443
+EXPOSE 3002
 

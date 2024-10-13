@@ -5,8 +5,8 @@ job "contrition-web" {
   group "web" {
     network {
       port "https" {
-        static = 2443
-        to     = 2443
+        static = 3002
+        to     = 3002
       }
     }
 
