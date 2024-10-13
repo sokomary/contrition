@@ -5,6 +5,7 @@ import { PathReporter } from 'io-ts/PathReporter';
 import {
   Recipe, RecipeSchema, Product, ProductSchema, Tag, TagSchema, InstructionSchema,
 } from 'src/domain';
+import { ENV } from '../../env';
 
 const instanceAxios = axios.create();
 
@@ -69,6 +70,6 @@ export const getUser = () => instanceAxios.get('/api/user', {
   },
 }).then((res) => res.data);
 
-export const getLoginUrl = () => instanceAxios.get('/api/login/url').then(decode(string));
+export const getLoginUrl = () => ENV.VITE_API_URL;
 
 export const logout = () => instanceAxios.post('/api/logout');

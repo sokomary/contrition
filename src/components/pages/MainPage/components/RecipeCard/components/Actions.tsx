@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
 import { Recipe } from 'src/domain';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
-import { Confirmation } from 'src/components/dialogs/Confirmation';
-import { color } from 'src/theme';
-import { Container } from 'src/components/features';
+import { Confirmation } from 'src/components/modals/Confirmation';
+import { Button } from 'src/components/features';
+import * as css from './Actions.css';
 
 type Props = {
   recipe: Recipe;
@@ -34,89 +33,100 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
     },
   });
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleMenu = () => {
+    setOptionsOpen(!optionsOpen);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOptionsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
-    <Dots
-      key={recipe.id}
-      tabIndex={0}
-      gap={2}
-      onClick={() => setOptionsOpen(true)}
-      onBlur={() => {
-        if (!confirmOpen) {
-          setOptionsOpen(false);
-        }
-      }}
-    >
-      <Dot />
-      <Dot />
-      <Dot />
-      {optionsOpen && (
-        <Options>
-          {confirmOpen && (
-            <Confirmation
-              key={recipe.id}
-              open={confirmOpen}
-              title="Удаление рецепта"
-              text="Вы уверены, что хотите удалить рецепт?"
-              onClose={(result) => {
-                if (result) {
-                  deleteMutation.mutate(recipe);
-                  setOptionsOpen(false);
-                }
-                setConfirmOpen(false);
+    <>
+      <div ref={menuRef}>
+        <Button
+          kind="ghost"
+          onClick={toggleMenu}
+          className={css.dots}
+          key={recipe.id}
+        >
+          <div className={css.dot} />
+          <div className={css.dot} />
+          <div className={css.dot} />
+          {optionsOpen && (
+          <div className={css.options}>
+            <Button
+              kind="ghost"
+              className={css.option()}
+              onClick={() => {
+                onEditClick(recipe);
+                toggleMenu();
               }}
-            />
+            >
+              Изменить
+            </Button>
+            {recipe.favorite
+              ? (
+                <Button
+                  kind="ghost"
+                  className={css.option()}
+                  onClick={() => {
+                    fromFavoritesMutation.mutate(recipe.id);
+                    toggleMenu();
+                  }}
+                >
+                  Из избранного
+                </Button>
+              )
+              : (
+                <Button
+                  kind="ghost"
+                  className={css.option()}
+                  onClick={() => {
+                    toFavoritesMutation.mutate(recipe.id);
+                    toggleMenu();
+                  }}
+                >
+                  В избранное
+                </Button>
+              )}
+            <Button
+              kind="ghost"
+              className={css.option({ negative: true })}
+              onClick={() => {
+                setConfirmOpen(true);
+                toggleMenu();
+              }}
+            >
+              Удалить
+            </Button>
+          </div>
           )}
-          <Option onClick={() => onEditClick(recipe)}>Изменить</Option>
-          {recipe.favorite
-            ? <Option onClick={() => fromFavoritesMutation.mutate(recipe.id)}>Из избранного</Option>
-            : <Option onClick={() => toFavoritesMutation.mutate(recipe.id)}>В избранное</Option>}
-          <Option negative onClick={() => setConfirmOpen(true)}>Удалить</Option>
-        </Options>
+        </Button>
+      </div>
+
+      {confirmOpen && (
+        <Confirmation
+          key={recipe.id}
+          open={confirmOpen}
+          title="Удаление рецепта"
+          text="Вы уверены, что хотите удалить рецепт?"
+          onClose={(result) => {
+            if (result) {
+              deleteMutation.mutate(recipe);
+            }
+            toggleMenu();
+          }}
+        />
       )}
-    </Dots>
+    </>
   );
 };
-
-const Dot = styled.div`
-  height: 4px;
-  width: 4px;
-  border-radius:  2px;
-  flex-shrink: 0;
-  background-color: ${({ theme }) => color('primary', theme)};
-`;
-
-const Dots = styled(Container)`
-  cursor: pointer;
-  align-self: flex-start;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2px;
-  border-radius: 5px;
-`;
-
-const Options = styled(Container)`
-  position: absolute;
-  border-radius: 5px;
-  background: #FFF;
-  box-shadow: 0 0 20px 5px rgba(8, 8, 8, 0.10);
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  right: 10px;
-  top: -50px;
-`;
-
-const Option = styled.div<{ negative?: boolean }>`
-  width: 105px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 4px;
-  color: ${({ theme, negative }) => (negative ? color('danger', theme) : '')};
-  &:hover {
-    color: ${({ theme }) => color('primary', theme)};
-  }
-`;

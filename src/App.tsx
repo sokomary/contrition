@@ -1,6 +1,4 @@
-import React, { FC } from 'react';
-// import 'src/App.css';
-import styled, { ThemeProvider } from 'styled-components';
+import React from 'react';
 import {
   BrowserRouter as Router, Route, Routes,
 } from 'react-router-dom';
@@ -8,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuthenticate } from 'src/hooks/useAuthenticate';
@@ -17,86 +14,43 @@ import { routs } from 'src/routs';
 import { MainPage } from 'src/components/pages/MainPage';
 import { LoginPage } from 'src/components/pages/LoginPage';
 import ReactDOM from 'react-dom/client';
-import { color } from './theme';
-import { useSystemThemeMode, useDeviceScreen } from './hooks';
-// import 'src/index.css';
-
-const App: FC = () => (
-  <QueryProvider><Content /></QueryProvider>
-);
+import * as css from './App.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
+const Content = () => {
+  const authenticated = useAuthenticate();
+  return (
+    <>
+      <ToastContainer position="bottom-center" theme="colored" />
+      <Router>
+        <Routes>
+          {authenticated ? (
+            <>
+              <Route path="*" element={<MainPage />} />
+              <Route path={routs.START} element={<MainPage />} />
+              <Route path={routs.LOGIN} element={<LoginPage />} />
+            </>
+          ) : (
+            <Route path="*" element={<LoginPage />} />
+          )}
+        </Routes>
+      </Router>
+      <div id="modals-root" />
+    </>
+  );
+};
+
 root.render(
-  <div>
+  <div className={css.root}>
     <CookiesProvider>
       <React.StrictMode>
-        <App />
+        <QueryProvider>
+          <Content />
+        </QueryProvider>
       </React.StrictMode>
     </CookiesProvider>
   </div>,
 );
-
-const Content = () => {
-  const authenticated = useAuthenticate();
-  const theme = useSystemThemeMode();
-  const screen = useDeviceScreen();
-  return (
-    <ThemeProvider theme={{ mode: theme, screen }}>
-      <StyledApp>
-        <StyledContainer position="bottom-center" theme="colored" />
-        <Router>
-          <Routes>
-            { authenticated ? (
-              <>
-                <Route path="*" element={<MainPage />} />
-                <Route path={routs.START} element={<MainPage />} />
-                <Route path={routs.LOGIN} element={<LoginPage />} />
-              </>
-            ) : (
-              <Route path="*" element={<LoginPage />} />
-            )}
-          </Routes>
-        </Router>
-      </StyledApp>
-    </ThemeProvider>
-  );
-};
-
-const StyledApp = styled.div`
-  height: 100vh;
-  overflow: auto;
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  background-color: ${({ theme }) => color('background', theme)};
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-`;
-
-const StyledContainer = styled(ToastContainer)`
-  // https://styled-compo nents.com/docs/faqs#how-can-i-override-styles-with-higher-specificity
-  &&&.Toastify__toast-container {
-    margin-bottom: 70px;
-  }
-  .Toastify__toast {
-    border-radius: 30px;
-    background-color: ${color('success')};
-  }
-  .Toastify__toast--error {
-    border-radius: 30px;
-    background-color: ${color('danger')};
-  }
-  .Toastify__toast-body {
-    color: white;
-    padding: 0 15px;
-  }
-  .Toastify__close-button {
-    margin-right: 15px;
-    margin-top: 15px;
-  }
-`;
-
-export default App;
