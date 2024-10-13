@@ -10,7 +10,6 @@ export const UserOptions = () => {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      window.location.href = '/login';
     },
   });
 
