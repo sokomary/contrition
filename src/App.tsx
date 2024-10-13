@@ -22,6 +22,7 @@ const root = ReactDOM.createRoot(
 
 const Content = () => {
   const authenticated = useAuthenticate();
+
   return (
     <>
       <ToastContainer position="bottom-center" theme="colored" />
@@ -31,6 +32,7 @@ const Content = () => {
             <>
               <Route path="*" element={<MainPage />} />
               <Route path={routs.START} element={<MainPage />} />
+              <Route path={routs.LOGIN} element={<LoginPage />} />
             </>
           ) : (
             <Route path="*" element={<LoginPage />} />

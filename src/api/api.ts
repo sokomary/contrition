@@ -5,6 +5,7 @@ import { PathReporter } from 'io-ts/PathReporter';
 import {
   Recipe, RecipeSchema, Product, ProductSchema, Tag, TagSchema, InstructionSchema,
 } from 'src/domain';
+import { useQueryClient } from '@tanstack/react-query';
 import { ENV } from '../../env';
 
 const instanceAxios = axios.create();
@@ -21,6 +22,8 @@ instanceAxios.interceptors.response.use(
   undefined,
   (response) => {
     if (response.response.status === 401) {
+      const queryClient = useQueryClient();
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       window.location.href = '/login';
     }
     return response;
