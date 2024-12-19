@@ -8,14 +8,14 @@ import { ENV } from '../../env';
 const instanceAxios = axios.create();
 
 instanceAxios.interceptors.response.use(
-  undefined,
+  (response) => response.data,
   (response) => {
     if (response.response.status === 401) {
       const queryClient = useQueryClient();
       queryClient.invalidateQueries({ queryKey: ['user'] });
       window.location.href = '/login';
     }
-    return response.response.data;
+    return response;
   },
 );
 
