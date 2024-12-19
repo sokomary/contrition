@@ -162,6 +162,15 @@ export const RecipeForm = ({
                         />
                       </div>
                     </div>
+                    <Field
+                      size={screen === 'iphone' ? 'large' : undefined}
+                      className={css.linkField}
+                      name="comment"
+                      register={register}
+                      placeholder={i18next.t('domain:recipe.comment')}
+                      error={formState.errors.comment}
+                      errorText={i18next.t('forms:fields.errors.required')}
+                    />
                     {screen === 'iphone'
                       && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
                     <ImageField

@@ -26,6 +26,7 @@ i18next.init({
           recipeProducts: 'Состав',
           carbohydrates: 'Углеводы',
           size: 'Вес (г)',
+          comment: 'Комментарий',
         },
       },
       forms: {

@@ -16,6 +16,7 @@ export type RecipeProduct = TypeOf<typeof RecipeProductSchema>;
 export const RecipeSchema = type({
   id: number,
   name: string,
+  comment: union([string, UndefinedType]),
   link: string,
   calories: number,
   protein: number,
