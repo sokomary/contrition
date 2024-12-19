@@ -33,6 +33,7 @@ export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
       <div className={css.styledContainer}>
         {fields
           .map((t, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div className={css.tag({ selected: true })} key={t.id} onClick={() => remove(index)}>
               #
               {t.name}
@@ -40,6 +41,7 @@ export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
           ))}
         {tags?.filter((unselected) => !find(fields, unselected))
           .map((t) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <div key={t.id} className={css.tag({ selected: false })} onClick={() => append(t)}>
               #
               {t.name}
