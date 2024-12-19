@@ -7,23 +7,29 @@ import React, { Fragment } from 'react';
 import { Actions } from './components/Actions';
 import * as css from './Content.css';
 
-export const Content = ({
-  recipe,
-  onEditClick,
-}: { recipe: Recipe; onEditClick: () => void }) => {
-  const { data: instructions, isLoading } = useQuery(
-    {
-      queryKey: [`instructions-${recipe.id}`],
-      queryFn: () => getInstructions(recipe.id),
-    },
-  );
+type Props = {
+  recipe: Recipe;
+  onEditClick: () => void;
+};
+
+export const Content = ({ recipe, onEditClick }: Props) => {
+  const { data: instructions, isLoading } = useQuery({
+    queryKey: [`instructions-${recipe.id}`],
+    queryFn: () => getInstructions(recipe.id),
+  });
   const screen = useDeviceScreen();
+
   return (
     <>
       {!isLoading && (
         <div className={css.dialogContentContainer}>
           <div className={css.mainContainer}>
 
+            {recipe.comment && (
+              <div className={css.comment}>
+                {recipe.comment}
+              </div>
+            )}
             <div className={css.productsContaines}>
               <div className={css.title}>Состав</div>
               <div className={css.card({ vertical: false })}>
@@ -47,7 +53,11 @@ export const Content = ({
                     <Fragment key={index}>
                       <div className={css.instructionName}>{sp.name}</div>
                       <div className={css.instructionSteps}>
-                        {sp.steps.map((s, sindex) => <div className={css.stepDescription} key={s.id}>{`${sindex + 1}. ${s.description}`}</div>)}
+                        {sp.steps.map((s, sindex) => (
+                          <div className={css.stepDescription} key={s.id}>
+                            {`${sindex + 1}. ${s.description}`}
+                          </div>
+                        ))}
                       </div>
                     </Fragment>
                   ))}

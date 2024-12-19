@@ -32,6 +32,13 @@ export const mainContainer = style({
   },
 });
 
+export const comment = style({
+  borderRadius: '15px',
+  backgroundColor: color('warning'),
+  padding: '15px',
+  width: '100%',
+});
+
 export const productName = style({
   display: 'flex',
   justifyContent: 'space-between',

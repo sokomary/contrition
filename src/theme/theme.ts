@@ -14,7 +14,8 @@ type ColorSchema =
   'label' |
   'field' |
   'danger' |
-  'success';
+  'success' |
+  'warning';
 
 type Theme = {
   color: {
@@ -42,6 +43,7 @@ export const theme: Theme = {
       'font-disabled': 'rgba(4,4,4,0.35)',
       'primary-disabled': 'rgba(255,104,0,0.35)',
       'bg-overlay': 'rgba(142,142,142,0.82)',
+      warning: 'rgba(250,183,59,0.52)',
     },
     dark: {
       primary: 'rgb(255, 104, 0, 1)',
@@ -60,6 +62,7 @@ export const theme: Theme = {
       'primary-disabled': 'rgba(255,104,0,0.35)',
       'font-disabled': 'rgba(4,4,4,0.35)',
       'bg-overlay': 'rgba(21,21,21,0.82)',
+      warning: 'rgba(165,114,53,0.62)',
     },
   },
 };
