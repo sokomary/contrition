@@ -46,7 +46,8 @@ export const RecipeCard = ({
         <div className={css.content({ displayInfo: localDisplayInfo })}>
           {recipe.favorite && <FavoriteIcon className={css.favoriteIcon} />}
           {!localDisplayInfo && <div className={css.calories}>{recipe.calories.toFixed(0)}</div>}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
+          jsx-a11y/no-noninteractive-element-interactions */}
           <img
             alt="recipe"
             className={css.img}

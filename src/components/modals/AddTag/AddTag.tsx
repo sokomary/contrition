@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import i18next from 'src/formatter';
-import { Tag, TagSchema } from 'src/domain';
+import { Tag } from 'src/domain';
 import { addTag } from 'src/api';
 import {
   Modal, Field, Loading, Action, ActionBar,
@@ -53,18 +53,15 @@ export const AddTag = ({ open, onClose }: Props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         { !addMutation.isPending ? (
           <div>
-            {Object.entries(TagSchema.props).filter((k) => k[0] !== 'id').map((key) => (
-              <Field
-                key={key[0]}
-                name={key[0]}
-                register={register}
-                placeholder={i18next.t(`domain:recipe.${key[0]}`)}
-                // @ts-ignore
-                error={formState.errors[key[0]]}
-                errorText={i18next.t('forms:fields.errors.required')}
-                required
-              />
-            ))}
+            <Field
+              key="name"
+              name="name"
+              register={register}
+              placeholder={i18next.t('domain:recipe.name')}
+              error={formState.errors.name}
+              errorText={i18next.t('forms:fields.errors.required')}
+              required
+            />
             <ActionBar actions={actions} />
           </div>
         ) : <Loading />}
