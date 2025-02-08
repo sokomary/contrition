@@ -68,7 +68,7 @@ export const ImageField = (props: Props) => {
             )}
           </>
         )}
-        <input className={css.hiddenInput} onChange={handleChange} ref={ref} type="file" />
+        <input className={css.hiddenInput} onChange={handleChange} ref={ref} type="file" accept="image/jpeg" />
       </div>
     </div>
   );
