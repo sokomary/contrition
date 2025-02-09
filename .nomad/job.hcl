@@ -15,6 +15,10 @@ job "contrition-web" {
     task "frontend" {
       driver = "docker"
 
+      resources {
+        memory = 150
+      }
+
       config {
         image = "msokol1999/contrition-web:latest"
         ports = ["http"]
