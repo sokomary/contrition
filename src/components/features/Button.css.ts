@@ -16,6 +16,7 @@ export const button = recipe({
     size: {
       small: {
         height: '24px',
+        fontSize: '13px',
       },
       regular: {
         height: '32px',
@@ -57,6 +58,9 @@ export const button = recipe({
           },
         },
       },
+    },
+    disabled: {
+      true: { color: color('label') },
     },
   },
 });

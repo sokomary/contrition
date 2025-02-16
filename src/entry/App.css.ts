@@ -11,6 +11,16 @@ export const root = style({
   color: color('font'),
 });
 
+globalStyle('body', {
+  backgroundColor: 'rgb(255, 255, 255, 1)',
+
+  '@media': {
+    'screen and (prefers-color-scheme: dark)': {
+      backgroundColor: 'rgb(22, 24, 28, 1)',
+    },
+  },
+});
+
 globalStyle(`${root} .Toastify__toast-container`, {
   marginBottom: '70px',
 });

@@ -140,10 +140,6 @@ export const overlay = recipe({
 export const content = recipe({
   base: {
     position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
     margin: 'auto',
     overflow: 'auto',
     animation: `${appearAnimation('center')} 300ms ease-out forwards`,
@@ -152,6 +148,21 @@ export const content = recipe({
     justifyContent: 'center',
   },
   variants: {
+    overlay: {
+      true: {
+        right: 0,
+        top: 0,
+        bottom: 0,
+        left: 0,
+      },
+      false: {
+        right: 0,
+        top: 0,
+        left: 'auto',
+        bottom: 0,
+        boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
+      },
+    },
     isActive: {
       false: {
         animationName: disappearAnimation,
@@ -159,9 +170,15 @@ export const content = recipe({
     },
     position: {
       top: { animation: `${appearAnimation('top')} 300ms ease-out forwards` },
-      bottom: { animation: `${appearAnimation('bottom')} 300ms ease-out forwards` },
-      right: { animation: `${appearAnimation('right')} 300ms ease-out forwards` },
-      center: { animation: `${appearAnimation('center')} 300ms ease-out forwards` },
+      bottom: {
+        animation: `${appearAnimation('bottom')} 300ms ease-out forwards`,
+      },
+      right: {
+        animation: `${appearAnimation('right')} 300ms ease-out forwards`,
+      },
+      center: {
+        animation: `${appearAnimation('center')} 300ms ease-out forwards`,
+      },
     },
   },
 });
@@ -172,7 +189,7 @@ export const children = recipe({
     alignSelf: 'center',
     justifySelf: 'center',
     borderRadius: '20px',
-    padding: '30px',
+    padding: '40px',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',

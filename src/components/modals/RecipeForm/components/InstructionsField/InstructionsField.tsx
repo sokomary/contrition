@@ -1,11 +1,7 @@
-import React, {
-} from 'react';
-import {
-  Control,
-  useFieldArray,
-} from 'react-hook-form';
+import React from 'react';
+import { Control, useFieldArray } from 'react-hook-form';
 import TextareaAutosize from 'react-textarea-autosize';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Button } from 'src/components/features';
 import { InstructionSteps } from './components/InstructionSteps';
@@ -17,9 +13,7 @@ type Props = {
 };
 
 export const InstructionsField = (props: Props) => {
-  const {
-    fields, append, remove,
-  } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: props.control,
     name: 'instructions',
   });
@@ -36,20 +30,26 @@ export const InstructionsField = (props: Props) => {
     <div className={css.mainContainer}>
       <div className={css.header}>
         Приготовление
-        <Button kind="ghost" className={css.addInstructionButton} onClick={addInstruction}>Добавить часть</Button>
+        <Button
+          kind="ghost"
+          className={css.addInstructionButton}
+          onClick={addInstruction}
+        >
+          Добавить часть
+        </Button>
       </div>
       <div className={css.contentContainer}>
         {fields.map((field, index) => (
           <InstructionSteps
             key={index}
-            instruction={(
+            instruction={
               <TextareaAutosize
                 className={css.instructionName}
                 placeholder="Название"
                 key={field.id}
                 {...props.register(`instructions.${index}.name`)}
               />
-            )}
+            }
             onDeleteInstruction={() => remove(index)}
             instrIndex={index}
             register={props.register}

@@ -2,10 +2,8 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProduct } from 'src/api';
-import { Product } from 'src/domain';
-import {
-  Modal, Action, Field, ActionBar,
-} from 'src/components/features';
+import { Product } from 'src/types/domain';
+import { Modal, Action, Field, ActionBar } from 'src/components/features';
 import i18next from 'src/formatter';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 import { NumberField } from './components/NumberField';
@@ -27,22 +25,19 @@ export const AddProduct = ({ open, onClose }: Props) => {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState,
-    reset,
-  } = useForm<Product>();
+  const { register, handleSubmit, formState, reset } = useForm<Product>();
 
   const screen = useDeviceScreen();
 
   const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
 
-  const actions: Action[] = [{
-    kind: 'primary',
-    type: 'submit',
-    label: i18next.t('startpage:recipes.actions.save'),
-  }];
+  const actions: Action[] = [
+    {
+      kind: 'primary',
+      type: 'submit',
+      label: i18next.t('startpage:recipes.actions.save'),
+    },
+  ];
 
   return (
     <Modal

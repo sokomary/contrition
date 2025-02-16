@@ -1,4 +1,7 @@
 export * from './Instruction';
+export * from './Kind';
+export * from './Menu';
+export * from './Meal';
 export * from './Product';
 export * from './Recipe';
 export * from './Role';

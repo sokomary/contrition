@@ -20,3 +20,7 @@ globalStyle(`${container} > button`, {
     },
   },
 });
+
+export const loader = style({
+  height: '20px !important',
+});

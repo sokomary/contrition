@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { color } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 import { MEDIA } from 'src/hooks';
@@ -34,27 +34,15 @@ export const animated = recipe({
         transitionDelay: '0s',
       },
       false: {
-        marginTop: '-380px',
+        marginTop: '-590px',
         visibility: 'hidden',
         transition: 'margin-top 0.5s, visibility 0s 4s',
-
-        '@media': {
-          [MEDIA.ipadh]: {
-            marginTop: '-280px',
-          },
-          [MEDIA.ipadv]: {
-            marginTop: '-280px',
-          },
-          [MEDIA.iphone]: {
-            marginTop: '-590px',
-          },
-          [MEDIA.mac]: {
-            marginTop: '-380px',
-          },
-        },
       },
     },
   },
+});
+globalStyle(animated.classNames.variants.open.true, {
+  containerType: 'inline-size',
 });
 
 export const infoContainer = style({
@@ -79,6 +67,20 @@ export const infoContainer = style({
       gap: '15px',
     },
   },
+});
+globalStyle(infoContainer, {
+  '@container': {
+    '(max-width: 605px)': {
+      flexDirection: 'column',
+      height: 'fit-content',
+      padding: '15px',
+      gap: '15px',
+    },
+  },
+});
+
+globalStyle(infoContainer, {
+  containerType: 'inline-size',
 });
 
 export const controlsContainer = style({
@@ -108,6 +110,16 @@ export const controlsContainer = style({
     },
   },
 });
+globalStyle(controlsContainer, {
+  '@container': {
+    '(max-width: 605px)': {
+      flexDirection: 'column',
+      width: '100%',
+      gap: '15px',
+      height: 'fit-content',
+    },
+  },
+});
 
 export const tagsControlCard = style({
   borderRadius: '20px',
@@ -115,6 +127,14 @@ export const tagsControlCard = style({
 
   '@media': {
     [MEDIA.ipadh]: {
+      height: '100%',
+      minWidth: '260px',
+    },
+  },
+});
+globalStyle(tagsControlCard, {
+  '@container': {
+    '(max-width: 605px)': {
       height: '100%',
       minWidth: '260px',
     },
@@ -134,6 +154,13 @@ export const productsControlCard = style({
       height: '142px',
     },
     [MEDIA.iphone]: {
+      height: '174px',
+    },
+  },
+});
+globalStyle(productsControlCard, {
+  '@container': {
+    '(max-width: 605px)': {
       height: '174px',
     },
   },
@@ -161,6 +188,14 @@ export const favoritesControlCard = style({
       height: '240px',
     },
     [MEDIA.iphone]: {
+      width: '100%',
+      height: '242px',
+    },
+  },
+});
+globalStyle(favoritesControlCard, {
+  '@container': {
+    '(max-width: 605px)': {
       width: '100%',
       height: '242px',
     },

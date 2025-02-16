@@ -8,7 +8,6 @@ import * as css from './Dropdown.css';
 type Props<T> = {
   options: { value: T; label: string }[];
   value: T[];
-  onActive: () => void;
   onSelect: (value: T) => void;
 };
 
@@ -22,27 +21,35 @@ export const Dropdown = <T = unknown>(props: Props<T>) => {
   const filteredOptions = props.options
     .filter((option) => (query.length ? option.label.toLowerCase().includes(query.toLowerCase()) : true));
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  document.body.onclick = (e) => {
-    const targetId = (e.target as HTMLElement).id;
-    if (!targetId.includes('products-input') && !targetId.includes('option')) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current
+      && !dropdownRef.current.contains(event.target as Node)
+    ) {
       setOpen(false);
     }
   };
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={css.container}>
+    <div className={css.container} ref={dropdownRef}>
       <div className={css.content({ open })}>
         <SearchIcon />
         <input
           className={css.input}
           autoComplete="off"
-          id="products-input"
           ref={inputRef}
           onFocus={async () => {
             setOpen(true);
-            props.onActive();
           }}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -50,17 +57,15 @@ export const Dropdown = <T = unknown>(props: Props<T>) => {
         <EnterIcon />
       </div>
       {open && (
-        <div className={css.contentContainer({ open })} id="options-dropdown-container">
+        <div className={css.contentContainer({ open })}>
           {filteredOptions.length ? (
-            <div className={css.options} id="options-container">
-              {filteredOptions.map((o, index) => (
+            <div className={css.options}>
+              {filteredOptions.map((o) => (
                 <div className={css.label} key={o.label}>
                   <div
                     className={css.option({ selected: !!value.find((v) => isEqual(v, o.value)) })}
-                    id={`option-${index}`}
                     onClick={() => {
                       props.onSelect(o.value);
-                      inputRef.current?.focus();
                       setQuery('');
                     }}
                   >

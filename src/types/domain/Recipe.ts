@@ -24,4 +24,5 @@ export type Recipe = {
   recipeProducts: RecipeProduct[];
   instructions?: Instruction[];
   favorite?: boolean;
+  portionSize?: number;
 };

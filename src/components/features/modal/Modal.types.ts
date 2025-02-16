@@ -8,4 +8,6 @@ export type Action = {
   onClick?: () => void;
   kind?: ButtonKind;
   type?: ButtonType;
+  display?: boolean;
+  isLoading?: boolean;
 };
