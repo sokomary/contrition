@@ -2,10 +2,14 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import i18next from 'src/formatter';
-import { Tag } from 'src/domain';
+import { Tag } from 'src/types/domain';
 import { addTag } from 'src/api';
 import {
-  Modal, Field, Loading, Action, ActionBar,
+  Modal,
+  Field,
+  Loading,
+  Action,
+  ActionBar,
 } from 'src/components/features';
 import { useDeviceScreen } from 'src/hooks';
 
@@ -25,22 +29,19 @@ export const AddTag = ({ open, onClose }: Props) => {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState,
-    reset,
-  } = useForm<Tag>();
+  const { register, handleSubmit, formState, reset } = useForm<Tag>();
 
   const screen = useDeviceScreen();
 
   const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
 
-  const actions: Action[] = [{
-    kind: 'primary',
-    type: 'submit',
-    label: i18next.t('startpage:recipes.actions.save'),
-  }];
+  const actions: Action[] = [
+    {
+      kind: 'primary',
+      type: 'submit',
+      label: i18next.t('startpage:recipes.actions.save'),
+    },
+  ];
 
   return (
     <Modal
@@ -51,7 +52,7 @@ export const AddTag = ({ open, onClose }: Props) => {
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        { !addMutation.isPending ? (
+        {!addMutation.isPending ? (
           <div>
             <Field
               key="name"
@@ -64,7 +65,9 @@ export const AddTag = ({ open, onClose }: Props) => {
             />
             <ActionBar actions={actions} />
           </div>
-        ) : <Loading />}
+        ) : (
+          <Loading />
+        )}
       </form>
     </Modal>
   );

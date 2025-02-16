@@ -1,11 +1,9 @@
-import React, {
-  useRef, useState,
-} from 'react';
+import React, { useRef, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { upload } from 'src/api';
 import { Button, Loading } from 'src/components/features';
-import { Recipe } from 'src/domain/Recipe';
+import { Recipe } from 'src/types/domain';
 import * as css from './ImageField.css';
 
 type Props = UseControllerProps<Recipe> & {
@@ -51,24 +49,37 @@ export const ImageField = (props: Props) => {
     <div>
       <div className={css.container}>
         {uploadMutation.isPending ? (
-          <div className={css.loadingWrapper}><Loading /></div>
+          <div className={css.loadingWrapper}>
+            <Loading />
+          </div>
         ) : (
           <>
-            {(!files.length && !props.defaultValue) ? (
-              <Button kind="ghost" className={css.photoInput} onClick={onPhotoClick}>
+            {!files.length && !props.defaultValue ? (
+              <Button
+                kind="ghost"
+                className={css.photoInput}
+                onClick={onPhotoClick}
+              >
                 {uploadMutation.error ? 'Что-то пошло не так' : 'Фото'}
               </Button>
             ) : (
               <Button
                 kind="ghost"
                 className={css.photoPreview}
-                style={{ backgroundImage: `url(${files.length ? URL.createObjectURL(files[0]) : props.defaultUrl})` }}
+                style={{
+                  backgroundImage: `url(${files.length ? URL.createObjectURL(files[0]) : props.defaultUrl})`,
+                }}
                 onClick={onPhotoClick}
               />
             )}
           </>
         )}
-        <input className={css.hiddenInput} onChange={handleChange} ref={ref} type="file" />
+        <input
+          className={css.hiddenInput}
+          onChange={handleChange}
+          ref={ref}
+          type="file"
+        />
       </div>
     </div>
   );

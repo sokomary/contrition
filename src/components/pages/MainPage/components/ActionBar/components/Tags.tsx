@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag } from 'src/domain';
+import { Tag } from 'src/types/domain';
 import { Button } from 'src/components/features';
 import * as css from './Tags.css';
 

@@ -78,6 +78,12 @@ export const favoriteIcon = style({
   top: '10px',
 });
 
+export const toMenuButton = style({
+  position: 'absolute',
+  left: '55px',
+  top: '10px',
+});
+
 export const calories = style({
   padding: '5px 10px',
   borderRadius: '15px',
@@ -162,7 +168,9 @@ export const recipeNameContainer = style({
 
   '@media': {
     [MEDIA.iphone]: {
-      fontSize: '14px', height: '40px', padding: '10px',
+      fontSize: '14px',
+      height: '40px',
+      padding: '10px',
     },
   },
 });
@@ -244,4 +252,9 @@ export const content = recipe({
 export const infoFirstPart = style({
   display: 'flex',
   gap: '4px',
+});
+
+export const tooltip = style({
+  backgroundColor: 'transparent',
+  zIndex: 150,
 });

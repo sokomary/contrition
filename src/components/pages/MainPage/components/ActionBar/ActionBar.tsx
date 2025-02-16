@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
-import {
-  DropDownIcon, DropUpIcon,
-} from 'src/assets';
-import { useAuthenticate } from 'src/hooks';
-import { Tag } from 'src/domain';
+import { DropDownIcon, DropUpIcon } from 'src/assets';
+import { useAuthenticate, useToggleModal } from 'src/hooks';
+import { Tag } from 'src/types/domain';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 import { GetRandomRecipe } from 'src/components/modals';
 import { Button } from 'src/components/features';
@@ -24,19 +22,28 @@ type Props = {
 };
 
 export const ActionBar = ({
-  infoOpen, setInfoOpen, onTagChange, onQueryChange, onNewClick,
+  infoOpen,
+  setInfoOpen,
+  onTagChange,
+  onQueryChange,
+  onNewClick,
 }: Props) => {
   const user = useAuthenticate();
-  const { data: tags } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
+  const { data: tags } = useQuery({
+    queryKey: ['tags'],
+    queryFn: () => getTags(),
+  });
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
   const [randomDialogOpen, setRandomDialogOpen] = useState(false);
   const screen = useDeviceScreen();
 
-  const menuRef = useRef<HTMLDivElement>(null);
+  const { open: openMenu } = useToggleModal('menu', 'true');
+
   const toggleMenu = () => {
     setUserOptionsOpen(!userOptionsOpen);
   };
 
+  const menuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -62,13 +69,23 @@ export const ActionBar = ({
           <div className={css.actionBarContent}>
             <div className={css.filtersContainer}>
               <div className={css.infoControl}>
-                {infoOpen
-                  ? <DropUpIcon className={css.icon} onClick={() => setInfoOpen(!infoOpen)} />
-                  : <DropDownIcon className={css.icon} onClick={() => setInfoOpen(!infoOpen)} />}
+                {infoOpen ? (
+                  <DropUpIcon
+                    className={css.icon}
+                    onClick={() => setInfoOpen(!infoOpen)}
+                  />
+                ) : (
+                  <DropDownIcon
+                    className={css.icon}
+                    onClick={() => setInfoOpen(!infoOpen)}
+                  />
+                )}
               </div>
               <div className={css.filters}>
                 <Tags tags={tags} onSelect={onTagChange} />
-                {screen !== 'iphone' && <Search onQueryChange={onQueryChange} />}
+                {screen !== 'iphone' && (
+                  <Search onQueryChange={onQueryChange} />
+                )}
               </div>
             </div>
             <div className={css.userBlock}>
@@ -76,20 +93,25 @@ export const ActionBar = ({
                 user={user}
                 onRandomClick={() => setRandomDialogOpen(true)}
                 onNewClick={onNewClick}
+                onMenuClick={openMenu}
               />
               <div className={css.content}>
-                {(screen === 'mac' || screen === 'ipadh') && <div className={css.name}>{user?.name}</div>}
-                {screen === 'iphone' && <Search onQueryChange={onQueryChange} />}
+                <div className={css.name}>{user?.name}</div>
+                {screen === 'iphone' && (
+                  <Search onQueryChange={onQueryChange} />
+                )}
                 <div className={css.photo}>
                   <div ref={menuRef}>
                     <Button kind="ghost" onClick={toggleMenu}>
-                      { user?.picture
-                        ? <img className={css.circleImg} src={user?.picture} alt={alt} />
-                        : (
-                          <div className={css.circleImg}>
-                            {alt}
-                          </div>
-                        )}
+                      {user?.picture ? (
+                        <img
+                          className={css.circleImg}
+                          src={user?.picture}
+                          alt={alt}
+                        />
+                      ) : (
+                        <div className={css.circleImg}>{alt}</div>
+                      )}
                     </Button>
                     {userOptionsOpen && <UserOptions />}
                   </div>

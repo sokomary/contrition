@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'src/components/features';
-import { Product } from 'src/domain';
+import { Product } from 'src/types/domain';
 import { useDeviceScreen } from 'src/hooks';
 import { Value } from './components/Value';
 import * as css from './ProductInfo.css';

@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { MEDIA } from 'src/hooks';
 import { color } from 'src/theme';
 
@@ -20,10 +20,21 @@ export const actionBar = style({
 
 export const filtersContainer = style({
   display: 'contents',
-
   '@media': {
     [MEDIA.iphone]: {
       display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      padding: '6px 15px',
+      gap: '15px',
+    },
+  },
+});
+globalStyle(filtersContainer, {
+  '@container': {
+    '(max-width: 600px)': {
+      display: 'flex',
+      alignItems: 'center',
       width: '100%',
       padding: '6px 15px',
       gap: '15px',
@@ -50,20 +61,33 @@ export const infoControl = style({
     },
   },
 });
+globalStyle(infoControl, {
+  '@container': {
+    '(max-width: 600px)': {
+      backgroundColor: 'transparent',
+      height: 'fit-content',
+      width: 'fit-content',
+    },
+  },
+});
 
 export const icon = style({
   cursor: 'pointer',
 });
 
+globalStyle(actionBar, {
+  containerType: 'inline-size',
+});
 export const actionBarContent = style({
   display: 'flex',
   borderRadius: '20px',
   boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
   backgroundColor: color('basic'),
   gap: 0,
-
-  '@media': {
-    [MEDIA.iphone]: {
+});
+globalStyle(actionBarContent, {
+  '@container': {
+    '(max-width: 600px)': {
       flexDirection: 'column-reverse',
     },
   },
@@ -76,6 +100,16 @@ export const filters = style({
 
   '@media': {
     [MEDIA.iphone]: {
+      width: '100%',
+      gap: '10px',
+      padding: '0',
+      justifyContent: 'space-between',
+    },
+  },
+});
+globalStyle(filters, {
+  '@container': {
+    '(max-width: 600px)': {
       width: '100%',
       gap: '10px',
       padding: '0',
@@ -102,11 +136,32 @@ export const userBlock = style({
     },
   },
 });
+globalStyle(userBlock, {
+  '@container': {
+    '(max-width: 600px)': {
+      width: '100%',
+      height: '58px',
+      padding: '0 15px',
+      gap: '10px',
+    },
+  },
+});
+globalStyle(userBlock, {
+  containerType: 'inline-size',
+});
 
 export const name = style({
+  display: 'unset',
   alignSelf: 'center',
-
   fontSize: '16px',
+  paddingLeft: '5px',
+});
+globalStyle(name, {
+  '@container': {
+    '(max-width: 400px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const circleImg = style({
@@ -121,6 +176,15 @@ export const circleImg = style({
 
   '@media': {
     [MEDIA.iphone]: {
+      height: '30px',
+      width: '30px',
+      borderRadius: '15px',
+    },
+  },
+});
+globalStyle(circleImg, {
+  '@container': {
+    '(max-width: 600px)': {
       height: '30px',
       width: '30px',
       borderRadius: '15px',

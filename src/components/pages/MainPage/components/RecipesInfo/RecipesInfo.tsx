@@ -1,9 +1,7 @@
-import React, {
-  FC, useMemo, useState,
-} from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getProducts, getTags } from 'src/api';
-import { Recipe, Product } from 'src/domain';
+import { Recipe, Product } from 'src/types/domain';
 import { AddProduct, AddTag, ProductInfo } from 'src/components/modals';
 import * as css from './RecipesInfo.css';
 import { ControlCard } from './components/ControlCard';
@@ -18,38 +16,46 @@ type Props = {
 };
 
 export const RecipesInfo: FC<Props> = ({
-  recipes, open, onViewClick, onRecipeClick, onRecipeInfoOpenChange,
+  recipes,
+  open,
+  onViewClick,
+  onRecipeClick,
+  onRecipeInfoOpenChange,
 }) => {
-  const [productToView, setProductToView] = useState<Product | undefined>(undefined);
+  const [productToView, setProductToView] = useState<Product | undefined>(
+    undefined
+  );
   const [openNewProduct, setOpenNewProduct] = useState(false);
   const [openNewTag, setOpenNewTag] = useState(false);
 
-  const { data: tags, isLoading: areTagsLoading } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
-  const { data: products, isLoading: areProductsLoading } = useSuspenseQuery(
-    {
-      queryKey: ['products'],
-      queryFn: () => getProducts(),
-    },
-  );
+  const { data: tags, isLoading: areTagsLoading } = useQuery({
+    queryKey: ['tags'],
+    queryFn: () => getTags(),
+  });
+  const { data: products, isLoading: areProductsLoading } = useSuspenseQuery({
+    queryKey: ['products'],
+    queryFn: () => getProducts(),
+  });
 
-  const favoriteRecipes = useMemo(() => (
-    recipes?.filter((r) => r.favorite)
-  ), [recipes]);
+  const favoriteRecipes = useMemo(
+    () => recipes?.filter((r) => r.favorite),
+    [recipes]
+  );
 
   return (
     <div style={{ overflow: 'hidden' }}>
-
       <div className={css.animated({ open })}>
-        <AddTag
-          open={openNewTag}
-          onClose={() => setOpenNewTag(false)}
-        />
+        <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
         <AddProduct
           open={openNewProduct}
           onClose={() => setOpenNewProduct(false)}
         />
         {productToView && (
-          <ProductInfo onClose={() => setProductToView(undefined)} product={productToView} open={!!productToView} />
+          <ProductInfo
+            onClose={() => setProductToView(undefined)}
+            product={productToView}
+            open={!!productToView}
+          />
         )}
 
         <div className={css.infoContainer}>
@@ -79,7 +85,9 @@ export const RecipesInfo: FC<Props> = ({
             <div className={css.controlName}>
               <div>Избранные рецепты</div>
               <div className={css.dotsDivider} />
-              <div>{favoriteRecipes?.length || 'пока нет избранных рецептов'}</div>
+              <div>
+                {favoriteRecipes?.length || 'пока нет избранных рецептов'}
+              </div>
             </div>
             <div className={css.recipesList}>
               {favoriteRecipes?.map((r) => (

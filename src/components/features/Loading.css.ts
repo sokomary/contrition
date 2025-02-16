@@ -20,8 +20,8 @@ const animation = keyframes({
 export const spinner = style({
   width: '20px',
   height: '20px',
-  border: '3px solid #f3f3f3',
-  borderTop: '3px solid #383636',
+  border: '2px solid #f3f3f3',
+  borderTop: '2px solid #383636',
   borderRadius: '50%',
   animation: `${animation} 1.5s linear infinite`,
 });

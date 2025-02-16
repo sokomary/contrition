@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Confirmation } from 'src/components/modals/Confirmation';
 import { Button } from 'src/components/features';
@@ -62,19 +62,18 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
           <div className={css.dot} />
           <div className={css.dot} />
           {optionsOpen && (
-          <div className={css.options}>
-            <Button
-              kind="ghost"
-              className={css.option()}
-              onClick={() => {
-                onEditClick(recipe);
-                toggleMenu();
-              }}
-            >
-              Изменить
-            </Button>
-            {recipe.favorite
-              ? (
+            <div className={css.options}>
+              <Button
+                kind="ghost"
+                className={css.option()}
+                onClick={() => {
+                  onEditClick(recipe);
+                  toggleMenu();
+                }}
+              >
+                Изменить
+              </Button>
+              {recipe.favorite ? (
                 <Button
                   kind="ghost"
                   className={css.option()}
@@ -85,8 +84,7 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
                 >
                   Из избранного
                 </Button>
-              )
-              : (
+              ) : (
                 <Button
                   kind="ghost"
                   className={css.option()}
@@ -98,17 +96,17 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
                   В избранное
                 </Button>
               )}
-            <Button
-              kind="ghost"
-              className={css.option({ negative: true })}
-              onClick={() => {
-                setConfirmOpen(true);
-                toggleMenu();
-              }}
-            >
-              Удалить
-            </Button>
-          </div>
+              <Button
+                kind="ghost"
+                className={css.option({ negative: true })}
+                onClick={() => {
+                  setConfirmOpen(true);
+                  toggleMenu();
+                }}
+              >
+                Удалить
+              </Button>
+            </div>
           )}
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import { getInstructions } from 'src/api';
 import { useDeviceScreen } from 'src/hooks';
 import { Loading } from 'src/components/features';
@@ -24,12 +24,14 @@ export const Content = ({ recipe, onEditClick }: Props) => {
       {!isLoading && (
         <div className={css.dialogContentContainer}>
           <div className={css.mainContainer}>
-
             {recipe.comment && (
-              <div className={css.comment}>
-                {recipe.comment}
-              </div>
+              <div className={css.comment}>{recipe.comment}</div>
             )}
+
+            {recipe.portionSize && (
+              <div>Размер порции: {recipe.portionSize}</div>
+            )}
+
             <div className={css.productsContaines}>
               <div className={css.title}>Состав</div>
               <div className={css.card({ vertical: false })}>

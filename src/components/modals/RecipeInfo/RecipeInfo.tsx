@@ -1,5 +1,5 @@
 import React from 'react';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import { Modal } from 'src/components/features';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 import { Header } from './components/Header';
@@ -12,16 +12,14 @@ type Props = {
   onEditClick: () => void;
 };
 
-export const RecipeInfo = ({
-  open, onClose, recipe, onEditClick,
-}: Props) => {
+export const RecipeInfo = ({ open, onClose, recipe, onEditClick }: Props) => {
   const screen = useDeviceScreen();
 
   return (
     <Modal
       width={WIDTHS[screen]}
       position={['iphone', 'ipadv'].includes(screen) ? 'bottom' : 'right'}
-      header={(<Header recipe={recipe} />)}
+      header={<Header recipe={recipe} />}
       isActive={open}
       onClose={onClose}
     >

@@ -17,7 +17,6 @@ export const dialogContentContainer = style({
       padding: '0 20px 20px 20px',
     },
   },
-
 });
 
 export const mainContainer = style({
@@ -56,7 +55,6 @@ export const quantity = style({
   textAlign: 'end',
   fontSize: '16px',
   height: '19px',
-
 });
 
 export const productsContaines = style({
@@ -98,7 +96,6 @@ export const instructionName = style({
 });
 
 export const stepDescription = style({
-
   fontSize: '16px',
 });
 

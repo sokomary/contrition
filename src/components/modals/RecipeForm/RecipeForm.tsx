@@ -1,17 +1,11 @@
 import React, { Suspense, useRef, useState } from 'react';
 
-import {
-  useForm, SubmitHandler,
-} from 'react-hook-form';
-import {
-  useMutation, useQuery, useQueryClient,
-} from '@tanstack/react-query';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addRecipe, getInstructions } from 'src/api';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import i18next from 'src/formatter';
-import {
-  Field, Loading, Modal, Action,
-} from 'src/components/features';
+import { Field, Loading, Modal, Action } from 'src/components/features';
 import { useDeviceScreen } from 'src/hooks';
 import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField/InstructionsField';
@@ -35,16 +29,12 @@ const POSITIONS = {
   ipadh: 'top',
 } as const;
 
-export const RecipeForm = ({
-  open, onClose, defaultValues,
-}: Props) => {
-  const { data: instructions, isLoading: areInstructionsLoading } = useQuery(
-    {
-      queryKey: [`instructions-${defaultValues?.id}`],
-      queryFn: () => (getInstructions(defaultValues!.id)),
-      enabled: defaultValues?.id !== undefined,
-    },
-  );
+export const RecipeForm = ({ open, onClose, defaultValues }: Props) => {
+  const { data: instructions, isLoading: areInstructionsLoading } = useQuery({
+    queryKey: [`instructions-${defaultValues?.id}`],
+    queryFn: () => getInstructions(defaultValues!.id),
+    enabled: defaultValues?.id !== undefined,
+  });
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
@@ -55,29 +45,22 @@ export const RecipeForm = ({
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState,
-  } = useForm<Recipe>({
-    defaultValues: defaultValues
-      ? { ...defaultValues, instructions }
-      : {
-        recipeProducts: [], tags: [], instructions: [], favorite: false,
-      },
-  });
+  const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(
+    {
+      defaultValues: defaultValues
+        ? { ...defaultValues, instructions }
+        : {
+            recipeProducts: [],
+            tags: [],
+            instructions: [],
+            favorite: false,
+          },
+    }
+  );
 
   const onSubmit: SubmitHandler<Recipe> = (data) => addMutation.mutate(data);
 
   const divRef = useRef<HTMLDivElement>(null);
-  const scrollToBottom = () => {
-    divRef.current?.scroll({
-      top: divRef.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
 
   const [openNewProduct, setOpenNewProduct] = useState(false);
   const [openNewTag, setOpenNewTag] = useState(false);
@@ -97,7 +80,11 @@ export const RecipeForm = ({
       <Modal
         position={POSITIONS[screen]}
         width={1120}
-        header={defaultValues ? defaultValues.name : i18next.t('startpage:recipes.new.header')}
+        header={
+          defaultValues
+            ? defaultValues.name
+            : i18next.t('startpage:recipes.new.header')
+        }
         isActive={open}
         onClose={() => {
           onClose();
@@ -110,22 +97,16 @@ export const RecipeForm = ({
         />
         <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
 
-        <div
-          ref={divRef}
-          style={{ height: '100%' }}
-        >
+        <div ref={divRef} style={{ height: '100%' }}>
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <form
             style={{ height: '100%' }}
             onSubmit={handleSubmit(onSubmit)}
             onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
           >
-
             {!addMutation.isPending && !areInstructionsLoading ? (
               <div className={css.container}>
-
                 <div className={css.content}>
-
                   <div className={css.leftPart}>
                     <div className={css.fields}>
                       <Field
@@ -171,8 +152,23 @@ export const RecipeForm = ({
                       error={formState.errors.comment}
                       errorText={i18next.t('forms:fields.errors.required')}
                     />
-                    {screen === 'iphone'
-                      && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
+                    <Field
+                      size={screen === 'iphone' ? 'large' : undefined}
+                      className={css.linkField}
+                      required
+                      name="portionSize"
+                      register={register}
+                      placeholder={i18next.t('domain:recipe.portionSize')}
+                      error={formState.errors.portionSize}
+                      errorText={i18next.t('forms:fields.errors.required')}
+                    />
+                    {screen === 'iphone' && (
+                      <TagsField
+                        onNewClick={() => setOpenNewTag(true)}
+                        control={control}
+                        name="tags"
+                      />
+                    )}
                     <ImageField
                       name="img"
                       control={control}
@@ -186,23 +182,29 @@ export const RecipeForm = ({
                     <ProductsField
                       register={register}
                       onNewClick={() => setOpenNewProduct(true)}
-                      onActive={scrollToBottom}
                       control={control}
                     />
                   </div>
-
                 </div>
 
                 <div className={css.footer}>
-                  {screen !== 'iphone'
-                  && <TagsField onNewClick={() => setOpenNewTag(true)} control={control} name="tags" />}
+                  {screen !== 'iphone' && (
+                    <TagsField
+                      onNewClick={() => setOpenNewTag(true)}
+                      control={control}
+                      name="tags"
+                    />
+                  )}
                   <ActionBar actions={actions} />
                 </div>
               </div>
-            ) : (<div className={css.loadingWrapper}><Loading /></div>)}
+            ) : (
+              <div className={css.loadingWrapper}>
+                <Loading />
+              </div>
+            )}
           </form>
         </div>
-
       </Modal>
     </Suspense>
   );

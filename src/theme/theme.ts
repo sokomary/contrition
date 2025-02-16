@@ -67,6 +67,17 @@ export const theme: Theme = {
   },
 };
 
+export const text = {
+  text3: { fontSize: '16px' },
+  text3b: { fontSize: '16px', fontWeight: 600 },
+  text2: { fontSize: '20px' },
+  text1: { fontSize: '24px' },
+  text2b: { fontSize: '20px', fontWeight: 600 },
+  header3: { fontSize: '24px', fontWeight: 600 },
+  header2: { fontSize: '36px', fontWeight: 600 },
+  header1: { fontSize: '48px', fontWeight: 600 },
+};
+
 export const color = (
   value: ColorSchema,
   mode?: 'dark' | 'light',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Recipe } from 'src/domain';
+import { Recipe } from 'src/types/domain';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Confirmation } from 'src/components/modals/Confirmation';
@@ -45,11 +45,31 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
           setConfirmOpen(false);
         }}
       />
-      <Button kind="ghost" className={css.actionButton} onClick={() => onEditClick(recipe)}>Изменить</Button>
-      {recipe.favorite
-        ? <Button kind="ghost" onClick={() => fromFavoritesMutation.mutate(recipe.id)}>Из избранного</Button>
-        : <Button kind="ghost" onClick={() => toFavoritesMutation.mutate(recipe.id)}>В избранное</Button>}
-      <Button kind="ghost" onClick={() => setConfirmOpen(true)}>Удалить</Button>
+      <Button
+        kind="ghost"
+        className={css.actionButton}
+        onClick={() => onEditClick(recipe)}
+      >
+        Изменить
+      </Button>
+      {recipe.favorite ? (
+        <Button
+          kind="ghost"
+          onClick={() => fromFavoritesMutation.mutate(recipe.id)}
+        >
+          Из избранного
+        </Button>
+      ) : (
+        <Button
+          kind="ghost"
+          onClick={() => toFavoritesMutation.mutate(recipe.id)}
+        >
+          В избранное
+        </Button>
+      )}
+      <Button kind="ghost" onClick={() => setConfirmOpen(true)}>
+        Удалить
+      </Button>
     </div>
   );
 };

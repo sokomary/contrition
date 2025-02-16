@@ -1,5 +1,5 @@
 import React, {
-  PropsWithChildren, ReactNode, Suspense,
+  PropsWithChildren, ReactNode, Suspense, useEffect, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { ClearIcon } from 'src/assets';
@@ -14,25 +14,33 @@ type Props = PropsWithChildren & {
   onClose: () => void;
   width?: number;
   position?: DialogPosition;
+  side?: boolean;
 };
 
 export const Modal = ({
-  children, isActive, width, onClose, header, position = 'center',
+  children, isActive, width, onClose, header, position = 'center', side,
 }: Props) => {
   const { isRendered } = useLogic({ isActive, onClose });
 
   const zIndex = 101 + Date.now();
 
-  if (!isRendered) {
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const root = document.getElementById('modals-root');
+    setModalRoot(root);
+  }, []);
+
+  if (!isRendered || !modalRoot) {
     return null;
   }
 
-  return createPortal(
+  const renderContent = (overlay: boolean) => (
     <div className="modal">
-      <div className={css.overlay({ isActive })} style={{ zIndex }} />
+      {overlay && <div className={css.overlay({ isActive })} style={{ zIndex }} />}
 
       <Suspense fallback={<>is loading</>}>
-        <div className={css.content({ isActive, position })} style={{ zIndex: zIndex + 1 }}>
+        <div className={css.content({ isActive, position, overlay })} style={{ zIndex: zIndex + 1 }}>
           <div
             style={{ width: ((position === 'center' || position === 'right') && width) ? width : undefined }}
             className={css.children({ position })}
@@ -45,7 +53,14 @@ export const Modal = ({
           </div>
         </div>
       </Suspense>
-    </div>,
+    </div>
+  );
+  if (side) {
+    return renderContent(false);
+  }
+
+  return createPortal(
+    renderContent(true),
     document.getElementById('modals-root') as HTMLDivElement,
   );
 };

@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Route, Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
@@ -10,14 +8,15 @@ import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuthenticate } from 'src/hooks/useAuthenticate';
 import { QueryProvider } from 'src/api';
-import { routs } from 'src/routs';
+import { ROUTES } from 'src/router';
 import { MainPage } from 'src/components/pages/MainPage';
 import { LoginPage } from 'src/components/pages/LoginPage';
 import ReactDOM from 'react-dom/client';
+import { Modals } from './components/Modals';
 import * as css from './App.css';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
+  document.getElementById('root') as HTMLElement
 );
 
 const Content = () => {
@@ -31,15 +30,15 @@ const Content = () => {
           {authenticated ? (
             <>
               <Route path="*" element={<MainPage />} />
-              <Route path={routs.START} element={<MainPage />} />
-              <Route path={routs.LOGIN} element={<LoginPage />} />
+              <Route path={ROUTES.start} element={<MainPage />} />
+              <Route path={ROUTES.login} element={<LoginPage />} />
             </>
           ) : (
             <Route path="*" element={<LoginPage />} />
           )}
         </Routes>
+        <Modals />
       </Router>
-      <div id="modals-root" />
     </>
   );
 };
@@ -50,8 +49,9 @@ root.render(
       <React.StrictMode>
         <QueryProvider>
           <Content />
+          <div id="modals-root" />
         </QueryProvider>
       </React.StrictMode>
     </CookiesProvider>
-  </div>,
+  </div>
 );

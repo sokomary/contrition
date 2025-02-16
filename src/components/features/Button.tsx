@@ -19,12 +19,12 @@ type Props = PropsWithChildren & StyleProps & {
 
 export const Button = ({
   style,
-  className, children, onBlur, onClick, kind = 'primary', size, type = 'button', disabled, label,
+  className, children, onBlur, onClick, kind = 'primary', size, type, disabled, label,
 }: Props) => (
   <button
-    className={`${className} ${css.button({ kind, size })}`}
+    className={`${className} ${css.button({ kind, size, disabled })}`}
     onClick={onClick}
-    type={type}
+    type={type || 'button'}
     disabled={disabled}
     onBlur={onBlur}
     style={style}
