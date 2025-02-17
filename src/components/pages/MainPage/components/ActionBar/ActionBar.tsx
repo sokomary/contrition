@@ -37,8 +37,6 @@ export const ActionBar = ({
   const [randomDialogOpen, setRandomDialogOpen] = useState(false);
   const screen = useDeviceScreen();
 
-  const { open: openMenu } = useToggleModal('menu', 'true');
-
   const toggleMenu = () => {
     setUserOptionsOpen(!userOptionsOpen);
   };
@@ -93,7 +91,6 @@ export const ActionBar = ({
                 user={user}
                 onRandomClick={() => setRandomDialogOpen(true)}
                 onNewClick={onNewClick}
-                onMenuClick={openMenu}
               />
               <div className={css.content}>
                 <div className={css.name}>{user?.name}</div>

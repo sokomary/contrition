@@ -4,6 +4,7 @@ import { Button } from 'src/components/features';
 import { upperFirst } from 'lodash';
 import { Options, useLogic } from './PeriodPicker.useLogic';
 import * as css from './PeriodPicker.css';
+import { format } from '../../helpers/dates';
 
 export const PeriodPicker = (props: Options) => {
   const {
@@ -30,9 +31,7 @@ export const PeriodPicker = (props: Options) => {
           {!value.start && !value.end ? (
             'Выберите период'
           ) : (
-            <div>
-              {value.start?.toString()} - {value.end?.toString()}
-            </div>
+            <div>{format(value)}</div>
           )}
         </div>
       </div>

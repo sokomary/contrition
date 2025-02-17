@@ -1,6 +1,8 @@
 import React from 'react';
 import { ActionBar, Button, PeriodPicker } from 'src/components/features';
 import { upperFirst } from 'lodash';
+import { format } from 'src/helpers/dates';
+import { Kind } from 'src/types/domain';
 import { useLogic, Options } from './NewMenu.useLogic';
 import * as css from './NewMenu.css';
 
@@ -16,7 +18,39 @@ export const NewMenu = (props: Options) => {
     onSelect,
     onCancel,
     onRemove,
+    isSelected,
   } = useLogic(props);
+
+  const renderItem = (date: string, kind: Kind) => {
+    const recipe = findMeal(date.toString(), kind.id)?.recipe;
+
+    if (recipe) {
+      return (
+        <div className={css.meal}>
+          {findMeal(date.toString(), kind.id)?.recipe?.name}
+          <Button
+            kind="ghost"
+            size="small"
+            label="Удалить"
+            onClick={() => onRemove(date, kind.id)}
+          />
+        </div>
+      );
+    }
+
+    if (isSelected(date, kind)) {
+      return <Button kind="ghost" label="Отмена" onClick={() => onCancel()} />;
+    }
+
+    return (
+      <Button
+        kind="ghost"
+        label="Выбрать"
+        disabled={!!selecting}
+        onClick={() => onSelect(date.toString(), kind.id)}
+      />
+    );
+  };
 
   return (
     <>
@@ -35,48 +69,19 @@ export const NewMenu = (props: Options) => {
 
           {dates?.map((date, i) => (
             <div key={i} className={css.row}>
-              <div className={css.dateLabel}>{date.toString()}</div>
+              <div className={css.dateLabel}>
+                {format(date, { year: false })}
+              </div>
 
               {kinds?.map((kind) => (
                 <div key={kind.id}>
                   <div
                     className={css.empty({
-                      selected:
-                        selecting?.date === date.toString() &&
-                        selecting?.kindId === kind.id,
+                      selected: isSelected(date, kind),
                     })}
                     key={`${date}${kind}`}
                   >
-                    {/* eslint-disable-next-line no-nested-ternary */}
-                    {!findMeal(date.toString(), kind.id)?.recipe ? (
-                      !(
-                        selecting?.date === date.toString() &&
-                        selecting?.kindId === kind.id
-                      ) ? (
-                        <Button
-                          kind="ghost"
-                          label="Выбрать"
-                          disabled={!!selecting}
-                          onClick={() => onSelect(date.toString(), kind.id)}
-                        />
-                      ) : (
-                        <Button
-                          kind="ghost"
-                          label="Отмена"
-                          onClick={() => onCancel()}
-                        />
-                      )
-                    ) : (
-                      <div className={css.meal}>
-                        {findMeal(date.toString(), kind.id)?.recipe?.name}
-                        <Button
-                          kind="ghost"
-                          size="small"
-                          label="Удалить"
-                          onClick={() => onRemove(date, kind.id)}
-                        />
-                      </div>
-                    )}
+                    {renderItem(date, kind)}
                   </div>
                 </div>
               ))}

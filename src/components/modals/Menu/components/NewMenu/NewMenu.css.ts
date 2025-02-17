@@ -31,7 +31,7 @@ export const kindLabel = style({
 });
 
 export const dateLabel = style({
-  width: '75px',
+  width: '35px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
