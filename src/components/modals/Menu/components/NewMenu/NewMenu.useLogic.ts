@@ -100,7 +100,6 @@ export const useLogic = (props: Options) => {
     const dates = periodToDates(newPeriod);
     if (dates && props.kinds) {
       const newMeals = props.kinds
-        .sort()
         .map((kind) =>
           dates.map((date) => ({
             date: date.toString(),
@@ -117,9 +116,11 @@ export const useLogic = (props: Options) => {
   return {
     dates: Array.from(new Set(meals.map((meal) => meal.date))).sort(),
     findMeal,
-    kinds: props.kinds.sort(),
+    kinds: props.kinds,
     period,
     setPeriod: onPeriodUpdate,
+    isSelected: (date: string, kind: Kind) =>
+      selecting?.date === date.toString() && selecting?.kindId === kind.id,
     actions,
     selecting,
     onSelect: (date: string, kindId: number) => {

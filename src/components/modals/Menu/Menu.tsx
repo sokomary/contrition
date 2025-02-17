@@ -3,8 +3,8 @@ import { Button, Loading, Modal } from 'src/components/features';
 import { useLogic } from './Menu.useLogic';
 import { CurrentMenu } from './components/CurrentMenu/CurrentMenu';
 import { NewMenu } from './components/NewMenu/NewMenu';
-import * as css from './Menu.css';
 import { History } from './components/History/History';
+import * as css from './Menu.css';
 
 export const Menu = () => {
   const {
@@ -54,21 +54,17 @@ export const Menu = () => {
       width={screen !== 'iphone' ? 577 : undefined}
       header={
         <div className={css.header}>
-          <div>
-            <Button
-              label="Меню"
-              kind="ghost"
-              onClick={() => setMode('current')}
-            />
-          </div>
+          <Button
+            label="Меню"
+            kind="ghost"
+            onClick={() => setMode('current')}
+          />
           <div>|</div>
-          <div>
-            <Button
-              label="История"
-              kind="ghost"
-              onClick={() => setMode('history')}
-            />
-          </div>
+          <Button
+            label="История"
+            kind="ghost"
+            onClick={() => setMode('history')}
+          />
         </div>
       }
       isActive={isOpen}

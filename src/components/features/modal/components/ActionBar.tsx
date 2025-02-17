@@ -21,7 +21,13 @@ export const ActionBar = ({ actions, className }: Props) => {
             key={i}
             size={screen === 'iphone' ? 'large' : 'regular'}
             {...action}
-            label={action.isLoading ? <Loading /> : action.label}
+            label={
+              action.isLoading ? (
+                <Loading className={css.loader} />
+              ) : (
+                action.label
+              )
+            }
           />
         ))}
     </div>

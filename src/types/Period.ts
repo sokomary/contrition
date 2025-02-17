@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill';
 
-export type Period = {
-  start: Temporal.PlainDate | null;
-  end: Temporal.PlainDate | null;
+export type Period<T = Temporal.PlainDate> = {
+  start: T | null | undefined;
+  end: T | null | undefined;
 };
