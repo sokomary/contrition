@@ -1,12 +1,14 @@
 import React from 'react';
-import {
-  Menu,
-} from 'src/components/modals';
+import { GetRandomRecipe, Menu } from 'src/components/modals';
 
 export const ROUT_MODALS = {
   menu: ['true'],
+  'random-recipe': ['true'],
 } as const;
 
 export const Modals = () => (
-  <Menu />
+  <>
+    <Menu />
+    <GetRandomRecipe />
+  </>
 );

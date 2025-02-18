@@ -12,13 +12,15 @@ export const useLogic = () => {
   });
 
   const [userOptionsOpen, setUserOptionsOpen] = useState(false);
-  const [randomDialogOpen, setRandomDialogOpen] = useState(false);
   const screen = useDeviceScreen();
 
-  const menuRef = useRef<HTMLDivElement>(null);
+  const userOptionsRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        userOptionsRef.current &&
+        !userOptionsRef.current.contains(event.target as Node)
+      ) {
         setUserOptionsOpen(false);
       }
     };
@@ -26,16 +28,14 @@ export const useLogic = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [menuRef]);
+  }, [userOptionsRef]);
 
   return {
     imageAlt: user?.name.slice(0, 2).toUpperCase(),
     toggleOptions: () => setUserOptionsOpen(!userOptionsOpen),
-    randomDialogOpen,
-    setRandomDialogOpen,
     screen,
     tags,
-    menuRef,
+    userOptionsRef,
     user,
     userOptionsOpen,
   };

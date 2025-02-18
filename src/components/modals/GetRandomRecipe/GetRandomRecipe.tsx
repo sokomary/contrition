@@ -1,70 +1,38 @@
-import React, {
-  useState,
-} from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getRandomRecipe, getTags } from 'src/api';
-import {
-  Action, ActionBar,
-  Button, Modal,
-} from 'src/components/features';
+import React from 'react';
+import { ActionBar, Button, Modal } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useDeviceScreen } from 'src/hooks';
-import { find, isEqual } from 'lodash';
+import { useLogic } from './GetRandomRecipe.useLogic';
 import * as css from './GetRandomRecipe.css';
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
-
-export const GetRandomRecipe = ({ open, onClose }: Props) => {
-  const screen = useDeviceScreen();
-
-  const { data: tags } = useQuery({ queryKey: ['tags'], queryFn: () => getTags() });
-  const [selectedTags, setSelectedTags] = useState(tags || []);
-
-  const { data, refetch } = useQuery({
-    queryKey: ['random-recipe'],
-    queryFn: () => getRandomRecipe(selectedTags.map((r) => r.id)),
-  });
-
-  const actions: Action[] = [
-    {
-      kind: 'primary',
-      label: i18next.t('startpage:recipes.random.actions.get'),
-      onClick: refetch,
-    },
-  ];
+export const GetRandomRecipe = () => {
+  const { screen, isOpen, onClose, data, actions, tags, isSelected, onSelect } =
+    useLogic();
 
   return (
     <Modal
       position={screen === 'iphone' ? 'bottom' : undefined}
       width={screen !== 'iphone' ? 350 : undefined}
       header={i18next.t('startpage:recipes.random.header')}
-      isActive={open}
+      isActive={isOpen}
       onClose={onClose}
     >
-      <div className={css.content}>
-        <div className={css.tags}>
-          {tags?.map((t, index) => (
+      <div className={css.container}>
+        <div className={css.content}>
+          {tags.map((tag, index) => (
             <Button
               kind="ghost"
-              className={css.tag({ selected: !!selectedTags.find((selTag) => isEqual(selTag, t)) })}
+              className={css.tag({ selected: isSelected(tag) })}
               key={index}
-              onClick={() => {
-                if (find(selectedTags, t)) {
-                  setSelectedTags(selectedTags.filter((selTag) => !isEqual(selTag, t)));
-                } else {
-                  setSelectedTags([...selectedTags, t]);
-                }
-              }}
+              onClick={() => onSelect(tag)}
             >
-              {t.name}
+              {tag.name}
             </Button>
           ))}
         </div>
-        <div className={css.randomName}>{data?.name}</div>
+
+        <div className={css.name}>{data?.name}</div>
       </div>
+
       <ActionBar actions={actions} />
     </Modal>
   );

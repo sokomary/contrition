@@ -8,13 +8,15 @@ import * as css from './Actions.css';
 type Props = {
   user?: User;
   onNewClick: () => void;
-  onRandomClick: () => void;
 };
 
 export const Actions = (props: Props) => {
   const screen = useDeviceScreen();
+
   const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu', value: 'true' });
   const { open: openMenu } = useToggleModal('menu', 'true');
+
+  const { open: openRandom } = useToggleModal('random-recipe', 'true');
 
   return (
     <div className={css.container}>
@@ -28,11 +30,7 @@ export const Actions = (props: Props) => {
         </Button>
       )}
 
-      <Button
-        className={css.button}
-        kind="primary"
-        onClick={props.onRandomClick}
-      >
+      <Button className={css.button} kind="primary" onClick={openRandom}>
         {screen === 'mac' ? (
           <div>Случайный</div>
         ) : (

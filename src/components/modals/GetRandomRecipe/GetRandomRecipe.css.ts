@@ -5,17 +5,11 @@ import { recipe } from '@vanilla-extract/recipes';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 10,
-});
-
-export const content = style({
-  display: 'flex',
-  flexDirection: 'column',
   gap: '30px',
   alignItems: 'center',
 });
 
-export const tags = style({
+export const content = style({
   display: 'flex',
   gap: '25px',
 });
@@ -34,6 +28,6 @@ export const tag = recipe({
   },
 });
 
-export const randomName = style({
+export const name = style({
   height: '30px',
 });
