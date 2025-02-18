@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getTags } from 'src/api';
+import React from 'react';
 import { DropDownIcon, DropUpIcon } from 'src/assets';
-import { useAuthenticate, useToggleModal } from 'src/hooks';
 import { Tag } from 'src/types/domain';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 import { GetRandomRecipe } from 'src/components/modals';
 import { Button } from 'src/components/features';
 import { Tags } from './components/Tags';
 import { Search } from './components/Search';
 import { UserOptions } from './components/UserOptions';
 import { Actions } from './components/Actions';
+import { useLogic } from './ActionBar.useLogic';
 import * as css from './ActionBar.css';
 
 type Props = {
@@ -28,33 +25,17 @@ export const ActionBar = ({
   onQueryChange,
   onNewClick,
 }: Props) => {
-  const user = useAuthenticate();
-  const { data: tags } = useQuery({
-    queryKey: ['tags'],
-    queryFn: () => getTags(),
-  });
-  const [userOptionsOpen, setUserOptionsOpen] = useState(false);
-  const [randomDialogOpen, setRandomDialogOpen] = useState(false);
-  const screen = useDeviceScreen();
-
-  const toggleMenu = () => {
-    setUserOptionsOpen(!userOptionsOpen);
-  };
-
-  const menuRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setUserOptionsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuRef]);
-
-  const alt = user?.name.slice(0, 2).toUpperCase();
+  const {
+    randomDialogOpen,
+    setRandomDialogOpen,
+    tags,
+    screen,
+    toggleOptions,
+    menuRef,
+    imageAlt,
+    user,
+    userOptionsOpen,
+  } = useLogic();
 
   return (
     <>
@@ -99,15 +80,15 @@ export const ActionBar = ({
                 )}
                 <div className={css.photo}>
                   <div ref={menuRef}>
-                    <Button kind="ghost" onClick={toggleMenu}>
+                    <Button kind="ghost" onClick={toggleOptions}>
                       {user?.picture ? (
                         <img
                           className={css.circleImg}
                           src={user?.picture}
-                          alt={alt}
+                          alt={imageAlt}
                         />
                       ) : (
-                        <div className={css.circleImg}>{alt}</div>
+                        <div className={css.circleImg}>{imageAlt}</div>
                       )}
                     </Button>
                     {userOptionsOpen && <UserOptions />}
