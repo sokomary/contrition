@@ -10,8 +10,6 @@ import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
-import { AddProduct } from '../AddProduct';
-import { AddTag } from '../AddTag';
 import { useLogic, Options } from './RecipeForm.useLogic';
 import * as css from './RecipeForm.css';
 
@@ -32,10 +30,6 @@ export const RecipeForm = (props: Options) => {
     formState,
     onSubmit,
     divRef,
-    openNewProduct,
-    setOpenNewProduct,
-    openNewTag,
-    setOpenNewTag,
     screen,
     isOpen,
     onClose,
@@ -54,12 +48,6 @@ export const RecipeForm = (props: Options) => {
         isActive={isOpen}
         onClose={onClose}
       >
-        <AddProduct
-          open={openNewProduct}
-          onClose={() => setOpenNewProduct(false)}
-        />
-        <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
-
         <div ref={divRef} style={{ height: '100%' }}>
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
           <form
@@ -125,11 +113,7 @@ export const RecipeForm = (props: Options) => {
                     errorText={i18next.t('forms:fields.errors.required')}
                   />
                   {screen === 'iphone' && (
-                    <TagsField
-                      onNewClick={() => setOpenNewTag(true)}
-                      control={control}
-                      name="tags"
-                    />
+                    <TagsField control={control} name="tags" />
                   )}
                   <ImageField
                     name="img"
@@ -141,21 +125,13 @@ export const RecipeForm = (props: Options) => {
 
                 <div className={css.interactiveFields}>
                   <InstructionsField control={control} register={register} />
-                  <ProductsField
-                    register={register}
-                    onNewClick={() => setOpenNewProduct(true)}
-                    control={control}
-                  />
+                  <ProductsField register={register} control={control} />
                 </div>
               </div>
 
               <div className={css.footer}>
                 {screen !== 'iphone' && (
-                  <TagsField
-                    onNewClick={() => setOpenNewTag(true)}
-                    control={control}
-                    name="tags"
-                  />
+                  <TagsField control={control} name="tags" />
                 )}
                 <ActionBar actions={actions} />
               </div>

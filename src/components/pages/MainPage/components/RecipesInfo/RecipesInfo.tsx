@@ -2,10 +2,10 @@ import React, { FC, useMemo, useState } from 'react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getProducts, getTags } from 'src/api';
 import { Recipe, Product } from 'src/types/domain';
-import { AddProduct, AddTag, ProductInfo } from 'src/components/modals';
-import * as css from './RecipesInfo.css';
+import { ProductInfo } from 'src/components/modals';
 import { ControlCard } from './components/ControlCard';
 import { RecipeCard } from '../RecipeCard';
+import * as css from './RecipesInfo.css';
 
 type Props = {
   open?: boolean;
@@ -23,8 +23,6 @@ export const RecipesInfo: FC<Props> = ({
   const [productToView, setProductToView] = useState<Product | undefined>(
     undefined
   );
-  const [openNewProduct, setOpenNewProduct] = useState(false);
-  const [openNewTag, setOpenNewTag] = useState(false);
 
   const { data: tags, isLoading: areTagsLoading } = useQuery({
     queryKey: ['tags'],
@@ -43,11 +41,6 @@ export const RecipesInfo: FC<Props> = ({
   return (
     <div style={{ overflow: 'hidden' }}>
       <div className={css.animated({ open })}>
-        <AddTag open={openNewTag} onClose={() => setOpenNewTag(false)} />
-        <AddProduct
-          open={openNewProduct}
-          onClose={() => setOpenNewProduct(false)}
-        />
         {productToView && (
           <ProductInfo
             onClose={() => setProductToView(undefined)}
@@ -59,22 +52,18 @@ export const RecipesInfo: FC<Props> = ({
         <div className={css.infoContainer}>
           <div className={css.controlsContainer}>
             <ControlCard
-              className={css.tagsControlCard}
+              type="tag"
               items={tags || []}
-              header="Все теги"
-              addButtonText="Добавить тег"
-              onAddClick={() => setOpenNewTag(true)}
+              className={css.tagsControlCard}
               isLoading={areTagsLoading}
             />
             <ControlCard
+              type="product"
+              items={products || []}
               className={css.productsControlCard}
-              addButtonText="Добавить продукт"
               onOpenClick={(item) => {
                 setProductToView(products?.find((p) => p.id === item.id));
               }}
-              items={products || []}
-              header="Все продукты"
-              onAddClick={() => setOpenNewProduct(true)}
               isLoading={areProductsLoading}
             />
           </div>
@@ -87,6 +76,7 @@ export const RecipesInfo: FC<Props> = ({
                 {favoriteRecipes?.length || 'пока нет избранных рецептов'}
               </div>
             </div>
+
             <div className={css.recipesList}>
               {favoriteRecipes?.map((r) => (
                 <RecipeCard

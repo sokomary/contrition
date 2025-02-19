@@ -10,13 +10,10 @@ import i18next from 'src/formatter';
 import { find } from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
+import { useToggleModal } from 'src/hooks';
 import * as css from './TagsField.css';
 
-type Props = {
-  onNewClick: () => void;
-};
-
-export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
+export const TagsField: FC<UseControllerProps<Recipe>> = (props) => {
   const { data: tags } = useQuery({
     queryKey: ['tags'],
     queryFn: () => getTags(),
@@ -32,6 +29,8 @@ export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
       validate: (v) => (v as any[]).length !== 0,
     },
   });
+
+  const { open: openAddTag } = useToggleModal('tag-new', 'true');
 
   return (
     <div className={css.container}>
@@ -62,7 +61,7 @@ export const TagsField: FC<UseControllerProps<Recipe> & Props> = (props) => {
       {fieldState.error && (
         <FieldError text={i18next.t('startpage:recipes.errors.tags')} />
       )}
-      <Button kind="ghost" className={css.button} onClick={props.onNewClick}>
+      <Button kind="ghost" className={css.button} onClick={openAddTag}>
         {i18next.t('startpage:recipes.actions.addTag')}
       </Button>
     </div>

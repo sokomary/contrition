@@ -39,9 +39,6 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
 
   const divRef = useRef<HTMLDivElement>(null);
 
-  const [openNewProduct, setOpenNewProduct] = useState(false);
-  const [openNewTag, setOpenNewTag] = useState(false);
-
   const screen = useDeviceScreen();
 
   const actions: Action[] = [
@@ -63,10 +60,6 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
     formState,
     onSubmit,
     divRef,
-    openNewProduct,
-    setOpenNewProduct,
-    openNewTag,
-    setOpenNewTag,
     screen,
     onClose: async () => {
       reset();

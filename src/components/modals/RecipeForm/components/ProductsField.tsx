@@ -9,12 +9,12 @@ import { getProducts } from 'src/api';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Tooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
+import { useToggleModal } from 'src/hooks';
 import * as css from './ProductsField.css';
 
 type Props = {
   control: Control<Recipe>;
   register: UseFormRegister<Recipe>;
-  onNewClick: () => void;
 };
 
 export const ProductsField: FC<Props> = (props) => {
@@ -41,6 +41,8 @@ export const ProductsField: FC<Props> = (props) => {
     label: p.name,
   }));
 
+  const { open: openAddProduct } = useToggleModal('product-new', 'true');
+
   return (
     <div className={css.productsFieldContainer}>
       <div className={css.header}>
@@ -48,11 +50,7 @@ export const ProductsField: FC<Props> = (props) => {
           <div className={css.label}>
             {i18next.t('domain:recipe.recipeProducts')}
           </div>
-          <Button
-            className={css.button}
-            kind="ghost"
-            onClick={props.onNewClick}
-          >
+          <Button className={css.button} kind="ghost" onClick={openAddProduct}>
             {i18next.t('startpage:recipes.actions.addProduct')}
           </Button>
         </div>

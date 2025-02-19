@@ -4,21 +4,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import i18next from 'src/formatter';
 import { Tag } from 'src/types/domain';
 import { addTag } from 'src/api';
-import {
-  Modal,
-  Field,
-  Loading,
-  Action,
-  ActionBar,
-} from 'src/components/features';
-import { useDeviceScreen } from 'src/hooks';
+import { Modal, Field, Action, ActionBar } from 'src/components/features';
+import { useDeviceScreen, useRoutModal } from 'src/hooks';
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+export const AddTag = () => {
+  const { isOpen, onClose } = useRoutModal({
+    key: 'tag-new',
+  });
 
-export const AddTag = ({ open, onClose }: Props) => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addTag,
@@ -49,7 +42,7 @@ export const AddTag = ({ open, onClose }: Props) => {
       position={screen === 'iphone' ? 'bottom' : undefined}
       width={screen !== 'iphone' ? 350 : undefined}
       header="Новый тег"
-      isActive={open}
+      isActive={isOpen}
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>

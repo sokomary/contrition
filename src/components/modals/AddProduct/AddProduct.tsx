@@ -6,15 +6,15 @@ import { Product } from 'src/types/domain';
 import { Modal, Action, Field, ActionBar } from 'src/components/features';
 import i18next from 'src/formatter';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+import { useRoutModal } from 'src/hooks';
 import { NumberField } from './components/NumberField';
 import * as css from './AddProduct.css';
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+export const AddProduct = () => {
+  const { isOpen, onClose } = useRoutModal({
+    key: 'product-new',
+  });
 
-export const AddProduct = ({ open, onClose }: Props) => {
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addProduct,
@@ -45,7 +45,7 @@ export const AddProduct = ({ open, onClose }: Props) => {
       position={screen === 'iphone' ? 'bottom' : undefined}
       width={screen !== 'iphone' ? 350 : undefined}
       header={i18next.t('startpage:products.new.header')}
-      isActive={open}
+      isActive={isOpen}
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
