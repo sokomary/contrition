@@ -14,7 +14,6 @@ type Props = {
   setInfoOpen: (value: boolean) => void;
   onTagChange: (newTag?: Tag) => void;
   onQueryChange: (newQuery: string) => void;
-  onNewClick: () => void;
 };
 
 export const ActionBar = ({
@@ -22,7 +21,6 @@ export const ActionBar = ({
   setInfoOpen,
   onTagChange,
   onQueryChange,
-  onNewClick,
 }: Props) => {
   const {
     tags,
@@ -58,7 +56,7 @@ export const ActionBar = ({
             </div>
           </div>
           <div className={css.userBlock}>
-            <Actions user={user} onNewClick={onNewClick} />
+            <Actions user={user} />
             <div className={css.content}>
               <div className={css.name}>{user?.name}</div>
               {screen === 'iphone' && <Search onQueryChange={onQueryChange} />}

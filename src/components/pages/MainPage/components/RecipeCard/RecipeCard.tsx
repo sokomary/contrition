@@ -16,7 +16,6 @@ type Props = {
   onAddToMenu?: () => void;
   recipe: Recipe;
   className?: string;
-  onEditClick: () => void;
   onViewClick: () => void;
   displayInfo?: boolean;
   small?: boolean;
@@ -28,7 +27,6 @@ export const RecipeCard = ({
   recipe,
   onViewClick,
   onRecipeInfoOpenChange,
-  onEditClick,
   displayInfo = true,
   small,
   showTooltip,
@@ -131,9 +129,7 @@ export const RecipeCard = ({
                 </div>
               </div>
             </div>
-            {isAdmin(user) && (
-              <Actions recipe={recipe} onEditClick={onEditClick} />
-            )}
+            {isAdmin(user) && <Actions recipe={recipe} />}
           </div>
         )}
       </div>

@@ -35,6 +35,8 @@ export const getRecipes = (tags?: number[]) =>
 export const getMenu = () => instanceAxios.get<any, Menu[]>('/api/menu', {});
 export const getKinds = () => instanceAxios.get<any, Kind[]>('/api/kinds');
 
+export const getRecipe = (id: number) =>
+  instanceAxios.get<any, Recipe>(`/api/recipes/${id}`);
 export const deleteRecipe = (recipe: Recipe) =>
   instanceAxios.delete(`/api/recipes/${recipe.id}`);
 export const addRecipe = (recipe: Recipe) =>

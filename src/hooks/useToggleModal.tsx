@@ -1,19 +1,17 @@
 import { useNavigate } from './useNavigate';
-import { ROUT_MODALS } from '../entry/components/Modals';
+import { ModalRouts } from '../entry/components/Modals';
 
-type RoutModals = typeof ROUT_MODALS;
-type Key = keyof RoutModals;
+type Key = keyof ModalRouts;
+type Value<K extends Key> = Pick<ModalRouts, K>[K];
 
-export const useToggleModal = <K extends Key>(
-  key: K,
-  value: RoutModals[K][number],
-) => {
+export const useToggleModal = <K extends Key>(key: K, value: Value<K>) => {
   const { navigate } = useNavigate();
 
-  const open = () => navigate({
-    search: { [key]: [value] },
-    keepPreviousSearch: true,
-  });
+  const open = () =>
+    navigate({
+      search: { [key]: [value] },
+      keepPreviousSearch: true,
+    });
 
   return { open };
 };

@@ -4,14 +4,14 @@ import { Recipe } from 'src/types/domain';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Confirmation } from 'src/components/modals/Confirmation';
 import { Button } from 'src/components/features';
+import { useToggleModal } from 'src/hooks';
 import * as css from './Actions.css';
 
 type Props = {
   recipe: Recipe;
-  onEditClick: (recipe: Recipe) => void;
 };
 
-export const Actions = ({ recipe, onEditClick }: Props) => {
+export const Actions = ({ recipe }: Props) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -49,6 +49,11 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
     };
   }, [menuRef]);
 
+  const { open: openRecipe } = useToggleModal(
+    'recipe-edit',
+    recipe.id.toString()
+  );
+
   return (
     <>
       <div ref={menuRef}>
@@ -67,7 +72,7 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
                 kind="ghost"
                 className={css.option()}
                 onClick={() => {
-                  onEditClick(recipe);
+                  openRecipe();
                   toggleMenu();
                 }}
               >

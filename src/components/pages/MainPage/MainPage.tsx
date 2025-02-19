@@ -10,14 +10,14 @@ import {
   useNavigate,
   useRoutModal,
 } from 'src/hooks';
-import { RecipeForm, RecipeInfo } from 'src/components/modals';
+import { RecipeInfo } from 'src/components/modals';
 import { ActionBar } from './components/ActionBar';
 import { RecipesInfo } from './components/RecipesInfo';
 import { RecipeCard } from './components/RecipeCard';
 import * as css from './MainPage.css';
 
 export const MainPage = () => {
-  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu', value: 'true' });
+  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu' });
 
   const user = useAuthenticate();
   const screen = useDeviceScreen();
@@ -26,13 +26,9 @@ export const MainPage = () => {
   const [recipeToView, setRecipeToView] = useState<Recipe | undefined>(
     undefined
   );
-  const [recipeDialogOpen, setRecipeDialogOpen] = useState(false);
 
   const [recipeInfoOpen, setRecipeInfoOpen] = useState(false);
   const [tagsToFilter, setTagsToFilter] = useState<number[]>([]);
-  const [recipeToEdit, setRecipeToEdit] = useState<Recipe | undefined>(
-    undefined
-  );
   const [q, setQ] = useState('');
 
   const { data: recipes, isLoading } = useQuery({
@@ -53,24 +49,9 @@ export const MainPage = () => {
 
   return (
     <div className={css.pagewrap({ withSide: isMenuOpen })}>
-      <RecipeForm
-        key={recipeToEdit?.id || 0}
-        open={recipeDialogOpen}
-        defaultValues={recipeToEdit}
-        onClose={() => {
-          setRecipeDialogOpen(false);
-          setRecipeToEdit(undefined);
-        }}
-      />
-
       {recipeInfoOpen && recipeToView && (
         <RecipeInfo
           key={recipeToView.id}
-          onEditClick={() => {
-            setRecipeInfoOpen(false);
-            setRecipeToEdit(recipeToView);
-            setRecipeDialogOpen(true);
-          }}
           recipe={recipeToView}
           open={recipeInfoOpen}
           onClose={() => {
@@ -82,7 +63,6 @@ export const MainPage = () => {
 
       <div>
         <ActionBar
-          onNewClick={() => setRecipeDialogOpen(true)}
           infoOpen={infoOpen}
           setInfoOpen={setInfoOpen}
           onQueryChange={setQ}
@@ -100,10 +80,6 @@ export const MainPage = () => {
               }}
               onRecipeInfoOpenChange={setRecipeInfoOpen}
               recipes={recipes}
-              onRecipeClick={(recipe) => {
-                setRecipeToEdit(recipe);
-                setRecipeDialogOpen(true);
-              }}
             />
           </Suspense>
         )}
@@ -127,10 +103,6 @@ export const MainPage = () => {
                       onViewClick={() => {
                         setRecipeToView(r);
                         setRecipeInfoOpen(true);
-                      }}
-                      onEditClick={() => {
-                        setRecipeToEdit(r);
-                        setRecipeDialogOpen(true);
                       }}
                       key={i}
                       recipe={r}

@@ -4,14 +4,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Confirmation } from 'src/components/modals/Confirmation';
 import { Button } from 'src/components/features';
+import { useToggleModal } from 'src/hooks';
 import * as css from './Actions.css';
 
 type Props = {
   recipe: Recipe;
-  onEditClick: (recipe: Recipe) => void;
 };
 
-export const Actions = ({ recipe, onEditClick }: Props) => {
+export const Actions = ({ recipe }: Props) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
@@ -32,6 +32,8 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
     },
   });
 
+  const { open } = useToggleModal('recipe-edit', recipe.id.toString());
+
   return (
     <div className={css.actionsCard}>
       <Confirmation
@@ -45,11 +47,7 @@ export const Actions = ({ recipe, onEditClick }: Props) => {
           setConfirmOpen(false);
         }}
       />
-      <Button
-        kind="ghost"
-        className={css.actionButton}
-        onClick={() => onEditClick(recipe)}
-      >
+      <Button kind="ghost" className={css.actionButton} onClick={open}>
         Изменить
       </Button>
       {recipe.favorite ? (

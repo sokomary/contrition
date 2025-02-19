@@ -1,79 +1,47 @@
-import React, { Suspense, useRef, useState } from 'react';
-
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addRecipe, getInstructions } from 'src/api';
-import { Recipe } from 'src/types/domain';
+import React, { Suspense } from 'react';
 import i18next from 'src/formatter';
-import { Field, Loading, Modal, Action } from 'src/components/features';
-import { useDeviceScreen } from 'src/hooks';
+import {
+  Field,
+  Loading,
+  Modal,
+  ActionBar,
+  DialogPosition,
+} from 'src/components/features';
 import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
 import { AddProduct } from '../AddProduct';
 import { AddTag } from '../AddTag';
+import { useLogic, Options } from './RecipeForm.useLogic';
 import * as css from './RecipeForm.css';
-import { ActionBar } from '../../features';
 
-type Props = {
-  open: boolean;
-  onClose: (result?: Recipe) => void;
-  defaultValues?: Recipe;
-};
-
-const POSITIONS = {
+const POSITIONS: Record<string, DialogPosition> = {
   mac: 'center',
   iphone: 'bottom',
   ipadv: 'top',
   ipadh: 'top',
-} as const;
+};
 
-export const RecipeForm = ({ open, onClose, defaultValues }: Props) => {
-  const { data: instructions, isLoading: areInstructionsLoading } = useQuery({
-    queryKey: [`instructions-${defaultValues?.id}`],
-    queryFn: () => getInstructions(defaultValues!.id),
-    enabled: defaultValues?.id !== undefined,
-  });
-
-  const queryClient = useQueryClient();
-  const addMutation = useMutation({
-    mutationFn: addRecipe,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recipes'] });
-      onClose();
-    },
-  });
-
-  const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(
-    {
-      defaultValues: defaultValues
-        ? { ...defaultValues, instructions }
-        : {
-            recipeProducts: [],
-            tags: [],
-            instructions: [],
-            favorite: false,
-          },
-    }
-  );
-
-  const onSubmit: SubmitHandler<Recipe> = (data) => addMutation.mutate(data);
-
-  const divRef = useRef<HTMLDivElement>(null);
-
-  const [openNewProduct, setOpenNewProduct] = useState(false);
-  const [openNewTag, setOpenNewTag] = useState(false);
-
-  const screen = useDeviceScreen();
-
-  const actions: Action[] = [
-    {
-      kind: 'primary',
-      type: 'submit',
-      label: i18next.t('startpage:recipes.actions.save'),
-    },
-  ];
+export const RecipeForm = (props: Options) => {
+  const {
+    isLoading,
+    defaultValues,
+    actions,
+    register,
+    handleSubmit,
+    control,
+    formState,
+    onSubmit,
+    divRef,
+    openNewProduct,
+    setOpenNewProduct,
+    openNewTag,
+    setOpenNewTag,
+    screen,
+    isOpen,
+    onClose,
+  } = useLogic(props);
 
   return (
     <Suspense>
@@ -85,11 +53,8 @@ export const RecipeForm = ({ open, onClose, defaultValues }: Props) => {
             ? defaultValues.name
             : i18next.t('startpage:recipes.new.header')
         }
-        isActive={open}
-        onClose={() => {
-          onClose();
-          reset();
-        }}
+        isActive={isOpen}
+        onClose={onClose}
       >
         <AddProduct
           open={openNewProduct}
@@ -104,7 +69,7 @@ export const RecipeForm = ({ open, onClose, defaultValues }: Props) => {
             onSubmit={handleSubmit(onSubmit)}
             onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
           >
-            {!addMutation.isPending && !areInstructionsLoading ? (
+            {!isLoading ? (
               <div className={css.container}>
                 <div className={css.content}>
                   <div className={css.leftPart}>

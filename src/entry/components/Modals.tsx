@@ -1,14 +1,23 @@
 import React from 'react';
-import { GetRandomRecipe, Menu } from 'src/components/modals';
+import {
+  GetRandomRecipe,
+  Menu,
+  RecipeNew,
+  RecipeEdit,
+} from 'src/components/modals';
 
-export const ROUT_MODALS = {
-  menu: ['true'],
-  'random-recipe': ['true'],
-} as const;
+export type ModalRouts = {
+  menu: 'true';
+  'random-recipe': 'true';
+  'recipe-new': 'true';
+  'recipe-edit': string;
+};
 
 export const Modals = () => (
   <>
-    <Menu />
     <GetRandomRecipe />
+    <Menu />
+    <RecipeNew />
+    <RecipeEdit />
   </>
 );

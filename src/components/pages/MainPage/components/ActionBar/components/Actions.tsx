@@ -7,21 +7,22 @@ import * as css from './Actions.css';
 
 type Props = {
   user?: User;
-  onNewClick: () => void;
 };
 
 export const Actions = (props: Props) => {
   const screen = useDeviceScreen();
 
-  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu', value: 'true' });
+  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu' });
   const { open: openMenu } = useToggleModal('menu', 'true');
+
+  const { open: openRecipeNew } = useToggleModal('recipe-new', 'true');
 
   const { open: openRandom } = useToggleModal('random-recipe', 'true');
 
   return (
     <div className={css.container}>
       {isAdmin(props.user) && (
-        <Button className={css.button} onClick={props.onNewClick}>
+        <Button className={css.button} onClick={openRecipeNew}>
           {screen === 'mac' ? (
             <div>Новый</div>
           ) : (

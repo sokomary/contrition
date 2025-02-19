@@ -10,7 +10,6 @@ import { Tag } from 'src/types/domain';
 export const useLogic = () => {
   const { isOpen, onClose } = useRoutModal({
     key: 'random-recipe',
-    value: 'true',
   });
 
   const screen = useDeviceScreen();

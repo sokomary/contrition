@@ -1,20 +1,18 @@
 import { useLocation } from './useLocation';
 import { useNavigate } from './useNavigate';
-import { ROUT_MODALS } from '../entry/components/Modals';
+import { ModalRouts } from '../entry/components/Modals';
 
-type Key = keyof typeof ROUT_MODALS;
-type Value = (typeof ROUT_MODALS)[Key][number];
+type Key = keyof ModalRouts;
 
 type RoutKey = {
   key: Key;
-  value: Value;
 };
 
-export const useRoutModal = ({ key, value }: RoutKey) => {
+export const useRoutModal = ({ key }: RoutKey) => {
   const { search } = useLocation();
   const { navigate } = useNavigate();
 
-  const isOpen = search[key]?.includes(value);
+  const value = search[key]?.[0];
 
   const onClose = () => {
     const newSearch: typeof search = {};
@@ -31,7 +29,8 @@ export const useRoutModal = ({ key, value }: RoutKey) => {
   };
 
   return {
-    isOpen,
+    isOpen: !!value,
     onClose,
+    value,
   };
 };

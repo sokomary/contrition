@@ -9,10 +9,9 @@ type Props = {
   open: boolean;
   onClose: () => void;
   recipe: Recipe;
-  onEditClick: () => void;
 };
 
-export const RecipeInfo = ({ open, onClose, recipe, onEditClick }: Props) => {
+export const RecipeInfo = ({ open: isOpen, onClose, recipe }: Props) => {
   const screen = useDeviceScreen();
 
   return (
@@ -20,10 +19,10 @@ export const RecipeInfo = ({ open, onClose, recipe, onEditClick }: Props) => {
       width={WIDTHS[screen]}
       position={['iphone', 'ipadv'].includes(screen) ? 'bottom' : 'right'}
       header={<Header recipe={recipe} />}
-      isActive={open}
+      isActive={isOpen}
       onClose={onClose}
     >
-      <Content recipe={recipe} onEditClick={onEditClick} />
+      <Content recipe={recipe} />
     </Modal>
   );
 };

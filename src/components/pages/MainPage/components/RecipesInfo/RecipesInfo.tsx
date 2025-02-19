@@ -10,7 +10,6 @@ import { RecipeCard } from '../RecipeCard';
 type Props = {
   open?: boolean;
   recipes: Recipe[];
-  onRecipeClick: (recipe: Recipe) => void;
   onViewClick: (recipe: Recipe) => void;
   onRecipeInfoOpenChange: (open: boolean) => void;
 };
@@ -19,7 +18,6 @@ export const RecipesInfo: FC<Props> = ({
   recipes,
   open,
   onViewClick,
-  onRecipeClick,
   onRecipeInfoOpenChange,
 }) => {
   const [productToView, setProductToView] = useState<Product | undefined>(
@@ -97,7 +95,6 @@ export const RecipesInfo: FC<Props> = ({
                   className={css.styledRecipeCard}
                   recipe={r}
                   onRecipeInfoOpenChange={onRecipeInfoOpenChange}
-                  onEditClick={() => onRecipeClick(r)}
                   onViewClick={() => onViewClick(r)}
                   displayInfo={false}
                 />

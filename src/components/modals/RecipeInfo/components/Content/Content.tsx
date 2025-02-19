@@ -1,18 +1,17 @@
+import React, { Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Recipe } from 'src/types/domain';
 import { getInstructions } from 'src/api';
 import { useDeviceScreen } from 'src/hooks';
 import { Loading } from 'src/components/features';
-import React, { Fragment } from 'react';
 import { Actions } from './components/Actions';
 import * as css from './Content.css';
 
 type Props = {
   recipe: Recipe;
-  onEditClick: () => void;
 };
 
-export const Content = ({ recipe, onEditClick }: Props) => {
+export const Content = ({ recipe }: Props) => {
   const { data: instructions, isLoading } = useQuery({
     queryKey: [`instructions-${recipe.id}`],
     queryFn: () => getInstructions(recipe.id),
@@ -67,9 +66,7 @@ export const Content = ({ recipe, onEditClick }: Props) => {
               </div>
             )}
           </div>
-          {screen !== 'mac' && (
-            <Actions recipe={recipe} onEditClick={onEditClick} />
-          )}
+          {screen !== 'mac' && <Actions recipe={recipe} />}
         </div>
       )}
       {isLoading && <Loading />}

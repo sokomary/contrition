@@ -9,7 +9,6 @@ type Mode = 'current' | 'new' | 'history';
 export const useLogic = () => {
   const { isOpen, onClose } = useRoutModal({
     key: 'menu',
-    value: 'true',
   });
 
   const [mode, setMode] = useState<Mode>('current');
