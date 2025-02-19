@@ -9,16 +9,9 @@ import * as css from './RecipesInfo.css';
 type Props = {
   open?: boolean;
   recipes: Recipe[];
-  onViewClick: (recipe: Recipe) => void;
-  onRecipeInfoOpenChange: (open: boolean) => void;
 };
 
-export const RecipesInfo: FC<Props> = ({
-  recipes,
-  open,
-  onViewClick,
-  onRecipeInfoOpenChange,
-}) => {
+export const RecipesInfo: FC<Props> = ({ recipes, open }) => {
   const { data: tags, isLoading: areTagsLoading } = useQuery({
     queryKey: ['tags'],
     queryFn: () => getTags(),
@@ -68,8 +61,6 @@ export const RecipesInfo: FC<Props> = ({
                   key={r.id}
                   className={css.styledRecipeCard}
                   recipe={r}
-                  onRecipeInfoOpenChange={onRecipeInfoOpenChange}
-                  onViewClick={() => onViewClick(r)}
                   displayInfo={false}
                 />
               ))}

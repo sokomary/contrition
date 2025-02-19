@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Recipe, isAdmin } from 'src/types/domain';
-import { useAuthenticate } from 'src/hooks';
+import { useAuthenticate, useToggleModal } from 'src/hooks';
 import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
 import { Link } from 'react-router-dom';
 import { FavoriteIcon, LinkIcon } from 'src/assets';
@@ -16,17 +16,17 @@ type Props = {
   onAddToMenu?: () => void;
   recipe: Recipe;
   className?: string;
-  onViewClick: () => void;
+  // onViewClick: () => void;
   displayInfo?: boolean;
   small?: boolean;
-  onRecipeInfoOpenChange: (open: boolean) => void;
+  // onRecipeInfoOpenChange: (open: boolean) => void;
 };
 
 export const RecipeCard = ({
   className,
   recipe,
-  onViewClick,
-  onRecipeInfoOpenChange,
+  // onViewClick,
+  // onRecipeInfoOpenChange,
   displayInfo = true,
   small,
   showTooltip,
@@ -41,10 +41,12 @@ export const RecipeCard = ({
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
 
-  const changeRecipeInfoOpen = (open: boolean) => {
-    onRecipeInfoOpenChange(open);
-    onViewClick();
-  };
+  // const changeRecipeInfoOpen = (open: boolean) => {
+  //   onRecipeInfoOpenChange(open);
+  //   onViewClick();
+  // };
+
+  const { open } = useToggleModal('recipe-info', recipe.id.toString());
 
   const ref = useRef<HTMLImageElement>(null);
 
@@ -78,7 +80,7 @@ export const RecipeCard = ({
               }
             }}
             src={recipe.pressignedUrl || NoImage}
-            onClick={() => changeRecipeInfoOpen(true)}
+            onClick={open}
           />
           <div className={css.recipeNameContainer}>
             <div>

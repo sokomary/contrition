@@ -10,7 +10,6 @@ import {
   useNavigate,
   useRoutModal,
 } from 'src/hooks';
-import { RecipeInfo } from 'src/components/modals';
 import { ActionBar } from './components/ActionBar';
 import { RecipesInfo } from './components/RecipesInfo';
 import { RecipeCard } from './components/RecipeCard';
@@ -23,11 +22,7 @@ export const MainPage = () => {
   const screen = useDeviceScreen();
 
   const [infoOpen, setInfoOpen] = useState(screen === 'mac');
-  const [recipeToView, setRecipeToView] = useState<Recipe | undefined>(
-    undefined
-  );
 
-  const [recipeInfoOpen, setRecipeInfoOpen] = useState(false);
   const [tagsToFilter, setTagsToFilter] = useState<number[]>([]);
   const [q, setQ] = useState('');
 
@@ -49,18 +44,6 @@ export const MainPage = () => {
 
   return (
     <div className={css.pagewrap({ withSide: isMenuOpen })}>
-      {recipeInfoOpen && recipeToView && (
-        <RecipeInfo
-          key={recipeToView.id}
-          recipe={recipeToView}
-          open={recipeInfoOpen}
-          onClose={() => {
-            setRecipeInfoOpen(false);
-            setRecipeToView(undefined);
-          }}
-        />
-      )}
-
       <div>
         <ActionBar
           infoOpen={infoOpen}
@@ -70,19 +53,13 @@ export const MainPage = () => {
             setTagsToFilter(selectedTag ? [selectedTag.id] : [])
           }
         />
+
         {isAdmin(user) && recipes && (
           <Suspense>
-            <RecipesInfo
-              open={infoOpen}
-              onViewClick={(r) => {
-                setRecipeToView(r);
-                setRecipeInfoOpen(true);
-              }}
-              onRecipeInfoOpenChange={setRecipeInfoOpen}
-              recipes={recipes}
-            />
+            <RecipesInfo open={infoOpen} recipes={recipes} />
           </Suspense>
         )}
+
         <div className={css.page}>
           {!isLoading ? (
             <>
@@ -99,11 +76,6 @@ export const MainPage = () => {
                         })
                       }
                       showTooltip={showTooltip}
-                      onRecipeInfoOpenChange={setRecipeInfoOpen}
-                      onViewClick={() => {
-                        setRecipeToView(r);
-                        setRecipeInfoOpen(true);
-                      }}
                       key={i}
                       recipe={r}
                     />
