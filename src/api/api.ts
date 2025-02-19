@@ -58,6 +58,9 @@ export const getInstructions = (recipeId: number) =>
   instanceAxios.get<any, Instruction[]>(
     `/api/recipes/${recipeId}/instructions`
   );
+
+export const getProduct = (id: number) =>
+  instanceAxios.get<any, Product>(`/api/products/${id}`);
 export const getProducts = () =>
   instanceAxios.get<any, Product[]>('/api/products');
 export const addProduct = (product: Product) =>

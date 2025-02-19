@@ -1,8 +1,7 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getProducts, getTags } from 'src/api';
-import { Recipe, Product } from 'src/types/domain';
-import { ProductInfo } from 'src/components/modals';
+import { Recipe } from 'src/types/domain';
 import { ControlCard } from './components/ControlCard';
 import { RecipeCard } from '../RecipeCard';
 import * as css from './RecipesInfo.css';
@@ -20,10 +19,6 @@ export const RecipesInfo: FC<Props> = ({
   onViewClick,
   onRecipeInfoOpenChange,
 }) => {
-  const [productToView, setProductToView] = useState<Product | undefined>(
-    undefined
-  );
-
   const { data: tags, isLoading: areTagsLoading } = useQuery({
     queryKey: ['tags'],
     queryFn: () => getTags(),
@@ -41,14 +36,6 @@ export const RecipesInfo: FC<Props> = ({
   return (
     <div style={{ overflow: 'hidden' }}>
       <div className={css.animated({ open })}>
-        {productToView && (
-          <ProductInfo
-            onClose={() => setProductToView(undefined)}
-            product={productToView}
-            open={!!productToView}
-          />
-        )}
-
         <div className={css.infoContainer}>
           <div className={css.controlsContainer}>
             <ControlCard
@@ -61,9 +48,6 @@ export const RecipesInfo: FC<Props> = ({
               type="product"
               items={products || []}
               className={css.productsControlCard}
-              onOpenClick={(item) => {
-                setProductToView(products?.find((p) => p.id === item.id));
-              }}
               isLoading={areProductsLoading}
             />
           </div>

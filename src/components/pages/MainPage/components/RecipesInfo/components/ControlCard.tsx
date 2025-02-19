@@ -12,7 +12,6 @@ type ControlCardItem = {
 type Props = {
   type: 'tag' | 'product';
   items: ControlCardItem[];
-  onOpenClick?: (item: { id: number }) => void;
   isLoading: boolean;
   className?: string;
 };
@@ -40,16 +39,25 @@ export const ControlCard = (props: Props) => {
 
         <div className={css.itemsList}>
           {props.items.map((item, index) => (
-            <Button
-              className={css.itemName}
-              onClick={() => props.onOpenClick && props.onOpenClick(item)}
-              key={index}
-            >
-              {item.name}
-            </Button>
+            <Item item={item} key={index} openable={props.type === 'product'} />
           ))}
         </div>
       </div>
     </div>
+  );
+};
+
+const Item = ({
+  item,
+  openable,
+}: {
+  item: ControlCardItem;
+  openable?: boolean;
+}) => {
+  const { open } = useToggleModal('product-info', item.id.toString());
+  return (
+    <Button className={css.itemName} onClick={() => (openable ? open() : {})}>
+      {item.name}
+    </Button>
   );
 };
