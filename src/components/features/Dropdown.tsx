@@ -1,6 +1,4 @@
-import React, {
-  useEffect, useRef, useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { isEqual } from 'lodash';
 import { EnterIcon, SearchIcon } from 'src/assets';
 import * as css from './Dropdown.css';
@@ -11,23 +9,26 @@ type Props<T> = {
   onSelect: (value: T) => void;
 };
 
-export const Dropdown = <T = unknown>(props: Props<T>) => {
+export const Dropdown = <T = unknown,>(props: Props<T>) => {
   const [value, setValue] = useState(props.value || []);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
 
   useEffect(() => setValue(props.value), [props.value]);
 
-  const filteredOptions = props.options
-    .filter((option) => (query.length ? option.label.toLowerCase().includes(query.toLowerCase()) : true));
+  const filteredOptions = props.options.filter((option) =>
+    query.length
+      ? option.label.toLowerCase().includes(query.toLowerCase())
+      : true
+  );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
-      dropdownRef.current
-      && !dropdownRef.current.contains(event.target as Node)
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
     ) {
       setOpen(false);
     }
@@ -63,15 +64,20 @@ export const Dropdown = <T = unknown>(props: Props<T>) => {
               {filteredOptions.map((o) => (
                 <div className={css.label} key={o.label}>
                   <div
-                    className={css.option({ selected: !!value.find((v) => isEqual(v, o.value)) })}
+                    className={css.option({
+                      selected: !!value.find((v) => isEqual(v, o.value)),
+                    })}
                     onClick={() => {
                       props.onSelect(o.value);
                       setQuery('');
+                      setOpen(false);
                     }}
                   >
                     {o.label}
                   </div>
-                  {value.find((v) => isEqual(v, o.value)) && <div className={css.dot} />}
+                  {value.find((v) => isEqual(v, o.value)) && (
+                    <div className={css.dot} />
+                  )}
                 </div>
               ))}
             </div>
