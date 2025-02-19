@@ -36,6 +36,7 @@ export const AddProduct = ({ open, onClose }: Props) => {
       kind: 'primary',
       type: 'submit',
       label: i18next.t('startpage:recipes.actions.save'),
+      isLoading: addMutation.isPending,
     },
   ];
 

@@ -64,7 +64,7 @@ export const ProductsField: FC<Props> = (props) => {
             append({
               id: undefined as unknown as number,
               product,
-              quantity: 0,
+              quantity: undefined as unknown as number,
             })
           }
         />

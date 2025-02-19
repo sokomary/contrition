@@ -37,6 +37,7 @@ export const Actions = ({ recipe }: Props) => {
   return (
     <div className={css.actionsCard}>
       <Confirmation
+        isLoading={deleteMutation.isPending}
         open={confirmOpen}
         title="Удаление рецепта"
         text="Вы уверены, что хотите удалить рецепт?"

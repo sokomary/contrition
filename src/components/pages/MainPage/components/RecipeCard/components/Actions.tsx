@@ -118,6 +118,7 @@ export const Actions = ({ recipe }: Props) => {
 
       {confirmOpen && (
         <Confirmation
+          isLoading={deleteMutation.isPending}
           key={recipe.id}
           open={confirmOpen}
           title="Удаление рецепта"

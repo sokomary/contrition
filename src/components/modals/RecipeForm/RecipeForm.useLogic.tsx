@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addRecipe, getInstructions } from 'src/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addRecipe } from 'src/api';
 import { Recipe } from 'src/types/domain';
 import i18next from 'src/formatter';
 import { Action } from 'src/components/features';
@@ -14,12 +14,6 @@ export type Options = {
 };
 
 export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
-  const { data: instructions, isLoading: areInstructionsLoading } = useQuery({
-    queryKey: ['instructions'],
-    queryFn: () => getInstructions(defaultValues!.id),
-    enabled: defaultValues?.id !== undefined,
-  });
-
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addRecipe,
@@ -32,14 +26,12 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
 
   const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(
     {
-      defaultValues: defaultValues
-        ? { ...defaultValues, instructions }
-        : {
-            recipeProducts: [],
-            tags: [],
-            instructions: [],
-            favorite: false,
-          },
+      defaultValues: defaultValues || {
+        recipeProducts: [],
+        tags: [],
+        instructions: [],
+        favorite: false,
+      },
     }
   );
 
@@ -57,14 +49,13 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
       kind: 'primary',
       type: 'submit',
       label: i18next.t('startpage:recipes.actions.save'),
+      isLoading: addMutation.isPending,
     },
   ];
 
   return {
-    isLoading: addMutation.isPending || areInstructionsLoading,
     defaultValues,
     isOpen,
-    instructions,
     actions,
     register,
     handleSubmit,

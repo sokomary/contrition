@@ -10,4 +10,5 @@ export type Action = {
   type?: ButtonType;
   display?: boolean;
   isLoading?: boolean;
+  disabled?: boolean;
 };

@@ -20,7 +20,7 @@ export const useLogic = () => {
   });
   const [selectedTags, setSelectedTags] = useState(tags || []);
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isFetching } = useQuery({
     queryKey: ['random-recipe'],
     queryFn: () => getRandomRecipe(selectedTags.map((r) => r.id)),
   });
@@ -30,6 +30,7 @@ export const useLogic = () => {
       kind: 'primary',
       label: i18next.t('startpage:recipes.random.actions.get'),
       onClick: refetch,
+      isLoading: isFetching,
     },
   ];
 

@@ -40,6 +40,7 @@ export const AddTag = ({ open, onClose }: Props) => {
       kind: 'primary',
       type: 'submit',
       label: i18next.t('startpage:recipes.actions.save'),
+      isLoading: addMutation.isPending,
     },
   ];
 
@@ -52,22 +53,18 @@ export const AddTag = ({ open, onClose }: Props) => {
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!addMutation.isPending ? (
-          <div>
-            <Field
-              key="name"
-              name="name"
-              register={register}
-              placeholder={i18next.t('domain:recipe.name')}
-              error={formState.errors.name}
-              errorText={i18next.t('forms:fields.errors.required')}
-              required
-            />
-            <ActionBar actions={actions} />
-          </div>
-        ) : (
-          <Loading />
-        )}
+        <div>
+          <Field
+            key="name"
+            name="name"
+            register={register}
+            placeholder={i18next.t('domain:recipe.name')}
+            error={formState.errors.name}
+            errorText={i18next.t('forms:fields.errors.required')}
+            required
+          />
+          <ActionBar actions={actions} />
+        </div>
       </form>
     </Modal>
   );
