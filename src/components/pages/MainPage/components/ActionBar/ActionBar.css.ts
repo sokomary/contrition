@@ -123,7 +123,7 @@ globalStyle(filters, {
 export const userBlock = style({
   display: 'flex',
   justifyContent: 'space-between',
-  width: '30%',
+  width: '35%',
   backgroundColor: color('accent-light'),
   alignItems: 'center',
   padding: '0 10px',
