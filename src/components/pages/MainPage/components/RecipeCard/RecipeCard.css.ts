@@ -87,7 +87,6 @@ export const calories = style({
   padding: '5px 10px',
   borderRadius: '15px',
   fontSize: '14px',
-  zIndex: 80,
   position: 'absolute',
   left: '10px',
   top: '10px',
@@ -251,9 +250,4 @@ export const content = recipe({
 export const infoFirstPart = style({
   display: 'flex',
   gap: '4px',
-});
-
-export const tooltip = style({
-  backgroundColor: 'transparent',
-  zIndex: 150,
 });

@@ -7,6 +7,7 @@ import { Action } from 'src/components/features';
 import { periodToDates } from 'src/helpers/dates';
 import { Period } from 'src/types/Period';
 import { useLocation, useNavigate } from 'src/router';
+import { toast } from 'react-toastify';
 
 export type Options = {
   kinds: Kind[];
@@ -35,8 +36,10 @@ export const useLogic = (props: Options) => {
     mutationFn: addMenu,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['menu'] });
+      toast('Меню успешно создано');
       props.onSave();
     },
+    onError: () => toast('Что-то пошло не так'),
   });
 
   const findMeal = useCallback(

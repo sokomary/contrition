@@ -1,21 +1,21 @@
 type ColorSchema =
-  'basic' |
-  'background' |
-  'background-transparent' |
-  'primary' |
-  'primary-disabled' |
-  'favorite' |
-  'secondary' |
-  'font' |
-  'font-disabled' |
-  'accent-light' |
-  'bg-overlay' |
-  'accent' |
-  'label' |
-  'field' |
-  'danger' |
-  'success' |
-  'warning';
+  | 'basic'
+  | 'background'
+  | 'background-transparent'
+  | 'primary'
+  | 'primary-disabled'
+  | 'favorite'
+  | 'secondary'
+  | 'font'
+  | 'font-disabled'
+  | 'accent-light'
+  | 'bg-overlay'
+  | 'accent'
+  | 'label'
+  | 'field'
+  | 'danger'
+  | 'success'
+  | 'warning';
 
 type Theme = {
   color: {
@@ -29,8 +29,8 @@ export const theme: Theme = {
     light: {
       primary: 'rgb(255, 104, 0, 1)',
       accent: 'rgb(158, 37, 255, 1)',
-      danger: 'rgb(255, 66, 66, 1)',
-      success: 'rgb(2, 185, 46, 1)',
+      danger: 'rgb(230,170,170)',
+      success: 'rgb(154, 222, 177, 1)',
       basic: 'rgb(255, 255, 255, 1)',
       secondary: 'rgb(254, 241, 230, 1)',
       'accent-light': 'rgb(243, 226, 255, 1)',
@@ -48,8 +48,8 @@ export const theme: Theme = {
     dark: {
       primary: 'rgb(255, 104, 0, 1)',
       accent: 'rgb(158, 37, 255, 1)',
-      danger: 'rgb(255, 66, 66, 1)',
-      success: 'rgb(2, 185, 46, 1)',
+      danger: 'rgb(113,58,58)',
+      success: 'rgb(102, 137, 114, 1)',
       basic: 'rgb(45, 50, 55, 1)',
       secondary: 'rgb(107, 36, 1, 1)',
       'accent-light': 'rgb(58, 32, 78, 1)',
@@ -78,7 +78,10 @@ export const text = {
   header1: { fontSize: '48px', fontWeight: 600 },
 };
 
-export const color = (
-  value: ColorSchema,
-  mode?: 'dark' | 'light',
-) => (mode ? theme.color[mode][value] : [theme.color.light[value], `light-dark(${theme.color.light[value]}, ${theme.color.dark[value]})`]);
+export const color = (value: ColorSchema, mode?: 'dark' | 'light') =>
+  mode
+    ? theme.color[mode][value]
+    : [
+        theme.color.light[value],
+        `light-dark(${theme.color.light[value]}, ${theme.color.dark[value]})`,
+      ];

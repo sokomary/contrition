@@ -4,6 +4,7 @@ import { Recipe } from 'src/types/domain';
 import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
+import { toast } from 'react-toastify';
 
 type Options = {
   recipe: Recipe;
@@ -21,8 +22,9 @@ export const useRecipeActions = ({ recipe }: Options): Action[] => {
   const removeMutation = useMutation({
     mutationFn: deleteRecipe,
     onSuccess: () => {
-      onSuccess();
       removeConfirmation.close();
+      toast('Рецепт удален');
+      onSuccess();
       onClose();
     },
   });
@@ -40,12 +42,18 @@ export const useRecipeActions = ({ recipe }: Options): Action[] => {
 
   const toFavoritesMutation = useMutation({
     mutationFn: toFavorites,
-    onSuccess,
+    onSuccess: () => {
+      toast('Рецепт добавлен в избранное');
+      onSuccess();
+    },
   });
 
   const fromFavoritesMutation = useMutation({
     mutationFn: fromFavorites,
-    onSuccess,
+    onSuccess: () => {
+      toast('Рецепт удален из избранного');
+      onSuccess();
+    },
   });
 
   return [

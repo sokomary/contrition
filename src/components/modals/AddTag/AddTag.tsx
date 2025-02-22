@@ -7,6 +7,7 @@ import { addTag } from 'src/api';
 import { Modal, Field, Action, ActionBar } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
+import { toast } from 'react-toastify';
 
 export const AddTag = () => {
   const { isOpen, onClose } = useRouteModal({
@@ -19,8 +20,10 @@ export const AddTag = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tags'] });
       reset();
+      toast('Тэг успешно добавлен');
       onClose();
     },
+    onError: () => toast('Что-то пошло не так'),
   });
 
   const { register, handleSubmit, formState, reset } = useForm<Tag>();
