@@ -1,9 +1,9 @@
 import React from 'react';
-import { useRoutModal } from 'src/hooks';
+import { useRouteModal } from 'src/router';
 import { RecipeForm } from './RecipeForm';
 
 export const RecipeNew = () => {
-  const { isOpen, onClose } = useRoutModal({
+  const { isOpen, onClose } = useRouteModal({
     key: 'recipe-new',
   });
 

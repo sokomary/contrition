@@ -1,6 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
 
 export const card = recipe({

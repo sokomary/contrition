@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const addStepButton = style({
   cursor: 'pointer',
@@ -60,7 +59,8 @@ export const styledInput = style({
   resize: 'none',
   fontSize: '16px',
   // eslint-disable-next-line max-len
-  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n  sans-serif",
+  fontFamily:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n  sans-serif",
   padding: '6px',
   maxWidth: '180px',
   selectors: {

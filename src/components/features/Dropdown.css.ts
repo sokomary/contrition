@@ -1,7 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -50,7 +49,6 @@ export const input = style({
   fontSize: '16px',
   padding: '0 8px',
   background: color('background'),
-
 });
 
 export const emptyState = style({
@@ -108,7 +106,6 @@ export const label = style({
 
 export const option = recipe({
   base: {
-
     height: '34px',
     padding: '8px',
     cursor: 'pointer',

@@ -1,7 +1,6 @@
 import { style, keyframes } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { MEDIA } from '../../../hooks';
-import { color } from '../../../theme';
+import { MEDIA, color } from 'src/theme';
 
 export const container = style({
   margin: '0 !important',

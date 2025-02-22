@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Recipe } from 'src/types/domain';
 import { getInstructions } from 'src/api';
-import { useDeviceScreen } from 'src/hooks';
+import { useDeviceScreen } from 'src/theme';
 import { Loading } from 'src/components/features';
 import { Actions } from './components/Actions';
 import * as css from './Content.css';

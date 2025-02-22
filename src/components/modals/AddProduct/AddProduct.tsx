@@ -5,13 +5,13 @@ import { addProduct } from 'src/api';
 import { Product } from 'src/types/domain';
 import { Modal, Action, Field, ActionBar } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
-import { useRoutModal } from 'src/hooks';
+import { useDeviceScreen } from 'src/theme/useDeviceScreen';
+import { useRouteModal } from 'src/router';
 import { NumberField } from './components/NumberField';
 import * as css from './AddProduct.css';
 
 export const AddProduct = () => {
-  const { isOpen, onClose } = useRoutModal({
+  const { isOpen, onClose } = useRouteModal({
     key: 'product-new',
   });
 

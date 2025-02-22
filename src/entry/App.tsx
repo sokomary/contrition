@@ -6,7 +6,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuthenticate } from 'src/hooks/useAuthenticate';
+import { useAuthenticate } from 'src/api/useAuthenticate';
 import { QueryProvider } from 'src/api';
 import { ROUTES } from 'src/router';
 import { MainPage } from 'src/components/pages/MainPage';

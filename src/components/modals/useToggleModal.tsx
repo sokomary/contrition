@@ -1,5 +1,4 @@
-import { useNavigate } from './useNavigate';
-import { ModalRouts } from '../entry/components/Modals';
+import { ModalRouts, useNavigate } from 'src/router';
 
 type Key = keyof ModalRouts;
 type Value<K extends Key> = Pick<ModalRouts, K>[K];

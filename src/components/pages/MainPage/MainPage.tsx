@@ -1,22 +1,17 @@
 import React, { Suspense, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { isAdmin, Recipe } from 'src/types/domain';
-import { getRecipes } from 'src/api';
+import { getRecipes, useAuthenticate } from 'src/api';
 import { Loading } from 'src/components/features';
-import {
-  useAuthenticate,
-  useDeviceScreen,
-  useLocation,
-  useNavigate,
-  useRoutModal,
-} from 'src/hooks';
+import { useLocation, useNavigate, useRouteModal } from 'src/router';
+import { useDeviceScreen } from 'src/theme';
 import { ActionBar } from './components/ActionBar';
 import { RecipesInfo } from './components/RecipesInfo';
 import { RecipeCard } from './components/RecipeCard';
 import * as css from './MainPage.css';
 
 export const MainPage = () => {
-  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu' });
+  const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
 
   const user = useAuthenticate();
   const screen = useDeviceScreen();

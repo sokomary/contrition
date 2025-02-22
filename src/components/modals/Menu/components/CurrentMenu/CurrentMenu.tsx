@@ -4,8 +4,8 @@ import { Kind } from 'src/types/domain';
 import { format } from 'src/helpers/dates';
 import { useLogic, Options } from './CurrentMenu.useLogic';
 import { Products } from './components/Products';
-import * as css from './CurrentMenu.css';
 import { Table } from './components/Table';
+import * as css from './CurrentMenu.css';
 
 type Props = Options & {
   kinds: Kind[];

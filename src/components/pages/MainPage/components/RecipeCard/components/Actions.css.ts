@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
 import { color } from 'src/theme';
-import { recipe } from '@vanilla-extract/recipes';
 
 export const dot = style({
   height: '4px',
@@ -35,25 +34,12 @@ export const options = style({
   top: '-50px',
 });
 
-export const option = recipe({
-  base: {
-    width: '135px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 4px',
-    color: color('primary'),
-    textAlign: 'end',
-
-    '@media': {
-    },
-  },
-
-  variants: {
-    negative: {
-      true: {
-        color: color('danger'),
-      },
-    },
-  },
+export const actions = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  textAlign: 'left',
+  width: '135px',
+  padding: 0,
 });

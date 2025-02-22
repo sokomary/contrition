@@ -9,7 +9,7 @@ import { getProducts } from 'src/api';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Tooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
-import { useToggleModal } from 'src/hooks';
+import { useToggleModal } from 'src/components/modals';
 import * as css from './ProductsField.css';
 
 type Props = {

@@ -10,7 +10,7 @@ import i18next from 'src/formatter';
 import { find } from 'lodash';
 import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
-import { useToggleModal } from 'src/hooks';
+import { useToggleModal } from 'src/components/modals';
 import * as css from './TagsField.css';
 
 export const TagsField: FC<UseControllerProps<Recipe>> = (props) => {

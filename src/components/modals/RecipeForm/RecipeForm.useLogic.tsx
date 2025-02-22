@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addRecipe } from 'src/api';
 import { Recipe } from 'src/types/domain';
 import i18next from 'src/formatter';
 import { Action } from 'src/components/features';
-import { useDeviceScreen } from 'src/hooks';
+import { useDeviceScreen } from 'src/theme';
 
 export type Options = {
   isOpen: boolean;

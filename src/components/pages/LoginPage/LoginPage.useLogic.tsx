@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { getLoginUrl } from 'src/api';
-import { useAuthenticate, useLocation, useNavigate } from 'src/hooks';
+import { getLoginUrl, useAuthenticate } from 'src/api';
 import i18next from 'src/formatter';
 import { isEmpty } from 'lodash';
+import { useLocation, useNavigate } from 'src/router';
 
 export const useLogic = () => {
   const { search } = useLocation();
@@ -11,7 +11,6 @@ export const useLogic = () => {
 
   useEffect(() => {
     if (!isEmpty(search)) {
-      console.log('navigating');
       navigate({ to: 'login', keepPreviousSearch: false });
     }
   }, [search, navigate]);

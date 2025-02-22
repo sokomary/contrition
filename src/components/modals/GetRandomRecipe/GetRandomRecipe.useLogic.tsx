@@ -3,12 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { getRandomRecipe, getTags } from 'src/api';
 import { Action } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useDeviceScreen, useRoutModal } from 'src/hooks';
 import { find, isEqual } from 'lodash';
 import { Tag } from 'src/types/domain';
+import { useRouteModal } from 'src/router';
+import { useDeviceScreen } from 'src/theme';
 
 export const useLogic = () => {
-  const { isOpen, onClose } = useRoutModal({
+  const { isOpen, onClose } = useRouteModal({
     key: 'random-recipe',
   });
 

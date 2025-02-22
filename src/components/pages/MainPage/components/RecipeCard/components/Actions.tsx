@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Recipe } from 'src/types/domain';
-import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
-import { Confirmation } from 'src/components/modals/Confirmation';
-import { Button } from 'src/components/features';
-import { useToggleModal } from 'src/hooks';
+import { ActionBar, Button } from 'src/components/features';
+import { useRecipeActions } from 'src/components/atoms/useRecipeActions';
 import * as css from './Actions.css';
 
 type Props = {
@@ -12,35 +9,16 @@ type Props = {
 };
 
 export const Actions = ({ recipe }: Props) => {
-  const [optionsOpen, setOptionsOpen] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
-
-  const queryClient = useQueryClient();
-  const deleteMutation = useMutation({
-    mutationFn: deleteRecipe,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['recipes'] }),
-  });
-  const toFavoritesMutation = useMutation({
-    mutationFn: toFavorites,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recipes'] });
-    },
-  });
-  const fromFavoritesMutation = useMutation({
-    mutationFn: fromFavorites,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recipes'] });
-    },
-  });
+  const [open, setOpen] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => {
-    setOptionsOpen(!optionsOpen);
+    setOpen(!open);
   };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOptionsOpen(false);
+        setOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -49,88 +27,26 @@ export const Actions = ({ recipe }: Props) => {
     };
   }, [menuRef]);
 
-  const { open: openRecipe } = useToggleModal(
-    'recipe-edit',
-    recipe.id.toString()
-  );
+  const actions = useRecipeActions({ recipe });
 
   return (
-    <>
-      <div ref={menuRef}>
-        <Button
-          kind="ghost"
-          onClick={toggleMenu}
-          className={css.dots}
-          key={recipe.id}
-        >
-          <div className={css.dot} />
-          <div className={css.dot} />
-          <div className={css.dot} />
-          {optionsOpen && (
-            <div className={css.options}>
-              <Button
-                kind="ghost"
-                className={css.option()}
-                onClick={() => {
-                  openRecipe();
-                  toggleMenu();
-                }}
-              >
-                Изменить
-              </Button>
-              {recipe.favorite ? (
-                <Button
-                  kind="ghost"
-                  className={css.option()}
-                  onClick={() => {
-                    fromFavoritesMutation.mutate(recipe.id);
-                    toggleMenu();
-                  }}
-                >
-                  Из избранного
-                </Button>
-              ) : (
-                <Button
-                  kind="ghost"
-                  className={css.option()}
-                  onClick={() => {
-                    toFavoritesMutation.mutate(recipe.id);
-                    toggleMenu();
-                  }}
-                >
-                  В избранное
-                </Button>
-              )}
-              <Button
-                kind="ghost"
-                className={css.option({ negative: true })}
-                onClick={() => {
-                  setConfirmOpen(true);
-                  toggleMenu();
-                }}
-              >
-                Удалить
-              </Button>
-            </div>
-          )}
-        </Button>
-      </div>
+    <div ref={menuRef}>
+      <Button
+        kind="ghost"
+        onClick={toggleMenu}
+        className={css.dots}
+        key={recipe.id}
+      >
+        <div className={css.dot} />
+        <div className={css.dot} />
+        <div className={css.dot} />
 
-      {confirmOpen && (
-        <Confirmation
-          isLoading={deleteMutation.isPending}
-          key={recipe.id}
-          open={confirmOpen}
-          title="Удаление рецепта"
-          text="Вы уверены, что хотите удалить рецепт?"
-          onClose={(result) => {
-            if (result) {
-              deleteMutation.mutate(recipe);
-            }
-            toggleMenu();
-          }}
-        />
-      )}
-    </>
+        {open && (
+          <div className={css.options}>
+            <ActionBar className={css.actions} actions={actions} />
+          </div>
+        )}
+      </Button>
+    </div>
   );
 };

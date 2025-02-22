@@ -4,9 +4,9 @@ import { addMenu, getRecipes } from 'src/api';
 import { Meal, Recipe, Kind } from 'src/types/domain';
 import { isEqual, omit, parseInt } from 'lodash';
 import { Action } from 'src/components/features';
-import { useLocation, useNavigate } from 'src/hooks';
 import { periodToDates } from 'src/helpers/dates';
 import { Period } from 'src/types/Period';
+import { useLocation, useNavigate } from 'src/router';
 
 export type Options = {
   kinds: Kind[];

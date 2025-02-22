@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const header = style({
   display: 'flex',
@@ -27,7 +26,7 @@ export const instructionName = style({
   resize: 'none',
   fontSize: '16px',
   fontFamily:
-  // eslint-disable-next-line max-len
+    // eslint-disable-next-line max-len
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n  sans-serif",
   padding: '6px',
   maxWidth: '180px',

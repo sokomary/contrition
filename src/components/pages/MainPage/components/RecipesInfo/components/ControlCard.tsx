@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Loading } from 'src/components/features';
-import { useToggleModal } from 'src/hooks';
 import i18next from 'src/formatter';
+import { useToggleModal } from 'src/components/modals';
 import * as css from './ControlCard.css';
 
 type ControlCardItem = {

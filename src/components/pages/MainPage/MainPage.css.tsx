@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
 import { recipe } from '@vanilla-extract/recipes';
+import { MEDIA } from 'src/theme';
 
 export const pagewrap = recipe({
   base: {

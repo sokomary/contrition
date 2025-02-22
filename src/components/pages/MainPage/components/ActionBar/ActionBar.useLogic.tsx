@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getTags } from 'src/api';
-import { useAuthenticate } from 'src/hooks';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+import { getTags, useAuthenticate } from 'src/api';
+import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 
 export const useLogic = () => {
   const user = useAuthenticate();

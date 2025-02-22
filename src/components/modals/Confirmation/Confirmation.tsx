@@ -1,37 +1,24 @@
 import React from 'react';
 import { Action, ActionBar, Modal } from 'src/components/features';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+import { useConfirmationToggle } from './useConfirmationToggle';
 
-type Props = {
-  title: string;
-  text: string;
-  open: boolean;
-  onClose: (result: boolean) => void;
-  isLoading: boolean;
-};
-
-export const Confirmation = ({
-  title,
-  text,
-  open,
-  onClose,
-  isLoading,
-}: Props) => {
-  const screen = useDeviceScreen();
+export const Confirmation = () => {
+  const { isOn, close, payload } = useConfirmationToggle();
 
   const actions: Action[] = [
-    { kind: 'primary', label: 'Ок', onClick: () => onClose(true), isLoading },
-    { label: 'Отмена', onClick: () => onClose(true), disabled: isLoading },
+    { ...payload?.confirm },
+    {
+      label: 'Отмена',
+      onClick: () => {
+        payload?.onClose?.();
+        close();
+      },
+    },
   ];
 
   return (
-    <Modal
-      width={350}
-      header={title}
-      isActive={open && screen !== 'iphone'}
-      onClose={() => onClose(false)}
-    >
-      <div>{text}</div>
+    <Modal width={350} header={payload?.title} isActive={isOn} onClose={close}>
+      <div>{payload?.description}</div>
       <ActionBar actions={actions} />
     </Modal>
   );

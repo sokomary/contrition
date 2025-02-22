@@ -1,6 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 
 export const actionBar = style({
   padding: '40px 40px 20px 40px',

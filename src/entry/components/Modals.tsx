@@ -8,18 +8,8 @@ import {
   AddTag,
   ProductInfo,
   RecipeInfo,
+  Confirmation,
 } from 'src/components/modals';
-
-export type ModalRouts = {
-  menu: 'true';
-  'random-recipe': 'true';
-  'recipe-new': 'true';
-  'recipe-edit': string;
-  'product-new': 'true';
-  'product-info': string;
-  'recipe-info': string;
-  'tag-new': 'true';
-};
 
 export const Modals = () => (
   <>
@@ -31,5 +21,6 @@ export const Modals = () => (
     <AddTag />
     <ProductInfo />
     <RecipeInfo />
+    <Confirmation />
   </>
 );

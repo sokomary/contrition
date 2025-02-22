@@ -63,6 +63,7 @@ export const Dropdown = <T = unknown,>(props: Props<T>) => {
             <div className={css.options}>
               {filteredOptions.map((o) => (
                 <div className={css.label} key={o.label}>
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
                   <div
                     className={css.option({
                       selected: !!value.find((v) => isEqual(v, o.value)),

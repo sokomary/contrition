@@ -1,9 +1,22 @@
-import React from 'react';
-import { useDeviceScreen } from 'src/hooks';
-import { Action } from '../Modal.types';
-import { Button } from '../../Button';
+import React, { ReactNode } from 'react';
+import { useDeviceScreen } from 'src/theme';
+import {
+  Button,
+  ButtonKind,
+  ButtonType,
+  Loading,
+} from 'src/components/features/index';
 import * as css from './ActionBar.css';
-import { Loading } from '../../Loading';
+
+export type Action = {
+  label: ReactNode;
+  onClick?: () => void;
+  kind?: ButtonKind;
+  type?: ButtonType;
+  display?: boolean;
+  isLoading?: boolean;
+  disabled?: boolean;
+};
 
 type Props = {
   actions: Action[];

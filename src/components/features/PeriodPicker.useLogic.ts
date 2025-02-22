@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { compare } from '../../helpers/dates';
+import { compare } from 'src/helpers/dates';
 import { Period } from '../../types/Period';
 
 export type Options = {

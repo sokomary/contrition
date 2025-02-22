@@ -1,7 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -28,11 +26,15 @@ export const header = style({
 });
 
 export const link = style({
-  height: '18px', alignSelf: 'flex-start', marginTop: '5px',
+  height: '18px',
+  alignSelf: 'flex-start',
+  marginTop: '5px',
 });
 
 export const icon = style({
-  height: '20px', width: '20px', marginBottom: '1px',
+  height: '20px',
+  width: '20px',
+  marginBottom: '1px',
 });
 
 export const element = style({

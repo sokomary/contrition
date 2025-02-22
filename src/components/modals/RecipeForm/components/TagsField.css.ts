@@ -1,7 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
 import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 
 export const styledContainer = style({
   display: 'flex',

@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const dialogContentContainer = style({

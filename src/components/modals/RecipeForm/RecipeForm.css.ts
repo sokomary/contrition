@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
-import { color } from 'src/theme';
+import { MEDIA } from 'src/theme';
 
 export const interactiveFields = style({
   width: '100%',

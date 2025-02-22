@@ -1,8 +1,10 @@
 import React from 'react';
 import { isAdmin, User } from 'src/types/domain';
-import { useDeviceScreen, useRoutModal, useToggleModal } from 'src/hooks';
 import { Button } from 'src/components/features';
 import { CreateIcon, RandomIcon } from 'src/assets';
+import { useDeviceScreen } from 'src/theme';
+import { useRouteModal } from 'src/router';
+import { useToggleModal } from 'src/components/modals';
 import * as css from './Actions.css';
 
 type Props = {
@@ -12,7 +14,7 @@ type Props = {
 export const Actions = (props: Props) => {
   const screen = useDeviceScreen();
 
-  const { isOpen: isMenuOpen } = useRoutModal({ key: 'menu' });
+  const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
   const { open: openMenu } = useToggleModal('menu', 'true');
 
   const { open: openRecipeNew } = useToggleModal('recipe-new', 'true');

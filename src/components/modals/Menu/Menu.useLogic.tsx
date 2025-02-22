@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { getKinds, getMenu } from 'src/api';
-import { useDeviceScreen, useRoutModal } from 'src/hooks';
-import { useMemo, useState } from 'react';
 import { compare, now } from 'src/helpers/dates';
+import { useMemo, useState } from 'react';
+import { useDeviceScreen } from 'src/theme';
+import { useRouteModal } from 'src/router';
 
 type Mode = 'current' | 'new' | 'history';
 
 export const useLogic = () => {
-  const { isOpen, onClose } = useRoutModal({
+  const { isOpen, onClose } = useRouteModal({
     key: 'menu',
   });
 

@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
@@ -14,7 +13,8 @@ export const container = style({
 
   '@media': {
     [MEDIA.iphone]: {
-      width: '100%', padding: '0',
+      width: '100%',
+      padding: '0',
     },
   },
 });

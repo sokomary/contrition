@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import { Recipe, isAdmin } from 'src/types/domain';
-import { useAuthenticate, useToggleModal } from 'src/hooks';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
+import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { Link } from 'react-router-dom';
 import { FavoriteIcon, LinkIcon } from 'src/assets';
 import { Button } from 'src/components/features';
+import { useAuthenticate } from 'src/api';
+import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
 import * as css from './RecipeCard.css';
@@ -131,6 +132,7 @@ export const RecipeCard = ({
                 </div>
               </div>
             </div>
+
             {isAdmin(user) && <Actions recipe={recipe} />}
           </div>
         )}

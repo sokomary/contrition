@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
+import { MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',

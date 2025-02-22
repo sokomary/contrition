@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',

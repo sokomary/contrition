@@ -1,6 +1,6 @@
 import { useLocation } from './useLocation';
 import { useNavigate } from './useNavigate';
-import { ModalRouts } from '../entry/components/Modals';
+import { ModalRouts } from './routes';
 
 type Key = keyof ModalRouts;
 
@@ -8,7 +8,7 @@ type RoutKey = {
   key: Key;
 };
 
-export const useRoutModal = ({ key }: RoutKey) => {
+export const useRouteModal = ({ key }: RoutKey) => {
   const { search } = useLocation();
   const { navigate } = useNavigate();
 

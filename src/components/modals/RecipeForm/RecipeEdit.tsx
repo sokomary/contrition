@@ -1,11 +1,11 @@
 import React from 'react';
-import { useRoutModal } from 'src/hooks';
+import { useRouteModal } from 'src/router';
 import { useQuery } from '@tanstack/react-query';
 import { getInstructions, getRecipe } from 'src/api';
 import { RecipeForm } from './RecipeForm';
 
 export const RecipeEdit = () => {
-  const { isOpen, value, onClose } = useRoutModal({
+  const { isOpen, value, onClose } = useRouteModal({
     key: 'recipe-edit',
   });
 

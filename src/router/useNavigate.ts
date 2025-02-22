@@ -40,7 +40,10 @@ export const useNavigate = () => {
     navigate: ({ to, search, keepPreviousSearch }: NavigateParams) => {
       navigate({
         pathname: to ? ROUTES[to] : undefined,
-        search: buildSearchString(!!to && !search ? '' : search, keepPreviousSearch),
+        search: buildSearchString(
+          !!to && !search ? '' : search,
+          keepPreviousSearch
+        ),
       });
     },
   };

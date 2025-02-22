@@ -5,10 +5,11 @@ import i18next from 'src/formatter';
 import { Tag } from 'src/types/domain';
 import { addTag } from 'src/api';
 import { Modal, Field, Action, ActionBar } from 'src/components/features';
-import { useDeviceScreen, useRoutModal } from 'src/hooks';
+import { useRouteModal } from 'src/router';
+import { useDeviceScreen } from 'src/theme';
 
 export const AddTag = () => {
-  const { isOpen, onClose } = useRoutModal({
+  const { isOpen, onClose } = useRouteModal({
     key: 'tag-new',
   });
 

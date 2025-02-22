@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'src/components/features';
-import { useDeviceScreen } from 'src/hooks/useDeviceScreen';
-import { useRoutModal } from 'src/hooks';
+import { useDeviceScreen } from 'src/theme/useDeviceScreen';
+import { useRouteModal } from 'src/router';
 import { useQuery } from '@tanstack/react-query';
 import { getRecipe } from 'src/api';
 import { Header } from './components/Header';
@@ -10,7 +10,7 @@ import { Content } from './components/Content';
 export const RecipeInfo = () => {
   const screen = useDeviceScreen();
 
-  const { isOpen, value, onClose } = useRoutModal({
+  const { isOpen, value, onClose } = useRouteModal({
     key: 'recipe-info',
   });
 

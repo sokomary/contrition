@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const tooltip = style({
   backgroundColor: color('background'),
@@ -87,7 +86,9 @@ export const nameText = style({
 });
 
 export const icon = style({
-  cursor: 'pointer', width: '15px', height: '15px',
+  cursor: 'pointer',
+  width: '15px',
+  height: '15px',
 });
 
 export const productsFieldContainer = style({
@@ -99,13 +100,18 @@ export const productsFieldContainer = style({
 
   '@media': {
     [MEDIA.ipadv]: {
-      margin: '0', width: '100%', padding: '10px',
+      margin: '0',
+      width: '100%',
+      padding: '10px',
     },
     [MEDIA.ipadh]: {
-      margin: '0', padding: 0,
+      margin: '0',
+      padding: 0,
     },
     [MEDIA.iphone]: {
-      margin: '0', width: '100%', padding: 0,
+      margin: '0',
+      width: '100%',
+      padding: 0,
     },
   },
 });

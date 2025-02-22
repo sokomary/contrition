@@ -1,15 +1,16 @@
 import React from 'react';
 import { Modal } from 'src/components/features';
-import { useDeviceScreen, useRoutModal } from 'src/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { getProduct } from 'src/api';
+import { useDeviceScreen } from 'src/theme';
+import { useRouteModal } from 'src/router';
 import { Value } from './components/Value';
 import * as css from './ProductInfo.css';
 
 export const ProductInfo = () => {
   const screen = useDeviceScreen();
 
-  const { isOpen, value, onClose } = useRoutModal({
+  const { isOpen, value, onClose } = useRouteModal({
     key: 'product-info',
   });
 

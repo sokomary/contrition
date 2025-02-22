@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
-import { MEDIA } from 'src/hooks';
+import { color, MEDIA } from 'src/theme';
 
 export const control = style({
   display: 'flex',
@@ -15,13 +14,6 @@ export const controlContent = style({
   height: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-
-  // todo check
-  // '@container': {
-  //   '(min-width: 10px)': {
-  //     border: '2px solid red',
-  //   },
-  // },
 });
 
 export const controlHeader = style({

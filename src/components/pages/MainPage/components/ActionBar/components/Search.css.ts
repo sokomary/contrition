@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/hooks';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -28,7 +27,8 @@ export const input = style({
 
   '@media': {
     [MEDIA.iphone]: {
-      height: '30px', borderRadius: '10px',
+      height: '30px',
+      borderRadius: '10px',
     },
   },
 });

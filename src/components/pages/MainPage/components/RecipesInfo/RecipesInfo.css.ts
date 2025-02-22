@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
-import { MEDIA } from 'src/hooks';
 
 export const styledRecipeCard = style({
   backgroundColor: color('favorite'),
