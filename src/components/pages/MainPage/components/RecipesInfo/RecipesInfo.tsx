@@ -55,13 +55,13 @@ export const RecipesInfo: FC<Props> = ({ recipes, open }) => {
             </div>
 
             <div className={css.recipesList}>
-              {favoriteRecipes?.map((r) => (
+              {favoriteRecipes?.map((recipe) => (
                 <RecipeCard
                   small
-                  key={r.id}
-                  className={css.styledRecipeCard}
-                  recipe={r}
+                  key={recipe.id}
+                  recipe={recipe}
                   displayInfo={false}
+                  className={css.styledRecipeCard}
                 />
               ))}
             </div>

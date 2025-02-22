@@ -13,21 +13,17 @@ import * as css from './RecipeCard.css';
 const VISIBLE_TAGS_COUNT = 2;
 
 type Props = {
+  recipe: Recipe;
   showTooltip?: boolean;
   onAddToMenu?: () => void;
-  recipe: Recipe;
   className?: string;
-  // onViewClick: () => void;
   displayInfo?: boolean;
   small?: boolean;
-  // onRecipeInfoOpenChange: (open: boolean) => void;
 };
 
 export const RecipeCard = ({
-  className,
   recipe,
-  // onViewClick,
-  // onRecipeInfoOpenChange,
+  className,
   displayInfo = true,
   small,
   showTooltip,
@@ -41,11 +37,6 @@ export const RecipeCard = ({
 
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
-
-  // const changeRecipeInfoOpen = (open: boolean) => {
-  //   onRecipeInfoOpenChange(open);
-  //   onViewClick();
-  // };
 
   const { open } = useToggleModal('recipe-info', recipe.id.toString());
 

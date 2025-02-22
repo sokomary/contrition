@@ -9,6 +9,7 @@ export * from './EnterIcon';
 export * from './FavoriteIcon';
 export * from './GoogleIcon';
 export * from './LinkIcon';
+export * from './MenuIcon';
 export * from './NonFavoriteIcon';
 export * from './RandomIcon';
 export * from './SearchIcon';

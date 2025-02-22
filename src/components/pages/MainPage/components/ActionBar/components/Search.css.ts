@@ -3,7 +3,7 @@ import { color, MEDIA } from 'src/theme';
 
 export const container = style({
   display: 'flex',
-  width: '30%',
+  width: '40%',
   alignItems: 'center',
   position: 'relative',
   '@media': {

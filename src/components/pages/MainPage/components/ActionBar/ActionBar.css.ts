@@ -3,6 +3,9 @@ import { color, MEDIA } from 'src/theme';
 
 export const actionBar = style({
   padding: '40px 40px 20px 40px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
 
   '@media': {
     [MEDIA.ipadv]: {
@@ -13,6 +16,7 @@ export const actionBar = style({
     },
     [MEDIA.iphone]: {
       padding: '15px',
+      gap: '15px',
     },
   },
 });
@@ -94,13 +98,12 @@ globalStyle(actionBarContent, {
 
 export const filters = style({
   display: 'flex',
-  width: '70%',
+  width: '65%',
   padding: '0 10px',
-
+  gap: '10px',
   '@media': {
     [MEDIA.iphone]: {
       width: '100%',
-      gap: '10px',
       padding: '0',
       justifyContent: 'space-between',
     },

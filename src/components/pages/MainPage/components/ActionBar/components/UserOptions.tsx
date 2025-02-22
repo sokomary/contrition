@@ -15,7 +15,13 @@ export const UserOptions = () => {
 
   return (
     <div className={css.container}>
-      <Button kind="ghost" className={css.option} onClick={() => logoutMutation.mutate()}>Выйти</Button>
+      <Button
+        kind="ghost"
+        className={css.option}
+        onClick={() => logoutMutation.mutate()}
+      >
+        Выйти
+      </Button>
     </div>
   );
 };

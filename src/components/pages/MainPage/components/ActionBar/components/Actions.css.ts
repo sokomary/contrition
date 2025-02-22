@@ -8,6 +8,10 @@ export const container = style({
 
 export const button = style({
   '@media': {
+    [MEDIA.ipadv]: {
+      borderRadius: '10px',
+      height: '30px',
+    },
     [MEDIA.iphone]: {
       borderRadius: '10px',
       height: '30px',
@@ -17,6 +21,10 @@ export const button = style({
 
 export const icon = style({
   '@media': {
+    [MEDIA.ipadv]: {
+      height: '20px',
+      width: '20px',
+    },
     [MEDIA.iphone]: {
       height: '20px',
       width: '20px',

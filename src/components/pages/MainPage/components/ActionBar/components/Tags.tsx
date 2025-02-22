@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tag } from 'src/types/domain';
 import { Button } from 'src/components/features';
+import { useQuery } from '@tanstack/react-query';
+import { getTags } from 'src/api';
 import * as css from './Tags.css';
 
 type Props = {
-  tags: Tag[];
-  onSelect: (tag?: Tag) => void;
+  value: Tag[];
+  onChange: (tag: Tag) => void;
 };
 
-export const Tags = (props: Props) => {
-  const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
-  const selectTag = (tag: Tag) => {
-    const newTag = selectedTag?.id !== tag.id ? tag : undefined;
-    setSelectedTag(newTag);
-    props.onSelect(newTag);
-  };
+export const Tags = ({ value, onChange }: Props) => {
+  const { data: tags } = useQuery({
+    queryKey: ['tags'],
+    queryFn: () => getTags(),
+  });
 
   return (
     <div className={css.container}>
-      {props.tags?.map((t) => (
+      {tags?.map((tag) => (
         <Button
           kind="ghost"
-          className={css.name({ selected: selectedTag?.id === t.id })}
-          onClick={() => selectTag(t)}
-          key={t.id}
+          className={css.tag({ selected: value.includes(tag) })}
+          onClick={() => onChange(tag)}
+          key={tag.id}
         >
-          {t.name}
+          {tag.name}
         </Button>
       ))}
     </div>

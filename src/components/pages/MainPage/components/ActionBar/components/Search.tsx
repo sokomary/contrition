@@ -1,36 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ClearIcon } from 'src/assets';
 import { Button } from 'src/components/features';
 import * as css from './Search.css';
 
 type Props = {
-  onQueryChange: (q: string) => void;
+  value: string;
+  onChange: (q: string) => void;
   className?: string;
 };
 
-export const Search = ({ onQueryChange, className }: Props) => {
-  const [q, setQ] = useState('');
-  return (
-    <div className={`${className} ${css.container}`}>
-      <input
-        className={css.input}
-        value={q}
-        onChange={(e) => {
-          setQ(e.target.value);
-          onQueryChange(e.target.value);
-        }}
-        placeholder="Поиск"
-      />
-      <Button
-        kind="ghost"
-        className={css.icon}
-        onClick={() => {
-          setQ('');
-          onQueryChange('');
-        }}
-      >
-        <ClearIcon />
-      </Button>
-    </div>
-  );
-};
+export const Search = ({ value, onChange, className }: Props) => (
+  <div className={`${className} ${css.container}`}>
+    <input
+      value={value}
+      placeholder="Поиск"
+      className={css.input}
+      onChange={(e) => onChange(e.target.value)}
+    />
+
+    <Button kind="ghost" className={css.icon} onClick={() => onChange('')}>
+      <ClearIcon />
+    </Button>
+  </div>
+);

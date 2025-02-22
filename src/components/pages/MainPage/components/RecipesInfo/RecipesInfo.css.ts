@@ -46,23 +46,19 @@ globalStyle(animated.classNames.variants.open.true, {
 
 export const infoContainer = style({
   display: 'flex',
-  padding: '20px 40px',
   width: '100%',
   gap: '20px',
 
   '@media': {
     [MEDIA.ipadh]: {
-      padding: '20px',
       gap: '10px',
     },
     [MEDIA.ipadv]: {
-      padding: '20px',
       gap: '10px',
     },
     [MEDIA.iphone]: {
       flexDirection: 'column',
       height: 'fit-content',
-      padding: '15px',
       gap: '15px',
     },
   },
@@ -72,7 +68,6 @@ globalStyle(infoContainer, {
     '(max-width: 605px)': {
       flexDirection: 'column',
       height: 'fit-content',
-      padding: '15px',
       gap: '15px',
     },
   },
