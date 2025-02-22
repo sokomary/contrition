@@ -6,6 +6,7 @@ import { Recipe } from 'src/types/domain';
 import i18next from 'src/formatter';
 import { Action } from 'src/components/features';
 import { useDeviceScreen } from 'src/theme';
+import { toast } from 'react-toastify';
 
 export type Options = {
   isOpen: boolean;
@@ -20,8 +21,10 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
       reset();
+      toast(`Рецепт ${defaultValues ? 'обновлен' : 'добавлен'}`);
       onClose();
     },
+    onError: () => toast('Что-то пошло не так'),
   });
 
   const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(

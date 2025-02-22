@@ -3,10 +3,17 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProduct } from 'src/api';
 import { Product } from 'src/types/domain';
-import { Modal, Action, Field, ActionBar } from 'src/components/features';
+import {
+  Modal,
+  Action,
+  Field,
+  ActionBar,
+  Button,
+} from 'src/components/features';
 import i18next from 'src/formatter';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { useRouteModal } from 'src/router';
+import { toast } from 'react-toastify';
 import { NumberField } from './components/NumberField';
 import * as css from './AddProduct.css';
 
@@ -21,8 +28,10 @@ export const AddProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       reset();
+      toast('Продукт успешно добавлен');
       onClose();
     },
+    onError: () => toast('Что-то пошло не так'),
   });
 
   const { register, handleSubmit, formState, reset } = useForm<Product>();
