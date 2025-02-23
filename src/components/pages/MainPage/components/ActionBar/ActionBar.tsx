@@ -9,6 +9,7 @@ import { Actions } from './components/Actions';
 import { useLogic } from './ActionBar.useLogic';
 import { RecipesInfo } from '../RecipesInfo';
 import * as css from './ActionBar.css';
+import { actionBar } from './ActionBar.css';
 
 type Props = {
   selectedTags: Tag[];
@@ -37,49 +38,51 @@ export const ActionBar = ({
 
   return (
     <div className={css.actionBar}>
-      <div className={css.actionBarContent}>
-        <div className={css.filtersContainer}>
-          <div className={css.infoControl}>
-            {infoOpen ? (
-              <DropUpIcon
-                className={css.icon}
-                onClick={() => setInfoOpen(!infoOpen)}
-              />
-            ) : (
-              <DropDownIcon
-                className={css.icon}
-                onClick={() => setInfoOpen(!infoOpen)}
-              />
-            )}
+      <div className={css.container}>
+        <div className={css.actionBarContent}>
+          <div className={css.filtersContainer}>
+            <div className={css.infoControl}>
+              {infoOpen ? (
+                <DropUpIcon
+                  className={css.icon}
+                  onClick={() => setInfoOpen(!infoOpen)}
+                />
+              ) : (
+                <DropDownIcon
+                  className={css.icon}
+                  onClick={() => setInfoOpen(!infoOpen)}
+                />
+              )}
+            </div>
+            <div className={css.filters}>
+              <Tags value={selectedTags} onChange={onTagSelect} />
+              {screen !== 'iphone' && (
+                <Search value={query} onChange={onQueryChange} />
+              )}
+            </div>
           </div>
-          <div className={css.filters}>
-            <Tags value={selectedTags} onChange={onTagSelect} />
-            {screen !== 'iphone' && (
-              <Search value={query} onChange={onQueryChange} />
-            )}
-          </div>
-        </div>
-        <div className={css.userBlock}>
-          <Actions user={user} />
-          <div className={css.content}>
-            <div className={css.name}>{user?.name}</div>
-            {screen === 'iphone' && (
-              <Search value={query} onChange={onQueryChange} />
-            )}
-            <div className={css.photo}>
-              <div ref={userOptionsRef}>
-                <Button kind="ghost" onClick={toggleOptions}>
-                  {user?.picture ? (
-                    <img
-                      className={css.circleImg}
-                      src={user?.picture}
-                      alt={imageAlt}
-                    />
-                  ) : (
-                    <div className={css.circleImg}>{imageAlt}</div>
-                  )}
-                </Button>
-                {userOptionsOpen && <UserOptions />}
+          <div className={css.userBlock}>
+            <Actions user={user} />
+            <div className={css.content}>
+              <div className={css.name}>{user?.name}</div>
+              {screen === 'iphone' && (
+                <Search value={query} onChange={onQueryChange} />
+              )}
+              <div className={css.photo}>
+                <div ref={userOptionsRef}>
+                  <Button kind="ghost" onClick={toggleOptions}>
+                    {user?.picture ? (
+                      <img
+                        className={css.circleImg}
+                        src={user?.picture}
+                        alt={imageAlt}
+                      />
+                    ) : (
+                      <div className={css.circleImg}>{imageAlt}</div>
+                    )}
+                  </Button>
+                  {userOptionsOpen && <UserOptions />}
+                </div>
               </div>
             </div>
           </div>

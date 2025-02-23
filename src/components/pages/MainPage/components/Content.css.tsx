@@ -9,6 +9,7 @@ export const container = style({
   gap: '10px',
   rowGap: '40px',
   paddingInline: '40px',
+  paddingTop: '20px',
 
   '@media': {
     [MEDIA.ipadv]: {

@@ -1,25 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
-export const actionBar = style({
-  padding: '40px 40px 20px 40px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '20px',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      padding: '20px',
-    },
-    [MEDIA.ipadh]: {
-      padding: '20px',
-    },
-    [MEDIA.iphone]: {
-      padding: '15px',
-      gap: '15px',
-    },
-  },
-});
+export const actionBar = style({});
 
 export const filtersContainer = style({
   display: 'contents',
@@ -76,6 +58,21 @@ globalStyle(infoControl, {
 
 export const icon = style({
   cursor: 'pointer',
+});
+
+export const container = style({
+  padding: '40px 40px 0px 40px',
+  '@media': {
+    [MEDIA.ipadv]: {
+      padding: '20px 20px 0px 20px',
+    },
+    [MEDIA.ipadh]: {
+      padding: '20px 20px 0px 20px',
+    },
+    [MEDIA.iphone]: {
+      padding: '15px 15px 0px 15px',
+    },
+  },
 });
 
 globalStyle(actionBar, {

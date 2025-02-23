@@ -45,6 +45,8 @@ globalStyle(animated.classNames.variants.open.true, {
 });
 
 export const infoContainer = style({
+  paddingInline: '40px',
+  paddingBlock: '20px',
   display: 'flex',
   width: '100%',
   gap: '20px',
@@ -52,14 +54,17 @@ export const infoContainer = style({
   '@media': {
     [MEDIA.ipadh]: {
       gap: '10px',
+      paddingInline: '20px',
     },
     [MEDIA.ipadv]: {
       gap: '10px',
+      paddingInline: '20px',
     },
     [MEDIA.iphone]: {
       flexDirection: 'column',
       height: 'fit-content',
       gap: '15px',
+      paddingInline: '15px',
     },
   },
 });
