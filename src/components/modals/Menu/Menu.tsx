@@ -6,12 +6,13 @@ import { NewMenu } from './components/NewMenu/NewMenu';
 import { History } from './components/History/History';
 import * as css from './Menu.css';
 
+export const SIDE_MODAL_WIDTH = 577;
+
 export const Menu = () => {
   const {
     kinds,
     actions,
     isOpen,
-    screen,
     mode,
     menu,
     setMode,
@@ -50,8 +51,8 @@ export const Menu = () => {
   return (
     <Modal
       side
-      position={screen === 'iphone' ? 'bottom' : 'right'}
-      width={screen !== 'iphone' ? 577 : undefined}
+      position="right"
+      width={SIDE_MODAL_WIDTH}
       header={
         <div className={css.header}>
           <Button

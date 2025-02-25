@@ -48,29 +48,20 @@ export const mainContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
+  width: '100%',
+  maxHeight: 'fit-content',
 
   '@media': {
-    [MEDIA.mac]: {
-      maxHeight: '428px',
-      marginLeft: '20px',
-      width: '30%',
-      padding: '0 10px',
+    [MEDIA.ipadv]: {
+      width: '100%',
+      maxHeight: '430px',
     },
     [MEDIA.ipadh]: {
       maxHeight: '320px',
-      width: '30%',
-      marginLeft: '0',
+      width: '35%',
     },
-    [MEDIA.ipadv]: {
-      width: '100%',
-      padding: '0 10px',
-      marginLeft: '0',
-      maxHeight: '430px',
-    },
-    [MEDIA.iphone]: {
-      width: '100%',
-      marginLeft: '0',
-      maxHeight: 'fit-content',
+    [MEDIA.mac]: {
+      maxHeight: '566px',
     },
   },
 });
@@ -82,14 +73,14 @@ export const contentContainer = style({
   justifyContent: 'space-between',
   background: color('background'),
   boxShadow: '0 0 15px 5px rgba(8, 8, 8, 0.07)',
-  minHeight: '34px',
+  minHeight: '42px',
   borderRadius: '10px',
   padding: '15px',
   overflowY: 'auto',
 
   '@media': {
-    [MEDIA.iphone]: {
-      minHeight: '42px',
+    [MEDIA.ipadh]: {
+      minHeight: '34px',
     },
   },
 });

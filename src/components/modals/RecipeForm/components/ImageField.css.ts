@@ -11,92 +11,57 @@ export const hiddenInput = style({
   display: 'none',
 });
 
-export const photoInput = style({
+const REGULAR_SIZE = 363;
+const SMALL_SIZE = 363;
+
+const photo = {
+  height: `${REGULAR_SIZE}px`,
+  width: `${REGULAR_SIZE}px`,
   backgroundColor: color('field'),
-  flexShrink: 0,
-  alignItems: 'center',
-  height: '333px',
-  width: '333px',
-  display: 'flex',
-  justifyContent: 'center',
   cursor: 'pointer',
   borderRadius: '10px',
   opacity: 30,
+  flexShrink: 0,
+  alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  marginRight: 'auto',
+};
+
+export const photoInput = style({
+  ...photo,
 
   '@media': {
-    [MEDIA.iphone]: {
-      marginRight: 'auto',
-      height: '363px',
-      width: '363px',
-    },
     [MEDIA.ipadv]: {
-      marginRight: 'auto',
-    },
-    [MEDIA.ipadh]: {
-      height: '170px',
-      width: '170px',
+      height: `${SMALL_SIZE}px`,
+      width: `${SMALL_SIZE}px`,
     },
   },
 });
 
 export const photoPreview = style({
-  backgroundColor: color('field'),
-  flexShrink: 0,
-  alignItems: 'center',
-  height: '333px',
-  width: '333px',
-  display: 'flex',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  borderRadius: '10px',
-  opacity: 30,
+  ...photo,
   backgroundRepeat: 'no-repeat',
   backgroundOrigin: 'border-box',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
 
   '@media': {
-    [MEDIA.iphone]: {
-      marginRight: 'auto',
-      height: '363px',
-      width: '363px',
-    },
     [MEDIA.ipadv]: {
-      marginRight: 'auto',
-    },
-    [MEDIA.ipadh]: {
-      height: '170px',
-      width: '170px',
+      height: `${SMALL_SIZE}px`,
+      width: `${SMALL_SIZE}px`,
     },
   },
 });
 
 export const loadingWrapper = style({
-  backgroundColor: color('field'),
-  flexShrink: 0,
-  alignItems: 'center',
-  height: '333px',
-  width: '333px',
-  display: 'flex',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  borderRadius: '10px',
+  ...photo,
   opacity: 1,
 
   '@media': {
-    [MEDIA.iphone]: {
-      height: '363px',
-      width: '363px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
     [MEDIA.ipadv]: {
-      marginRight: 'auto',
-      marginLeft: 'auto',
-    },
-    [MEDIA.ipadh]: {
-      height: '170px',
-      width: '170px',
+      height: `${SMALL_SIZE}px`,
+      width: `${SMALL_SIZE}px`,
     },
   },
 });

@@ -60,7 +60,6 @@ export const RecipeForm = (props: Options) => {
                 <div className={css.leftPart}>
                   <div className={css.fields}>
                     <Field
-                      className={css.nameField}
                       size={screen === 'iphone' ? 'large' : undefined}
                       name="name"
                       register={register}
@@ -72,7 +71,6 @@ export const RecipeForm = (props: Options) => {
                     <div className={css.linkWeightFields}>
                       <Field
                         size={screen === 'iphone' ? 'large' : undefined}
-                        className={css.linkField}
                         name="link"
                         register={register}
                         placeholder={i18next.t('domain:recipe.link')}
@@ -95,7 +93,6 @@ export const RecipeForm = (props: Options) => {
                   </div>
                   <Field
                     size={screen === 'iphone' ? 'large' : undefined}
-                    className={css.linkField}
                     name="comment"
                     register={register}
                     placeholder={i18next.t('domain:recipe.comment')}
@@ -104,7 +101,6 @@ export const RecipeForm = (props: Options) => {
                   />
                   <Field
                     size={screen === 'iphone' ? 'large' : undefined}
-                    className={css.linkField}
                     required
                     name="portionSize"
                     register={register}

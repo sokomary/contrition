@@ -1,6 +1,20 @@
 import { style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
+export const productsFieldContainer = style({
+  display: 'flex',
+  gap: '20px',
+  flexDirection: 'column',
+  margin: '0',
+  width: '100%',
+
+  '@media': {
+    [MEDIA.ipadh]: {
+      width: '35%',
+    },
+  },
+});
+
 export const tooltip = style({
   backgroundColor: color('background'),
   zIndex: 150,
@@ -37,16 +51,6 @@ export const products = style({
   flexWrap: 'wrap',
   height: 'fit-content',
   maxWidth: '400px',
-  '@media': {
-    [MEDIA.ipadv]: {
-      maxHeight: '115px',
-      overflowY: 'scroll',
-    },
-    [MEDIA.ipadh]: {
-      maxHeight: '248px',
-      overflowY: 'scroll',
-    },
-  },
 });
 
 export const input = style({
@@ -89,29 +93,4 @@ export const icon = style({
   cursor: 'pointer',
   width: '15px',
   height: '15px',
-});
-
-export const productsFieldContainer = style({
-  display: 'flex',
-  padding: '0 20px',
-  gap: '20px',
-  flexDirection: 'column',
-  width: '35%',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      margin: '0',
-      width: '100%',
-      padding: '10px',
-    },
-    [MEDIA.ipadh]: {
-      margin: '0',
-      padding: 0,
-    },
-    [MEDIA.iphone]: {
-      margin: '0',
-      width: '100%',
-      padding: 0,
-    },
-  },
 });

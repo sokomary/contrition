@@ -50,18 +50,16 @@ export const AddTag = () => {
       onClose={onClose}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <Field
-            key="name"
-            name="name"
-            register={register}
-            placeholder={i18next.t('domain:recipe.name')}
-            error={formState.errors.name}
-            errorText={i18next.t('forms:fields.errors.required')}
-            required
-          />
-          <ActionBar actions={actions} />
-        </div>
+        <Field
+          key="name"
+          name="name"
+          register={register}
+          placeholder={i18next.t('domain:recipe.name')}
+          error={formState.errors.name}
+          errorText={i18next.t('forms:fields.errors.required')}
+          required
+        />
+        <ActionBar actions={actions} />
       </form>
     </Modal>
   );

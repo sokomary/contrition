@@ -12,19 +12,21 @@ export const container = style({
 export const content = recipe({
   base: {
     width: '100%',
-    height: '34px',
+    height: '42px',
+    padding: '8px 16px',
     zIndex: 99,
-    padding: '4px 8px',
+
     cursor: 'pointer',
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '16px',
     alignItems: 'center',
     background: color('background'),
+
     '@media': {
-      [MEDIA.iphone]: {
-        height: '42px',
-        padding: '8px 16px',
+      [MEDIA.ipadh]: {
+        height: '34px',
+        padding: '4px 8px',
       },
     },
   },
@@ -106,7 +108,7 @@ export const label = style({
 
 export const option = recipe({
   base: {
-    height: '34px',
+    height: '42px',
     padding: '8px',
     cursor: 'pointer',
     fontSize: '16px',
@@ -125,8 +127,8 @@ export const option = recipe({
     },
 
     '@media': {
-      [MEDIA.iphone]: {
-        height: '42px',
+      [MEDIA.ipadh]: {
+        height: '34px',
       },
     },
   },

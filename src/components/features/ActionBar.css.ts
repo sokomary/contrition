@@ -6,17 +6,19 @@ export const container = style({
   justifyContent: 'flex-end',
   gap: '8px',
   paddingTop: '15px',
+  paddingBottom: '15px',
 
   '@media': {
-    [MEDIA.iphone]: {
-      paddingBottom: '15px',
+    [MEDIA.ipadh]: {
+      paddingBottom: 0,
     },
   },
 });
 globalStyle(`${container} > button`, {
+  width: '100%',
   '@media': {
-    [MEDIA.iphone]: {
-      width: '100%',
+    [MEDIA.ipadv]: {
+      width: 'fit-content',
     },
   },
 });

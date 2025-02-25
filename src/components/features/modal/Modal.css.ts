@@ -4,14 +4,14 @@ import { MEDIA, color } from 'src/theme';
 
 export const container = style({
   margin: '0 !important',
-  maxHeight: '100%',
+  maxHeight: '85%',
 
   '@media': {
     [MEDIA.ipadv]: {
       maxHeight: '73%',
     },
-    [MEDIA.iphone]: {
-      maxHeight: '85%',
+    [MEDIA.ipadh]: {
+      maxHeight: '100%',
     },
   },
 });
@@ -88,19 +88,6 @@ const appearAnimation = (position: 'center' | 'bottom' | 'top' | 'right') => {
       });
     }
   }
-
-  keyframes({
-    '0%': {
-      opacity: 0.25,
-      visibility: 'hidden',
-      transform: 'scale(0.95)',
-    },
-    '100%': {
-      opacity: 1,
-      visibility: 'visible',
-      transform: 'none',
-    },
-  });
 };
 
 const disappearAnimation = keyframes({
@@ -188,7 +175,7 @@ export const children = recipe({
     alignSelf: 'center',
     justifySelf: 'center',
     borderRadius: '20px',
-    padding: '40px',
+    padding: '15px',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
@@ -199,8 +186,8 @@ export const children = recipe({
       [MEDIA.ipadv]: {
         padding: '15px',
       },
-      [MEDIA.iphone]: {
-        padding: '15px',
+      [MEDIA.ipadh]: {
+        padding: '40px',
       },
     },
   },

@@ -17,19 +17,24 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
     menu,
   });
 
+  const renderTitle = () => {
+    if (!menu) {
+      return 'Нет текущего меню';
+    }
+    return <div className={css.title}>{format(period)}</div>;
+  };
+
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.title}>{format(period)}</div>
+        {renderTitle()}
         <ActionBar className={css.actions} actions={actions} />
       </div>
 
       {menu && (
         <>
           {dates && <Table kinds={kinds} dates={dates} data={tableData} />}
-
           {isLoading && <Loading />}
-
           {products && <Products products={products} />}
         </>
       )}

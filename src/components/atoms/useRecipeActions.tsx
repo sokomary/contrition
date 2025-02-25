@@ -67,17 +67,20 @@ export const useRecipeActions = ({ recipe }: Options): Action[] => {
       onClick: () => toFavoritesMutation.mutate(recipe.id),
       label: 'В избранное',
       display: !recipe.favorite,
+      isLoading: toFavoritesMutation.isPending,
     },
     {
       kind: 'ghost',
       onClick: () => fromFavoritesMutation.mutate(recipe.id),
       label: 'Из избранного',
       display: recipe.favorite,
+      isLoading: fromFavoritesMutation.isPending,
     },
     {
       kind: 'ghost',
       onClick: () => removeConfirmation.open(),
       label: 'Удалить',
+      isLoading: removeMutation.isPending,
     },
   ];
 };

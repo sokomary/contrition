@@ -1,22 +1,11 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { color, MEDIA } from 'src/theme';
+import { color } from 'src/theme';
 
 export const styledContainer = style({
   display: 'flex',
   gap: '5px',
-
-  '@media': {
-    [MEDIA.iphone]: {
-      flexWrap: 'wrap',
-    },
-    [MEDIA.ipadh]: {
-      flexWrap: 'wrap',
-    },
-    [MEDIA.ipadv]: {
-      flexWrap: 'wrap',
-    },
-  },
+  flexWrap: 'wrap',
 });
 
 export const tag = recipe({

@@ -2,84 +2,31 @@ import { style } from '@vanilla-extract/css';
 import { MEDIA } from 'src/theme';
 
 export const interactiveFields = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '15px',
   width: '100%',
 
   '@media': {
     [MEDIA.ipadh]: {
       display: 'contents',
-    },
-    [MEDIA.iphone]: {
-      display: 'contents',
-    },
-    [MEDIA.mac]: {
-      display: 'contents',
-    },
-  },
-});
-
-export const nameField = style({
-  width: 332,
-
-  '@media': {
-    [MEDIA.iphone]: {
-      width: 'auto',
-    },
-  },
-});
-
-export const linkField = style({
-  width: '100%',
-  '@media': {
-    [MEDIA.iphone]: {
-      width: '100%',
     },
   },
 });
 
 export const linkWeightFields = style({
   display: 'flex',
-  width: '100%',
   gap: 7,
-
-  '@media': {
-    [MEDIA.iphone]: {
-      justifyContent: 'space-between',
-    },
-  },
 });
 
 export const numberField = style({
-  width: 72,
+  width: 104,
 
-  '@media': {
-    [MEDIA.iphone]: {
-      width: 104,
-    },
-  },
-});
-
-export const dialog = style({
   '@media': {
     [MEDIA.ipadh]: {
-      width: '100%',
-      height: '60%',
-    },
-    [MEDIA.ipadv]: {
-      width: '100%',
-    },
-    [MEDIA.iphone]: {
-      width: '100%',
-      height: '100%',
-    },
-    [MEDIA.mac]: {
-      height: '67%',
+      width: 72,
     },
   },
-});
-
-export const loadingWrapper = style({
-  width: '100%',
-  height: '100%',
 });
 
 export const container = style({
@@ -91,52 +38,53 @@ export const container = style({
 
 export const content = style({
   display: 'flex',
-  gap: '10px',
+  flexDirection: 'column',
+  gap: '15px',
 
   '@media': {
-    [MEDIA.iphone]: {
-      flexDirection: 'column',
-      gap: '20px',
-    },
-    [MEDIA.ipadh]: {
-      gap: '30px',
+    [MEDIA.ipadv]: {
+      flexDirection: 'row',
     },
   },
 });
 
 export const footer = style({
   display: 'flex',
-  justifyContent: 'space-between',
   marginBottom: 0,
+  flexDirection: 'column',
+  gap: '20px',
+  width: '100%',
+  paddingBottom: '15px',
 
   '@media': {
-    [MEDIA.iphone]: {
-      flexDirection: 'column',
-      gap: '20px',
-      width: '100%',
-      paddingBottom: '15px',
+    [MEDIA.ipadv]: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingBottom: 0,
     },
   },
 });
 
 export const button = style({
   alignSelf: 'flex-end',
+  width: '100%',
 
   '@media': {
-    [MEDIA.iphone]: {
-      width: '100%',
+    [MEDIA.ipadv]: {
+      width: 'fit-content',
     },
   },
 });
 
 export const fields = style({
+  width: '100%',
   display: 'flex',
   gap: '7px',
   flexDirection: 'column',
 
   '@media': {
-    [MEDIA.iphone]: {
-      width: '100%',
+    [MEDIA.ipadv]: {
+      width: 'auto',
     },
   },
 });

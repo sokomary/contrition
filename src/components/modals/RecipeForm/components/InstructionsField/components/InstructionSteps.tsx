@@ -20,6 +20,7 @@ export const InstructionSteps = (props: InstructionStepsProps) => {
   });
   const addStep = () =>
     append({ id: undefined as unknown as number, description: '' });
+
   return (
     <div className={css.container}>
       <div className={css.instructionHeader}>

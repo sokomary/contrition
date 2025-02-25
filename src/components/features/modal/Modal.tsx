@@ -33,8 +33,6 @@ export const Modal = ({
   const { isRendered } = useLogic({ isActive, onClose });
 
   const zIndex = 101 + Date.now() / 100000000000;
-  console.log(zIndex);
-
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {

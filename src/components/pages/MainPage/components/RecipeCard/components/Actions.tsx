@@ -30,7 +30,7 @@ export const Actions = ({ recipe }: Props) => {
   const actions = useRecipeActions({ recipe });
 
   return (
-    <div ref={menuRef}>
+    <div ref={menuRef} className={css.container}>
       <Button
         kind="ghost"
         onClick={toggleMenu}
@@ -40,13 +40,9 @@ export const Actions = ({ recipe }: Props) => {
         <div className={css.dot} />
         <div className={css.dot} />
         <div className={css.dot} />
-
-        {open && (
-          <div className={css.options}>
-            <ActionBar className={css.actions} actions={actions} />
-          </div>
-        )}
       </Button>
+
+      {open && <ActionBar className={css.actions} actions={actions} />}
     </div>
   );
 };

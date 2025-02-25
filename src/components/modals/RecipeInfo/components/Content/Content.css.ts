@@ -21,11 +21,12 @@ export const dialogContentContainer = style({
 export const mainContainer = style({
   flexDirection: 'column',
   display: 'flex',
+  justifyContent: 'space-between',
   gap: '24px',
 
   '@media': {
-    [MEDIA.iphone]: {
-      justifyContent: 'space-between',
+    [MEDIA.ipadv]: {
+      gap: '24px',
     },
   },
 });

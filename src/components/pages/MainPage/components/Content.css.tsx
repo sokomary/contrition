@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { MEDIA } from 'src/theme';
+import { CARD_SIZES } from './RecipeCard/index.css';
 
 export const container = style({
   width: '100%',
@@ -7,22 +8,18 @@ export const container = style({
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   gap: '10px',
-  rowGap: '40px',
-  paddingInline: '40px',
   paddingTop: '20px',
+  rowGap: '20px',
+  paddingInline: '15px',
 
   '@media': {
     [MEDIA.ipadv]: {
       rowGap: '20px',
       paddingInline: '20px',
     },
-    [MEDIA.ipadh]: {
-      rowGap: '20px',
-      paddingInline: '20px',
-    },
-    [MEDIA.iphone]: {
-      paddingInline: '15px',
-      rowGap: '20px',
+    [MEDIA.mac]: {
+      rowGap: '40px',
+      paddingInline: '40px',
     },
   },
 });
@@ -32,26 +29,20 @@ export const emptyState = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
-  '@media': {
-    [MEDIA.mac]: {
-      height: '100%',
-    },
-  },
 });
 
 export const fakeCard = style({
-  width: '268px',
+  width: CARD_SIZES.iphone.width,
 
   '@media': {
-    [MEDIA.ipadh]: {
-      width: '268px',
-    },
     [MEDIA.ipadv]: {
-      width: '242px',
+      width: CARD_SIZES.ipadv.width,
     },
-    [MEDIA.iphone]: {
-      width: '170px',
+    [MEDIA.ipadh]: {
+      width: CARD_SIZES.ipadh.width,
+    },
+    [MEDIA.mac]: {
+      width: CARD_SIZES.mac.width,
     },
   },
 });

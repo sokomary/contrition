@@ -3,6 +3,7 @@ import { useDeviceScreen } from 'src/theme';
 import {
   Button,
   ButtonKind,
+  ButtonSize,
   ButtonType,
   Loading,
 } from 'src/components/features/index';
@@ -16,6 +17,7 @@ export type Action = {
   display?: boolean;
   isLoading?: boolean;
   disabled?: boolean;
+  size?: ButtonSize;
 };
 
 type Props = {
