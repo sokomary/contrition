@@ -13,6 +13,7 @@ const loginButton = keyframes({
 export const container = style({
   display: 'flex',
   flex: 1,
+  height: '100%',
   justifyContent: 'center',
   alignItems: 'center',
   backgroundColor: color('background'),
