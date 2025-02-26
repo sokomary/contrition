@@ -1,10 +1,4 @@
-import React, {
-  PropsWithChildren,
-  ReactNode,
-  Suspense,
-  useEffect,
-  useState,
-} from 'react';
+import React, { PropsWithChildren, ReactNode, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { ClearIcon } from 'src/assets';
 import { useLogic } from './Modal.useLogic';
@@ -30,15 +24,7 @@ export const Modal = ({
   position = 'center',
   side,
 }: Props) => {
-  const { isRendered } = useLogic({ isActive, onClose });
-
-  const zIndex = 101 + Date.now() / 100000000000;
-  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const root = document.getElementById('modals-root');
-    setModalRoot(root);
-  }, []);
+  const { isRendered, zIndex, modalRoot } = useLogic({ isActive, onClose });
 
   if (!isRendered || !modalRoot) {
     return null;
@@ -76,6 +62,7 @@ export const Modal = ({
       </Suspense>
     </div>
   );
+
   if (side) {
     return renderContent(false);
   }

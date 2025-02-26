@@ -36,7 +36,17 @@ export const useLogic = (options: Options) => {
     return () => document.removeEventListener('keydown', keydown);
   }, []);
 
+  const zIndex = 101 + Date.now() / 100000000000;
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const root = document.getElementById('modals-root');
+    setModalRoot(root);
+  }, []);
+
   return {
     isRendered,
+    zIndex,
+    modalRoot,
   };
 };
