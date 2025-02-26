@@ -8,16 +8,18 @@ import { useLogic } from './useLogic';
 export const LoginPage = () => {
   const { authenticated, login } = useLogic();
 
+  if (authenticated) {
+    return null;
+  }
+
   return (
     <div className={css.container}>
-      {!authenticated && (
-        <Button className={css.button} onClick={login} size="large">
-          <div className={css.loginButtonContent}>
-            <GoogleIcon />
-            <div>{i18next.t('loginpage:actions.login.google')}</div>
-          </div>
-        </Button>
-      )}
+      <Button className={css.button} onClick={login} size="large">
+        <div className={css.loginButtonContent}>
+          <GoogleIcon />
+          <div>{i18next.t('loginpage:actions.login.google')}</div>
+        </div>
+      </Button>
     </div>
   );
 };
