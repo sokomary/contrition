@@ -1,6 +1,6 @@
 import { Temporal } from 'temporal-polyfill';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { compare } from 'src/helpers/dates';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { compare, format } from 'src/helpers/dates';
 import { Period } from '../../types/Period';
 
 export type Options = {
@@ -38,87 +38,75 @@ export const useLogic = (props: Options) => {
     [month, year]
   );
 
+  const isSelected = (date: Temporal.PlainDate | null) => {
+    if (!date || !(value.end || value.start)) {
+      return false;
+    }
+
+    if (value.end && compare(value.end, date) === 0) {
+      return 'corner-right';
+    }
+
+    if (value.start && compare(value.start, date) === 0) {
+      return 'corner-left';
+    }
+
+    if (
+      value.start &&
+      value.end &&
+      compare(value.start, date) === -1 &&
+      compare(date, value.end) === -1
+    ) {
+      return 'inside';
+    }
+
+    return false;
+  };
+
+  const onDayClick = (d: number) => {
+    const date = Temporal.PlainDate.from({
+      year: parseInt(year, 10),
+      month: parseInt(month, 10),
+      day: d,
+    });
+
+    let { start } = value;
+    let { end } = value;
+
+    if (!(value.start || value.end) || (value.start && value.end)) {
+      start = date;
+      end = null;
+    } else if (value.start) {
+      if (compare(value.start, date) === -1) {
+        end = date;
+      } else if (compare(date, value.start) === -1) {
+        end = start;
+        start = date;
+      }
+    }
+    onChange({ start, end });
+  };
+
   return {
+    title:
+      !value.start && !value.end ? (
+        'Выберите период'
+      ) : (
+        <div>{format(value)}</div>
+      ),
     datePickerRef,
-    value,
-    plusYear: () => {
-      setNow((prev) => prev.add({ years: 1 }));
-    },
-    minusYear: () => {
-      setNow((prev) => prev.add({ years: -1 }));
-    },
-    plusMonth: () => {
-      setNow((prev) => prev.add({ months: 1 }));
-    },
-    minusMonth: () => {
-      setNow((prev) => prev.add({ months: -1 }));
-    },
+    plusYear: () => setNow((prev) => prev.add({ years: 1 })),
+    minusYear: () => setNow((prev) => prev.add({ years: -1 })),
+    plusMonth: () => setNow((prev) => prev.add({ months: 1 })),
+    minusMonth: () => setNow((prev) => prev.add({ months: -1 })),
     month: monthName,
     year,
     open,
     setOpen,
     now,
     calendar,
-    onDayClick: (d: number) => {
-      const date = Temporal.PlainDate.from({
-        year: parseInt(year, 10),
-        month: parseInt(month, 10),
-        day: d,
-      });
-
-      let result;
-      if (!value.start && !value.end) {
-        result = { ...value, start: date };
-      }
-      if (value.start && !value.end) {
-        if (compare(value.start, date) === -1) {
-          result = { ...value, end: date };
-        } else {
-          result = { start: date, end: value.start };
-        }
-      }
-      if (!value.start && value.end) {
-        if (Temporal.PlainDate.compare(date, value.end) === -1) {
-          result = { ...value, start: date };
-        } else {
-          result = { start: value.end, end: date };
-        }
-      }
-      if (value.start && value.end) {
-        result = { start: date, end: null };
-      }
-
-      onChange(result || value);
-    },
-    selected: (date: Temporal.PlainDate | null) => {
-      if (!date) {
-        return false;
-      }
-      if (value.end || value.start) {
-        if (value.end && !value.start) {
-          return compare(value.end, date) === 0 ? 'corner-right' : false;
-        }
-        if (value.start && !value.end) {
-          return compare(value.start, date) === 0 ? 'corner-left' : false;
-        }
-        if (value.start && value.end) {
-          if (compare(value.start, date) === 0) {
-            return 'corner-left';
-          }
-          if (compare(value.end, date) === 0) {
-            return 'corner-right';
-          }
-          if (
-            compare(value.start, date) === -1 &&
-            compare(date, value.end) === -1
-          ) {
-            return 'inside';
-          }
-          return false;
-        }
-      }
-      return false;
-    },
+    onDayClick,
+    isSelected,
   };
 };
 

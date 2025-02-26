@@ -4,11 +4,11 @@ import { Button } from 'src/components/features';
 import { upperFirst } from 'lodash';
 import { Options, useLogic } from './PeriodPicker.useLogic';
 import * as css from './PeriodPicker.css';
-import { format } from '../../helpers/dates';
 
 export const PeriodPicker = (props: Options) => {
   const {
-    selected,
+    title,
+    isSelected,
     datePickerRef,
     month,
     year,
@@ -20,21 +20,15 @@ export const PeriodPicker = (props: Options) => {
     minusMonth,
     minusYear,
     onDayClick,
-    value,
   } = useLogic(props);
 
   return (
     <div ref={datePickerRef} className={css.container}>
       <div className={css.datepicker}>
         <CalendarIcon className={css.icon} onClick={() => setOpen(!open)} />
-        <div>
-          {!value.start && !value.end ? (
-            'Выберите период'
-          ) : (
-            <div>{format(value)}</div>
-          )}
-        </div>
+        <div>{title}</div>
       </div>
+
       {open && (
         <div className={css.picker}>
           <div className={css.header}>
@@ -49,6 +43,7 @@ export const PeriodPicker = (props: Options) => {
               <Button label=">" kind="ghost" onClick={plusYear} />
             </div>
           </div>
+
           <div className={css.calendar}>
             {Object.keys(calendar).map((weekday) => (
               <div key={weekday}>
@@ -61,7 +56,7 @@ export const PeriodPicker = (props: Options) => {
                       <Button
                         kind="ghost"
                         onClick={() => onDayClick(dt.day)}
-                        className={css.day({ selected: selected(dt.date) })}
+                        className={css.day({ selected: isSelected(dt.date) })}
                         key={dt.day}
                       >
                         {dt.day}
