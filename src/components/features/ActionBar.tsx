@@ -27,6 +27,7 @@ type Props = {
 
 export const ActionBar = ({ actions, className }: Props) => {
   const screen = useDeviceScreen();
+
   return (
     <div className={`${css.container} ${className}`}>
       {actions

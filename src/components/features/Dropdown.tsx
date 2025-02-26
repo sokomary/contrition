@@ -1,45 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { isEqual } from 'lodash';
+import React from 'react';
 import { EnterIcon, SearchIcon } from 'src/assets';
+import { useLogic, Options } from './Dropdown.useLogic';
+import { Button } from './Button';
 import * as css from './Dropdown.css';
 
-type Props<T> = {
-  options: { value: T; label: string }[];
-  value: T[];
-  onSelect: (value: T) => void;
-};
+export const Dropdown = <T = unknown,>(props: Options<T>) => {
+  const {
+    open,
+    query,
+    setOpen,
+    setQuery,
+    options,
+    dropdownRef,
+    inputRef,
+    onSelect,
+    isSelected,
+  } = useLogic(props);
 
-export const Dropdown = <T = unknown,>(props: Props<T>) => {
-  const [value, setValue] = useState(props.value || []);
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState('');
-
-  useEffect(() => setValue(props.value), [props.value]);
-
-  const filteredOptions = props.options.filter((option) =>
-    query.length
-      ? option.label.toLowerCase().includes(query.toLowerCase())
-      : true
-  );
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setOpen(false);
+  const renderContent = () => {
+    if (!options.length) {
+      return <div className={css.emptyState}>Нет результатов</div>;
     }
+    return options.map((o) => (
+      <div className={css.label} key={o.label}>
+        <Button
+          kind="ghost"
+          className={css.option({ selected: isSelected(o) })}
+          onClick={() => onSelect(o)}
+        >
+          {o.label}
+        </Button>
+        {isSelected(o) && <div className={css.dot} />}
+      </div>
+    ));
   };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className={css.container} ref={dropdownRef}>
@@ -49,44 +43,14 @@ export const Dropdown = <T = unknown,>(props: Props<T>) => {
           className={css.input}
           autoComplete="off"
           ref={inputRef}
-          onFocus={async () => {
-            setOpen(true);
-          }}
+          onFocus={() => setOpen(true)}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <EnterIcon />
       </div>
-      {open && (
-        <div className={css.contentContainer({ open })}>
-          {filteredOptions.length ? (
-            <div className={css.options}>
-              {filteredOptions.map((o) => (
-                <div className={css.label} key={o.label}>
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                  <div
-                    className={css.option({
-                      selected: !!value.find((v) => isEqual(v, o.value)),
-                    })}
-                    onClick={() => {
-                      props.onSelect(o.value);
-                      setQuery('');
-                      setOpen(false);
-                    }}
-                  >
-                    {o.label}
-                  </div>
-                  {value.find((v) => isEqual(v, o.value)) && (
-                    <div className={css.dot} />
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className={css.emptyState}>Нет результатов</div>
-          )}
-        </div>
-      )}
+
+      {open && <div className={css.contentContainer}>{renderContent()}</div>}
     </div>
   );
 };

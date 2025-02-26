@@ -70,30 +70,26 @@ const itemsappears = keyframes({
     transformOrigin: 'top center',
   },
 });
-export const contentContainer = recipe({
-  base: {
-    background: color('background'),
-    width: '100%',
-    borderRadius: '10px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '5px',
-    position: 'absolute',
-    zIndex: 98,
-    padding: '34px 8px 8px 8px',
-    animationDuration: '0.3s',
-    animationName: itemsappears,
-    animationDirection: 'alternate',
-  },
-  variants: {
-    open: {
-      true: {
-        boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
-      },
-      false: {
-        boxShadow: 'none',
-      },
-    },
+export const contentContainer = style({
+  background: color('background'),
+  width: '100%',
+  borderRadius: '10px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '5px',
+  position: 'absolute',
+  zIndex: 98,
+  padding: '34px 8px 8px 8px',
+  animationDuration: '0.3s',
+  animationName: itemsappears,
+  animationDirection: 'alternate',
+  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
+  maxHeight: '250px',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
+
+  '::-webkit-scrollbar': {
+    display: 'none',
   },
 });
 
@@ -116,6 +112,8 @@ export const option = recipe({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     width: '100%',
+    color: color('font'),
+    textAlign: 'left',
 
     selectors: {
       '&:hover': {
