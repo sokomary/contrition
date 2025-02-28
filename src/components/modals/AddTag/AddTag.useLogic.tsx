@@ -1,34 +1,34 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addProduct } from 'src/api';
-import { Product } from 'src/types/domain';
-import { Action } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useDeviceScreen } from 'src/theme/useDeviceScreen';
+import { Tag } from 'src/types/domain';
+import { addTag } from 'src/api';
+import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
+import { useDeviceScreen } from 'src/theme';
 import { toast } from 'react-toastify';
 
 export const useLogic = () => {
   const { isOpen, onClose } = useRouteModal({
-    key: 'product-new',
+    key: 'tag-new',
   });
 
   const screen = useDeviceScreen();
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
-    mutationFn: addProduct,
+    mutationFn: addTag,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['tags'] });
       reset();
-      toast('Продукт успешно добавлен');
+      toast('Тэг успешно добавлен');
       onClose();
     },
     onError: () => toast('Что-то пошло не так'),
   });
 
-  const { register, handleSubmit, formState, reset } = useForm<Product>();
-  const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
+  const { register, handleSubmit, formState, reset } = useForm<Tag>();
+  const onSubmit: SubmitHandler<Tag> = (data) => addMutation.mutate(data);
   const actions: Action[] = [
     {
       kind: 'primary',
@@ -40,11 +40,11 @@ export const useLogic = () => {
 
   return {
     isOpen,
+    onClose,
     register,
-    submit: handleSubmit(onSubmit),
     errors: formState.errors,
     screen,
-    onClose,
+    submit: handleSubmit(onSubmit),
     actions,
   };
 };

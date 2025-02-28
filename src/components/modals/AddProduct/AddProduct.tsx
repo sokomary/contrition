@@ -6,16 +6,8 @@ import { useLogic } from './AddProduct.useLogic';
 import * as css from './AddProduct.css';
 
 export const AddProduct = () => {
-  const {
-    isOpen,
-    onClose,
-    screen,
-    handleSubmit,
-    errors,
-    onSubmit,
-    register,
-    actions,
-  } = useLogic();
+  const { isOpen, onClose, screen, errors, submit, register, actions } =
+    useLogic();
 
   return (
     <Modal
@@ -25,7 +17,7 @@ export const AddProduct = () => {
       isActive={isOpen}
       onClose={onClose}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={submit}>
         <div className={css.content}>
           <div className={css.fields}>
             <Field
