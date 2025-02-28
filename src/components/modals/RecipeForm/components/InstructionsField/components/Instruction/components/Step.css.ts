@@ -1,29 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
-export const addStepButton = style({
-  cursor: 'pointer',
-  fontWeight: 'normal',
-  color: color('primary'),
-  fontSize: '16px',
-  flexShrink: 0,
-  alignSelf: 'flex-start',
-});
-
 export const container = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '5px',
-});
-
-export const instructionHeader = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  fontSize: '16px',
-});
-
-export const stepContainer = style({
   display: 'flex',
   gap: '3px',
   borderRadius: '5px',
@@ -32,27 +10,19 @@ export const stepContainer = style({
   justifyContent: 'space-between',
 });
 
-export const steps = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '3px',
-});
-
-export const step = style({
+export const content = style({
   display: 'flex',
   gap: '1px',
-  alignItems: 'center',
+  alignItems: 'flex-start',
 });
 
-export const stepNumber = style({
-  display: 'flex',
-  justifyContent: 'space-between',
+export const number = style({
   marginTop: '6px',
   marginRight: '3px',
   fontSize: '16px',
 });
 
-export const styledInput = style({
+export const textarea = style({
   backgroundColor: color('background'),
   outline: 'none',
   border: 'none',
@@ -74,4 +44,9 @@ export const styledInput = style({
       maxWidth: '300px',
     },
   },
+});
+
+export const actions = style({
+  justifyContent: 'flex-start',
+  padding: 0,
 });

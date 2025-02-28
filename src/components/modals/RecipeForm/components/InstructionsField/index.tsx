@@ -1,62 +1,40 @@
 import React from 'react';
-import { Control, useFieldArray } from 'react-hook-form';
-import TextareaAutosize from 'react-textarea-autosize';
-import { Recipe } from 'src/types/domain';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
-import { Button } from 'src/components/features';
-import { InstructionSteps } from './components/InstructionSteps';
+import { ActionBar } from 'src/components/features';
+import { Instruction } from './components/Instruction';
+import { useLogic, Options } from './useLogic';
 import * as css from './index.css';
 
-type Props = {
-  control: Control<Recipe>;
-  register: UseFormRegister<Recipe>;
-};
+export const InstructionsField = (props: Options) => {
+  const { fields, remove, actions } = useLogic(props);
 
-export const InstructionsField = (props: Props) => {
-  const { fields, append, remove } = useFieldArray({
-    control: props.control,
-    name: 'instructions',
-  });
+  const renderContent = () => {
+    if (!fields.length) {
+      return <div className={css.emptyState}>Приготовление не описано</div>;
+    }
 
-  const addInstruction = () => {
-    append({
-      id: undefined as unknown as number,
-      name: '',
-      steps: [],
-    });
-  };
-
-  return (
-    <div className={css.mainContainer}>
-      <div className={css.header}>
-        Приготовление
-        <Button
-          kind="ghost"
-          className={css.addInstructionButton}
-          onClick={addInstruction}
-        >
-          Добавить часть
-        </Button>
-      </div>
-      <div className={css.contentContainer}>
-        {fields.map((field, index) => (
-          <InstructionSteps
+    return (
+      <div className={css.content}>
+        {fields.map((_, index) => (
+          <Instruction
             key={index}
-            instruction={
-              <TextareaAutosize
-                className={css.instructionName}
-                placeholder="Название"
-                key={field.id}
-                {...props.register(`instructions.${index}.name`)}
-              />
-            }
-            onDeleteInstruction={() => remove(index)}
-            instrIndex={index}
+            name={`instructions.${index}`}
             register={props.register}
             control={props.control}
+            onRemove={() => remove(index)}
           />
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div className={css.container}>
+      <div className={css.header}>
+        Приготовление
+        <ActionBar className={css.actions} actions={actions} />
+      </div>
+
+      {renderContent()}
     </div>
   );
 };
