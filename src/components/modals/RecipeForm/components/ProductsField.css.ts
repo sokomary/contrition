@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
-export const productsFieldContainer = style({
+export const container = style({
   display: 'flex',
   gap: '20px',
   flexDirection: 'column',
@@ -24,19 +24,20 @@ export const label = style({
   fontSize: '16px',
 });
 
-export const header = style({
+export const field = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
 });
 
-export const container = style({
+export const header = style({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
 });
 
-export const button = style({
-  alignSelf: 'center',
+export const actions = style({
+  padding: '0 !important',
 });
 
 export const product = style({
@@ -82,8 +83,7 @@ export const name = style({
   cursor: 'pointer',
   maxWidth: '280px',
 });
-
-export const nameText = style({
+globalStyle(`${name} > div`, {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',

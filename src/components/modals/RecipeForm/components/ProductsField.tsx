@@ -1,96 +1,53 @@
-import React, { FC } from 'react';
-import { Control, useController, useFieldArray } from 'react-hook-form';
+import React from 'react';
 import i18next from 'src/formatter';
-import { Recipe } from 'src/types/domain';
-import { Button, Dropdown, FieldError } from 'src/components/features';
-import { find } from 'lodash';
-import { useQuery } from '@tanstack/react-query';
-import { getProducts } from 'src/api';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import { ActionBar, Dropdown, FieldError } from 'src/components/features';
 import { Tooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
-import { useToggleModal } from 'src/components/modals';
+import { Options, useLogic } from './ProductsField.useLogic';
 import * as css from './ProductsField.css';
 
-type Props = {
-  control: Control<Recipe>;
-  register: UseFormRegister<Recipe>;
-};
-
-export const ProductsField: FC<Props> = (props) => {
-  const { data: products } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => getProducts(),
-  });
-
-  const { fieldState } = useController({
-    control: props.control,
-    name: 'recipeProducts',
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control: props.control,
-    name: 'recipeProducts',
-    rules: {
-      validate: (v) => (v as any[]).length !== 0,
-    },
-  });
-
-  const options = products?.map((p) => ({
-    value: p,
-    label: p.name,
-  }));
-
-  const { open: openAddProduct } = useToggleModal('product-new', 'true');
+export const ProductsField = (props: Options) => {
+  const { actions, options, remove, onSelect, fields, error, value } =
+    useLogic(props);
 
   return (
-    <div className={css.productsFieldContainer}>
-      <div className={css.header}>
-        <div className={css.container}>
+    <div className={css.container}>
+      <div className={css.field}>
+        <div className={css.header}>
           <div className={css.label}>
             {i18next.t('domain:recipe.recipeProducts')}
           </div>
-          <Button className={css.button} kind="ghost" onClick={openAddProduct}>
-            {i18next.t('startpage:recipes.actions.addProduct')}
-          </Button>
+          <ActionBar className={css.actions} actions={actions} />
         </div>
-        <Dropdown
-          options={options || []}
-          value={fields.map((rp) => rp.product)}
-          onSelect={(product) =>
-            !find(fields, { product }) &&
-            append({
-              id: undefined as unknown as number,
-              product,
-              quantity: undefined as unknown as number,
-            })
-          }
-        />
-        {fieldState.error && (
+
+        <Dropdown options={options || []} value={value} onSelect={onSelect} />
+        {error && (
           <FieldError text={i18next.t('startpage:recipes.errors.products')} />
         )}
       </div>
+
       <div className={css.products}>
-        {fields.map((rp, index) => (
-          <div className={css.product} key={rp.product.id}>
+        {fields.map(({ product, id }, index) => (
+          <div className={css.product} key={product.id}>
             <input
-              className={css.input}
-              key={rp.id}
+              key={id}
               type="number"
+              className={css.input}
               {...props.register(`recipeProducts.${index}.quantity`)}
             />
             <div
               className={css.name}
-              data-tooltip-id={`product-delete${rp.product.id}`}
+              data-tooltip-id={`product-delete${product.id}`}
             >
-              <div className={css.nameText}>{rp.product.name}</div>
+              <div>{product.name}</div>
             </div>
+
             <Tooltip
-              className={css.tooltip}
-              offset={0}
-              id={`product-delete${rp.product.id}`}
               clickable
+              offset={0}
               delayShow={600}
+              className={css.tooltip}
+              id={`product-delete${product.id}`}
             >
               <DeleteIcon className={css.icon} onClick={() => remove(index)} />
             </Tooltip>
