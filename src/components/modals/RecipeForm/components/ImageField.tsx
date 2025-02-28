@@ -1,86 +1,47 @@
-import React, { useRef, useState } from 'react';
-import { useController, UseControllerProps } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { upload } from 'src/api';
+import React from 'react';
 import { Button, Loading } from 'src/components/features';
-import { Recipe } from 'src/types/domain';
+import { useLogic, Options } from './ImageField.useLogic';
 import * as css from './ImageField.css';
 
-type Props = UseControllerProps<Recipe> & {
-  defaultValue?: string;
-  defaultUrl?: string;
-};
+export const ImageField = (props: Options) => {
+  const { isLoading, error, onClick, ref, files, handleChange } =
+    useLogic(props);
 
-export const ImageField = (props: Props) => {
-  const { field } = useController(props);
-  const [files, setFiles] = useState<File[]>([]);
-  const ref = useRef<HTMLInputElement>(null);
-
-  const clear = () => {
-    if (ref.current) {
-      ref.current.value = '';
+  const renderContent = () => {
+    if (isLoading) {
+      return <Loading />;
     }
-    setFiles([]);
-    field.onChange(undefined);
-  };
 
-  const onPhotoClick = () => {
-    ref.current?.click();
-  };
-
-  const uploadMutation = useMutation({
-    mutationFn: upload,
-    onSuccess: (res) => {
-      field.onChange(res);
-    },
-    onError: clear,
-  });
-
-  const handleChange = () => {
-    if (ref.current?.files?.length) {
-      const newFiles = Array.from(ref.current?.files || []);
-      setFiles(newFiles);
-      uploadMutation.mutate(newFiles[0]);
-      field.onChange(newFiles);
+    if (!files.length && !props.defaultValue) {
+      return (
+        <Button kind="ghost" className={css.photoInput} onClick={onClick}>
+          {error ? 'Что-то пошло не так' : 'Фото'}
+        </Button>
+      );
     }
+
+    return (
+      <Button
+        kind="ghost"
+        className={css.photoPreview}
+        style={{
+          backgroundImage: `url(${files.length ? URL.createObjectURL(files[0]) : props.defaultUrl})`,
+        }}
+        onClick={onClick}
+      />
+    );
   };
 
   return (
-    <div>
-      <div className={css.container}>
-        {uploadMutation.isPending ? (
-          <div className={css.loadingWrapper}>
-            <Loading />
-          </div>
-        ) : (
-          <>
-            {!files.length && !props.defaultValue ? (
-              <Button
-                kind="ghost"
-                className={css.photoInput}
-                onClick={onPhotoClick}
-              >
-                {uploadMutation.error ? 'Что-то пошло не так' : 'Фото'}
-              </Button>
-            ) : (
-              <Button
-                kind="ghost"
-                className={css.photoPreview}
-                style={{
-                  backgroundImage: `url(${files.length ? URL.createObjectURL(files[0]) : props.defaultUrl})`,
-                }}
-                onClick={onPhotoClick}
-              />
-            )}
-          </>
-        )}
-        <input
-          className={css.hiddenInput}
-          onChange={handleChange}
-          ref={ref}
-          type="file"
-        />
-      </div>
+    <div className={css.container}>
+      {renderContent()}
+
+      <input
+        className={css.hiddenInput}
+        onChange={handleChange}
+        ref={ref}
+        type="file"
+      />
     </div>
   );
 };

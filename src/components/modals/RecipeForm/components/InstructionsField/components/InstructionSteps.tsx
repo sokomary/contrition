@@ -29,6 +29,7 @@ export const InstructionSteps = (props: InstructionStepsProps) => {
           удалить
         </Button>
       </div>
+
       <div className={css.steps}>
         {fields.map((field, index) => (
           <div className={css.stepContainer} key={index}>
@@ -48,6 +49,7 @@ export const InstructionSteps = (props: InstructionStepsProps) => {
             </Button>
           </div>
         ))}
+
         <Button kind="ghost" className={css.addStepButton} onClick={addStep}>
           Добавить шаг
         </Button>

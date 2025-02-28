@@ -1,22 +1,31 @@
 import { style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
+const REGULAR_SIZE = 363;
+const SMALL_SIZE = 363;
+
 export const container = style({
+  height: `${REGULAR_SIZE}px`,
+  width: `${REGULAR_SIZE}px`,
   display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  '@media': {
+    [MEDIA.ipadv]: {
+      height: `${SMALL_SIZE}px`,
+      width: `${SMALL_SIZE}px`,
+    },
+  },
 });
 
 export const hiddenInput = style({
   display: 'none',
 });
 
-const REGULAR_SIZE = 363;
-const SMALL_SIZE = 363;
-
 const photo = {
-  height: `${REGULAR_SIZE}px`,
-  width: `${REGULAR_SIZE}px`,
+  flex: 1,
+  height: '100%',
   backgroundColor: color('field'),
   cursor: 'pointer',
   borderRadius: '10px',
@@ -28,16 +37,7 @@ const photo = {
   marginRight: 'auto',
 };
 
-export const photoInput = style({
-  ...photo,
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      height: `${SMALL_SIZE}px`,
-      width: `${SMALL_SIZE}px`,
-    },
-  },
-});
+export const photoInput = style(photo);
 
 export const photoPreview = style({
   ...photo,
@@ -45,23 +45,4 @@ export const photoPreview = style({
   backgroundOrigin: 'border-box',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      height: `${SMALL_SIZE}px`,
-      width: `${SMALL_SIZE}px`,
-    },
-  },
-});
-
-export const loadingWrapper = style({
-  ...photo,
-  opacity: 1,
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      height: `${SMALL_SIZE}px`,
-      width: `${SMALL_SIZE}px`,
-    },
-  },
 });
