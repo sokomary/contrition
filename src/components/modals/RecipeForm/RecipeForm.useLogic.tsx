@@ -20,6 +20,11 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
     mutationFn: addRecipe,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
+      if (defaultValues) {
+        queryClient.invalidateQueries({
+          queryKey: [`recipe-${defaultValues.id}`],
+        });
+      }
       reset();
       toast(`Рецепт ${defaultValues ? 'обновлен' : 'добавлен'}`);
       onClose();

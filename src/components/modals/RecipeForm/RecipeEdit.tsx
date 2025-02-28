@@ -12,7 +12,7 @@ export const RecipeEdit = () => {
   const id = parseInt(value, 10);
 
   const { data: defaultValues } = useQuery({
-    queryKey: [`recipes-${id}`],
+    queryKey: [`recipe-${id}`],
     queryFn: () => getRecipe(id),
     enabled: !Number.isNaN(id),
   });

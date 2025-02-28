@@ -27,7 +27,7 @@ export const Actions = ({ recipe }: Props) => {
     };
   }, [menuRef]);
 
-  const actions = useRecipeActions({ recipe });
+  const actions = useRecipeActions({ recipe, onSuccess: toggleMenu });
 
   return (
     <div ref={menuRef} className={css.container}>

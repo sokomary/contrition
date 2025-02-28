@@ -4,13 +4,12 @@ import { Recipe } from 'src/types/domain';
 import { ClearIcon, LinkIcon } from 'src/assets';
 import * as css from './Header.css';
 
-export const Header = ({
-  recipe,
-  onClose,
-}: {
+type Props = {
   recipe: Recipe;
   onClose?: () => void;
-}) => (
+};
+
+export const Header = ({ recipe, onClose }: Props) => (
   <div className={css.header}>
     <div className={css.container}>
       <div className={css.content}>

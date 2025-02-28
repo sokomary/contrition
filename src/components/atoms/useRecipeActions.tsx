@@ -8,16 +8,29 @@ import { toast } from 'react-toastify';
 
 type Options = {
   recipe: Recipe;
+  onSuccess?: () => void;
 };
 
-export const useRecipeActions = ({ recipe }: Options): Action[] => {
+export const useRecipeActions = ({
+  recipe,
+  onSuccess: propsOnSuccess,
+}: Options): Action[] => {
   const queryClient = useQueryClient();
 
   const { open } = useToggleModal('recipe-edit', recipe.id.toString());
   const { onClose } = useRouteModal({ key: 'recipe-info' });
 
-  const onSuccess = () =>
-    queryClient.invalidateQueries({ queryKey: ['recipes'] });
+  const onSuccess = () => {
+    queryClient.invalidateQueries({
+      queryKey: ['recipes'],
+    });
+    queryClient.invalidateQueries({
+      queryKey: [`recipe-${recipe.id}`],
+    });
+    if (propsOnSuccess) {
+      propsOnSuccess();
+    }
+  };
 
   const removeMutation = useMutation({
     mutationFn: deleteRecipe,
