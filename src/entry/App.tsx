@@ -24,7 +24,13 @@ const Content = () => {
 
   return (
     <>
-      <ToastContainer position="bottom-center" theme="colored" />
+      <ToastContainer
+        position="bottom-center"
+        theme="colored"
+        autoClose={2000}
+        closeButton={false}
+        hideProgressBar
+      />
       <Router>
         <Routes>
           {authenticated ? (

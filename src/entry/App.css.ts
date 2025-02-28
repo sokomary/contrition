@@ -41,13 +41,3 @@ globalStyle(`${root} .Toastify__toast-body`, {
 globalStyle(`${root} .Toastify__toast-icon`, {
   display: 'none',
 });
-globalStyle(`${root} .Toastify__close-button`, {
-  marginRight: '15px',
-  marginTop: '18px',
-});
-globalStyle(`${root} .Toastify__progress-bar`, {
-  display: 'none',
-});
-globalStyle(`${root} .Toastify__progress-bar--bg`, {
-  display: 'none',
-});
