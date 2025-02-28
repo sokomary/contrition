@@ -25,14 +25,14 @@ export const Button = ({
   onClick,
   kind = 'primary',
   size,
-  type,
+  type = 'button',
   disabled,
   label,
 }: Props) => (
   <button
     className={`${className} ${css.button({ kind, size, disabled })}`}
     onClick={onClick}
-    type={type || 'button'}
+    type={type}
     disabled={disabled}
     onBlur={onBlur}
     style={style}
