@@ -1,53 +1,21 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addProduct } from 'src/api';
-import { Product } from 'src/types/domain';
-import {
-  Modal,
-  Action,
-  Field,
-  ActionBar,
-  Button,
-} from 'src/components/features';
+import { Modal, Field, ActionBar } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useDeviceScreen } from 'src/theme/useDeviceScreen';
-import { useRouteModal } from 'src/router';
-import { toast } from 'react-toastify';
 import { NumberField } from './components/NumberField';
+import { useLogic } from './AddProduct.useLogic';
 import * as css from './AddProduct.css';
 
 export const AddProduct = () => {
-  const { isOpen, onClose } = useRouteModal({
-    key: 'product-new',
-  });
-
-  const queryClient = useQueryClient();
-  const addMutation = useMutation({
-    mutationFn: addProduct,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      reset();
-      toast('Продукт успешно добавлен');
-      onClose();
-    },
-    onError: () => toast('Что-то пошло не так'),
-  });
-
-  const { register, handleSubmit, formState, reset } = useForm<Product>();
-
-  const screen = useDeviceScreen();
-
-  const onSubmit: SubmitHandler<Product> = (data) => addMutation.mutate(data);
-
-  const actions: Action[] = [
-    {
-      kind: 'primary',
-      type: 'submit',
-      label: i18next.t('startpage:recipes.actions.save'),
-      isLoading: addMutation.isPending,
-    },
-  ];
+  const {
+    isOpen,
+    onClose,
+    screen,
+    handleSubmit,
+    errors,
+    onSubmit,
+    register,
+    actions,
+  } = useLogic();
 
   return (
     <Modal
@@ -65,23 +33,23 @@ export const AddProduct = () => {
               name="name"
               register={register}
               placeholder={i18next.t('domain:recipe.name')}
-              error={formState.errors.name}
+              error={errors.name}
               errorText={i18next.t('forms:fields.errors.required')}
               required
             />
             <NumberField
               name="calories"
               register={register}
-              error={formState.errors.calories}
+              error={errors.calories}
             />
           </div>
           <div className={css.fields}>
-            {['protein', 'fats', 'carbohydrates'].map((field) => (
+            {(['protein', 'fats', 'carbohydrates'] as const).map((field) => (
               <NumberField
                 key={field}
                 name={field}
                 register={register}
-                error={formState.errors.protein}
+                error={errors[field]}
               />
             ))}
           </div>
