@@ -10,20 +10,20 @@ export const styledContainer = style({
 
 export const tag = recipe({
   base: {
-    height: '34px',
     borderRadius: '7px',
-    padding: '8px 10px',
-    cursor: 'pointer',
-    width: 'fit-content',
+    color: color('font'),
+    border: `1px solid`,
   },
   variants: {
     selected: {
       true: {
         backgroundColor: color('accent-light'),
         color: color('accent'),
+        border: 'none',
       },
       false: {
         backgroundColor: color('field'),
+        borderColor: color('primary'),
       },
     },
   },
@@ -39,4 +39,9 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '5px',
+});
+
+export const actions = style({
+  justifyContent: 'flex-start',
+  padding: 0,
 });
