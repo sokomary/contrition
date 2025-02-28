@@ -1,5 +1,5 @@
 import { Temporal } from 'temporal-polyfill';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { compare, format } from 'src/helpers/dates';
 import { Period } from '../../types/Period';
 
@@ -88,12 +88,7 @@ export const useLogic = (props: Options) => {
   };
 
   return {
-    title:
-      !value.start && !value.end ? (
-        'Выберите период'
-      ) : (
-        <div>{format(value)}</div>
-      ),
+    title: !value.start && !value.end ? 'Выберите период' : format(value),
     datePickerRef,
     plusYear: () => setNow((prev) => prev.add({ years: 1 })),
     minusYear: () => setNow((prev) => prev.add({ years: -1 })),

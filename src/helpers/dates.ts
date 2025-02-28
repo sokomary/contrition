@@ -42,9 +42,9 @@ type FormatOptions = { year?: boolean };
 export const format = (
   date?: Date | Period<Date>,
   options?: FormatOptions
-): string | null | undefined => {
+): string => {
   if (!date) {
-    return null;
+    return '';
   }
 
   if (typeof date === 'string') {
@@ -69,7 +69,7 @@ const formatPlainDate = (
   options?: FormatOptions
 ) => {
   if (!date) {
-    return date;
+    return '';
   }
 
   let result = date.toLocaleString().replaceAll('/', '.');
