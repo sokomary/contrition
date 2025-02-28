@@ -28,7 +28,7 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
     <div className={css.container}>
       <div className={css.header}>
         {renderTitle()}
-        <ActionBar className={css.actions} actions={actions} />
+        <ActionBar actions={actions} />
       </div>
 
       {menu && (

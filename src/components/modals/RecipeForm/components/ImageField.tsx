@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Loading } from 'src/components/features';
+import i18next from 'src/formatter';
 import { useLogic, Options } from './ImageField.useLogic';
 import * as css from './ImageField.css';
 
@@ -15,7 +16,7 @@ export const ImageField = (props: Options) => {
     if (!files.length && !props.defaultValue) {
       return (
         <Button kind="ghost" className={css.photoInput} onClick={onClick}>
-          {error ? 'Что-то пошло не так' : 'Фото'}
+          {error ? 'Что-то пошло не так' : 'Выбрать'}
         </Button>
       );
     }
@@ -34,14 +35,18 @@ export const ImageField = (props: Options) => {
 
   return (
     <div className={css.container}>
-      {renderContent()}
+      <div className={css.label}>{i18next.t('domain:recipe.photo')}</div>
 
-      <input
-        className={css.hiddenInput}
-        onChange={handleChange}
-        ref={ref}
-        type="file"
-      />
+      <div className={css.content}>
+        {renderContent()}
+
+        <input
+          className={css.hiddenInput}
+          onChange={handleChange}
+          ref={ref}
+          type="file"
+        />
+      </div>
     </div>
   );
 };

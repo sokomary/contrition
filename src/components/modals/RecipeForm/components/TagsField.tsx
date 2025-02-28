@@ -10,7 +10,12 @@ export const TagsField = (props: Options) => {
 
   return (
     <div className={css.container}>
-      <div className={css.styledContainer}>
+      <div className={css.header}>
+        <div className={css.label}>{i18next.t('domain:recipe.tags')}</div>
+        <ActionBar actions={actions} />
+      </div>
+
+      <div className={css.content}>
         {fields.map((t, index) => (
           <Button
             className={css.tag({ selected: true })}
@@ -37,7 +42,6 @@ export const TagsField = (props: Options) => {
       {error && (
         <FieldError text={i18next.t('startpage:recipes.errors.tags')} />
       )}
-      <ActionBar actions={actions} className={css.actions} />
     </div>
   );
 };

@@ -31,10 +31,6 @@ export const header = style({
   fontSize: '16px',
 });
 
-export const actions = style({
-  padding: 0,
-});
-
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
@@ -56,5 +52,4 @@ export const content = style({
 
 export const emptyState = style({
   color: color('label'),
-  textAlign: 'center',
 });

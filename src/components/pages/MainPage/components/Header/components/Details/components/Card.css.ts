@@ -63,7 +63,3 @@ export const divider = style({
   marginTop: '2px',
   backgroundColor: color('label'),
 });
-
-export const actionBar = style({
-  padding: 0,
-});

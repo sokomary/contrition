@@ -27,6 +27,8 @@ i18next.init({
           carbohydrates: 'Углеводы',
           size: 'Вес (г)',
           comment: 'Комментарий',
+          portionSize: 'Количество порций',
+          photo: 'Фото',
         },
       },
       forms: {

@@ -31,7 +31,7 @@ export const InstructionsField = (props: Options) => {
     <div className={css.container}>
       <div className={css.header}>
         Приготовление
-        <ActionBar className={css.actions} actions={actions} />
+        <ActionBar actions={actions} />
       </div>
 
       {renderContent()}

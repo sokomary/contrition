@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
@@ -30,4 +30,15 @@ export const tag = recipe({
 
 export const name = style({
   height: '30px',
+});
+
+export const actions = style({
+  marginBottom: '15px',
+  justifyContent: 'flex-end',
+
+  '@media': {
+    [MEDIA.ipadh]: {
+      marginBottom: 0,
+    },
+  },
 });

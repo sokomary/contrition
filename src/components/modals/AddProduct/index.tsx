@@ -17,7 +17,7 @@ export const AddProduct = () => {
       isActive={isOpen}
       onClose={onClose}
     >
-      <form onSubmit={submit}>
+      <form onSubmit={submit} className={css.container}>
         <div className={css.content}>
           <div className={css.fields}>
             <Field
@@ -47,7 +47,7 @@ export const AddProduct = () => {
           </div>
         </div>
 
-        <ActionBar actions={actions} />
+        <ActionBar actions={actions} className={css.actions} />
       </form>
     </Modal>
   );

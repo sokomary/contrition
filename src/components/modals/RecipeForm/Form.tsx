@@ -25,14 +25,13 @@ export const Form = (props: Options) => {
     defaultValues,
     actions,
     register,
-    handleSubmit,
     control,
-    formState,
+    errors,
     onSubmit,
-    divRef,
     screen,
     isOpen,
     onClose,
+    title,
   } = useLogic(props);
 
   return (
@@ -40,100 +39,74 @@ export const Form = (props: Options) => {
       <Modal
         position={POSITIONS[screen]}
         width={1120}
-        header={
-          defaultValues
-            ? defaultValues.name
-            : i18next.t('startpage:recipes.new.header')
-        }
+        header={title}
         isActive={isOpen}
         onClose={onClose}
       >
-        <div ref={divRef} style={{ height: '100%' }}>
-          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-          <form
-            style={{ height: '100%' }}
-            onSubmit={handleSubmit(onSubmit)}
-            onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
-          >
-            <div className={css.container}>
-              <div className={css.content}>
-                <div className={css.leftPart}>
-                  <div className={css.fields}>
-                    <Field
-                      size={screen === 'iphone' ? 'large' : undefined}
-                      name="name"
-                      register={register}
-                      placeholder={i18next.t('domain:recipe.name')}
-                      error={formState.errors.name}
-                      errorText={i18next.t('forms:fields.errors.required')}
-                      required
-                    />
-                    <div className={css.linkWeightFields}>
-                      <Field
-                        size={screen === 'iphone' ? 'large' : undefined}
-                        name="link"
-                        register={register}
-                        placeholder={i18next.t('domain:recipe.link')}
-                        error={formState.errors.link}
-                        errorText={i18next.t('forms:fields.errors.required')}
-                      />
-                      <Field
-                        size={screen === 'iphone' ? 'large' : undefined}
-                        className={css.numberField}
-                        type="number"
-                        step="0.01"
-                        name="size"
-                        register={register}
-                        placeholder={i18next.t('domain:recipe.size')}
-                        error={formState.errors.size}
-                        errorText={i18next.t('forms:fields.errors.required')}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <Field
-                    size={screen === 'iphone' ? 'large' : undefined}
-                    name="comment"
-                    register={register}
-                    placeholder={i18next.t('domain:recipe.comment')}
-                    error={formState.errors.comment}
-                    errorText={i18next.t('forms:fields.errors.required')}
-                  />
-                  <Field
-                    size={screen === 'iphone' ? 'large' : undefined}
-                    required
-                    name="portionSize"
-                    register={register}
-                    placeholder={i18next.t('domain:recipe.portionSize')}
-                    error={formState.errors.portionSize}
-                    errorText={i18next.t('forms:fields.errors.required')}
-                  />
-                  {screen === 'iphone' && (
-                    <TagsField control={control} name="tags" />
-                  )}
-                  <ImageField
-                    name="img"
-                    control={control}
-                    defaultValue={defaultValues?.img}
-                    defaultUrl={defaultValues?.pressignedUrl}
-                  />
-                </div>
-
-                <div className={css.interactiveFields}>
-                  <InstructionsField control={control} register={register} />
-                  <ProductsField register={register} control={control} />
-                </div>
+        <form onSubmit={onSubmit} className={css.container}>
+          <div className={css.content}>
+            <div className={css.basicFields}>
+              <Field
+                name="name"
+                register={register}
+                label={i18next.t('domain:recipe.name')}
+                error={errors.name}
+                errorText={i18next.t('forms:fields.errors.required')}
+                required
+              />
+              <div className={css.linkWeightFields}>
+                <Field
+                  name="link"
+                  className={css.linkField}
+                  register={register}
+                  label={i18next.t('domain:recipe.link')}
+                  error={errors.link}
+                  errorText={i18next.t('forms:fields.errors.required')}
+                />
+                <Field
+                  className={css.numberField}
+                  type="number"
+                  step="0.01"
+                  name="size"
+                  register={register}
+                  label={i18next.t('domain:recipe.size')}
+                  error={errors.size}
+                  errorText={i18next.t('forms:fields.errors.required')}
+                  required
+                />
               </div>
-
-              <div className={css.footer}>
-                {screen !== 'iphone' && (
-                  <TagsField control={control} name="tags" />
-                )}
-                <ActionBar actions={actions} />
-              </div>
+              <Field
+                name="comment"
+                register={register}
+                label={i18next.t('domain:recipe.comment')}
+                error={errors.comment}
+                errorText={i18next.t('forms:fields.errors.required')}
+              />
+              <Field
+                required
+                name="portionSize"
+                register={register}
+                label={i18next.t('domain:recipe.portionSize')}
+                error={errors.portionSize}
+                errorText={i18next.t('forms:fields.errors.required')}
+              />
+              <ImageField
+                name="img"
+                control={control}
+                defaultValue={defaultValues?.img}
+                defaultUrl={defaultValues?.pressignedUrl}
+              />
             </div>
-          </form>
-        </div>
+
+            <div className={css.interactiveFields}>
+              <InstructionsField control={control} register={register} />
+              <ProductsField register={register} control={control} />
+            </div>
+          </div>
+
+          <TagsField control={control} name="tags" />
+          <ActionBar actions={actions} className={css.actions} />
+        </form>
       </Modal>
     </Suspense>
   );

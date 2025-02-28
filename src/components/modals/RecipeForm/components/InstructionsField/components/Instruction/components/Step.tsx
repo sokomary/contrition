@@ -34,7 +34,7 @@ export const Step = ({ index, onRemove, register, name }: Props) => {
         />
       </div>
 
-      <ActionBar className={css.actions} actions={actions} />
+      <ActionBar actions={actions} />
     </div>
   );
 };

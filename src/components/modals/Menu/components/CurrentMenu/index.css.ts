@@ -14,7 +14,3 @@ export const header = style({
 });
 
 export const title = style({ ...text.text3b, lineHeight: '100%' });
-
-export const actions = style({
-  paddingTop: 0,
-});

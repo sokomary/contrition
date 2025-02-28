@@ -23,7 +23,7 @@ export const Instruction = ({ register, ...props }: Props) => {
           placeholder="Название"
           {...register(`${name}.name`)}
         />
-        <ActionBar actions={[actions[0]]} className={css.actions} />
+        <ActionBar actions={[actions[0]]} />
       </div>
 
       <div className={css.content}>
@@ -38,7 +38,7 @@ export const Instruction = ({ register, ...props }: Props) => {
         ))}
       </div>
 
-      <ActionBar actions={[actions[1]]} className={css.actions} />
+      <ActionBar actions={[actions[1]]} />
     </div>
   );
 };

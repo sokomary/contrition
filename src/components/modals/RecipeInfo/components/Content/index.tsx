@@ -33,7 +33,7 @@ export const Content = ({ recipe }: Props) => {
         {!!instructions?.length && <Instructions instructions={instructions} />}
       </div>
 
-      {screen !== 'mac' && (
+      {screen === 'iphone' && (
         <ActionBar className={css.actions} actions={actions} />
       )}
     </>

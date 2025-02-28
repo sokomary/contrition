@@ -19,6 +19,10 @@ export const linkWeightFields = style({
   gap: 7,
 });
 
+export const linkField = style({
+  flex: 1,
+});
+
 export const numberField = style({
   width: 104,
 
@@ -39,7 +43,7 @@ export const container = style({
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '15px',
+  gap: '40px',
 
   '@media': {
     [MEDIA.ipadv]: {
@@ -55,6 +59,7 @@ export const footer = style({
   gap: '20px',
   width: '100%',
   paddingBottom: '15px',
+  alignItems: 'flex-end',
 
   '@media': {
     [MEDIA.ipadv]: {
@@ -76,21 +81,19 @@ export const button = style({
   },
 });
 
-export const fields = style({
-  width: '100%',
+export const basicFields = style({
   display: 'flex',
-  gap: '7px',
+  gap: '10px',
   flexDirection: 'column',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      width: 'auto',
-    },
-  },
 });
 
-export const leftPart = style({
-  display: 'flex',
-  gap: '20px',
-  flexDirection: 'column',
+export const actions = style({
+  marginBottom: '15px',
+  justifyContent: 'flex-end',
+
+  '@media': {
+    [MEDIA.ipadh]: {
+      marginBottom: 0,
+    },
+  },
 });

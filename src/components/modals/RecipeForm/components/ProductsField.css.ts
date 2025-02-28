@@ -36,10 +36,6 @@ export const header = style({
   alignItems: 'center',
 });
 
-export const actions = style({
-  padding: '0 !important',
-});
-
 export const product = style({
   display: 'flex',
   justifyContent: 'space-between',

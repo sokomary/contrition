@@ -27,4 +27,5 @@ export const item = style({
   fontSize: '16px',
   color: color('font'),
   backgroundColor: color('basic'),
+  width: 'fit-content',
 });

@@ -33,7 +33,7 @@ export const GetRandomRecipe = () => {
         <div className={css.name}>{data?.name}</div>
       </div>
 
-      <ActionBar actions={actions} />
+      <ActionBar actions={actions} className={css.actions} />
     </Modal>
   );
 };

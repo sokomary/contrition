@@ -1,5 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
+import { color, MEDIA } from 'src/theme';
 
 export const button = recipe({
   base: {
@@ -44,6 +44,13 @@ export const button = recipe({
         selectors: {
           '&:active': {
             backgroundColor: color('primary-disabled'),
+          },
+        },
+        width: '100%',
+
+        '@media': {
+          [MEDIA.ipadv]: {
+            width: 'fit-content',
           },
         },
       },

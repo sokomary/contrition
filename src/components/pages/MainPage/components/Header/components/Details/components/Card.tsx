@@ -26,7 +26,7 @@ export const Card = ({
           <div>{items.length}</div>
         </div>
 
-        {actions && <ActionBar className={css.actionBar} actions={actions} />}
+        {actions && <ActionBar actions={actions} />}
       </div>
 
       <div className={css.list({ layout })}>

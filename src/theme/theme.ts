@@ -14,6 +14,7 @@ type ColorSchema =
   | 'label'
   | 'field'
   | 'danger'
+  | 'error'
   | 'success'
   | 'warning';
 
@@ -30,6 +31,7 @@ export const theme: Theme = {
       primary: 'rgb(255, 104, 0, 1)',
       accent: 'rgb(158, 37, 255, 1)',
       danger: 'rgb(230,170,170)',
+      error: 'rgb(241,75,75)',
       success: 'rgb(154, 222, 177, 1)',
       basic: 'rgb(255, 255, 255, 1)',
       secondary: 'rgb(254, 241, 230, 1)',
@@ -49,6 +51,7 @@ export const theme: Theme = {
       primary: 'rgb(255, 104, 0, 1)',
       accent: 'rgb(158, 37, 255, 1)',
       danger: 'rgb(113,58,58)',
+      error: 'rgb(241,75,75)',
       success: 'rgb(102, 137, 114, 1)',
       basic: 'rgb(45, 50, 55, 1)',
       secondary: 'rgb(107, 36, 1, 1)',

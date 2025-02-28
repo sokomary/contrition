@@ -13,7 +13,7 @@ type Props = {
 
 export const Actions = ({ user }: Props) => {
   const screen = useDeviceScreen();
-  const wideScreen = screen !== 'iphone';
+  const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
 
   const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
   const { open: openMenu } = useToggleModal('menu', 'true');
@@ -43,5 +43,5 @@ export const Actions = ({ user }: Props) => {
     },
   ];
 
-  return <ActionBar className={css.container} actions={actions} />;
+  return <ActionBar actions={actions} />;
 };

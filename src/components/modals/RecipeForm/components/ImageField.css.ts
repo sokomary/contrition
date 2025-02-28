@@ -1,10 +1,16 @@
 import { style } from '@vanilla-extract/css';
 import { color, MEDIA } from 'src/theme';
 
-const REGULAR_SIZE = 363;
-const SMALL_SIZE = 363;
+const REGULAR_SIZE = 360;
+const SMALL_SIZE = 300;
 
 export const container = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '5px',
+});
+
+export const content = style({
   height: `${REGULAR_SIZE}px`,
   width: `${REGULAR_SIZE}px`,
   display: 'flex',
@@ -45,4 +51,8 @@ export const photoPreview = style({
   backgroundOrigin: 'border-box',
   backgroundSize: 'cover',
   backgroundPosition: 'center center',
+});
+
+export const label = style({
+  fontSize: '16px',
 });

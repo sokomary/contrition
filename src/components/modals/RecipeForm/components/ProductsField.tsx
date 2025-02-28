@@ -17,7 +17,7 @@ export const ProductsField = (props: Options) => {
           <div className={css.label}>
             {i18next.t('domain:recipe.recipeProducts')}
           </div>
-          <ActionBar className={css.actions} actions={actions} />
+          <ActionBar actions={actions} />
         </div>
 
         <Dropdown options={options || []} value={value} onSelect={onSelect} />

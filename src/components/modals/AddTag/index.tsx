@@ -2,6 +2,7 @@ import React from 'react';
 import i18next from 'src/formatter';
 import { Modal, Field, ActionBar } from 'src/components/features';
 import { useLogic } from './useLogic';
+import * as css from './index.css';
 
 export const AddTag = () => {
   const { isOpen, onClose, register, submit, errors, screen, actions } =
@@ -15,7 +16,7 @@ export const AddTag = () => {
       isActive={isOpen}
       onClose={onClose}
     >
-      <form onSubmit={submit}>
+      <form onSubmit={submit} className={css.container}>
         <Field
           key="name"
           name="name"
@@ -25,7 +26,7 @@ export const AddTag = () => {
           errorText={i18next.t('forms:fields.errors.required')}
           required
         />
-        <ActionBar actions={actions} />
+        <ActionBar actions={actions} className={css.actions} />
       </form>
     </Modal>
   );

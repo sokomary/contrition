@@ -1,6 +1,7 @@
 export * from './AddProduct';
 export * from './AddTag';
 export * from './Confirmation';
+export * from './Confirmation/useConfirmationToggle';
 export * from './GetRandomRecipe';
 export * from './ProductInfo';
 export * from './RecipeForm';

@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addRecipe } from 'src/api';
 import { Recipe } from 'src/types/domain';
@@ -15,6 +14,8 @@ export type Options = {
 };
 
 export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
+  const screen = useDeviceScreen();
+
   const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addRecipe,
@@ -43,12 +44,6 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
     }
   );
 
-  const onSubmit: SubmitHandler<Recipe> = (data) => addMutation.mutate(data);
-
-  const divRef = useRef<HTMLDivElement>(null);
-
-  const screen = useDeviceScreen();
-
   const actions: Action[] = [
     {
       kind: 'primary',
@@ -59,19 +54,21 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
   ];
 
   return {
+    screen,
     defaultValues,
     isOpen,
     actions,
     register,
     handleSubmit,
     control,
-    formState,
-    onSubmit,
-    divRef,
-    screen,
+    errors: formState.errors,
+    onSubmit: handleSubmit((data) => addMutation.mutate(data)),
     onClose: async () => {
       reset();
       onClose();
     },
+    title: defaultValues
+      ? defaultValues.name
+      : i18next.t('startpage:recipes.new.header'),
   };
 };

@@ -45,8 +45,3 @@ export const textarea = style({
     },
   },
 });
-
-export const actions = style({
-  justifyContent: 'flex-start',
-  padding: 0,
-});
