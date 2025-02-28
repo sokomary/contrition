@@ -1,7 +1,7 @@
 import React from 'react';
 import i18next from 'src/formatter';
 import { Modal, Field, ActionBar } from 'src/components/features';
-import { useLogic } from './AddTag.useLogic';
+import { useLogic } from './useLogic';
 
 export const AddTag = () => {
   const { isOpen, onClose, register, submit, errors, screen, actions } =

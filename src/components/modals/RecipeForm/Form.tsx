@@ -7,11 +7,11 @@ import {
   DialogPosition,
 } from 'src/components/features';
 import { ImageField } from './components/ImageField';
-import { InstructionsField } from './components/InstructionsField/InstructionsField';
+import { InstructionsField } from './components/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
-import { useLogic, Options } from './RecipeForm.useLogic';
-import * as css from './RecipeForm.css';
+import { useLogic, Options } from './useLogic';
+import * as css from './index.css';
 
 const POSITIONS: Record<string, DialogPosition> = {
   mac: 'center',
@@ -20,7 +20,7 @@ const POSITIONS: Record<string, DialogPosition> = {
   ipadh: 'top',
 };
 
-export const RecipeForm = (props: Options) => {
+export const Form = (props: Options) => {
   const {
     defaultValues,
     actions,

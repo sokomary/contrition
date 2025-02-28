@@ -3,8 +3,8 @@ import { ActionBar, Button, PeriodPicker } from 'src/components/features';
 import { upperFirst } from 'lodash';
 import { format } from 'src/helpers/dates';
 import { Kind } from 'src/types/domain';
-import { useLogic, Options } from './NewMenu.useLogic';
-import * as css from './NewMenu.css';
+import { useLogic, Options } from './useLogic';
+import * as css from './index.css';
 
 export const NewMenu = (props: Options) => {
   const {

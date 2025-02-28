@@ -1,10 +1,11 @@
 import React, { PropsWithChildren, ReactNode, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { ClearIcon } from 'src/assets';
+import { Button } from './Button';
 import { useLogic } from './Modal.useLogic';
-import { Button } from '../Button';
-import { DialogPosition } from './Modal.types';
 import * as css from './Modal.css';
+
+export type DialogPosition = 'center' | 'bottom' | 'right' | 'top';
 
 type Props = PropsWithChildren & {
   isActive: boolean;

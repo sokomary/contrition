@@ -5,7 +5,7 @@ import { getInstructions } from 'src/api';
 import { useDeviceScreen } from 'src/theme';
 import { Loading } from 'src/components/features';
 import { Actions } from './components/Actions';
-import * as css from './Content.css';
+import * as css from './index.css';
 
 type Props = {
   recipe: Recipe;

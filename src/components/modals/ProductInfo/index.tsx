@@ -1,26 +1,11 @@
 import React from 'react';
 import { Modal } from 'src/components/features';
-import { useQuery } from '@tanstack/react-query';
-import { getProduct } from 'src/api';
-import { useDeviceScreen } from 'src/theme';
-import { useRouteModal } from 'src/router';
 import { Value } from './components/Value';
-import * as css from './ProductInfo.css';
+import * as css from './index.css';
+import { useLogic } from './useLogic';
 
 export const ProductInfo = () => {
-  const screen = useDeviceScreen();
-
-  const { isOpen, value, onClose } = useRouteModal({
-    key: 'product-info',
-  });
-
-  const id = parseInt(value, 10);
-
-  const { data: product } = useQuery({
-    queryKey: [`product-${id}`],
-    queryFn: () => getProduct(id),
-    enabled: !Number.isNaN(id),
-  });
+  const { isOpen, onClose, product, screen } = useLogic();
 
   return (
     <Modal

@@ -2,8 +2,8 @@ import React from 'react';
 import { Modal, Field, ActionBar } from 'src/components/features';
 import i18next from 'src/formatter';
 import { NumberField } from './components/NumberField';
-import { useLogic } from './AddProduct.useLogic';
-import * as css from './AddProduct.css';
+import { useLogic } from './useLogic';
+import * as css from './index.css';
 
 export const AddProduct = () => {
   const { isOpen, onClose, screen, errors, submit, register, actions } =

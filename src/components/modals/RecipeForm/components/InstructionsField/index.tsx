@@ -5,7 +5,7 @@ import { Recipe } from 'src/types/domain';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Button } from 'src/components/features';
 import { InstructionSteps } from './components/InstructionSteps';
-import * as css from './InstructionsField.css';
+import * as css from './index.css';
 
 type Props = {
   control: Control<Recipe>;

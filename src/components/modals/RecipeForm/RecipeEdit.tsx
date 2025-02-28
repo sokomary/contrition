@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouteModal } from 'src/router';
 import { useQuery } from '@tanstack/react-query';
 import { getInstructions, getRecipe } from 'src/api';
-import { RecipeForm } from './RecipeForm';
+import { Form } from './Form';
 
 export const RecipeEdit = () => {
   const { isOpen, value, onClose } = useRouteModal({
@@ -25,7 +25,7 @@ export const RecipeEdit = () => {
   return (
     defaultValues &&
     instructions && (
-      <RecipeForm
+      <Form
         isOpen={isOpen}
         onClose={onClose}
         defaultValues={{ ...defaultValues, instructions }}

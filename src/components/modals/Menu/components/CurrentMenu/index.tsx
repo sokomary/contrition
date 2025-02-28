@@ -2,10 +2,10 @@ import React from 'react';
 import { Action, ActionBar, Loading } from 'src/components/features';
 import { Kind } from 'src/types/domain';
 import { format } from 'src/helpers/dates';
-import { useLogic, Options } from './CurrentMenu.useLogic';
+import { useLogic, Options } from './useLogic';
 import { Products } from './components/Products';
 import { Table } from './components/Table';
-import * as css from './CurrentMenu.css';
+import * as css from './index.css';
 
 type Props = Options & {
   kinds: Kind[];

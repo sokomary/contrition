@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu } from 'src/types/domain';
 import { format } from 'src/helpers/dates';
 import { Row } from './components/Row';
-import * as css from './History.css';
+import * as css from './index.css';
 
 type Props = {
   menu: Menu[];

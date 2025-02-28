@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Loading, Modal } from 'src/components/features';
-import { useLogic } from './Menu.useLogic';
-import { CurrentMenu } from './components/CurrentMenu/CurrentMenu';
-import { NewMenu } from './components/NewMenu/NewMenu';
-import { History } from './components/History/History';
-import * as css from './Menu.css';
+import { useLogic } from './useLogic';
+import { CurrentMenu } from './components/CurrentMenu';
+import { NewMenu } from './components/NewMenu';
+import { History } from './components/History';
+import * as css from './index.css';
 
 export const SIDE_MODAL_WIDTH = 577;
 

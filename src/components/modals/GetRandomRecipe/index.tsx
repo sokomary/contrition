@@ -1,8 +1,8 @@
 import React from 'react';
 import { ActionBar, Button, Modal } from 'src/components/features';
 import i18next from 'src/formatter';
-import { useLogic } from './GetRandomRecipe.useLogic';
-import * as css from './GetRandomRecipe.css';
+import { useLogic } from './useLogic';
+import * as css from './index.css';
 
 export const GetRandomRecipe = () => {
   const { screen, isOpen, onClose, data, actions, tags, isSelected, onSelect } =

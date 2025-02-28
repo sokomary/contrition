@@ -21,6 +21,7 @@ export const Dropdown = <T = unknown,>(props: Options<T>) => {
     if (!options.length) {
       return <div className={css.emptyState}>Нет результатов</div>;
     }
+
     return options.map((o) => (
       <div className={css.label} key={o.label}>
         <Button
