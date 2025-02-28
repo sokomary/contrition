@@ -1,28 +1,25 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
-
-export const container = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-});
+import { color } from 'src/theme';
 
 export const content = style({
   display: 'flex',
   gap: '4px',
 });
 
-export const header = style({
+export const name = style({
+  alignSelf: 'flex-start',
+  marginTop: 3,
+  fontWeight: 'medium',
+  fontSize: 18,
+  width: 'fit-content',
+  maxWidth: 260,
+});
+
+export const container = style({
   display: 'flex',
   justifyContent: 'space-between',
   flexDirection: 'column',
   gap: '7px',
-  padding: '0 15px 15px 15px',
-
-  '@media': {
-    [MEDIA.mac]: {
-      padding: '0 20px 20px 20px',
-    },
-  },
 });
 
 export const link = style({
