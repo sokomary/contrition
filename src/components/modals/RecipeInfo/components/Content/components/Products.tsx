@@ -1,5 +1,6 @@
 import React from 'react';
 import { RecipeProduct } from 'src/types/domain';
+import { CrossOutAble } from 'src/components/features';
 import * as css from './Products.css';
 
 type Props = {
@@ -15,7 +16,9 @@ export const Products = ({ products }: Props) => (
         <div className={css.product} key={id}>
           <span className={css.quantity}>{quantity}</span>
           <div className={css.divider}>|</div>
-          <div className={css.name}>{product.name}</div>
+          <div className={css.name}>
+            <CrossOutAble content={product.name} />
+          </div>
         </div>
       ))}
     </div>

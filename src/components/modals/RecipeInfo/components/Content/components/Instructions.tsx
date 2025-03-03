@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Instruction } from 'src/types/domain';
+import { CrossOutAble } from 'src/components/features';
 import * as css from './Instructons.css';
 
 type Props = {
@@ -18,7 +19,7 @@ export const Instructions = ({ instructions }: Props) => (
           <div className={css.steps}>
             {instruction.steps.map((step, index) => (
               <div className={css.step} key={step.id}>
-                {`${index + 1}. ${step.description}`}
+                <CrossOutAble content={`${index + 1}. ${step.description}`} />
               </div>
             ))}
           </div>
