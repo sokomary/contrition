@@ -21,6 +21,8 @@ export const Menu = () => {
     onCancel,
     currentMenu,
     isLoading,
+    screen,
+    wideScreen,
   } = useLogic();
 
   const renderContent = () => {
@@ -50,9 +52,9 @@ export const Menu = () => {
 
   return (
     <Modal
-      side
-      position="right"
-      width={SIDE_MODAL_WIDTH}
+      side={wideScreen}
+      position={wideScreen ? 'right' : 'bottom'}
+      width={wideScreen ? SIDE_MODAL_WIDTH : undefined}
       header={
         <div className={css.header}>
           <Button

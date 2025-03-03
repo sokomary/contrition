@@ -14,10 +14,11 @@ export const MainPage = () => {
     setQuery,
     tags,
     setTags,
+    wideScreen,
   } = useLogic();
 
   return (
-    <div className={css.container({ withSide: isMenuOpen })}>
+    <div className={css.container({ withSide: isMenuOpen && wideScreen })}>
       <Header
         query={query}
         onQueryChange={setQuery}

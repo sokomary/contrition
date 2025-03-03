@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getRecipes } from 'src/api';
 import { useRouteModal } from 'src/router';
 import { Tag } from 'src/types/domain';
+import { useDeviceScreen } from 'src/theme';
 
 export const useLogic = () => {
   const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
@@ -26,7 +27,11 @@ export const useLogic = () => {
       [query, recipes]
     ) || [];
 
+  const screen = useDeviceScreen();
+  const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
+
   return {
+    wideScreen,
     isMenuOpen,
     filteredRecipes,
     query,

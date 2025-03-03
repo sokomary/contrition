@@ -3,10 +3,12 @@ import { getKinds, getMenu } from 'src/api';
 import { compare, now } from 'src/helpers/dates';
 import { useMemo, useState } from 'react';
 import { useRouteModal } from 'src/router';
+import { useDeviceScreen } from 'src/theme';
 
 type Mode = 'current' | 'new' | 'history';
 
 export const useLogic = () => {
+  const screen = useDeviceScreen();
   const { isOpen, onClose } = useRouteModal({
     key: 'menu',
   });
@@ -34,9 +36,13 @@ export const useLogic = () => {
     [menu]
   );
 
+  const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
+
   return {
+    wideScreen,
     isLoading: isMenuLoading || isKindsLoading,
     mode,
+    screen,
     setMode,
     kinds: kinds || [],
     currentMenu,
@@ -52,6 +58,7 @@ export const useLogic = () => {
         kind: 'primary' as const,
         label: 'Добавить меню',
         onClick: () => setMode('new'),
+        display: wideScreen,
       },
     ],
   };

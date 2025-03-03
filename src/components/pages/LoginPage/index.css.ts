@@ -28,4 +28,5 @@ export const loginButtonContent = style({
 export const button = style({
   animationDuration: '1s',
   animationName: loginButton,
+  width: 'fit-content',
 });

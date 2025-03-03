@@ -39,7 +39,7 @@ export const Actions = ({ user }: Props) => {
       onClick: openMenu,
       kind: 'primary',
       size: 'regular',
-      display: !isMenuOpen && wideScreen,
+      display: !isMenuOpen,
     },
   ];
 
