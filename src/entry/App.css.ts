@@ -3,7 +3,7 @@ import { color } from 'src/theme';
 
 export const root = style({
   colorScheme: 'light dark',
-  height: '100vh',
+  height: '100dvh',
   overflow: 'auto',
   fontFamily: "'Roboto', sans-serif",
   fontSize: '14px',
