@@ -18,7 +18,7 @@ export const History = ({ menu }: Props) => (
           {format({ start: m.dateStart, end: m.dateEnd })}
         </div>
 
-        <Row meals={m.meals || []} />
+        <Row menu={m} />
       </div>
     ))}
   </div>
