@@ -12,7 +12,7 @@ export const Row = ({ menu }: { menu: Menu }) => {
   ).sort();
   const { data: products } = useQuery({
     queryFn: () => getMenuProducts(menu?.id as number),
-    queryKey: ['menu-products'],
+    queryKey: [`menu-products-${menu?.id}`],
     enabled: !!menu,
   });
 
