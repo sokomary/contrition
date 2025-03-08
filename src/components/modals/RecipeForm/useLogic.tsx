@@ -25,6 +25,9 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
         queryClient.invalidateQueries({
           queryKey: [`recipe-${defaultValues.id}`],
         });
+        queryClient.invalidateQueries({
+          queryKey: ['menu-products'],
+        });
       }
       reset();
       toast(`Рецепт ${defaultValues ? 'обновлен' : 'добавлен'}`);

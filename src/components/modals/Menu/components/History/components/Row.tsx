@@ -1,39 +1,28 @@
-import { Menu } from 'src/types/domain';
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 import { ActionBar } from 'src/components/features';
-import { getMenuProducts } from 'src/api';
 import { Products } from '../../CurrentMenu/components/Products';
+import { Options, useLogic } from './Row.useLogic';
 import * as css from './Row.css';
 
-export const Row = ({ menu }: { menu: Menu }) => {
-  const dates = Array.from(
-    new Set(menu.meals?.map((meal) => meal.date))
-  ).sort();
-  const { data: products } = useQuery({
-    queryFn: () => getMenuProducts(menu?.id as number),
-    queryKey: [`menu-products-${menu?.id}`],
-    enabled: !!menu,
-  });
+export const Row = ({ menu }: Options) => {
+  const { actions, dates, products, open } = useLogic({ menu });
 
-  const [open, setOpen] = useState(false);
   return (
     <div className={css.container}>
-      {dates.map((date) => (
-        <div key={date} className={css.recipe}>
-          {menu.meals
-            ?.filter((meal) => meal.date === date)
-            .map((meal) => meal.recipe.name)
-            .join(', ')}
-        </div>
-      ))}
+      <div className={css.content}>
+        {dates.map((date) => (
+          <div key={date} className={css.recipe}>
+            {menu.meals
+              ?.filter((meal) => meal.date === date)
+              .map((meal) => meal.recipe.name)
+              .join(', ')}
+          </div>
+        ))}
+      </div>
 
       <div>
-        <ActionBar
-          actions={[
-            { label: 'Продукты', onClick: () => setOpen(!open), kind: 'ghost' },
-          ]}
-        />
+        <ActionBar actions={actions} />
+
         {open && products && <Products products={products} header={false} />}
       </div>
     </div>

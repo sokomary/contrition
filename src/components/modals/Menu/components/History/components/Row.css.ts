@@ -11,6 +11,12 @@ export const recipe = style({
 
 export const container = style({
   display: 'flex',
+  flexDirection: 'column',
+  gap: '5px',
+});
+
+export const content = style({
+  display: 'flex',
   flexWrap: 'wrap',
   gap: '5px',
 });
