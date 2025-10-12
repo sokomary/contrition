@@ -26,13 +26,16 @@ export const useLogic = () => {
 
   const currentMenu = useMemo(
     () =>
-      menu?.find((m) => {
-        const currentDate = now();
-        return (
-          compare(m.dateStart, currentDate) < 1 &&
-          compare(currentDate, m.dateEnd) < 1
-        );
-      }),
+      menu
+        ?.sort((a, b) => (a.dateStart > b.dateStart ? 1 : -1))
+        .find((m) => {
+          const currentDate = now();
+          return (
+            (compare(m.dateStart, currentDate) < 1 &&
+              compare(currentDate, m.dateEnd) < 1) ||
+            compare(currentDate, m.dateEnd) < 1
+          );
+        }),
     [menu]
   );
 
