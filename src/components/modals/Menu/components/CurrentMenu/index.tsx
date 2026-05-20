@@ -27,7 +27,10 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
       <div className={css.title}>
         {format({
           kind: 'period',
-          value: { from: period.start?.toString(), till: period.end?.toString() },
+          value: {
+            from: period.start?.toString(),
+            till: period.end?.toString(),
+          },
         })}
       </div>
     );
