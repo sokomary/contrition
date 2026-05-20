@@ -1,6 +1,6 @@
 FROM alpine as build
 
-RUN apk add --no-cache --update nodejs npm git
+RUN apk add --no-cache --update nodejs pnpm git
 
 ARG GITHUB_AUTH_TOKEN
 ENV GITHUB_AUTH_TOKEN=$GITHUB_AUTH_TOKEN
