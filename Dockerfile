@@ -8,7 +8,7 @@ ENV GITHUB_AUTH_TOKEN=$GITHUB_AUTH_TOKEN
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json pnpm-lock.json ./
+COPY package.json pnpm-lock.yaml ./
 
 RUN echo -e "@sokomary:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=$GITHUB_AUTH_TOKEN" > .npmrc
 
