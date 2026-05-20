@@ -7,10 +7,10 @@ export const MAC_WIDTH = 1280;
 export const useDeviceScreen = () => {
   const isIphone = useMediaQuery(`(max-width: ${IPAD_V_WIDTH - 1}px)`);
   const isIpadv = useMediaQuery(
-    `(min-width: ${IPAD_V_WIDTH}px) and (max-width: ${IPAD_H_WIDTH - 1}px)`
+    `(min-width: ${IPAD_V_WIDTH}px) and (max-width: ${IPAD_H_WIDTH - 1}px)`,
   );
   const isIpadh = useMediaQuery(
-    `(min-width: ${IPAD_H_WIDTH}px) and (max-width: ${MAC_WIDTH - 1}px)`
+    `(min-width: ${IPAD_H_WIDTH}px) and (max-width: ${MAC_WIDTH - 1}px)`,
   );
 
   if (isIphone) {

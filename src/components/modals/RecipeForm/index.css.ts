@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/theme';
+import { MEDIA, px } from 'src/theme';
 
 export const interactiveFields = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '15px',
+  gap: px(15),
   width: '100%',
 
   '@media': {
@@ -43,7 +43,7 @@ export const container = style({
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '40px',
+  gap: px(40),
 
   '@media': {
     [MEDIA.ipadv]: {
@@ -56,9 +56,9 @@ export const footer = style({
   display: 'flex',
   marginBottom: 0,
   flexDirection: 'column',
-  gap: '20px',
+  gap: px(20),
   width: '100%',
-  paddingBottom: '15px',
+  paddingBottom: px(15),
   alignItems: 'flex-end',
 
   '@media': {
@@ -83,12 +83,12 @@ export const button = style({
 
 export const basicFields = style({
   display: 'flex',
-  gap: '10px',
+  gap: px(10),
   flexDirection: 'column',
 });
 
 export const actions = style({
-  marginBottom: '15px',
+  marginBottom: px(15),
   justifyContent: 'flex-end',
 
   '@media': {

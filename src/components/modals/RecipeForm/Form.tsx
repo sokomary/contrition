@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import {
   Field,
   Modal,
@@ -21,6 +21,7 @@ const POSITIONS: Record<string, DialogPosition> = {
 };
 
 export const Form = (props: Options) => {
+  const { t } = useTranslation();
   const {
     defaultValues,
     actions,
@@ -47,51 +48,51 @@ export const Form = (props: Options) => {
           <div className={css.content}>
             <div className={css.basicFields}>
               <Field
-                name="name"
+                name='name'
                 register={register}
-                label={i18next.t('domain:recipe.name')}
+                label={t('domain.recipe.name')}
                 error={errors.name}
-                errorText={i18next.t('forms:fields.errors.required')}
+                errorText={t('forms.fields.errors.required')}
                 required
               />
               <div className={css.linkWeightFields}>
                 <Field
-                  name="link"
+                  name='link'
                   className={css.linkField}
                   register={register}
-                  label={i18next.t('domain:recipe.link')}
+                  label={t('domain.recipe.link')}
                   error={errors.link}
-                  errorText={i18next.t('forms:fields.errors.required')}
+                  errorText={t('forms.fields.errors.required')}
                 />
                 <Field
                   className={css.numberField}
-                  type="number"
-                  step="0.01"
-                  name="size"
+                  type='number'
+                  step='0.01'
+                  name='size'
                   register={register}
-                  label={i18next.t('domain:recipe.size')}
+                  label={t('domain.recipe.size')}
                   error={errors.size}
-                  errorText={i18next.t('forms:fields.errors.required')}
+                  errorText={t('forms.fields.errors.required')}
                   required
                 />
               </div>
               <Field
-                name="comment"
+                name='comment'
                 register={register}
-                label={i18next.t('domain:recipe.comment')}
+                label={t('domain.recipe.comment')}
                 error={errors.comment}
-                errorText={i18next.t('forms:fields.errors.required')}
+                errorText={t('forms.fields.errors.required')}
               />
               <Field
                 required
-                name="portionSize"
+                name='portionSize'
                 register={register}
-                label={i18next.t('domain:recipe.portionSize')}
+                label={t('domain.recipe.portionSize')}
                 error={errors.portionSize}
-                errorText={i18next.t('forms:fields.errors.required')}
+                errorText={t('forms.fields.errors.required')}
               />
               <ImageField
-                name="img"
+                name='img'
                 control={control}
                 defaultValue={defaultValues?.img}
                 defaultUrl={defaultValues?.pressignedUrl}
@@ -104,7 +105,7 @@ export const Form = (props: Options) => {
             </div>
           </div>
 
-          <TagsField control={control} name="tags" />
+          <TagsField control={control} name='tags' />
           <ActionBar actions={actions} className={css.actions} />
         </form>
       </Modal>

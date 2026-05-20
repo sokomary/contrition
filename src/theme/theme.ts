@@ -43,7 +43,7 @@ export const theme: Theme = {
       field: 'rgba(217, 217, 217, 0.8)',
       'background-transparent': 'rgba(217, 217, 217, 0.97)',
       'font-disabled': 'rgba(4,4,4,0.35)',
-      'primary-disabled': 'rgba(255,104,0,0.35)',
+      'primary-disabled': 'rgb(246 193 160)',
       'bg-overlay': 'rgba(142,142,142,0.82)',
       warning: 'rgba(250,183,59,0.52)',
     },
@@ -62,7 +62,7 @@ export const theme: Theme = {
       label: 'rgb(134, 134, 134, 1)',
       field: 'rgba(30, 30, 30, 0.9)',
       'background-transparent': 'rgba(30, 30, 30, 0.9)',
-      'primary-disabled': 'rgba(255,104,0,0.35)',
+      'primary-disabled': 'rgb(246 193 160)',
       'font-disabled': 'rgba(4,4,4,0.35)',
       'bg-overlay': 'rgba(21,21,21,0.82)',
       warning: 'rgba(165,114,53,0.62)',
@@ -70,16 +70,27 @@ export const theme: Theme = {
   },
 };
 
+export const px = (value: number) => `${value / 16}rem`;
+
 export const text = {
-  text3: { fontSize: '16px' },
-  text3b: { fontSize: '16px', fontWeight: 600 },
-  text2: { fontSize: '20px' },
-  text1: { fontSize: '24px' },
-  text2b: { fontSize: '20px', fontWeight: 600 },
-  header3: { fontSize: '24px', fontWeight: 600 },
-  header2: { fontSize: '36px', fontWeight: 600 },
-  header1: { fontSize: '48px', fontWeight: 600 },
+  text3: { fontSize: px(16) },
+  text3b: { fontSize: px(16), fontWeight: 600 },
+  text2: { fontSize: px(20) },
+  text1: { fontSize: px(24) },
+  text2b: { fontSize: px(20), fontWeight: 600 },
+  header3: { fontSize: px(24), fontWeight: 600 },
+  header2: { fontSize: px(36), fontWeight: 600 },
+  header1: { fontSize: px(48), fontWeight: 600 },
 };
+
+export const vars = {
+  'radius-00': px(2),
+  'radius-01': px(5),
+  'radius-02': px(8),
+  'radius-03': px(12),
+  'radius-04': px(15),
+  'radius-05': px(20),
+} as const;
 
 export const color = (value: ColorSchema, mode?: 'dark' | 'light') =>
   mode

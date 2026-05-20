@@ -1,15 +1,15 @@
 import { style } from '@vanilla-extract/css';
-import { text } from 'src/theme';
+import { text, px } from 'src/theme';
 
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: px(30),
 });
 
 export const header = style({
   display: 'flex',
-  gap: '10px',
+  gap: px(10),
   alignItems: 'center',
   ...text.text3,
   fontWeight: 'normal',

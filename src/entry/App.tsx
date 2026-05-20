@@ -13,10 +13,11 @@ import { MainPage } from 'src/components/pages/MainPage';
 import { LoginPage } from 'src/components/pages/LoginPage';
 import ReactDOM from 'react-dom/client';
 import { Modals } from './components/Modals';
+import 'src/locales/locales';
 import * as css from './App.css';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 
 if ('serviceWorker' in navigator) {
@@ -31,8 +32,8 @@ const Content = () => {
   return (
     <>
       <ToastContainer
-        position="bottom-center"
-        theme="colored"
+        position='bottom-center'
+        theme='colored'
         autoClose={2000}
         closeButton={false}
         hideProgressBar
@@ -41,12 +42,12 @@ const Content = () => {
         <Routes>
           {authenticated ? (
             <>
-              <Route path="*" element={<MainPage />} />
+              <Route path='*' element={<MainPage />} />
               <Route path={ROUTES.start} element={<MainPage />} />
               <Route path={ROUTES.login} element={<LoginPage />} />
             </>
           ) : (
-            <Route path="*" element={<LoginPage />} />
+            <Route path='*' element={<LoginPage />} />
           )}
         </Routes>
         <Modals />
@@ -61,9 +62,9 @@ root.render(
       <React.StrictMode>
         <QueryProvider>
           <Content />
-          <div id="modals-root" />
+          <div id='modals-root' />
         </QueryProvider>
       </React.StrictMode>
     </CookiesProvider>
-  </div>
+  </div>,
 );

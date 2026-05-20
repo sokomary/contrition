@@ -7,7 +7,7 @@ export type Options = { menu: Menu };
 
 export const useLogic = ({ menu }: Options) => {
   const dates = Array.from(
-    new Set(menu.meals?.map((meal) => meal.date))
+    new Set(menu.meals?.map((meal) => meal.date)),
   ).sort();
 
   const [open, setOpen] = useState(false);

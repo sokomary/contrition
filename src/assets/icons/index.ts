@@ -4,6 +4,8 @@ export * from './CreateIcon';
 export * from './DeleteIcon';
 export * from './DownIcon';
 export * from './DropDownIcon';
+export * from './DropLeftIcon';
+export * from './DropRightIcon';
 export * from './DropUpIcon';
 export * from './EnterIcon';
 export * from './FavoriteIcon';

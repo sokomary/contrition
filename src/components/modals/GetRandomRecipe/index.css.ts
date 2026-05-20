@@ -1,17 +1,17 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: px(30),
   alignItems: 'center',
 });
 
 export const content = style({
   display: 'flex',
-  gap: '25px',
+  gap: px(25),
 });
 
 export const tag = recipe({
@@ -29,11 +29,11 @@ export const tag = recipe({
 });
 
 export const name = style({
-  height: '30px',
+  height: px(30),
 });
 
 export const actions = style({
-  marginBottom: '15px',
+  marginBottom: px(15),
   justifyContent: 'flex-end',
 
   '@media': {

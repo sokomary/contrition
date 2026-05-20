@@ -1,6 +1,6 @@
 import { style, keyframes } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { MEDIA, color } from 'src/theme';
+import { MEDIA, color, px } from 'src/theme';
 
 export const container = style({
   margin: '0 !important',
@@ -43,7 +43,7 @@ const appearAnimation = (position: 'center' | 'bottom' | 'top' | 'right') => {
     case 'right': {
       return keyframes({
         '0%': {
-          marginRight: '-1000px',
+          marginRight: px(-1000),
         },
         '100%': {
           marginRight: '0',
@@ -54,7 +54,7 @@ const appearAnimation = (position: 'center' | 'bottom' | 'top' | 'right') => {
     case 'top': {
       return keyframes({
         '0%': {
-          marginTop: '-1000px',
+          marginTop: px(-1000),
         },
         '100%': {
           marginTop: '0',
@@ -65,7 +65,7 @@ const appearAnimation = (position: 'center' | 'bottom' | 'top' | 'right') => {
     case 'bottom': {
       return keyframes({
         '0%': {
-          marginBottom: '-1000px',
+          marginBottom: px(-1000),
         },
         '100%': {
           marginBottom: '0',
@@ -146,7 +146,7 @@ export const content = recipe({
         top: 0,
         left: 'auto',
         bottom: 0,
-        boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
+        boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
       },
     },
     isActive: {
@@ -174,20 +174,20 @@ export const children = recipe({
     backgroundColor: color('basic'),
     alignSelf: 'center',
     justifySelf: 'center',
-    borderRadius: '20px',
-    padding: '15px',
+    borderRadius: px(20),
+    padding: px(15),
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px',
+    gap: px(20),
     overflow: 'scroll',
     width: '100%',
 
     '@media': {
       [MEDIA.ipadv]: {
-        padding: '15px',
+        padding: px(15),
       },
       [MEDIA.ipadh]: {
-        padding: '40px',
+        padding: px(40),
       },
     },
   },
@@ -201,7 +201,7 @@ export const children = recipe({
         width: '100%',
         marginTop: '0',
         marginBottom: 'auto',
-        borderRadius: '0 0 15px 15px',
+        borderRadius: `0 0 ${px(15)} ${px(15)}`,
       },
       right: {
         marginRight: '0',
@@ -214,7 +214,7 @@ export const children = recipe({
         marginTop: 'auto',
         marginBottom: 0,
         maxHeight: '80%',
-        borderRadius: '15px 15px 0 0',
+        borderRadius: `${px(15)} ${px(15)} 0 0`,
       },
     },
   },
@@ -224,6 +224,6 @@ export const header = style({
   display: 'flex',
   justifyContent: 'space-between',
   fontWeight: 'bold',
-  fontSize: '20px',
+  fontSize: px(20),
   alignItems: 'flex-start',
 });

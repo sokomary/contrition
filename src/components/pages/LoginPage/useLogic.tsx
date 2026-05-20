@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { getLoginUrl, useAuthenticate } from 'src/api';
-import i18next from 'src/formatter';
 import { isEmpty } from 'lodash';
 import { useLocation, useNavigate } from 'src/router';
+import { useTranslation } from 'react-i18next';
 
 export const useLogic = () => {
   const { search } = useLocation();
   const { navigate } = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isEmpty(search)) {
@@ -23,7 +24,7 @@ export const useLogic = () => {
     if (loginUrl) {
       window.location.href = loginUrl;
     } else {
-      toast(<>{i18next.t('loginpage:errors.url')}</>, { type: 'error' });
+      toast(<>{t('loginpage.errors.url')}</>, { type: 'error' });
     }
   };
 

@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/theme';
+import { MEDIA, px } from 'src/theme';
 
 export const actions = style({
-  marginBottom: '15px',
+  marginBottom: px(15),
   justifyContent: 'flex-end',
 
   '@media': {

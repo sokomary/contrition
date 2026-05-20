@@ -1,29 +1,33 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
+import { globalStyle } from '@vanilla-extract/css';
 
 export const button = recipe({
   base: {
     border: 'none',
     outline: 'none',
-    borderRadius: '15px',
+    borderRadius: px(15),
     cursor: 'pointer',
-    fontSize: '16px',
+    fontSize: px(16),
     width: 'fit-content',
     minWidth: 'fit-content',
-    padding: '5px 15px',
+    padding: `${px(5)} ${px(15)}`,
+    display: 'flex',
+    alignItems: 'center',
+    gap: px(7),
   },
   variants: {
     size: {
       small: {
-        height: '24px',
-        fontSize: '13px',
+        height: px(24),
+        fontSize: px(13),
       },
       regular: {
-        height: '32px',
+        height: px(32),
       },
       large: {
-        height: '45px',
-        borderRadius: '10px',
+        height: px(45),
+        borderRadius: px(10),
       },
     },
     kind: {
@@ -70,4 +74,17 @@ export const button = recipe({
       true: { color: color('label') },
     },
   },
+});
+
+globalStyle(`${button.classNames.variants.size.regular} svg`, {
+  height: px(24),
+  width: px(24),
+});
+globalStyle(`${button.classNames.variants.size.large} svg`, {
+  height: px(24),
+  width: px(24),
+});
+globalStyle(`${button.classNames.variants.size.small} svg`, {
+  height: px(24),
+  width: px(24),
 });

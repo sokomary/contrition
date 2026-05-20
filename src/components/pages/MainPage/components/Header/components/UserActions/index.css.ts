@@ -1,11 +1,11 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const container = style({
   width: '100%',
-  height: '58px',
-  padding: '0 15px',
-  gap: '10px',
+  height: px(60),
+  padding: `0 ${px(15)}`,
+  gap: px(10),
   display: 'flex',
   justifyContent: 'space-between',
   backgroundColor: color('accent-light'),
@@ -19,8 +19,8 @@ globalStyle(container, {
 
 export const name = style({
   alignSelf: 'center',
-  fontSize: '16px',
-  paddingLeft: '5px',
+  fontSize: px(16),
+  paddingLeft: px(5),
 });
 
 export const photo = style({
@@ -31,13 +31,13 @@ export const photo = style({
 
 export const content = style({
   display: 'flex',
-  gap: '10px',
+  gap: px(10),
 });
 
 export const image = style({
-  height: '30px',
-  width: '30px',
-  borderRadius: '15px',
+  height: px(30),
+  width: px(30),
+  borderRadius: px(15),
   backgroundColor: color('background'),
   cursor: 'pointer',
   display: 'flex',

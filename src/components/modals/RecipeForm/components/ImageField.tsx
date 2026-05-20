@@ -1,10 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Loading } from 'src/components/features';
-import i18next from 'src/formatter';
 import { useLogic, Options } from './ImageField.useLogic';
 import * as css from './ImageField.css';
 
 export const ImageField = (props: Options) => {
+  const { t } = useTranslation();
   const { isLoading, error, onClick, ref, files, handleChange } =
     useLogic(props);
 
@@ -15,7 +16,7 @@ export const ImageField = (props: Options) => {
 
     if (!files.length && !props.defaultValue) {
       return (
-        <Button kind="ghost" className={css.photoInput} onClick={onClick}>
+        <Button kind='ghost' className={css.photoInput} onClick={onClick}>
           {error ? 'Что-то пошло не так' : 'Выбрать'}
         </Button>
       );
@@ -23,7 +24,7 @@ export const ImageField = (props: Options) => {
 
     return (
       <Button
-        kind="ghost"
+        kind='ghost'
         className={css.photoPreview}
         style={{
           backgroundImage: `url(${files.length ? URL.createObjectURL(files[0]) : props.defaultUrl})`,
@@ -35,7 +36,7 @@ export const ImageField = (props: Options) => {
 
   return (
     <div className={css.container}>
-      <div className={css.label}>{i18next.t('domain:recipe.photo')}</div>
+      <div className={css.label}>{t('domain.recipe.photo')}</div>
 
       <div className={css.content}>
         {renderContent()}
@@ -44,7 +45,7 @@ export const ImageField = (props: Options) => {
           className={css.hiddenInput}
           onChange={handleChange}
           ref={ref}
-          type="file"
+          type='file'
         />
       </div>
     </div>

@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_API_URL,
           changeOrigin: true,
           secure: false,
-        }
+        },
       },
     },
     plugins: [
@@ -23,37 +23,38 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'prompt',
         manifest: {
-          "short_name": "Contrition",
-          "name": "Conscious nutrition",
-          "icons": [
+          short_name: 'Contrition',
+          name: 'Conscious nutrition',
+          icons: [
             {
-              "src": "logo64.png",
-              "sizes": "64x64 32x32 24x24 16x16",
-              "type": "image/x-icon"
+              src: 'logo64.png',
+              sizes: '64x64 32x32 24x24 16x16',
+              type: 'image/x-icon',
             },
             {
-              "src": "logo192.png",
-              "type": "image/png",
-              "sizes": "192x192"
+              src: 'logo192.png',
+              type: 'image/png',
+              sizes: '192x192',
             },
             {
-              "src": "logo512.png",
-              "type": "image/png",
-              "sizes": "512x512"
-            }
+              src: 'logo512.png',
+              type: 'image/png',
+              sizes: '512x512',
+            },
           ],
-          "start_url": ".",
-          "display": "standalone",
-          "theme_color": "#000000",
-          "background_color": "#ffffff"
+          start_url: '.',
+          display: 'standalone',
+          theme_color: '#000000',
+          background_color: '#ffffff',
         },
       }),
     ],
     resolve: {
-      alias: { src: path.resolve(__dirname, 'src') }
+      alias: { src: path.resolve(__dirname, 'src') },
     },
     build: {
       outDir: './build',
     },
     publicDir: './public',
-}});
+  };
+});

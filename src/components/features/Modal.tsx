@@ -32,7 +32,7 @@ export const Modal = ({
   }
 
   const renderContent = (overlay: boolean) => (
-    <div className="modal">
+    <div className='modal'>
       {overlay && (
         <div className={css.overlay({ isActive })} style={{ zIndex }} />
       )}
@@ -53,9 +53,11 @@ export const Modal = ({
           >
             <div className={css.header}>
               <div>{header}</div>
-              <Button kind="ghost" onClick={onClose}>
-                <ClearIcon />
-              </Button>
+              <Button
+                kind='ghost'
+                startGraphic={<ClearIcon />}
+                onClick={onClose}
+              />
             </div>
             {children}
           </div>
@@ -70,6 +72,6 @@ export const Modal = ({
 
   return createPortal(
     renderContent(true),
-    document.getElementById('modals-root') as HTMLDivElement
+    document.getElementById('modals-root') as HTMLDivElement,
   );
 };

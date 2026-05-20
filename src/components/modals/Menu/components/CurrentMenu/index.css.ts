@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css';
-import { text } from 'src/theme';
+import { text, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: px(30),
 });
 
 export const header = style({
@@ -13,4 +13,4 @@ export const header = style({
   alignItems: 'center',
 });
 
-export const title = style({ ...text.text3b, lineHeight: '100%' });
+export const title = style({ ...text.text3, lineHeight: '100%' });

@@ -1,5 +1,5 @@
 import React from 'react';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import { ActionBar, Dropdown, FieldError } from 'src/components/features';
 import { Tooltip } from 'react-tooltip';
 import { DeleteIcon } from 'src/assets';
@@ -7,6 +7,7 @@ import { Options, useLogic } from './ProductsField.useLogic';
 import * as css from './ProductsField.css';
 
 export const ProductsField = (props: Options) => {
+  const { t } = useTranslation();
   const { actions, options, remove, onSelect, fields, error, value } =
     useLogic(props);
 
@@ -14,16 +15,12 @@ export const ProductsField = (props: Options) => {
     <div className={css.container}>
       <div className={css.field}>
         <div className={css.header}>
-          <div className={css.label}>
-            {i18next.t('domain:recipe.recipeProducts')}
-          </div>
+          <div className={css.label}>{t('domain.recipe.recipeProducts')}</div>
           <ActionBar actions={actions} />
         </div>
 
         <Dropdown options={options || []} value={value} onSelect={onSelect} />
-        {error && (
-          <FieldError text={i18next.t('startpage:recipes.errors.products')} />
-        )}
+        {error && <FieldError text={t('startpage.recipes.errors.products')} />}
       </div>
 
       <div className={css.products}>
@@ -31,7 +28,7 @@ export const ProductsField = (props: Options) => {
           <div className={css.product} key={product.id}>
             <input
               key={id}
-              type="number"
+              type='number'
               className={css.input}
               {...props.register(`recipeProducts.${index}.quantity`)}
             />

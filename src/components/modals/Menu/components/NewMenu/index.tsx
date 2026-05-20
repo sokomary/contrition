@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActionBar, Button, PeriodPicker } from 'src/components/features';
 import { upperFirst } from 'lodash';
-import { format } from 'src/helpers/dates';
 import { Kind } from 'src/types/domain';
 import { useLogic, Options } from './useLogic';
+import { useFormat } from 'src/utils';
 import * as css from './index.css';
 
 export const NewMenu = (props: Options) => {
@@ -29,9 +29,9 @@ export const NewMenu = (props: Options) => {
         <div className={css.meal}>
           {findMeal(date.toString(), kind.id)?.recipe?.name}
           <Button
-            kind="ghost"
-            size="small"
-            label="Удалить"
+            kind='ghost'
+            size='small'
+            label='Удалить'
             onClick={() => onRemove(date, kind.id)}
           />
         </div>
@@ -39,18 +39,20 @@ export const NewMenu = (props: Options) => {
     }
 
     if (isSelected(date, kind)) {
-      return <Button kind="ghost" label="Отмена" onClick={() => onCancel()} />;
+      return <Button kind='ghost' label='Отмена' onClick={() => onCancel()} />;
     }
 
     return (
       <Button
-        kind="ghost"
-        label="Выбрать"
+        kind='ghost'
+        label='Выбрать'
         disabled={!!selecting}
         onClick={() => onSelect(date.toString(), kind.id)}
       />
     );
   };
+
+  const format = useFormat();
 
   return (
     <>
@@ -70,7 +72,12 @@ export const NewMenu = (props: Options) => {
           {dates?.map((date, i) => (
             <div key={i} className={css.row}>
               <div className={css.dateLabel}>
-                {format(date, { year: false })}
+                {format({
+                  kind: 'date',
+                  value: date,
+                  year: false,
+                  template: 'numeric',
+                })}
               </div>
 
               {kinds?.map((kind) => (

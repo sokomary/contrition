@@ -1,23 +1,23 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
   display: 'flex',
   justifyContent: 'space-between',
-  gap: '10px',
+  gap: px(10),
   alignItems: 'center',
-  fontSize: '18px',
+  fontSize: px(18),
   color: color('primary'),
   backgroundColor: color('background'),
-  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
-  padding: '3px 5px',
-  borderRadius: '10px',
+  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
+  padding: `${px(3)} ${px(5)}`,
+  borderRadius: px(10),
 
   '@media': {
     [MEDIA.ipadh]: {
-      padding: '8px',
-      borderRadius: '15px',
+      padding: px(8),
+      borderRadius: px(15),
     },
   },
 });
@@ -25,16 +25,16 @@ export const container = style({
 export const tag = recipe({
   base: {
     fontWeight: 'normal',
-    borderRadius: '25px',
+    borderRadius: px(25),
     alignSelf: 'center',
-    fontSize: '18px',
+    fontSize: px(18),
     cursor: 'pointer',
     color: color('primary'),
-    padding: '0 5px',
+    padding: `0 ${px(5)}`,
 
     '@media': {
       [MEDIA.ipadv]: {
-        padding: '3px 10px',
+        padding: `${px(3)} ${px(10)}`,
       },
     },
   },

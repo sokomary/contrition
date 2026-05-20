@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addRecipe } from 'src/api';
 import { Recipe } from 'src/types/domain';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import { Action } from 'src/components/features';
 import { useDeviceScreen } from 'src/theme';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ export type Options = {
 };
 
 export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
+  const { t } = useTranslation();
   const screen = useDeviceScreen();
 
   const queryClient = useQueryClient();
@@ -44,14 +45,14 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
         instructions: [],
         favorite: false,
       },
-    }
+    },
   );
 
   const actions: Action[] = [
     {
       kind: 'primary',
       type: 'submit',
-      label: i18next.t('startpage:recipes.actions.save'),
+      label: t('startpage.recipes.actions.save'),
       isLoading: addMutation.isPending,
     },
   ];
@@ -72,6 +73,6 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
     },
     title: defaultValues
       ? defaultValues.name
-      : i18next.t('startpage:recipes.new.header'),
+      : t('startpage.recipes.new.header'),
   };
 };

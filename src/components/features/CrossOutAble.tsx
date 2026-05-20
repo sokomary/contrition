@@ -10,7 +10,7 @@ export const CrossOutAble = ({ content }: Props) => {
 
   return (
     <Button
-      kind="ghost"
+      kind='ghost'
       className={css.content({ crossedOut })}
       onClick={() => setCrossedOut((prev) => !prev)}
     >

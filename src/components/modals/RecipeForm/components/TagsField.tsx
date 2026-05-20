@@ -1,17 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActionBar, Button, FieldError } from 'src/components/features';
-import i18next from 'src/formatter';
 import { find } from 'lodash';
 import { Options, useLogic } from './TagsField.useLogic';
 import * as css from './TagsField.css';
 
 export const TagsField = (props: Options) => {
+  const { t } = useTranslation();
   const { fields, remove, tags, append, actions, error } = useLogic(props);
 
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.label}>{i18next.t('domain:recipe.tags')}</div>
+        <div className={css.label}>{t('domain.recipe.tags')}</div>
         <ActionBar actions={actions} />
       </div>
 
@@ -39,9 +40,7 @@ export const TagsField = (props: Options) => {
           ))}
       </div>
 
-      {error && (
-        <FieldError text={i18next.t('startpage:recipes.errors.tags')} />
-      )}
+      {error && <FieldError text={t('startpage.recipes.errors.tags')} />}
     </div>
   );
 };

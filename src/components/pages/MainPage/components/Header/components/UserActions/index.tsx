@@ -9,7 +9,7 @@ export type ActionsProps = Options;
 
 export const UserActions = ({ user }: ActionsProps) => {
   const { userOptionsOpen, toggleOptions, userOptionsRef, imageAlt } = useLogic(
-    { user }
+    { user },
   );
 
   return (
@@ -20,7 +20,7 @@ export const UserActions = ({ user }: ActionsProps) => {
         <div className={css.name}>{user?.name}</div>
         <div className={css.photo}>
           <div ref={userOptionsRef}>
-            <Button kind="ghost" onClick={toggleOptions}>
+            <Button kind='ghost' onClick={toggleOptions}>
               <img className={css.image} src={user?.picture} alt={imageAlt} />
             </Button>
 

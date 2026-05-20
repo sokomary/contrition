@@ -29,7 +29,7 @@ export const Step = ({ index, onRemove, register, name }: Props) => {
 
         <TextareaAutosize
           className={css.textarea}
-          placeholder="Описание"
+          placeholder='Описание'
           {...register(name)}
         />
       </div>

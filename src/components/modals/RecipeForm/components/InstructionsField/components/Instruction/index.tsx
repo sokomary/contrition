@@ -20,7 +20,7 @@ export const Instruction = ({ register, ...props }: Props) => {
       <div className={css.header}>
         <TextareaAutosize
           className={textarea}
-          placeholder="Название"
+          placeholder='Название'
           {...register(`${name}.name`)}
         />
         <ActionBar actions={[actions[0]]} />

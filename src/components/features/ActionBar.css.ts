@@ -1,10 +1,11 @@
 import { style } from '@vanilla-extract/css';
+import { px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
-  gap: '8px',
+  gap: px(8),
 });
 
 export const loader = style({
-  height: '20px !important',
+  height: `${px(20)} !important`,
 });

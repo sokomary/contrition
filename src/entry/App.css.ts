@@ -1,12 +1,12 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const root = style({
   colorScheme: 'light dark',
   height: '100dvh',
   overflow: 'auto',
   fontFamily: "'Roboto', sans-serif",
-  fontSize: '14px',
+  fontSize: px(14),
   backgroundColor: color('background'),
   color: color('font'),
 });
@@ -22,21 +22,21 @@ globalStyle('body', {
 });
 
 globalStyle(`${root} .Toastify__toast-container`, {
-  marginBottom: '70px',
-  borderRadius: '30px',
+  marginBottom: px(70),
+  borderRadius: px(30),
 });
 globalStyle(`${root} .Toastify__toast`, {
-  borderRadius: '30px',
+  borderRadius: px(30),
   backgroundColor: color('success'),
   color: color('font'),
 });
 globalStyle(`${root} .Toastify__toast--error`, {
-  borderRadius: '30px',
+  borderRadius: px(30),
   backgroundColor: color('danger'),
 });
 globalStyle(`${root} .Toastify__toast-body`, {
   color: color('font'),
-  padding: '0 15px',
+  padding: `0 ${px(15)}`,
 });
 globalStyle(`${root} .Toastify__toast-icon`, {
   display: 'none',

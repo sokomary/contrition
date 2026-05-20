@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { IPAD_H_WIDTH, IPAD_V_WIDTH, MAC_WIDTH } from 'src/theme';
+import { IPAD_H_WIDTH, IPAD_V_WIDTH, MAC_WIDTH, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 import { PADDING_IPAD, PADDING_IPHONE, PADDING_MAC } from '../../index.css';
 
@@ -11,7 +11,7 @@ export const container = recipe({
   variants: {
     open: {
       true: {
-        maxHeight: '650px',
+        maxHeight: px(650),
       },
       false: {
         maxHeight: 0,
@@ -44,9 +44,9 @@ export const content = style({
   height: 'fit-content',
   display: 'flex',
   flexDirection: 'column',
-  paddingBlock: '20px',
+  paddingBlock: px(20),
   paddingInline: `${PADDING_IPHONE}px`,
-  gap: '15px',
+  gap: px(15),
 });
 globalStyle(content, {
   containerType: 'inline-size',
@@ -58,7 +58,7 @@ globalStyle(content, {
     },
     [`(min-width: ${IPAD_H_WIDTH}px)`]: {
       paddingInline: `${PADDING_IPAD}px`,
-      gap: '10px',
+      gap: px(10),
     },
     [`(min-width: ${MAC_WIDTH}px)`]: {
       paddingInline: `${PADDING_MAC}px`,
@@ -70,15 +70,15 @@ export const controls = style({
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
-  minWidth: '200px',
+  minWidth: px(200),
   flexShrink: 0,
   flex: 1,
-  gap: '15px',
+  gap: px(15),
 });
 globalStyle(controls, {
   '@container': {
     [`(min-width: ${IPAD_V_WIDTH - PADDING_IPAD * 2}px)`]: {
-      gap: '10px',
+      gap: px(10),
     },
     [`(min-width:  ${IPAD_H_WIDTH - PADDING_IPAD * 2}px)`]: {
       flexDirection: 'row',

@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
+import { px } from 'src/theme';
 
 export const icon = style({
-  height: '20px',
-  width: '20px',
+  height: px(20),
+  width: px(20),
 });

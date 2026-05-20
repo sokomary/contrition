@@ -3,12 +3,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProduct } from 'src/api';
 import { Product } from 'src/types/domain';
 import { Action } from 'src/components/features';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
 
 export const useLogic = () => {
+  const { t } = useTranslation();
   const { isOpen, onClose } = useRouteModal({
     key: 'product-new',
   });
@@ -33,7 +34,7 @@ export const useLogic = () => {
     {
       kind: 'primary',
       type: 'submit',
-      label: i18next.t('startpage:recipes.actions.save'),
+      label: t('startpage.recipes.actions.save'),
       isLoading: addMutation.isPending,
     },
   ];

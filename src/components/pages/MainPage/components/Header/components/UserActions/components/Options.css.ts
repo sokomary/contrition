@@ -1,24 +1,24 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
   position: 'absolute',
-  borderRadius: '5px',
+  borderRadius: px(5),
   background: color('background'),
-  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
-  padding: '8px',
+  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
+  padding: px(8),
   flexDirection: 'column',
-  gap: '8px',
+  gap: px(8),
   right: '0',
-  top: '35px',
+  top: px(35),
   zIndex: 20,
 });
 
 export const option = style({
-  width: '70px',
-  height: '25px',
+  width: px(70),
+  height: px(25),
   display: 'flex',
   alignItems: 'center',
-  padding: '0 4px',
+  padding: `0 ${px(4)}`,
 });

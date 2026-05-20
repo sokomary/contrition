@@ -1,19 +1,19 @@
-name: "Build and publish docker image to the registry"
+name: 'Build and publish docker image to the registry'
 inputs:
   username:
-    description: "Docker username"
+    description: 'Docker username'
     required: true
   token:
-    description: "Docker password"
+    description: 'Docker password'
     required: true
   build-args:
-    description: "Docker CLI arguments for the build"
+    description: 'Docker CLI arguments for the build'
     required: true
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - name: "Checkout source code"
-      uses: "actions/checkout@v4"
+    - name: 'Checkout source code'
+      uses: 'actions/checkout@v4'
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3

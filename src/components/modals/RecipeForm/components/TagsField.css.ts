@@ -1,15 +1,15 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const content = style({
   display: 'flex',
-  gap: '5px',
+  gap: px(5),
   flexWrap: 'wrap',
 });
 
 export const label = style({
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const header = style({
@@ -21,7 +21,7 @@ export const header = style({
 
 export const tag = recipe({
   base: {
-    borderRadius: '7px',
+    borderRadius: px(7),
     color: color('font'),
     border: `1px solid`,
     width: 'fit-content',
@@ -45,5 +45,5 @@ export const container = style({
   width: 'fit-content',
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
 });

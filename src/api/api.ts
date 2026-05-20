@@ -10,21 +10,23 @@ import {
   Meal,
   RecipeProduct,
 } from 'src/types/domain';
-import { useQueryClient } from '@tanstack/react-query';
 import { ENV } from '../../env';
+import { queryClient } from './QueryProvider.queryClient';
 
 const instanceAxios = axios.create();
 
 instanceAxios.interceptors.response.use(
   (response) => response.data,
-  (response) => {
-    if (response.response.status === 401) {
-      const queryClient = useQueryClient();
-      queryClient.invalidateQueries({ queryKey: ['user'] });
+  (error) => {
+    if (
+      error.response?.status === 401 &&
+      window.location.pathname !== '/login'
+    ) {
+      queryClient.removeQueries({ queryKey: ['user'] });
       window.location.href = '/login';
     }
-    return response;
-  }
+    return Promise.reject(error);
+  },
 );
 
 export const getRecipes = (tags?: number[]) =>
@@ -43,7 +45,7 @@ export const addRecipe = (recipe: Recipe) =>
   instanceAxios.post('/api/recipes', recipe);
 
 export const addMenu = (
-  menu: Omit<Menu, 'id' | 'meals'> & { meals: Omit<Meal, 'id'>[] }
+  menu: Omit<Menu, 'id' | 'meals'> & { meals: Omit<Meal, 'id'>[] },
 ) => instanceAxios.post('/api/menu', menu);
 
 export const getMenuProducts = (menuId: number) =>
@@ -56,7 +58,7 @@ export const fromFavorites = (recipeId: number) =>
 
 export const getInstructions = (recipeId: number) =>
   instanceAxios.get<any, Instruction[]>(
-    `/api/recipes/${recipeId}/instructions`
+    `/api/recipes/${recipeId}/instructions`,
   );
 
 export const getProduct = (id: number) =>
@@ -72,7 +74,7 @@ export const addTag = (tag: Tag) => instanceAxios.post('/api/tags', tag);
 export const getRandomRecipe = (tags?: number[]) =>
   instanceAxios.get<any, Recipe>(
     '/api/recipes/random',
-    tags?.length ? { params: { tags: tags.join(',') } } : undefined
+    tags?.length ? { params: { tags: tags.join(',') } } : undefined,
   );
 
 export const upload = (file: File) => {

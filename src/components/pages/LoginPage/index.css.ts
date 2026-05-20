@@ -1,9 +1,9 @@
 import { keyframes, style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 const loginButton = keyframes({
   '0%': {
-    marginLeft: '-3000px',
+    marginLeft: px(-3000),
   },
   '100%': {
     marginLeft: 0,

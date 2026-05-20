@@ -14,7 +14,7 @@ export const Tags = () => {
 
   return (
     <Card
-      title="Тэги"
+      title='Тэги'
       items={(tags || []).map((tag) => (
         <div className={css.item} key={tag.id}>
           {tag.name}

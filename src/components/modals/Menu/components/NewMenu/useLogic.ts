@@ -4,10 +4,10 @@ import { addMenu, getRecipes } from 'src/api';
 import { Meal, Recipe, Kind } from 'src/types/domain';
 import { isEqual, omit, parseInt } from 'lodash';
 import { Action } from 'src/components/features';
-import { periodToDates } from 'src/helpers/dates';
 import { Period } from 'src/types/Period';
 import { useLocation, useNavigate } from 'src/router';
 import { toast } from 'react-toastify';
+import { generateDates } from 'src/components/features/DatesPicker/helpers';
 
 export type Options = {
   kinds: Kind[];
@@ -45,7 +45,7 @@ export const useLogic = (props: Options) => {
   const findMeal = useCallback(
     (date: string, kindId: number) =>
       meals.filter((m) => m.date === date).find((m) => m.kind.id === kindId),
-    [meals]
+    [meals],
   );
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export const useLogic = (props: Options) => {
 
   const onPeriodUpdate = (newPeriod: Period) => {
     setPeriod(newPeriod);
-    const dates = periodToDates(newPeriod);
+    const dates = generateDates(newPeriod);
     if (dates && props.kinds) {
       const newMeals = props.kinds
         .map((kind) =>
@@ -108,7 +108,7 @@ export const useLogic = (props: Options) => {
             date: date.toString(),
             kind,
             recipe: null as unknown as Recipe,
-          }))
+          })),
         )
         .flat(1);
 

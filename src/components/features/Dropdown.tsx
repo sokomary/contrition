@@ -4,7 +4,7 @@ import { useLogic, Options } from './Dropdown.useLogic';
 import { Button } from './Button';
 import * as css from './Dropdown.css';
 
-export const Dropdown = <T = unknown,>(props: Options<T>) => {
+export const Dropdown = <T = unknown>(props: Options<T>) => {
   const {
     open,
     query,
@@ -25,7 +25,7 @@ export const Dropdown = <T = unknown,>(props: Options<T>) => {
     return options.map((o) => (
       <div className={css.label} key={o.label}>
         <Button
-          kind="ghost"
+          kind='ghost'
           className={css.option({ selected: isSelected(o) })}
           onClick={() => onSelect(o)}
         >
@@ -42,7 +42,7 @@ export const Dropdown = <T = unknown,>(props: Options<T>) => {
         <SearchIcon />
         <input
           className={css.input}
-          autoComplete="off"
+          autoComplete='off'
           ref={inputRef}
           onFocus={() => setOpen(true)}
           value={query}

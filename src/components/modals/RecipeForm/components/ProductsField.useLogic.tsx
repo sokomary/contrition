@@ -6,7 +6,7 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { useToggleModal } from 'src/components/modals';
 import { find } from 'lodash';
 import { Action } from 'src/components/features';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 
 export type Options = {
   control: Control<Recipe>;
@@ -14,6 +14,7 @@ export type Options = {
 };
 
 export const useLogic = (props: Options) => {
+  const { t } = useTranslation();
   const { data: products } = useQuery({
     queryKey: ['products'],
     queryFn: () => getProducts(),
@@ -43,7 +44,7 @@ export const useLogic = (props: Options) => {
     {
       kind: 'ghost',
       onClick: openAddProduct,
-      label: i18next.t('startpage:recipes.actions.addProduct'),
+      label: t('startpage.recipes.actions.addProduct'),
     },
   ];
 

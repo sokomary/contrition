@@ -7,7 +7,7 @@ export type Options<T> = {
   onSelect: (value: T) => void;
 };
 
-export const useLogic = <T = unknown,>(props: Options<T>) => {
+export const useLogic = <T = unknown>(props: Options<T>) => {
   const [value, setValue] = useState(props.value || []);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -17,7 +17,7 @@ export const useLogic = <T = unknown,>(props: Options<T>) => {
   const filteredOptions = props.options.filter((option) =>
     query.length
       ? option.label.toLowerCase().includes(query.toLowerCase())
-      : true
+      : true,
   );
 
   const dropdownRef = useRef<HTMLDivElement>(null);

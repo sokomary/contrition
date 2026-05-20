@@ -1,29 +1,29 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const content = style({
   display: 'flex',
   justifyContent: 'space-between',
   flexShrink: 0,
-  padding: '20px',
-  borderRadius: '20px',
+  padding: px(20),
+  borderRadius: px(20),
   background: color('background'),
-  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
+  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
 });
 
 export const product = style({
   display: 'flex',
-  gap: '5px',
+  gap: px(5),
 });
 
 export const quantity = style({
-  width: '30px',
+  width: px(30),
   flexShrink: 0,
   textAlign: 'end',
-  fontSize: '16px',
-  height: '19px',
+  fontSize: px(16),
+  height: px(19),
 });
 
 export const divider = style({
@@ -33,16 +33,16 @@ export const divider = style({
 export const name = style({
   display: 'flex',
   justifyContent: 'space-between',
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const title = style({
   fontWeight: '500',
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
+  gap: px(10),
 });

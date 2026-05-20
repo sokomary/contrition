@@ -26,7 +26,7 @@ export const Header = ({ recipe }: Props) => (
           <div key={index} className={css.element}>
             {recipe[field].toFixed(recipe[field] % 1 > 0 ? 0 : undefined)}
           </div>
-        )
+        ),
       )}
     </div>
   </div>

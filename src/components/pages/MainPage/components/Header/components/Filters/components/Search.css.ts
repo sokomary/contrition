@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -9,28 +9,28 @@ export const container = style({
 });
 
 export const input = style({
-  height: '30px',
-  borderRadius: '10px',
+  height: px(30),
+  borderRadius: px(10),
   outline: 'none',
   border: 'none',
-  padding: '0 15px',
+  padding: `0 ${px(15)}`,
   alignSelf: 'center',
-  fontSize: '16px',
+  fontSize: px(16),
   width: '100%',
   backgroundColor: color('field'),
   color: color('label'),
 
   '@media': {
     [MEDIA.ipadv]: {
-      height: '42px',
-      borderRadius: '15px',
+      height: px(42),
+      borderRadius: px(15),
     },
   },
 });
 
 export const icon = style({
   position: 'absolute',
-  right: '10px',
+  right: px(10),
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',

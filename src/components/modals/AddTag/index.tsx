@@ -1,10 +1,11 @@
 import React from 'react';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import { Modal, Field, ActionBar } from 'src/components/features';
 import { useLogic } from './useLogic';
 import * as css from './index.css';
 
 export const AddTag = () => {
+  const { t } = useTranslation();
   const { isOpen, onClose, register, submit, errors, screen, actions } =
     useLogic();
 
@@ -12,18 +13,18 @@ export const AddTag = () => {
     <Modal
       position={screen === 'iphone' ? 'bottom' : undefined}
       width={screen !== 'iphone' ? 350 : undefined}
-      header="Новый тег"
+      header='Новый тег'
       isActive={isOpen}
       onClose={onClose}
     >
       <form onSubmit={submit} className={css.container}>
         <Field
-          key="name"
-          name="name"
+          key='name'
+          name='name'
           register={register}
-          placeholder={i18next.t('domain:recipe.name')}
+          placeholder={t('domain.recipe.name')}
           error={errors.name}
-          errorText={i18next.t('forms:fields.errors.required')}
+          errorText={t('forms.fields.errors.required')}
           required
         />
         <ActionBar actions={actions} className={css.actions} />

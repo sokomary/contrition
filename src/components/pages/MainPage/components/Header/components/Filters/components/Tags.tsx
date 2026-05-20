@@ -20,7 +20,7 @@ export const Tags = ({ value, onChange }: Props) => {
     <div className={css.container}>
       {tags?.map((tag) => (
         <Button
-          kind="ghost"
+          kind='ghost'
           className={css.tag({ selected: value.includes(tag) })}
           onClick={() => onChange(tag)}
           key={tag.id}

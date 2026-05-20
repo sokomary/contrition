@@ -1,24 +1,24 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
+  gap: px(10),
   width: '100%',
   maxHeight: 'fit-content',
 
   '@media': {
     [MEDIA.ipadv]: {
       width: '100%',
-      maxHeight: '430px',
+      maxHeight: px(430),
     },
     [MEDIA.ipadh]: {
-      maxHeight: '320px',
+      maxHeight: px(320),
       width: '35%',
     },
     [MEDIA.mac]: {
-      maxHeight: '566px',
+      maxHeight: px(566),
     },
   },
 });
@@ -28,24 +28,24 @@ export const header = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const content = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
+  gap: px(30),
   justifyContent: 'space-between',
   background: color('background'),
-  boxShadow: '0 0 15px 5px rgba(8, 8, 8, 0.07)',
-  minHeight: '42px',
-  borderRadius: '10px',
-  padding: '15px',
+  boxShadow: `0 0 ${px(15)} ${px(5)} rgba(8, 8, 8, 0.07)`,
+  minHeight: px(42),
+  borderRadius: px(10),
+  padding: px(15),
   overflowY: 'auto',
 
   '@media': {
     [MEDIA.ipadh]: {
-      minHeight: '34px',
+      minHeight: px(34),
     },
   },
 });

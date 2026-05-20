@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getRandomRecipe, getTags } from 'src/api';
 import { Action } from 'src/components/features';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 import { find, isEqual } from 'lodash';
 import { Tag } from 'src/types/domain';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
 
 export const useLogic = () => {
+  const { t } = useTranslation();
   const { isOpen, onClose } = useRouteModal({
     key: 'random-recipe',
   });
@@ -29,7 +30,7 @@ export const useLogic = () => {
   const actions: Action[] = [
     {
       kind: 'primary',
-      label: i18next.t('startpage:recipes.random.actions.get'),
+      label: t('startpage.recipes.random.actions.get'),
       onClick: refetch,
       isLoading: isFetching,
     },

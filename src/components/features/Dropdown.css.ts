@@ -1,6 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -12,33 +12,33 @@ export const container = style({
 export const content = recipe({
   base: {
     width: '100%',
-    height: '42px',
-    padding: '8px 16px',
+    height: px(42),
+    padding: `${px(8)} ${px(16)}`,
     zIndex: 99,
 
     cursor: 'pointer',
     display: 'flex',
     justifyContent: 'space-between',
-    fontSize: '16px',
+    fontSize: px(16),
     alignItems: 'center',
     background: color('background'),
 
     '@media': {
       [MEDIA.ipadh]: {
-        height: '34px',
-        padding: '4px 8px',
+        height: px(34),
+        padding: `${px(4)} ${px(8)}`,
       },
     },
   },
   variants: {
     open: {
       true: {
-        borderRadius: '10px 10px 0 0',
+        borderRadius: `${px(10)} ${px(10)} 0 0`,
         boxShadow: 'none',
       },
       false: {
-        borderRadius: '10px',
-        boxShadow: '0 0 10px 5px rgba(8, 8, 8, 0.07)',
+        borderRadius: px(10),
+        boxShadow: `0 0 ${px(10)} ${px(5)} rgba(8, 8, 8, 0.07)`,
       },
     },
   },
@@ -48,16 +48,16 @@ export const input = style({
   width: '100%',
   outline: 'none',
   border: 'none',
-  fontSize: '16px',
-  padding: '0 8px',
+  fontSize: px(16),
+  padding: `0 ${px(8)}`,
   background: color('background'),
 });
 
 export const emptyState = style({
   color: color('label'),
-  fontSize: '14px',
+  fontSize: px(14),
   textAlign: 'center',
-  padding: '18px',
+  padding: px(18),
 });
 
 const itemsappears = keyframes({
@@ -73,18 +73,18 @@ const itemsappears = keyframes({
 export const contentContainer = style({
   background: color('background'),
   width: '100%',
-  borderRadius: '10px',
+  borderRadius: px(10),
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
   position: 'absolute',
   zIndex: 98,
-  padding: '34px 8px 8px 8px',
+  padding: `${px(34)} ${px(8)} ${px(8)} ${px(8)}`,
   animationDuration: '0.3s',
   animationName: itemsappears,
   animationDirection: 'alternate',
-  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
-  maxHeight: '250px',
+  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
+  maxHeight: px(250),
   overflowY: 'scroll',
   overflowX: 'hidden',
 
@@ -94,7 +94,7 @@ export const contentContainer = style({
 });
 
 export const options = style({
-  maxHeight: '140px',
+  maxHeight: px(140),
   overflowY: 'scroll',
 });
 
@@ -104,10 +104,10 @@ export const label = style({
 
 export const option = recipe({
   base: {
-    height: '42px',
-    padding: '8px',
+    height: px(42),
+    padding: px(8),
     cursor: 'pointer',
-    fontSize: '16px',
+    fontSize: px(16),
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -117,16 +117,16 @@ export const option = recipe({
 
     selectors: {
       '&:hover': {
-        fontSize: '17px',
+        fontSize: px(17),
         backgroundColor: color('secondary'),
-        borderRadius: '7px',
+        borderRadius: px(7),
         color: color('primary'),
       },
     },
 
     '@media': {
       [MEDIA.ipadh]: {
-        height: '34px',
+        height: px(34),
       },
     },
   },
@@ -136,7 +136,7 @@ export const option = recipe({
         color: color('label'),
         selectors: {
           '&:hover': {
-            fontSize: '17px',
+            fontSize: px(17),
           },
         },
       },
@@ -145,10 +145,10 @@ export const option = recipe({
 });
 
 export const dot = style({
-  height: '7px',
-  width: '7px',
-  borderRadius: '3.5px',
+  height: px(7),
+  width: px(7),
+  borderRadius: px(3.5),
   backgroundColor: color('accent'),
   alignSelf: 'center',
-  marginRight: '4px',
+  marginRight: px(4),
 });

@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getKinds, getMenu } from 'src/api';
-import { compare, now } from 'src/helpers/dates';
 import { useMemo, useState } from 'react';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
+import { Temporal } from 'temporal-polyfill';
 
 type Mode = 'current' | 'new' | 'history';
 
@@ -27,16 +27,20 @@ export const useLogic = () => {
   const currentMenu = useMemo(
     () =>
       menu
-        ?.sort((a, b) => (a.dateStart > b.dateStart ? 1 : -1))
-        .find((m) => {
-          const currentDate = now();
-          return (
-            (compare(m.dateStart, currentDate) < 1 &&
-              compare(currentDate, m.dateEnd) < 1) ||
-            compare(currentDate, m.dateEnd) < 1
-          );
-        }),
-    [menu]
+        ?.sort((a, b) =>
+          Temporal.PlainDate.compare(
+            Temporal.PlainDate.from(a.dateStart),
+            Temporal.PlainDate.from(b.dateStart),
+          ),
+        )
+        .find(
+          (m) =>
+            Temporal.PlainDate.compare(
+              Temporal.Now.plainDateISO(),
+              Temporal.PlainDate.from(m.dateEnd),
+            ) <= 0,
+        ),
+    [menu],
   );
 
   const wideScreen = screen !== 'iphone' && screen !== 'ipadv';

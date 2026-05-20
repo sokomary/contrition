@@ -1,12 +1,12 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_V_WIDTH } from 'src/theme';
+import { color, IPAD_V_WIDTH, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  padding: '6px 15px',
-  gap: '15px',
+  padding: `${px(6)} ${px(15)}`,
+  gap: px(15),
 });
 globalStyle(container, {
   '@container': {
@@ -25,14 +25,14 @@ export const action = style({
   height: 'fit-content',
   width: 'fit-content',
   flexShrink: 0,
-  borderRadius: '20px',
+  borderRadius: px(20),
 });
 globalStyle(action, {
   '@container': {
     [`(min-width: ${IPAD_V_WIDTH})`]: {
       backgroundColor: color('accent-light'),
-      height: '62px',
-      width: '62px',
+      height: px(62),
+      width: px(62),
     },
   },
 });
@@ -44,7 +44,7 @@ export const icon = style({
 export const content = style({
   width: '100%',
   padding: '0',
-  gap: '10px',
+  gap: px(10),
   display: 'flex',
   flexDirection: 'column',
 });

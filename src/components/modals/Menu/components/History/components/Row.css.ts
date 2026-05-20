@@ -1,10 +1,10 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 
 export const recipe = style({
   backgroundColor: color('accent-light'),
-  padding: '5px 10px',
-  borderRadius: '15px',
+  padding: `${px(5)} ${px(10)}`,
+  borderRadius: px(15),
   width: 'fit-content',
   height: 'fit-content',
 });
@@ -12,11 +12,11 @@ export const recipe = style({
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
 });
 
 export const content = style({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '5px',
+  gap: px(5),
 });

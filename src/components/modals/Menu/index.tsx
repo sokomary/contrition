@@ -21,7 +21,6 @@ export const Menu = () => {
     onCancel,
     currentMenu,
     isLoading,
-    screen,
     wideScreen,
   } = useLogic();
 
@@ -58,14 +57,14 @@ export const Menu = () => {
       header={
         <div className={css.header}>
           <Button
-            label="Меню"
-            kind="ghost"
+            label='Меню'
+            kind='ghost'
             onClick={() => setMode('current')}
           />
           <div>|</div>
           <Button
-            label="История"
-            kind="ghost"
+            label='История'
+            kind='ghost'
             onClick={() => setMode('history')}
           />
         </div>

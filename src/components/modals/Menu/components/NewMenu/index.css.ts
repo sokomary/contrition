@@ -1,23 +1,23 @@
 import { style } from '@vanilla-extract/css';
-import { color } from 'src/theme';
+import { color, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
-  boxShadow: '0 0 20px 5px rgba(8, 8, 8, 0.10)',
-  borderRadius: '15px',
-  padding: '10px 15px',
+  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
+  borderRadius: px(15),
+  padding: `${px(10)} ${px(15)}`,
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: px(20),
 });
 
 export const meal = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
   alignItems: 'center',
   textAlign: 'center',
-  padding: '5px',
+  padding: px(5),
 });
 
 export const row = style({
@@ -26,12 +26,12 @@ export const row = style({
 });
 
 export const kindLabel = style({
-  width: '100px',
+  width: px(100),
   textAlign: 'center',
 });
 
 export const dateLabel = style({
-  width: '35px',
+  width: px(35),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -43,10 +43,10 @@ export const empty = recipe({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100px',
-    width: '100px',
-    border: '1px dashed gray',
-    borderRadius: '5px',
+    height: px(100),
+    width: px(100),
+    border: `${px(1)} dashed gray`,
+    borderRadius: px(5),
   },
   variants: {
     selected: {

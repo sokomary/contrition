@@ -35,7 +35,7 @@ export const Field = ({
       className={css.input}
       type={type || 'text'}
       step={step}
-      autoComplete="new-password"
+      autoComplete='new-password'
       {...register(name, { required })}
       placeholder={placeholder}
     />

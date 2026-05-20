@@ -16,7 +16,7 @@ export const Options = () => {
   return (
     <div className={css.container}>
       <Button
-        kind="ghost"
+        kind='ghost'
         className={css.option}
         onClick={() => logoutMutation.mutate()}
       >

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 const REGULAR_SIZE = 360;
 const SMALL_SIZE = 300;
@@ -7,7 +7,7 @@ const SMALL_SIZE = 300;
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '5px',
+  gap: px(5),
 });
 
 export const content = style({
@@ -34,7 +34,7 @@ const photo = {
   height: '100%',
   backgroundColor: color('field'),
   cursor: 'pointer',
-  borderRadius: '10px',
+  borderRadius: px(10),
   opacity: 30,
   flexShrink: 0,
   alignItems: 'center',
@@ -54,5 +54,5 @@ export const photoPreview = style({
 });
 
 export const label = style({
-  fontSize: '16px',
+  fontSize: px(16),
 });

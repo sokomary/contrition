@@ -3,9 +3,10 @@ import { useLocation as useOriginLocation } from 'react-router-dom';
 export const useLocation = () => {
   const location = useOriginLocation();
 
-  const pieces = location.search.length > 0
-    ? location.search.slice(1, location.search.length).split('&')
-    : [];
+  const pieces =
+    location.search.length > 0
+      ? location.search.slice(1, location.search.length).split('&')
+      : [];
 
   const search: Record<string, string[]> = {};
 

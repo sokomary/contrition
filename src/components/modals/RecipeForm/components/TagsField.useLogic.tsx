@@ -8,11 +8,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getTags } from 'src/api';
 import { useToggleModal } from 'src/components/modals';
 import { Action } from 'src/components/features';
-import i18next from 'src/formatter';
+import { useTranslation } from 'react-i18next';
 
 export type Options = UseControllerProps<Recipe>;
 
 export const useLogic = (props: Options) => {
+  const { t } = useTranslation();
   const { data: tags } = useQuery({
     queryKey: ['tags'],
     queryFn: () => getTags(),
@@ -35,7 +36,7 @@ export const useLogic = (props: Options) => {
     {
       kind: 'ghost',
       onClick: openAddTag,
-      label: i18next.t('startpage:recipes.actions.addTag'),
+      label: t('startpage.recipes.actions.addTag'),
     },
   ];
 

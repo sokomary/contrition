@@ -1,25 +1,25 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
-  gap: '3px',
-  borderRadius: '5px',
-  padding: '5px 0',
+  gap: px(3),
+  borderRadius: px(5),
+  padding: `${px(5)} 0`,
   alignItems: 'flex-start',
   justifyContent: 'space-between',
 });
 
 export const content = style({
   display: 'flex',
-  gap: '1px',
+  gap: px(1),
   alignItems: 'flex-start',
 });
 
 export const number = style({
-  marginTop: '6px',
-  marginRight: '3px',
-  fontSize: '16px',
+  marginTop: px(6),
+  marginRight: px(3),
+  fontSize: px(16),
 });
 
 export const textarea = style({
@@ -27,21 +27,21 @@ export const textarea = style({
   outline: 'none',
   border: 'none',
   resize: 'none',
-  fontSize: '16px',
+  fontSize: px(16),
   // eslint-disable-next-line max-len
   fontFamily:
     "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n  sans-serif",
-  padding: '6px',
-  maxWidth: '180px',
+  padding: px(6),
+  maxWidth: px(180),
   selectors: {
     '&:focus': {
       backgroundColor: color('field'),
-      borderRadius: '6px',
+      borderRadius: px(6),
     },
   },
   '@media': {
     [MEDIA.ipadv]: {
-      maxWidth: '300px',
+      maxWidth: px(300),
     },
   },
 });

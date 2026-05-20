@@ -1,28 +1,28 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_H_WIDTH } from 'src/theme';
+import { color, IPAD_H_WIDTH, px } from 'src/theme';
 import { PADDING_IPAD } from '../../../index.css';
 
 export const container = style({
   height: '100%',
-  borderRadius: '20px',
+  borderRadius: px(20),
   backgroundColor: color('favorite'),
 });
 globalStyle(container, {
   '@container': {
     [`(min-width: ${IPAD_H_WIDTH - PADDING_IPAD * 2}px)`]: {
-      minWidth: '260px',
-      height: '240px',
+      minWidth: px(260),
+      height: px(240),
     },
   },
 });
 
 export const item = style({
   display: 'flex',
-  height: '30px',
-  borderRadius: '20px',
-  padding: '2px 12px 4px 12px',
+  height: px(30),
+  borderRadius: px(20),
+  padding: `${px(2)} ${px(12)} ${px(4)} ${px(12)}`,
   alignItems: 'center',
-  fontSize: '16px',
+  fontSize: px(16),
   color: color('font'),
   backgroundColor: color('basic'),
 });

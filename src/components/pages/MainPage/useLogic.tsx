@@ -21,10 +21,10 @@ export const useLogic = () => {
       () =>
         query?.length
           ? recipes?.filter((r) =>
-              r.name.toLowerCase().includes(query.toLowerCase())
+              r.name.toLowerCase().includes(query.toLowerCase()),
             )
           : recipes,
-      [query, recipes]
+      [query, recipes],
     ) || [];
 
   const screen = useDeviceScreen();
@@ -42,7 +42,7 @@ export const useLogic = () => {
       setTags((prev) =>
         prev.includes(tag)
           ? prev.filter((t) => t.id !== tag.id)
-          : [...prev, tag]
+          : [...prev, tag],
       ),
   };
 };

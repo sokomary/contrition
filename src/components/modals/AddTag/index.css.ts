@@ -1,10 +1,11 @@
 import { style } from '@vanilla-extract/css';
 import { MEDIA } from '../../../theme';
+import { px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  gap: px(20),
 });
 
 export const field = style({
@@ -14,7 +15,7 @@ export const field = style({
 export const fields = style({
   width: '100%',
   display: 'flex',
-  paddingTop: '3px',
+  paddingTop: px(3),
   justifyContent: 'space-between',
 });
 
@@ -24,7 +25,7 @@ export const content = style({
 });
 
 export const actions = style({
-  marginBottom: '15px',
+  marginBottom: px(15),
   justifyContent: 'flex-end',
 
   '@media': {

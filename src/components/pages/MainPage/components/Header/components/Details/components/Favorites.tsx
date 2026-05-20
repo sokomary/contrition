@@ -10,8 +10,8 @@ type Props = {
 
 export const Favorites = ({ recipes }: Props) => (
   <Card
-    layout="horizontal"
-    title="Избранные рецепты"
+    layout='horizontal'
+    title='Избранные рецепты'
     items={recipes.map((recipe) => (
       <RecipeCard small key={recipe.id} recipe={recipe} />
     ))}

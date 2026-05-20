@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from 'src/theme';
+import { MEDIA, px } from 'src/theme';
 import { CARD_SIZES } from './RecipeCard/index.css';
 
 export const container = style({
@@ -7,25 +7,25 @@ export const container = style({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
-  gap: '10px',
-  paddingTop: '20px',
-  rowGap: '20px',
-  paddingInline: '15px',
+  gap: px(10),
+  paddingTop: px(20),
+  rowGap: px(20),
+  paddingInline: px(15),
 
   '@media': {
     [MEDIA.ipadv]: {
-      rowGap: '20px',
-      paddingInline: '20px',
+      rowGap: px(20),
+      paddingInline: px(20),
     },
     [MEDIA.mac]: {
-      rowGap: '40px',
-      paddingInline: '40px',
+      rowGap: px(40),
+      paddingInline: px(40),
     },
   },
 });
 
 export const emptyState = style({
-  width: '100%',
+  marginBlockStart: px(140),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

@@ -42,7 +42,7 @@ export const useNavigate = () => {
         pathname: to ? ROUTES[to] : undefined,
         search: buildSearchString(
           !!to && !search ? '' : search,
-          keepPreviousSearch
+          keepPreviousSearch,
         ),
       });
     },

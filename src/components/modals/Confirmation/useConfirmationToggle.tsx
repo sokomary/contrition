@@ -22,7 +22,7 @@ export const useConfirmationToggle = () => {
       open: (payload: Payload) => setState({ isOn: true, payload }),
       close: () => setState((prev) => ({ ...prev, isOn: false })),
     }),
-    [setState]
+    [setState],
   );
 
   return {

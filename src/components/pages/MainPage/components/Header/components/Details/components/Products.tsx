@@ -16,7 +16,7 @@ export const Products = () => {
 
   return (
     <Card
-      title="Продукты"
+      title='Продукты'
       items={(products || []).map((product) => (
         <Item key={product.id} item={product} />
       ))}

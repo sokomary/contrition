@@ -1,10 +1,10 @@
 import React from 'react';
 import { Action, ActionBar, Loading } from 'src/components/features';
 import { Kind } from 'src/types/domain';
-import { format } from 'src/helpers/dates';
 import { useLogic, Options } from './useLogic';
 import { Products } from './components/Products';
 import { Table } from './components/Table';
+import { useFormat } from 'src/utils';
 import * as css from './index.css';
 
 type Props = Options & {
@@ -17,11 +17,20 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
     menu,
   });
 
+  const format = useFormat();
+
   const renderTitle = () => {
     if (!menu) {
       return 'Нет текущего меню';
     }
-    return <div className={css.title}>{format(period)}</div>;
+    return (
+      <div className={css.title}>
+        {format({
+          kind: 'period',
+          value: { from: period.start?.toString(), till: period.end?.toString() },
+        })}
+      </div>
+    );
   };
 
   return (

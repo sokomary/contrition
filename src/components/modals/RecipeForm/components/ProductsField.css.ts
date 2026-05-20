@@ -1,9 +1,9 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color, MEDIA } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
-  gap: '20px',
+  gap: px(20),
   flexDirection: 'column',
   margin: '0',
   width: '100%',
@@ -21,13 +21,13 @@ export const tooltip = style({
 });
 
 export const label = style({
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const field = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
+  gap: px(10),
 });
 
 export const header = style({
@@ -39,15 +39,15 @@ export const header = style({
 export const product = style({
   display: 'flex',
   justifyContent: 'space-between',
-  height: '34px',
+  height: px(34),
 });
 
 export const products = style({
   display: 'flex',
-  gap: '5px',
+  gap: px(5),
   flexWrap: 'wrap',
   height: 'fit-content',
-  maxWidth: '400px',
+  maxWidth: px(400),
 });
 
 export const input = style({
@@ -55,16 +55,16 @@ export const input = style({
     WebkitAppearance: 'none',
     margin: 0,
   },
-  width: '65px',
-  height: '34px',
+  width: px(65),
+  height: px(34),
   border: 'none',
-  borderRadius: '25px',
-  padding: '0 25px 0 5px',
+  borderRadius: px(25),
+  padding: `0 ${px(25)} 0 ${px(5)}`,
   textAlign: 'center',
   outline: 'none',
   backgroundColor: color('secondary'),
   color: color('primary'),
-  fontSize: '16px',
+  fontSize: px(16),
 });
 
 export const name = style({
@@ -72,12 +72,12 @@ export const name = style({
   color: color('accent'),
   display: 'flex',
   alignItems: 'center',
-  height: '34px',
-  padding: '0 20px 2px 20px',
-  borderRadius: '20px',
-  marginLeft: '-30px',
+  height: px(34),
+  padding: `0 ${px(20)} ${px(2)} ${px(20)}`,
+  borderRadius: px(20),
+  marginLeft: px(-30),
   cursor: 'pointer',
-  maxWidth: '280px',
+  maxWidth: px(280),
 });
 globalStyle(`${name} > div`, {
   textOverflow: 'ellipsis',
@@ -87,6 +87,6 @@ globalStyle(`${name} > div`, {
 
 export const icon = style({
   cursor: 'pointer',
-  width: '15px',
-  height: '15px',
+  width: px(15),
+  height: px(15),
 });

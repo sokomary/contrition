@@ -48,17 +48,15 @@ export const RecipeCard = ({
           {showTooltip && (
             <Button
               className={css.toMenuButton}
-              label="Добавить в меню"
+              label='Добавить в меню'
               onClick={onAddToMenu}
             />
           )}
           {!displayInfo && (
             <div className={css.calories}>{recipe.calories.toFixed(0)}</div>
           )}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-          jsx-a11y/no-noninteractive-element-interactions */}
           <img
-            alt="recipe"
+            alt='recipe'
             className={css.img}
             ref={ref}
             onError={() => {
@@ -86,7 +84,7 @@ export const RecipeCard = ({
             <div className={css.infoFirstPart}>
               <div className={css.bigElement}>
                 {recipe.calories.toFixed(
-                  recipe.calories % 1 > 0 ? 0 : undefined
+                  recipe.calories % 1 > 0 ? 0 : undefined,
                 )}
               </div>
 
@@ -94,7 +92,7 @@ export const RecipeCard = ({
                 <div className={css.elements}>
                   <div className={css.element}>
                     {recipe.protein.toFixed(
-                      recipe.protein % 1 > 0 ? 0 : undefined
+                      recipe.protein % 1 > 0 ? 0 : undefined,
                     )}
                   </div>
                   <div className={css.element}>
@@ -102,7 +100,7 @@ export const RecipeCard = ({
                   </div>
                   <div className={css.element}>
                     {recipe.carbohydrates.toFixed(
-                      recipe.carbohydrates % 1 > 0 ? 0 : undefined
+                      recipe.carbohydrates % 1 > 0 ? 0 : undefined,
                     )}
                   </div>
                 </div>
