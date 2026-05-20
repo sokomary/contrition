@@ -8,14 +8,14 @@ ENV GITHUB_AUTH_TOKEN=$GITHUB_AUTH_TOKEN
 RUN mkdir /app
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.json ./
 
 RUN echo -e "@sokomary:registry=https://npm.pkg.github.com/\n//npm.pkg.github.com/:_authToken=$GITHUB_AUTH_TOKEN" > .npmrc
 
-RUN npm ci --include=dev
+RUN pnpm install
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM nginx:stable-alpine
 COPY dockerConf/nginx.conf /etc/nginx/nginx.conf
