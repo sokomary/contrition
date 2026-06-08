@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { color, px } from 'src/theme';
 
 export const content = style({
@@ -23,6 +23,7 @@ export const steps = style({
   display: 'flex',
   flexDirection: 'column',
   gap: px(12),
+  flexShrink: 0,
 });
 
 export const name = style({
@@ -37,4 +38,11 @@ export const title = style({
 
 export const step = style({
   fontSize: px(16),
+  flexShrink: 0,
+});
+
+globalStyle(`${step} button`, {
+  height: 'auto',
+  minHeight: px(32),
+  alignItems: 'flex-start',
 });
