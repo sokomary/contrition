@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, px } from 'src/theme';
+import { color, px, text } from 'src/theme';
 
 export const content = style({
   display: 'flex',
@@ -16,14 +16,15 @@ export const content = style({
 export const product = style({
   display: 'flex',
   gap: px(5),
+  alignItems: 'center',
 });
 
 export const quantity = style({
   width: px(30),
   flexShrink: 0,
   textAlign: 'end',
-  fontSize: px(16),
-  height: px(19),
+  ...text.text3,
+  paddingBlockStart: px(2),
 });
 
 export const divider = style({

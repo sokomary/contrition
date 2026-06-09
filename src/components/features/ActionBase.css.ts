@@ -1,5 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes';
-import { color, px } from 'src/theme';
+import { color, px, text } from 'src/theme';
 
 export const button = recipe({
   base: {
@@ -9,6 +9,13 @@ export const button = recipe({
     alignItems: 'center',
     gap: px(7),
     boxSizing: 'border-box',
+    background: 'none',
+    border: 'none',
+    ...text.text3,
+    padding: 0,
+    color: color('font'),
+    textDecoration: 'none',
+    textAlign: 'left',
   },
 
   variants: {

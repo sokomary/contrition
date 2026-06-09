@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from './Button';
+import { ActionBase } from './ActionBase';
 import * as css from './CrossOutAble.css';
 
 type Props = {
@@ -9,12 +9,11 @@ export const CrossOutAble = ({ content }: Props) => {
   const [crossedOut, setCrossedOut] = useState(false);
 
   return (
-    <Button
-      kind='ghost'
+    <ActionBase
       className={css.content({ crossedOut })}
       onClick={() => setCrossedOut((prev) => !prev)}
     >
       {content}
-    </Button>
+    </ActionBase>
   );
 };

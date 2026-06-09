@@ -55,7 +55,7 @@ export const input = style({
     WebkitAppearance: 'none',
     margin: 0,
   },
-  width: px(65),
+  width: px(80),
   height: px(34),
   border: 'none',
   borderRadius: px(25),
