@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       vanillaExtractPlugin(),
       react({ include: '**/*.{jsx,tsx}' }),
       VitePWA({
-        registerType: 'prompt',
+        registerType: 'autoUpdate',
         manifest: {
           short_name: 'Contrition',
           name: 'Conscious nutrition',
