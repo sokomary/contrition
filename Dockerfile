@@ -1,6 +1,8 @@
-FROM alpine as build
+FROM node:20-bullseye-slim AS build
 
-RUN apk add --no-cache --update nodejs pnpm git
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
+RUN corepack enable && corepack prepare pnpm@10.6.2 --activate
 
 ARG GITHUB_AUTH_TOKEN
 ENV GITHUB_AUTH_TOKEN=$GITHUB_AUTH_TOKEN
