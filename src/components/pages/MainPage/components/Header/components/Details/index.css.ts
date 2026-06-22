@@ -1,12 +1,12 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { IPAD_H_WIDTH, IPAD_V_WIDTH, MAC_WIDTH, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
+import { IPAD_H_WIDTH, IPAD_V_WIDTH, MAC_WIDTH, px } from 'src/theme';
 import { PADDING_IPAD, PADDING_IPHONE, PADDING_MAC } from '../../index.css';
 
 export const container = recipe({
   base: {
     overflow: 'hidden',
-    transition: 'max-height 1s 0s',
+    transition: 'max-height 0.3s 0s',
   },
   variants: {
     open: {
@@ -18,25 +18,6 @@ export const container = recipe({
       },
     },
   },
-});
-
-export const animated = recipe({
-  base: {
-    transition: 'transform 1s ease-in-out, opacity 1s',
-  },
-  variants: {
-    open: {
-      true: {
-        transform: 'translateY(0)',
-      },
-      false: {
-        transform: 'translateY(-100%)',
-      },
-    },
-  },
-});
-globalStyle(animated.classNames.variants.open.true, {
-  containerType: 'inline-size',
 });
 
 export const content = style({

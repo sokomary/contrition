@@ -12,7 +12,7 @@ type Props = {
 
 export const Details: FC<Props> = ({ recipes, open }) => (
   <div className={css.container({ open })}>
-    <div className={css.animated({ open })}>
+    <div>
       <div className={css.content}>
         <div className={css.controls}>
           <Tags />

@@ -13,6 +13,9 @@ export const container = style({
   boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
   padding: `${px(3)} ${px(5)}`,
   borderRadius: px(10),
+  maxWidth: '100%',
+  overflowX: 'auto',
+  boxSizing: 'border-box',
 
   '@media': {
     [MEDIA.ipadh]: {

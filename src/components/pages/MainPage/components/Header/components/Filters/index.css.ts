@@ -42,11 +42,13 @@ export const icon = style({
 });
 
 export const content = style({
-  width: '100%',
+  maxWidth: '100%',
   padding: '0',
   gap: px(10),
   display: 'flex',
   flexDirection: 'column',
+  boxSizing: 'border-box',
+  overflow: 'hidden',
 });
 globalStyle(content, {
   '@container': {
