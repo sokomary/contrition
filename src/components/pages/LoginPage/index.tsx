@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { GoogleIcon } from 'src/assets';
 import { Button } from 'src/components/features';
 import { useLogic } from './useLogic';
+import { Navigate } from 'react-router-dom';
 import * as css from './index.css';
 
 export const LoginPage = () => {
@@ -10,7 +11,7 @@ export const LoginPage = () => {
   const { authenticated, login } = useLogic();
 
   if (authenticated) {
-    return null;
+    return <Navigate to='/' />;
   }
 
   return (
