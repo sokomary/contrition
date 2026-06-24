@@ -14,7 +14,7 @@ export const UserActions = ({ user }: ActionsProps) => {
 
   return (
     <div className={css.container}>
-      <Actions user={user} />
+      <Actions />
 
       <div className={css.content}>
         <div className={css.name}>{user?.name}</div>

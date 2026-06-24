@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
-import { Recipe, isAdmin } from 'src/types/domain';
+import { Recipe } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { Link } from 'react-router-dom';
 import { FavoriteIcon, LinkIcon } from 'src/assets';
 import { Button } from 'src/components/features';
-import { useAuthenticate } from 'src/api';
 import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
@@ -27,8 +26,6 @@ export const RecipeCard = ({
 }: Props) => {
   const screen = useDeviceScreen();
   const displayInfo = screen !== 'iphone' && !small;
-
-  const user = useAuthenticate();
 
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
@@ -117,7 +114,7 @@ export const RecipeCard = ({
               </div>
             </div>
 
-            {isAdmin(user) && <Actions recipe={recipe} />}
+            <Actions recipe={recipe} />
           </div>
         )}
       </div>

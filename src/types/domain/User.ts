@@ -6,6 +6,3 @@ export type User = {
   picture: string;
   roles: Role[];
 };
-
-export const isAdmin = (user?: User) =>
-  !!user?.roles?.find((r) => r.name === 'admin');

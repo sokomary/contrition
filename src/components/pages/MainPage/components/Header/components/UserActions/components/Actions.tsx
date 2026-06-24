@@ -1,5 +1,4 @@
 import React from 'react';
-import { isAdmin, User } from 'src/types/domain';
 import { Action, ActionBar } from 'src/components/features';
 import { CreateIcon, RandomIcon } from 'src/assets';
 import { useDeviceScreen } from 'src/theme';
@@ -7,11 +6,7 @@ import { useRouteModal } from 'src/router';
 import { useToggleModal } from 'src/components/modals';
 import * as css from './Actions.css';
 
-type Props = {
-  user?: User;
-};
-
-export const Actions = ({ user }: Props) => {
+export const Actions = () => {
   const screen = useDeviceScreen();
   const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
 
@@ -26,7 +21,6 @@ export const Actions = ({ user }: Props) => {
       onClick: openRecipeNew,
       kind: 'primary',
       size: 'regular',
-      display: isAdmin(user),
     },
     {
       label: wideScreen ? 'Случайный' : <RandomIcon className={css.icon} />,
