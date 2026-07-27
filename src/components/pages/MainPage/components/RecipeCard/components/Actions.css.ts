@@ -16,7 +16,7 @@ export const dot = style({
 export const dots = style({
   display: 'flex',
   gap: 2,
-  flexDirection: 'column',
+  padding: px(8),
 });
 
 export const actions = style({

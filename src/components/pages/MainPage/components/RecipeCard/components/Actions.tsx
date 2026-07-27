@@ -32,8 +32,8 @@ export const Actions = ({ recipe }: Props) => {
   return (
     <div ref={menuRef} className={css.container}>
       <Button
-        kind='ghost'
         onClick={toggleMenu}
+        size='small'
         className={css.dots}
         key={recipe.id}
       >
