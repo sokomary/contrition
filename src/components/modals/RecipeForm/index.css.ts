@@ -52,24 +52,6 @@ export const content = style({
   },
 });
 
-export const footer = style({
-  display: 'flex',
-  marginBottom: 0,
-  flexDirection: 'column',
-  gap: px(20),
-  width: '100%',
-  paddingBottom: px(15),
-  alignItems: 'flex-end',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingBottom: 0,
-    },
-  },
-});
-
 export const button = style({
   alignSelf: 'flex-end',
   width: '100%',
@@ -88,12 +70,5 @@ export const basicFields = style({
 });
 
 export const actions = style({
-  marginBottom: px(15),
   justifyContent: 'flex-end',
-
-  '@media': {
-    [MEDIA.ipadh]: {
-      marginBottom: 0,
-    },
-  },
 });

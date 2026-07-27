@@ -3,7 +3,7 @@ import { useRecipeActions } from 'src/components/atoms/useRecipeActions';
 import { ActionBar } from 'src/components/features';
 import { Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
-import { getInstructions } from 'src/api';
+import { getInstructions, useAuthenticate } from 'src/api';
 import { useDeviceScreen } from 'src/theme';
 import { Comment } from './components/Comment';
 import { PortionSize } from './components/PortionSize';
@@ -17,6 +17,7 @@ type Props = {
 export const Content = ({ recipe }: Props) => {
   const actions = useRecipeActions({ recipe });
   const screen = useDeviceScreen();
+  const user = useAuthenticate();
 
   const { data: instructions } = useQuery({
     queryKey: [`instructions-${recipe?.id}`],
@@ -25,7 +26,7 @@ export const Content = ({ recipe }: Props) => {
   });
 
   return (
-    <>
+    <div className={css.wrapper}>
       <div className={css.container}>
         {recipe.comment && <Comment comment={recipe.comment} />}
         {recipe.portionSize && <PortionSize portionSize={recipe.portionSize} />}
@@ -33,9 +34,9 @@ export const Content = ({ recipe }: Props) => {
         {!!instructions?.length && <Instructions instructions={instructions} />}
       </div>
 
-      {screen === 'iphone' && (
+      {screen === 'iphone' && user.id === recipe.ownerId && (
         <ActionBar className={css.actions} actions={actions} />
       )}
-    </>
+    </div>
   );
 };

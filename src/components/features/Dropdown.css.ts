@@ -114,6 +114,7 @@ export const option = recipe({
     width: '100%',
     color: color('font'),
     textAlign: 'left',
+    justifyContent: 'left',
 
     selectors: {
       '&:hover': {

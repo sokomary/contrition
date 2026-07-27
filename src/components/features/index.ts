@@ -1,6 +1,7 @@
 export * from './ActionBar';
 export * from './Button';
 export * from './DatesPicker';
+export * from './Dialog';
 export * from './CrossOutAble';
 export * from './Dropdown';
 export * from './form';

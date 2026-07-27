@@ -7,6 +7,7 @@ import { Button } from 'src/components/features';
 import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
+import { useAuthenticate } from 'src/api';
 import * as css from './index.css';
 
 const VISIBLE_TAGS_COUNT = 2;
@@ -26,6 +27,8 @@ export const RecipeCard = ({
 }: Props) => {
   const screen = useDeviceScreen();
   const displayInfo = screen !== 'iphone' && !small;
+
+  const user = useAuthenticate();
 
   const visibleTags = recipe.tags.slice(0, VISIBLE_TAGS_COUNT);
   const restTagsCount = recipe.tags.length - 2;
@@ -114,7 +117,7 @@ export const RecipeCard = ({
               </div>
             </div>
 
-            <Actions recipe={recipe} />
+            {user.id === recipe.ownerId && <Actions recipe={recipe} />}
           </div>
         )}
       </div>

@@ -1,10 +1,9 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProduct } from 'src/api';
 import { Product } from 'src/types/domain';
 import { Action } from 'src/components/features';
 import { useTranslation } from 'react-i18next';
-import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
 
@@ -13,8 +12,6 @@ export const useLogic = () => {
   const { isOpen, onClose } = useRouteModal({
     key: 'product-new',
   });
-
-  const screen = useDeviceScreen();
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
@@ -44,7 +41,6 @@ export const useLogic = () => {
     register,
     submit: handleSubmit(onSubmit),
     errors: formState.errors,
-    screen,
     onClose,
     actions,
   };

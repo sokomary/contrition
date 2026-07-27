@@ -1,17 +1,22 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA, px } from 'src/theme';
+import { color, px } from 'src/theme';
+
+export const wrapper = style({
+  width: px(500),
+  maxWidth: '100%',
+  flexDirection: 'column',
+  display: 'flex',
+  height: '100%',
+  justifyContent: 'space-between',
+  gap: px(24),
+});
 
 export const container = style({
   flexDirection: 'column',
   display: 'flex',
+  height: '100%',
   justifyContent: 'space-between',
   gap: px(24),
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      gap: px(24),
-    },
-  },
 });
 
 export const actions = style({

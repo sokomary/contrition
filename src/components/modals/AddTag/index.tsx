@@ -1,22 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Field, ActionBar } from 'src/components/features';
+import { Field, ActionBar, Dialog } from 'src/components/features';
 import { useLogic } from './useLogic';
 import * as css from './index.css';
 
 export const AddTag = () => {
   const { t } = useTranslation();
-  const { isOpen, onClose, register, submit, errors, screen, actions } =
-    useLogic();
+  const { isOpen, onClose, register, submit, errors, actions } = useLogic();
 
   return (
-    <Modal
-      position={screen === 'iphone' ? 'bottom' : undefined}
-      width={screen !== 'iphone' ? 350 : undefined}
-      header='Новый тег'
-      isActive={isOpen}
-      onClose={onClose}
-    >
+    <Dialog header='Новый тег' isActive={isOpen} onClose={onClose} size='small'>
       <form onSubmit={submit} className={css.container}>
         <Field
           key='name'
@@ -29,6 +22,6 @@ export const AddTag = () => {
         />
         <ActionBar actions={actions} className={css.actions} />
       </form>
-    </Modal>
+    </Dialog>
   );
 };

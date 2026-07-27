@@ -8,6 +8,8 @@ import {
   AddTag,
   ProductInfo,
   RecipeInfo,
+  ShareRecipe,
+  ViewSharings,
   Confirmation,
 } from 'src/components/modals';
 
@@ -21,6 +23,8 @@ export const Modals = () => (
     <AddTag />
     <ProductInfo />
     <RecipeInfo />
+    <ShareRecipe />
+    <ViewSharings />
     <Confirmation />
   </>
 );

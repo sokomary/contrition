@@ -6,15 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { find, isEqual } from 'lodash';
 import { Tag } from 'src/types/domain';
 import { useRouteModal } from 'src/router';
-import { useDeviceScreen } from 'src/theme';
 
 export const useLogic = () => {
   const { t } = useTranslation();
   const { isOpen, onClose } = useRouteModal({
     key: 'random-recipe',
   });
-
-  const screen = useDeviceScreen();
 
   const { data: tags } = useQuery({
     queryKey: ['tags'],
@@ -39,7 +36,6 @@ export const useLogic = () => {
   return {
     isOpen,
     onClose,
-    screen,
     data,
     actions,
     tags: tags || [],

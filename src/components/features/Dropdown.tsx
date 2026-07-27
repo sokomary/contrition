@@ -4,6 +4,7 @@ import { useLogic, Options } from './Dropdown.useLogic';
 import { Button } from './Button';
 import * as css from './Dropdown.css';
 
+// todo move to popover
 export const Dropdown = <T = unknown>(props: Options<T>) => {
   const {
     open,

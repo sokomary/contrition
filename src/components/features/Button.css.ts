@@ -15,6 +15,7 @@ export const button = recipe({
     display: 'flex',
     alignItems: 'center',
     gap: px(7),
+    justifyContent: 'center',
   },
   variants: {
     size: {
@@ -55,6 +56,16 @@ export const button = recipe({
         '@media': {
           [MEDIA.ipadv]: {
             width: 'fit-content',
+          },
+        },
+      },
+      secondary: {
+        color: color('font'),
+        backgroundColor: color('field'),
+
+        selectors: {
+          '&:active': {
+            backgroundColor: color('background-transparent'),
           },
         },
       },

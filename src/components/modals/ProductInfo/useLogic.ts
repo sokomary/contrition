@@ -1,11 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { useDeviceScreen } from 'src/theme';
 import { useRouteModal } from 'src/router';
 import { getProduct } from 'src/api';
 
 export const useLogic = () => {
-  const screen = useDeviceScreen();
-
   const { isOpen, value, onClose } = useRouteModal({
     key: 'product-info',
   });
@@ -18,7 +15,6 @@ export const useLogic = () => {
     enabled: !Number.isNaN(id),
   });
   return {
-    screen,
     product,
     isOpen,
     onClose,

@@ -1,35 +1,32 @@
 import React from 'react';
-import { Action, ActionBar, Modal } from 'src/components/features';
-import { useDeviceScreen } from 'src/theme';
+import { Action, ActionBar, Dialog } from 'src/components/features';
 import { useConfirmationToggle } from './useConfirmationToggle';
 import * as css from './index.css';
 
 export const Confirmation = () => {
   const { isOn, close, payload } = useConfirmationToggle();
 
-  const screen = useDeviceScreen();
-
   const actions: Action[] = [
-    { ...payload?.confirm },
     {
       label: 'Отмена',
+      kind: 'secondary',
       onClick: () => {
         payload?.onClose?.();
         close();
       },
     },
+    { ...payload?.confirm },
   ];
 
   return (
-    <Modal
-      position={screen === 'iphone' ? 'bottom' : undefined}
-      width={screen !== 'iphone' ? 350 : undefined}
+    <Dialog
+      size='small'
       header={payload?.title}
       isActive={isOn}
       onClose={close}
     >
       <div>{payload?.description}</div>
       <ActionBar actions={actions} className={css.actions} />
-    </Modal>
+    </Dialog>
   );
 };

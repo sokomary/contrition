@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA, px } from 'src/theme';
+import { color, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
@@ -7,6 +7,7 @@ export const container = style({
   flexDirection: 'column',
   gap: px(30),
   alignItems: 'center',
+  marginBlockEnd: px(15),
 });
 
 export const content = style({
@@ -33,12 +34,5 @@ export const name = style({
 });
 
 export const actions = style({
-  marginBottom: px(15),
   justifyContent: 'flex-end',
-
-  '@media': {
-    [MEDIA.ipadh]: {
-      marginBottom: 0,
-    },
-  },
 });

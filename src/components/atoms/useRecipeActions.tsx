@@ -11,6 +11,10 @@ type Options = {
   onSuccess?: () => void;
 };
 
+// todo think of removing a recipe which was shared with me once
+// but I don't want to have it anymore
+// in case 1) one time sharing 2) continuous sharing
+
 export const useRecipeActions = ({
   recipe,
   onSuccess: propsOnSuccess,
@@ -18,6 +22,10 @@ export const useRecipeActions = ({
   const queryClient = useQueryClient();
 
   const { open } = useToggleModal('recipe-edit', recipe.id.toString());
+  const { open: openShare } = useToggleModal(
+    'recipe-share',
+    recipe.id.toString(),
+  );
   const { onClose } = useRouteModal({ key: 'recipe-info' });
 
   const onSuccess = () => {
@@ -88,6 +96,11 @@ export const useRecipeActions = ({
       label: 'Из избранного',
       display: recipe.favorite,
       isLoading: fromFavoritesMutation.isPending,
+    },
+    {
+      kind: 'ghost',
+      onClick: openShare,
+      label: 'Поделиться',
     },
     {
       kind: 'ghost',

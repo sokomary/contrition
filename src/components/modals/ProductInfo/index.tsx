@@ -1,17 +1,16 @@
 import React from 'react';
-import { Modal } from 'src/components/features';
+import { Dialog } from 'src/components/features';
 import { Value } from './components/Value';
-import * as css from './index.css';
 import { useLogic } from './useLogic';
+import * as css from './index.css';
 
 export const ProductInfo = () => {
-  const { isOpen, onClose, product, screen } = useLogic();
+  const { isOpen, onClose, product } = useLogic();
 
   return (
-    <Modal
-      width={350}
-      position={screen === 'iphone' ? 'bottom' : undefined}
+    <Dialog
       header={product?.name}
+      size='small'
       isActive={isOpen}
       onClose={onClose}
     >
@@ -21,6 +20,6 @@ export const ProductInfo = () => {
         <Value label='Жиры:' content={product?.fats} />
         <Value label='Углеводы:' content={product?.carbohydrates} />
       </div>
-    </Modal>
+    </Dialog>
   );
 };

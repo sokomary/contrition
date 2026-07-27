@@ -1,22 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal, Field, ActionBar } from 'src/components/features';
+import { Field, ActionBar, Dialog } from 'src/components/features';
 import { NumberField } from './components/NumberField';
 import { useLogic } from './useLogic';
 import * as css from './index.css';
 
 export const AddProduct = () => {
   const { t } = useTranslation();
-  const { isOpen, onClose, screen, errors, submit, register, actions } =
-    useLogic();
+  const { isOpen, onClose, errors, submit, register, actions } = useLogic();
 
   return (
-    <Modal
-      position={screen === 'iphone' ? 'bottom' : undefined}
-      width={screen !== 'iphone' ? 350 : undefined}
+    <Dialog
       header={t('startpage.products.new.header')}
       isActive={isOpen}
       onClose={onClose}
+      size='small'
     >
       <form onSubmit={submit} className={css.container}>
         <div className={css.content}>
@@ -50,6 +48,6 @@ export const AddProduct = () => {
 
         <ActionBar actions={actions} className={css.actions} />
       </form>
-    </Modal>
+    </Dialog>
   );
 };

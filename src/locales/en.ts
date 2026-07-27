@@ -42,18 +42,62 @@ export const en = {
       new: {
         header: 'New recipe',
       },
+      share: {
+        header: 'Share recipe',
+        newFriend: 'New friend',
+        friends: 'Friends',
+        success: 'Recipe shared',
+        error: 'Failed to share recipe',
+        emailPlaceholder: 'Email',
+      },
       actions: {
         add: 'Add recipe',
         addProduct: 'Add product',
         addTag: 'Add tag',
         delete: 'Delete',
         save: 'Save',
+        share: 'Share',
       },
       errors: {
         products:
           'Select at least 1 product and specify the amount for each product',
         tags: 'Select at least 1 tag',
       },
+    },
+    sharings: {
+      action: 'View sharings',
+      header: 'My sharings',
+      empty: 'Empty',
+      continuous: {
+        title: 'Continuous sharing',
+        cancel: 'Cancel sharing',
+        add: {
+          action: 'Share',
+          header: 'Continuous sharing',
+          newFriend: 'New friend',
+          submit: 'Add',
+        },
+        added: 'Sharing enabled',
+      },
+      recipients: {
+        title: 'Shared recipes',
+      },
+      cancelConfirm: {
+        title: 'Cancel continuous sharing',
+        description:
+          'Cancel continuous sharing? You can keep already shared recipes or unshare all of them.',
+        back: 'Back',
+        keepShared: 'Cancel and keep shared',
+        unshareAll: 'Cancel and unshare all',
+      },
+      removeConfirm: {
+        title: 'Stop sharing recipe',
+        description: 'Stop sharing this recipe?',
+        confirm: 'Stop sharing',
+      },
+      removed: 'Sharing removed',
+      cancelled: 'Sharing cancelled',
+      error: 'Something went wrong',
     },
     products: {
       title: 'Products',

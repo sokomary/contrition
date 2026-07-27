@@ -1,21 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionBar, Button, Modal } from 'src/components/features';
+import { ActionBar, Button, Dialog } from 'src/components/features';
 import { useLogic } from './useLogic';
 import * as css from './index.css';
 
 export const GetRandomRecipe = () => {
   const { t } = useTranslation();
-  const { screen, isOpen, onClose, data, actions, tags, isSelected, onSelect } =
+  const { isOpen, onClose, data, actions, tags, isSelected, onSelect } =
     useLogic();
 
   return (
-    <Modal
-      position={screen === 'iphone' ? 'bottom' : undefined}
-      width={screen !== 'iphone' ? 350 : undefined}
+    <Dialog
       header={t('startpage.recipes.random.header')}
       isActive={isOpen}
       onClose={onClose}
+      size='small'
     >
       <div className={css.container}>
         <div className={css.content}>
@@ -35,6 +34,6 @@ export const GetRandomRecipe = () => {
       </div>
 
       <ActionBar actions={actions} className={css.actions} />
-    </Modal>
+    </Dialog>
   );
 };

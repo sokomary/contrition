@@ -8,7 +8,7 @@ import React, {
 import * as css from './Button.css';
 import { Loading } from './Loading';
 
-export type ButtonKind = 'primary' | 'accent' | 'ghost';
+export type ButtonKind = 'primary' | 'accent' | 'secondary' | 'ghost';
 export type ButtonType = 'submit' | 'reset' | 'button';
 export type ButtonSize = 'small' | 'regular' | 'large';
 

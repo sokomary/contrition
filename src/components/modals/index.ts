@@ -6,5 +6,7 @@ export * from './GetRandomRecipe';
 export * from './ProductInfo';
 export * from './RecipeForm';
 export * from './RecipeInfo';
+export * from './ShareRecipe';
+export * from './ViewSharings';
 export * from './Menu';
 export * from './useToggleModal';

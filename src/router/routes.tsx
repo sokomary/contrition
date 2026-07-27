@@ -6,6 +6,8 @@ export type ModalRouts = {
   'product-new': 'true';
   'product-info': string;
   'recipe-info': string;
+  'recipe-share': string;
+  'view-sharings': 'true';
   'tag-new': 'true';
 };
 

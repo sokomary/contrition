@@ -1,11 +1,11 @@
 import React from 'react';
-import { Loading, Modal } from 'src/components/features';
+import { Dialog, Loading } from 'src/components/features';
 import { Header } from './components/Header';
 import { Content } from './components/Content';
-import { useLogic, WIDTHS } from './useLogic';
+import { useLogic } from './useLogic';
 
 export const RecipeInfo = () => {
-  const { isOpen, onClose, isLoading, recipe, screen } = useLogic();
+  const { isOpen, onClose, isLoading, recipe } = useLogic();
 
   const renderContent = () => {
     if (isLoading) return <Loading />;
@@ -16,14 +16,13 @@ export const RecipeInfo = () => {
   };
 
   return (
-    <Modal
-      width={WIDTHS[screen]}
-      position={['iphone', 'ipadv'].includes(screen) ? 'bottom' : 'right'}
+    <Dialog
       header={recipe && <Header recipe={recipe} />}
+      right
       isActive={isOpen}
       onClose={onClose}
     >
       {renderContent()}
-    </Modal>
+    </Dialog>
   );
 };

@@ -25,4 +25,5 @@ export type Recipe = {
   instructions?: Instruction[];
   favorite?: boolean;
   portionSize?: number;
+  ownerId: number;
 };

@@ -1,24 +1,12 @@
 import React, { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Field,
-  Modal,
-  ActionBar,
-  DialogPosition,
-} from 'src/components/features';
+import { Field, ActionBar, Dialog } from 'src/components/features';
 import { ImageField } from './components/ImageField';
 import { InstructionsField } from './components/InstructionsField';
 import { ProductsField } from './components/ProductsField';
 import { TagsField } from './components/TagsField';
 import { useLogic, Options } from './useLogic';
 import * as css from './index.css';
-
-const POSITIONS: Record<string, DialogPosition> = {
-  mac: 'center',
-  iphone: 'bottom',
-  ipadv: 'top',
-  ipadh: 'top',
-};
 
 export const Form = (props: Options) => {
   const { t } = useTranslation();
@@ -29,7 +17,6 @@ export const Form = (props: Options) => {
     control,
     errors,
     onSubmit,
-    screen,
     isOpen,
     onClose,
     title,
@@ -37,13 +24,7 @@ export const Form = (props: Options) => {
 
   return (
     <Suspense>
-      <Modal
-        position={POSITIONS[screen]}
-        width={1120}
-        header={title}
-        isActive={isOpen}
-        onClose={onClose}
-      >
+      <Dialog size='large' header={title} isActive={isOpen} onClose={onClose}>
         <form onSubmit={onSubmit} className={css.container}>
           <div className={css.content}>
             <div className={css.basicFields}>
@@ -108,7 +89,7 @@ export const Form = (props: Options) => {
           <TagsField control={control} name='tags' />
           <ActionBar actions={actions} className={css.actions} />
         </form>
-      </Modal>
+      </Dialog>
     </Suspense>
   );
 };

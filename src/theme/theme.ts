@@ -73,6 +73,7 @@ export const theme: Theme = {
 export const px = (value: number) => `${value / 16}rem`;
 
 export const text = {
+  text4: { fontSize: px(14) },
   text3: { fontSize: px(16) },
   text3b: { fontSize: px(16), fontWeight: 600 },
   text2: { fontSize: px(20) },

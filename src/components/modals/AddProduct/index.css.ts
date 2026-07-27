@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA, px } from 'src/theme';
+import { px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -12,7 +12,6 @@ export const field = style({
 });
 
 export const fields = style({
-  width: '100%',
   display: 'flex',
   paddingTop: px(3),
   justifyContent: 'space-between',
@@ -24,12 +23,5 @@ export const content = style({
 });
 
 export const actions = style({
-  marginBottom: px(15),
   justifyContent: 'flex-end',
-
-  '@media': {
-    [MEDIA.ipadh]: {
-      marginBottom: 0,
-    },
-  },
 });

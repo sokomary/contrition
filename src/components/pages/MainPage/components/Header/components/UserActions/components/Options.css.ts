@@ -16,9 +16,11 @@ export const container = style({
 });
 
 export const option = style({
-  width: px(70),
+  width: 'fit-content',
+  minWidth: px(70),
   height: px(25),
   display: 'flex',
   alignItems: 'center',
+  whiteSpace: 'nowrap',
   padding: `0 ${px(4)}`,
 });

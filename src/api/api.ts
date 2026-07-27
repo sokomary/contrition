@@ -9,6 +9,7 @@ import {
   Menu,
   Meal,
   RecipeProduct,
+  FriendRecipes,
 } from 'src/types/domain';
 import { ENV } from '../../env';
 import { queryClient } from './QueryProvider.queryClient';
@@ -86,6 +87,35 @@ export const upload = (file: File) => {
     },
   });
 };
+
+export const getFriends = () =>
+  instanceAxios.get<any, FriendRecipes[]>(`/api/recipes/shared/recipients`);
+
+export const shareRecipe = (recipeId: number, email: string) =>
+  instanceAxios.post(`/api/recipes/${recipeId}/share`, null, {
+    params: { email },
+  });
+
+export const shareRecipesCountinuously = (email: string) =>
+  instanceAxios.post(`/api/recipes/share/continuous`, null, {
+    params: { email },
+  });
+
+export const unshareRecipe = (recipeId: number, email: string) =>
+  instanceAxios.delete(`/api/recipes/${recipeId}/share`, {
+    params: { email },
+  });
+
+export const getContinuousFriends = () =>
+  instanceAxios.get<any, User[]>('/api/recipes/share/continuous');
+
+export const disableContinuousSharing = (
+  email: string,
+  removeShared: boolean,
+) =>
+  instanceAxios.delete('/api/recipes/share/continuous', {
+    params: { email, removeShared },
+  });
 
 export const getUser = () =>
   instanceAxios.get<any, User>('/api/user', {

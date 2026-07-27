@@ -1,5 +1,4 @@
 import { style } from '@vanilla-extract/css';
-import { MEDIA } from '../../../theme';
 import { px } from 'src/theme';
 
 export const container = style({
@@ -25,12 +24,5 @@ export const content = style({
 });
 
 export const actions = style({
-  marginBottom: px(15),
   justifyContent: 'flex-end',
-
-  '@media': {
-    [MEDIA.ipadh]: {
-      marginBottom: 0,
-    },
-  },
 });

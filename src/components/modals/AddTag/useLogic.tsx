@@ -1,11 +1,10 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Tag } from 'src/types/domain';
 import { addTag } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
-import { useDeviceScreen } from 'src/theme';
 import { toast } from 'react-toastify';
 
 export const useLogic = () => {
@@ -13,8 +12,6 @@ export const useLogic = () => {
   const { isOpen, onClose } = useRouteModal({
     key: 'tag-new',
   });
-
-  const screen = useDeviceScreen();
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
@@ -44,7 +41,6 @@ export const useLogic = () => {
     onClose,
     register,
     errors: formState.errors,
-    screen,
     submit: handleSubmit(onSubmit),
     actions,
   };
