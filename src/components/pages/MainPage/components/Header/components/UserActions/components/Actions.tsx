@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Action, ActionBar } from 'src/components/features';
 import { CreateIcon, RandomIcon } from 'src/assets';
 import { useDeviceScreen } from 'src/theme';
@@ -7,6 +8,7 @@ import { useToggleModal } from 'src/components/modals';
 import * as css from './Actions.css';
 
 export const Actions = () => {
+  const { t } = useTranslation();
   const screen = useDeviceScreen();
   const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
 
@@ -17,19 +19,19 @@ export const Actions = () => {
 
   const actions: Action[] = [
     {
-      label: wideScreen ? 'Новый' : <CreateIcon className={css.icon} />,
+      label: wideScreen ? t('voc.new') : <CreateIcon className={css.icon} />,
       onClick: openRecipeNew,
       kind: 'primary',
       size: 'regular',
     },
     {
-      label: wideScreen ? 'Случайный' : <RandomIcon className={css.icon} />,
+      label: wideScreen ? t('voc.random') : <RandomIcon className={css.icon} />,
       onClick: openRandom,
       kind: 'primary',
       size: 'regular',
     },
     {
-      label: 'Меню',
+      label: t('startpage.menu.title'),
       onClick: openMenu,
       kind: 'primary',
       size: 'regular',

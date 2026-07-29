@@ -5,6 +5,7 @@ import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 type Options = {
   recipe: Recipe;
@@ -19,6 +20,7 @@ export const useRecipeActions = ({
   recipe,
   onSuccess: propsOnSuccess,
 }: Options): Action[] => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const { open } = useToggleModal('recipe-edit', recipe.id.toString());
@@ -44,17 +46,17 @@ export const useRecipeActions = ({
     mutationFn: deleteRecipe,
     onSuccess: () => {
       removeConfirmation.close();
-      toast('Рецепт удален');
+      toast(t('startpage.recipes.removed'));
       onSuccess();
       onClose();
     },
   });
 
   const removeConfirmation = useConfirmation({
-    title: 'Удаление рецепта',
-    description: 'Вы уверены, что хотите удалить рецепт?',
+    title: t('startpage.recipes.removeConfirm.title'),
+    description: t('startpage.recipes.removeConfirm.description'),
     confirm: {
-      label: 'Удалить',
+      label: t('startpage.recipes.actions.delete'),
       kind: 'primary',
       isLoading: removeMutation.isPending,
       onClick: () => removeMutation.mutate(recipe),
@@ -64,7 +66,7 @@ export const useRecipeActions = ({
   const toFavoritesMutation = useMutation({
     mutationFn: toFavorites,
     onSuccess: () => {
-      toast('Рецепт добавлен в избранное');
+      toast(t('startpage.recipes.favorites.added'));
       onSuccess();
     },
   });
@@ -72,7 +74,7 @@ export const useRecipeActions = ({
   const fromFavoritesMutation = useMutation({
     mutationFn: fromFavorites,
     onSuccess: () => {
-      toast('Рецепт удален из избранного');
+      toast(t('startpage.recipes.favorites.removed'));
       onSuccess();
     },
   });
@@ -81,31 +83,31 @@ export const useRecipeActions = ({
     {
       kind: 'ghost',
       onClick: open,
-      label: 'Изменить',
+      label: t('startpage.recipes.actions.edit'),
     },
     {
       kind: 'ghost',
       onClick: () => toFavoritesMutation.mutate(recipe.id),
-      label: 'В избранное',
+      label: t('startpage.recipes.actions.toFavorites'),
       display: !recipe.favorite,
       isLoading: toFavoritesMutation.isPending,
     },
     {
       kind: 'ghost',
       onClick: () => fromFavoritesMutation.mutate(recipe.id),
-      label: 'Из избранного',
+      label: t('startpage.recipes.actions.fromFavorites'),
       display: recipe.favorite,
       isLoading: fromFavoritesMutation.isPending,
     },
     {
       kind: 'ghost',
       onClick: openShare,
-      label: 'Поделиться',
+      label: t('startpage.recipes.actions.share'),
     },
     {
       kind: 'ghost',
       onClick: () => removeConfirmation.open(),
-      label: 'Удалить',
+      label: t('startpage.recipes.actions.delete'),
       isLoading: removeMutation.isPending,
     },
   ];

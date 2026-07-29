@@ -1,5 +1,6 @@
 import { Control, useFieldArray } from 'react-hook-form';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import { useTranslation } from 'react-i18next';
 import { Action } from 'src/components/features';
 import { Recipe } from 'src/types/domain';
 
@@ -9,6 +10,7 @@ export type Options = {
 };
 
 export const useLogic = (props: Options) => {
+  const { t } = useTranslation();
   const { fields, append, remove } = useFieldArray({
     control: props.control,
     name: 'instructions',
@@ -23,7 +25,7 @@ export const useLogic = (props: Options) => {
           name: '',
           steps: [],
         }),
-      label: 'Добавить часть',
+      label: t('startpage.recipes.instructions.actions.addPart'),
     },
   ];
 

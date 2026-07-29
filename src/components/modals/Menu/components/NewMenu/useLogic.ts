@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addMenu, getRecipes } from 'src/api';
 import { Meal, Recipe, Kind } from 'src/types/domain';
@@ -16,6 +17,7 @@ export type Options = {
 };
 
 export const useLogic = (props: Options) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const { navigate } = useNavigate();
 
@@ -36,10 +38,10 @@ export const useLogic = (props: Options) => {
     mutationFn: addMenu,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['menu'] });
-      toast('Меню успешно создано');
+      toast(t('startpage.menu.created'));
       props.onSave();
     },
-    onError: () => toast('Что-то пошло не так'),
+    onError: () => toast(t('errors.somethingWentWrong')),
   });
 
   const findMeal = useCallback(
@@ -76,14 +78,14 @@ export const useLogic = (props: Options) => {
   const actions: Action[] = [
     {
       kind: 'primary',
-      label: 'Отмена',
+      label: t('modals.confirmation.actions.cancel.label'),
       onClick: props.onCancel,
     },
     {
       display:
         !!period.start && !!period.end && !meals.find((meal) => !meal.recipe),
       kind: 'primary',
-      label: 'Сохранить',
+      label: t('startpage.recipes.actions.save'),
       onClick: () => {
         if (period.start && period.end) {
           addMutation.mutate({

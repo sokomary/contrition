@@ -17,7 +17,7 @@ export const ImageField = (props: Options) => {
     if (!files.length && !props.defaultValue) {
       return (
         <Button kind='ghost' className={css.photoInput} onClick={onClick}>
-          {error ? 'Что-то пошло не так' : 'Выбрать'}
+          {error ? t('errors.somethingWentWrong') : t('voc.select')}
         </Button>
       );
     }

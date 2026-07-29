@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Recipe } from 'src/types/domain';
 import { useLocation, useNavigate } from 'src/router';
 import { RecipeCard } from './RecipeCard';
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export const Content = ({ recipes }: Props) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const { navigate } = useNavigate();
 
@@ -21,7 +23,7 @@ export const Content = ({ recipes }: Props) => {
     });
 
   if (!recipes.length) {
-    return <div className={css.emptyState}>Пока нет рецептов</div>;
+    return <div className={css.emptyState}>{t('startpage.recipes.empty')}</div>;
   }
 
   return (

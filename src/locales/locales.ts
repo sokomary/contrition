@@ -4,6 +4,7 @@ import { en } from './en';
 import { ru } from './ru';
 
 i18next.use(initReactI18next).init({
+  // todo browser language by default
   fallbackLng: localStorage.getItem('language') || 'en',
   resources: {
     en: { translation: en },

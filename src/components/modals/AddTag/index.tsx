@@ -9,7 +9,12 @@ export const AddTag = () => {
   const { isOpen, onClose, register, submit, errors, actions } = useLogic();
 
   return (
-    <Dialog header='Новый тег' isActive={isOpen} onClose={onClose} size='small'>
+    <Dialog
+      header={t('startpage.tags.new.header')}
+      isActive={isOpen}
+      onClose={onClose}
+      size='small'
+    >
       <form onSubmit={submit} className={css.container}>
         <Field
           key='name'

@@ -19,10 +19,10 @@ export const useLogic = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tags'] });
       reset();
-      toast('Тэг успешно добавлен');
+      toast(t('startpage.tags.added'));
       onClose();
     },
-    onError: () => toast('Что-то пошло не так'),
+    onError: () => toast(t('errors.somethingWentWrong')),
   });
 
   const { register, handleSubmit, formState, reset } = useForm<Tag>();

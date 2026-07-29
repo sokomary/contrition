@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RecipeProduct } from 'src/types/domain';
 import { CrossOutAble } from 'src/components/features';
 import * as css from './Products.css';
@@ -8,18 +9,24 @@ type Props = {
   header?: boolean;
 };
 
-export const Products = ({ products, header }: Props) => (
-  <div className={css.container}>
-    {header && <div className={css.title}>Список продуктов:</div>}
+export const Products = ({ products, header }: Props) => {
+  const { t } = useTranslation();
 
-    {products
-      .sort((a, b) => (b.quantity < a.quantity ? -1 : 1))
-      .map((product) => (
-        <div key={product.id}>
-          <CrossOutAble
-            content={`${product.product.name} - ${product.quantity}`}
-          />
-        </div>
-      ))}
-  </div>
-);
+  return (
+    <div className={css.container}>
+      {header && (
+        <div className={css.title}>{t('startpage.menu.products.title')}:</div>
+      )}
+
+      {products
+        .sort((a, b) => (b.quantity < a.quantity ? -1 : 1))
+        .map((product) => (
+          <div key={product.id}>
+            <CrossOutAble
+              content={`${product.product.name} - ${product.quantity}`}
+            />
+          </div>
+        ))}
+    </div>
+  );
+};

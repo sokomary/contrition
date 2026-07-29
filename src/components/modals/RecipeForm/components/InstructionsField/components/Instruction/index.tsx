@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActionBar } from 'src/components/features';
+import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Recipe } from 'src/types/domain';
@@ -13,6 +14,7 @@ type Props = Options & {
 };
 
 export const Instruction = ({ register, ...props }: Props) => {
+  const { t } = useTranslation();
   const { fields, actions, remove, name } = useLogic(props);
 
   return (
@@ -20,7 +22,7 @@ export const Instruction = ({ register, ...props }: Props) => {
       <div className={css.header}>
         <TextareaAutosize
           className={textarea}
-          placeholder='Название'
+          placeholder={t('domain.recipe.name')}
           {...register(`${name}.name`)}
         />
         <ActionBar actions={[actions[0]]} />

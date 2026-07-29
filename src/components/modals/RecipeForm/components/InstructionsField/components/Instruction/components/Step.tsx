@@ -1,5 +1,6 @@
 import { Action, ActionBar } from 'src/components/features';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Recipe } from 'src/types/domain';
@@ -13,10 +14,12 @@ type Props = {
 };
 
 export const Step = ({ index, onRemove, register, name }: Props) => {
+  const { t } = useTranslation();
+
   const actions: Action[] = [
     {
       kind: 'ghost',
-      label: 'Удалить',
+      label: t('startpage.recipes.actions.delete'),
       onClick: onRemove,
       size: 'small',
     },
@@ -29,7 +32,7 @@ export const Step = ({ index, onRemove, register, name }: Props) => {
 
         <TextareaAutosize
           className={css.textarea}
-          placeholder='Описание'
+          placeholder={t('voc.description')}
           {...register(name)}
         />
       </div>

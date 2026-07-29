@@ -34,13 +34,37 @@ export const en = {
     },
   },
   startpage: {
+    actions: {
+      logout: 'Log out',
+    },
     recipes: {
+      empty: 'No recipes yet',
+      added: 'Recipe added',
+      updated: 'Recipe updated',
+      removed: 'Recipe deleted',
       random: {
         header: 'Random recipe',
         actions: { get: 'Refresh' },
       },
       new: {
         header: 'New recipe',
+      },
+      favorites: {
+        title: 'Favorite recipes',
+        added: 'Recipe added to favorites',
+        removed: 'Recipe removed from favorites',
+      },
+      removeConfirm: {
+        title: 'Delete recipe',
+        description: 'Are you sure you want to delete this recipe?',
+      },
+      instructions: {
+        title: 'Instructions',
+        empty: 'No instructions yet',
+        actions: {
+          addPart: 'Add part',
+          addStep: 'Add step',
+        },
       },
       share: {
         header: 'Share recipe',
@@ -55,8 +79,11 @@ export const en = {
         addProduct: 'Add product',
         addTag: 'Add tag',
         delete: 'Delete',
+        edit: 'Edit',
         save: 'Save',
         share: 'Share',
+        toFavorites: 'To favorites',
+        fromFavorites: 'From favorites',
       },
       errors: {
         products:
@@ -81,6 +108,7 @@ export const en = {
       },
       recipients: {
         title: 'Shared recipes',
+        remove: 'Stop sharing',
       },
       cancelConfirm: {
         title: 'Cancel continuous sharing',
@@ -101,6 +129,7 @@ export const en = {
     },
     products: {
       title: 'Products',
+      added: 'Product added',
       new: {
         header: 'New product',
       },
@@ -110,11 +139,30 @@ export const en = {
     },
     tags: {
       title: 'Tags',
+      added: 'Tag added',
       new: {
         header: 'New tag',
       },
       actions: {
         add: 'Add tag',
+      },
+    },
+    menu: {
+      title: 'Menu',
+      created: 'Menu created',
+      actions: {
+        add: 'Add menu',
+        addRecipe: 'Add to menu',
+      },
+      current: {
+        empty: 'No current menu',
+      },
+      history: {
+        title: 'History',
+        empty: 'History is empty',
+      },
+      products: {
+        title: 'Shopping list',
       },
     },
   },
@@ -132,6 +180,7 @@ export const en = {
     },
   },
   errors: {
+    somethingWentWrong: 'Something went wrong',
     fields: {
       required: {
         text: 'Required field',
@@ -158,6 +207,11 @@ export const en = {
     till: 'till',
     to: 'to',
     random: 'Random',
+    new: 'New',
+    select: 'Select',
+    search: 'Search',
+    description: 'Description',
+    loading: 'Loading',
   },
   weekdays: {
     monday: { label: 'Monday', labelShort: 'Mon' },

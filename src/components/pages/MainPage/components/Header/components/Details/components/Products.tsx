@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useToggleModal } from 'src/components/modals';
 import { getProducts } from 'src/api';
@@ -8,6 +9,7 @@ import { Card } from './Card';
 import * as css from './Products.css';
 
 export const Products = () => {
+  const { t } = useTranslation();
   const { open: openAddProduct } = useToggleModal(`product-new`, 'true');
   const { data: products } = useSuspenseQuery({
     queryKey: ['products'],
@@ -16,14 +18,14 @@ export const Products = () => {
 
   return (
     <Card
-      title='Продукты'
+      title={t('startpage.products.title')}
       items={(products || []).map((product) => (
         <Item key={product.id} item={product} />
       ))}
       className={css.container}
       actions={[
         {
-          label: 'Добавить продукт',
+          label: t('startpage.products.actions.add'),
           onClick: openAddProduct,
           kind: 'ghost',
         },

@@ -1,11 +1,13 @@
 import { Menu } from 'src/types/domain';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { getMenuProducts } from 'src/api';
 
 export type Options = { menu: Menu };
 
 export const useLogic = ({ menu }: Options) => {
+  const { t } = useTranslation();
   const dates = Array.from(
     new Set(menu.meals?.map((meal) => meal.date)),
   ).sort();
@@ -20,7 +22,7 @@ export const useLogic = ({ menu }: Options) => {
 
   const actions = [
     {
-      label: 'Продукты',
+      label: t('startpage.products.title'),
       onClick: () => setOpen(!open),
       kind: 'ghost' as const,
       isLoading,

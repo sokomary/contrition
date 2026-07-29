@@ -27,7 +27,7 @@ export const Options = () => {
         className={css.option}
         onClick={() => logoutMutation.mutate()}
       >
-        Выйти
+        {t('startpage.actions.logout')}
       </Button>
     </div>
   );

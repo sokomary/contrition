@@ -8,6 +8,7 @@ type Props = {
   recipe: Recipe;
 };
 
+// todo move to popover
 export const Actions = ({ recipe }: Props) => {
   const [open, setOpen] = useState(false);
 

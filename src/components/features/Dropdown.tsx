@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { EnterIcon, SearchIcon } from 'src/assets';
 import { useLogic, Options } from './Dropdown.useLogic';
 import { Button } from './Button';
@@ -6,6 +7,7 @@ import * as css from './Dropdown.css';
 
 // todo move to popover
 export const Dropdown = <T = unknown>(props: Options<T>) => {
+  const { t } = useTranslation();
   const {
     open,
     query,
@@ -20,7 +22,11 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
 
   const renderContent = () => {
     if (!options.length) {
-      return <div className={css.emptyState}>Нет результатов</div>;
+      return (
+        <div className={css.emptyState}>
+          {t('features.dropdown.emptyState.text')}
+        </div>
+      );
     }
 
     return options.map((o) => (

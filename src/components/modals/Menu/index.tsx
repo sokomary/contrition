@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Loading, Modal } from 'src/components/features';
 import { useLogic } from './useLogic';
 import { CurrentMenu } from './components/CurrentMenu';
@@ -9,6 +10,7 @@ import * as css from './index.css';
 export const SIDE_MODAL_WIDTH = 577;
 
 export const Menu = () => {
+  const { t } = useTranslation();
   const {
     kinds,
     actions,
@@ -57,13 +59,13 @@ export const Menu = () => {
       header={
         <div className={css.header}>
           <Button
-            label='Меню'
+            label={t('startpage.menu.title')}
             kind='ghost'
             onClick={() => setMode('current')}
           />
           <div>|</div>
           <Button
-            label='История'
+            label={t('startpage.menu.history.title')}
             kind='ghost'
             onClick={() => setMode('history')}
           />

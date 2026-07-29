@@ -86,7 +86,7 @@ export const ViewSharings = () => {
                         <div className={css.recipeName}>{recipe.name}</div>
                         <Button
                           kind='ghost'
-                          label='Удалить доступ'
+                          label={t('startpage.sharings.recipients.remove')}
                           className={css.removeButton}
                           onClick={() =>
                             setRemoveTarget({

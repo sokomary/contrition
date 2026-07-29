@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Action, ActionBar, Loading } from 'src/components/features';
 import { Kind } from 'src/types/domain';
 import { useLogic, Options } from './useLogic';
@@ -13,6 +14,7 @@ type Props = Options & {
 };
 
 export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
+  const { t } = useTranslation();
   const { tableData, dates, period, isLoading, products } = useLogic({
     menu,
   });
@@ -21,7 +23,7 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
 
   const renderTitle = () => {
     if (!menu) {
-      return 'Нет текущего меню';
+      return t('startpage.menu.current.empty');
     }
     return (
       <div className={css.title}>

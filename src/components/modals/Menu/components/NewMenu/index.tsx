@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActionBar, Button, PeriodPicker } from 'src/components/features';
 import { upperFirst } from 'lodash';
 import { Kind } from 'src/types/domain';
@@ -7,6 +8,7 @@ import { useFormat } from 'src/utils';
 import * as css from './index.css';
 
 export const NewMenu = (props: Options) => {
+  const { t } = useTranslation();
   const {
     dates,
     findMeal,
@@ -31,7 +33,7 @@ export const NewMenu = (props: Options) => {
           <Button
             kind='ghost'
             size='small'
-            label='Удалить'
+            label={t('startpage.recipes.actions.delete')}
             onClick={() => onRemove(date, kind.id)}
           />
         </div>
@@ -39,13 +41,19 @@ export const NewMenu = (props: Options) => {
     }
 
     if (isSelected(date, kind)) {
-      return <Button kind='ghost' label='Отмена' onClick={() => onCancel()} />;
+      return (
+        <Button
+          kind='ghost'
+          label={t('modals.confirmation.actions.cancel.label')}
+          onClick={() => onCancel()}
+        />
+      );
     }
 
     return (
       <Button
         kind='ghost'
-        label='Выбрать'
+        label={t('voc.select')}
         disabled={!!selecting}
         onClick={() => onSelect(date.toString(), kind.id)}
       />

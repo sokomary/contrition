@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Recipe } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { Link } from 'react-router-dom';
@@ -25,6 +26,7 @@ export const RecipeCard = ({
   showTooltip,
   onAddToMenu,
 }: Props) => {
+  const { t } = useTranslation();
   const screen = useDeviceScreen();
   const displayInfo = screen !== 'iphone' && !small;
 
@@ -48,7 +50,7 @@ export const RecipeCard = ({
           {showTooltip && (
             <Button
               className={css.toMenuButton}
-              label='Добавить в меню'
+              label={t('startpage.menu.actions.addRecipe')}
               onClick={onAddToMenu}
             />
           )}

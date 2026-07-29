@@ -19,10 +19,10 @@ export const useLogic = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       reset();
-      toast('Продукт успешно добавлен');
+      toast(t('startpage.products.added'));
       onClose();
     },
-    onError: () => toast('Что-то пошло не так'),
+    onError: () => toast(t('errors.somethingWentWrong')),
   });
 
   const { register, handleSubmit, formState, reset } = useForm<Product>();

@@ -31,10 +31,14 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
         });
       }
       reset();
-      toast(`Рецепт ${defaultValues ? 'обновлен' : 'добавлен'}`);
+      toast(
+        defaultValues
+          ? t('startpage.recipes.updated')
+          : t('startpage.recipes.added'),
+      );
       onClose();
     },
-    onError: () => toast('Что-то пошло не так'),
+    onError: () => toast(t('errors.somethingWentWrong')),
   });
 
   const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(

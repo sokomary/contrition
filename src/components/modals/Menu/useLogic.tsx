@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getKinds, getMenu } from 'src/api';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
 import { Temporal } from 'temporal-polyfill';
@@ -8,6 +9,7 @@ import { Temporal } from 'temporal-polyfill';
 type Mode = 'current' | 'new' | 'history';
 
 export const useLogic = () => {
+  const { t } = useTranslation();
   const screen = useDeviceScreen();
   const { isOpen, onClose } = useRouteModal({
     key: 'menu',
@@ -63,7 +65,7 @@ export const useLogic = () => {
     actions: [
       {
         kind: 'primary' as const,
-        label: 'Добавить меню',
+        label: t('startpage.menu.actions.add'),
         onClick: () => setMode('new'),
         display: wideScreen,
       },

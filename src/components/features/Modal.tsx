@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, ReactNode, Suspense } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { ClearIcon } from 'src/assets';
 import { Button } from './Button';
 import { useLogic } from './Modal.useLogic';
@@ -25,6 +26,7 @@ export const Modal = ({
   position = 'center',
   side,
 }: Props) => {
+  const { t } = useTranslation();
   const { isRendered, zIndex, modalRoot } = useLogic({ isActive, onClose });
 
   if (!isRendered || !modalRoot) {
@@ -37,7 +39,7 @@ export const Modal = ({
         <div className={css.overlay({ isActive })} style={{ zIndex }} />
       )}
 
-      <Suspense fallback={<>is loading</>}>
+      <Suspense fallback={<>{t('voc.loading')}</>}>
         <div
           className={css.content({ isActive, position, overlay })}
           style={{ zIndex: zIndex + 1 }}

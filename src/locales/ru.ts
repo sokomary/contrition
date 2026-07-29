@@ -34,13 +34,37 @@ export const ru = {
     },
   },
   startpage: {
+    actions: {
+      logout: 'Выйти',
+    },
     recipes: {
+      empty: 'Пока нет рецептов',
+      added: 'Рецепт добавлен',
+      updated: 'Рецепт обновлен',
+      removed: 'Рецепт удален',
       random: {
         header: 'Случайный рецепт',
         actions: { get: 'Обновить' },
       },
       new: {
         header: 'Новый рецепт',
+      },
+      favorites: {
+        title: 'Избранные рецепты',
+        added: 'Рецепт добавлен в избранное',
+        removed: 'Рецепт удален из избранного',
+      },
+      removeConfirm: {
+        title: 'Удаление рецепта',
+        description: 'Вы уверены, что хотите удалить рецепт?',
+      },
+      instructions: {
+        title: 'Приготовление',
+        empty: 'Приготовление не описано',
+        actions: {
+          addPart: 'Добавить часть',
+          addStep: 'Добавить шаг',
+        },
       },
       share: {
         header: 'Поделиться рецептом',
@@ -55,8 +79,11 @@ export const ru = {
         addProduct: 'Добавить продукт',
         addTag: 'Добавить тэг',
         delete: 'Удалить',
+        edit: 'Изменить',
         save: 'Сохранить',
         share: 'Поделиться',
+        toFavorites: 'В избранное',
+        fromFavorites: 'Из избранного',
       },
       errors: {
         products:
@@ -81,6 +108,7 @@ export const ru = {
       },
       recipients: {
         title: 'Открытые рецепты',
+        remove: 'Удалить доступ',
       },
       cancelConfirm: {
         title: 'Отмена постоянного доступа',
@@ -101,6 +129,7 @@ export const ru = {
     },
     products: {
       title: 'Продукты',
+      added: 'Продукт успешно добавлен',
       new: {
         header: 'Новый продукт',
       },
@@ -110,11 +139,30 @@ export const ru = {
     },
     tags: {
       title: 'Тэги',
+      added: 'Тэг успешно добавлен',
       new: {
         header: 'Новый тэг',
       },
       actions: {
         add: 'Добавить тэг',
+      },
+    },
+    menu: {
+      title: 'Меню',
+      created: 'Меню успешно создано',
+      actions: {
+        add: 'Добавить меню',
+        addRecipe: 'Добавить в меню',
+      },
+      current: {
+        empty: 'Нет текущего меню',
+      },
+      history: {
+        title: 'История',
+        empty: 'В истории пока пусто',
+      },
+      products: {
+        title: 'Список продуктов',
       },
     },
   },
@@ -132,6 +180,7 @@ export const ru = {
     },
   },
   errors: {
+    somethingWentWrong: 'Что-то пошло не так',
     fields: {
       required: {
         text: 'Обязательное поле',
@@ -158,6 +207,11 @@ export const ru = {
     till: 'до',
     to: 'до',
     random: 'Случайный',
+    new: 'Новый',
+    select: 'Выбрать',
+    search: 'Поиск',
+    description: 'Описание',
+    loading: 'Загрузка',
   },
   weekdays: {
     monday: { label: 'Понедельник', labelShort: 'Пон' },
