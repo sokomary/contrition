@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Action, ActionBar } from 'src/components/features';
-import { CreateIcon, RandomIcon } from 'src/assets';
+import { IconCreate, IconRandom } from 'src/assets';
 import { useDeviceScreen } from 'src/theme';
 import { useRouteModal } from 'src/router';
 import { useToggleModal } from 'src/components/modals';
@@ -19,13 +19,13 @@ export const Actions = () => {
 
   const actions: Action[] = [
     {
-      label: wideScreen ? t('voc.new') : <CreateIcon className={css.icon} />,
+      label: wideScreen ? t('voc.new') : <IconCreate className={css.icon} />,
       onClick: openRecipeNew,
       kind: 'primary',
       size: 'regular',
     },
     {
-      label: wideScreen ? t('voc.random') : <RandomIcon className={css.icon} />,
+      label: wideScreen ? t('voc.random') : <IconRandom className={css.icon} />,
       onClick: openRandom,
       kind: 'primary',
       size: 'regular',

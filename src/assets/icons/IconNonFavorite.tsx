@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const NonFavoriteIcon = (props: any) => (
+export const IconNonFavorite = (props: any) => (
   <svg
     {...props}
     width='24'

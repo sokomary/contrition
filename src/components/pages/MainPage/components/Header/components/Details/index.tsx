@@ -19,7 +19,7 @@ export const Details: FC<Props> = ({ recipes, open }) => (
           <Products />
         </div>
 
-        <Favorites recipes={recipes.filter((r) => r.favorite)} />
+        <Favorites recipes={recipes} />
       </div>
     </div>
   </div>

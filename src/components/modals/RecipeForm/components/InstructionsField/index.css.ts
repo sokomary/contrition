@@ -5,17 +5,17 @@ export const container = style({
   display: 'flex',
   flexDirection: 'column',
   gap: px(10),
-  width: '100%',
+  // width: '100%',
   maxHeight: 'fit-content',
 
   '@media': {
     [MEDIA.ipadv]: {
-      width: '100%',
+      // width: '100%',
       maxHeight: px(430),
     },
     [MEDIA.ipadh]: {
       maxHeight: px(320),
-      width: '35%',
+      // width: '35%',
     },
     [MEDIA.mac]: {
       maxHeight: px(566),

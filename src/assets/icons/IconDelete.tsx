@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const DeleteIcon = (props: any) => (
+export const IconDelete = (props: any) => (
   <svg {...props} width='20' height='20' viewBox='0 0 20 20' fill='none'>
     <circle cx='10' cy='10' r='10' fill='#E1737F' />
     <path

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from './Button';
-import { ClearIcon } from 'src/assets';
+import { IconClear } from 'src/assets';
 import * as css from './Dialog.css';
 
 type Options = PropsWithChildren & {
@@ -77,7 +77,7 @@ export const Dialog = (options: Options) => {
               dialogRef.current?.close();
               optionsRef.current.onClose?.();
             }}
-            startGraphic={<ClearIcon />}
+            startGraphic={<IconClear />}
           />
         </div>
 

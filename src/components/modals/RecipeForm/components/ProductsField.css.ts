@@ -6,11 +6,11 @@ export const container = style({
   gap: px(20),
   flexDirection: 'column',
   margin: '0',
-  width: '100%',
+  // width: '100%',
 
   '@media': {
     [MEDIA.ipadh]: {
-      width: '35%',
+      // width: '35%',
     },
   },
 });

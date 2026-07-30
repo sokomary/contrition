@@ -18,6 +18,7 @@ export type Action = {
   isLoading?: boolean;
   disabled?: boolean;
   size?: ButtonSize;
+  startGraphic?: ReactNode;
 };
 
 type Props = {

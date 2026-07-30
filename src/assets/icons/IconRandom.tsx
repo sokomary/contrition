@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const RandomIcon = (props: any) => (
+export const IconRandom = (props: any) => (
   <svg
     {...props}
     width='24'

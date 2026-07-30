@@ -21,7 +21,6 @@ export const Callout = ({ buttonProps, calloutRef, content }: Props) => {
 
       <div
         id={id}
-        // oxlint-disable-next-line react/no-unknown-property
         popover='auto'
         ref={calloutRef}
         className={css.content}

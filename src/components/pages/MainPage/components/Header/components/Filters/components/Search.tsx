@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ClearIcon } from 'src/assets';
+import { IconClear } from 'src/assets';
 import { Button } from 'src/components/features';
 import * as css from './Search.css';
 
@@ -23,7 +23,7 @@ export const Search = ({ value, onChange, className }: Props) => {
       />
 
       <Button
-        startGraphic={<ClearIcon />}
+        startGraphic={<IconClear />}
         kind='ghost'
         className={css.icon}
         onClick={() => onChange('')}

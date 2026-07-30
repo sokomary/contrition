@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarIcon, DropRightIcon, DropLeftIcon } from 'src/assets';
+import { IconCalendar, IconDropRight, IconDropLeft } from 'src/assets';
 import { Button } from 'src/components/features';
 import { upperFirst } from 'lodash';
 import { Temporal } from 'temporal-polyfill';
@@ -44,7 +44,7 @@ export const Picker = (props: Props) => {
       buttonProps={{
         id: id,
         disabled: disabled,
-        startGraphic: <CalendarIcon />,
+        startGraphic: <IconCalendar />,
         label: title,
       }}
       content={
@@ -53,13 +53,13 @@ export const Picker = (props: Props) => {
             <div className={css.control}>
               <Button
                 kind='ghost'
-                startGraphic={<DropLeftIcon />}
+                startGraphic={<IconDropLeft />}
                 onClick={minusMonth}
               />
               {upperFirst(monthName)}
               <Button
                 kind='ghost'
-                startGraphic={<DropRightIcon />}
+                startGraphic={<IconDropRight />}
                 onClick={plusMonth}
               />
             </div>
@@ -67,13 +67,13 @@ export const Picker = (props: Props) => {
             <div className={css.control}>
               <Button
                 kind='ghost'
-                startGraphic={<DropLeftIcon />}
+                startGraphic={<IconDropLeft />}
                 onClick={minusYear}
               />
               {year}
               <Button
                 kind='ghost'
-                startGraphic={<DropRightIcon />}
+                startGraphic={<IconDropRight />}
                 onClick={plusYear}
               />
             </div>

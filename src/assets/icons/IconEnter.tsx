@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const EnterIcon = (props: any) => (
+export const IconEnter = (props: any) => (
   <svg
     {...props}
     width='14'

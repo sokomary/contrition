@@ -42,7 +42,7 @@ export const icon = style({
 });
 
 export const content = style({
-  maxWidth: '100%',
+  // maxWidth: '100%',
   padding: '0',
   gap: px(10),
   display: 'flex',

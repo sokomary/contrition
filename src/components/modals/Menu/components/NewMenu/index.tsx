@@ -24,12 +24,13 @@ export const NewMenu = (props: Options) => {
   } = useLogic(props);
 
   const renderItem = (date: string, kind: Kind) => {
-    const recipe = findMeal(date.toString(), kind.id)?.recipe;
+    const recipe = findMeal(date.toString(), kind.id)?.recipeId;
 
     if (recipe) {
       return (
         <div className={css.meal}>
-          {findMeal(date.toString(), kind.id)?.recipe?.name}
+          {/* todo get recipe name */}
+          {recipe}
           <Button
             kind='ghost'
             size='small'

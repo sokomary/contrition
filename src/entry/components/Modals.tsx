@@ -18,6 +18,7 @@ export const Modals = () => (
     <GetRandomRecipe />
     <Menu />
     <RecipeNew />
+    {/* todo no closing animation */}
     <RecipeEdit />
     <AddProduct />
     <AddTag />

@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addMenu, getRecipes } from 'src/api';
-import { Meal, Recipe, Kind } from 'src/types/domain';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addMenu } from 'src/api';
+import { Meal, Kind } from 'src/types/domain';
 import { isEqual, omit, parseInt } from 'lodash';
 import { Action } from 'src/components/features';
 import { Period } from 'src/types/Period';
 import { useLocation, useNavigate } from 'src/router';
 import { toast } from 'react-toastify';
 import { generateDates } from 'src/components/features/DatesPicker/helpers';
+
+// todo update menu design and logic considering recipes pagination
+// todo it is weird BE requires the whole recipe object
 
 export type Options = {
   kinds: Kind[];
@@ -21,13 +24,10 @@ export const useLogic = (props: Options) => {
   const { search } = useLocation();
   const { navigate } = useNavigate();
 
-  const { data: recipes } = useQuery({
-    queryKey: ['recipes'],
-    queryFn: () => getRecipes(),
-  });
-
   const [period, setPeriod] = useState<Period>({ start: null, end: null });
-  const [meals, setMeals] = useState<Omit<Meal, 'id'>[]>([]);
+  const [meals, setMeals] = useState<
+    (Omit<Meal, 'id' | 'recipe'> & { recipeId: number })[]
+  >([]);
   const [selecting, setSelecting] = useState<{
     date: string;
     kindId: number;
@@ -58,22 +58,21 @@ export const useLogic = (props: Options) => {
     const recipeId = search.select?.[2]
       ? parseInt(search.select[2], 10)
       : undefined;
-    const recipe = recipes?.find((r) => r.id === recipeId);
 
     if (recipeId && kindId) {
       const meal = findMeal(date, kindId);
-      const mealRecipe = meal?.recipe;
+      const mealRecipeId = meal?.recipeId;
 
-      if (meal && recipe && (!mealRecipe || mealRecipe.id !== recipeId)) {
+      if (meal && mealRecipeId !== recipeId) {
         setMeals((prev) => [
           ...prev.filter((m) => !isEqual(m, meal)),
-          { ...meal, recipe },
+          { ...meal, recipeId },
         ]);
         setSelecting(null);
         navigate({ search: { ...omit(search, 'select') } });
       }
     }
-  }, [findMeal, props.kinds, navigate, recipes, search]);
+  }, [findMeal, props.kinds, navigate, search]);
 
   const actions: Action[] = [
     {
@@ -83,7 +82,7 @@ export const useLogic = (props: Options) => {
     },
     {
       display:
-        !!period.start && !!period.end && !meals.find((meal) => !meal.recipe),
+        !!period.start && !!period.end && !meals.find((meal) => !meal.recipeId),
       kind: 'primary',
       label: t('startpage.recipes.actions.save'),
       onClick: () => {
@@ -109,7 +108,7 @@ export const useLogic = (props: Options) => {
           dates.map((date) => ({
             date: date.toString(),
             kind,
-            recipe: null as unknown as Recipe,
+            recipeId: null as unknown as number,
           })),
         )
         .flat(1);
@@ -142,10 +141,10 @@ export const useLogic = (props: Options) => {
     onRemove: (date: string, kindId: number) => {
       const meal = findMeal(date, kindId);
 
-      if (meal?.recipe) {
+      if (meal?.recipeId) {
         setMeals((prev) => [
           ...prev.filter((m) => !isEqual(m, meal)),
-          { ...meal, recipe: null as unknown as Recipe },
+          { ...meal, recipeId: null as unknown as number },
         ]);
       }
     },

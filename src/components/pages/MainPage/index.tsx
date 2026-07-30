@@ -7,15 +7,48 @@ import * as css from './index.css';
 
 export const MainPage = () => {
   const {
-    filteredRecipes,
+    recipes,
+    sharedRecipes,
     isMenuOpen,
     isLoading,
+    isSharedLoading,
     query,
     setQuery,
     tags,
     setTags,
     wideScreen,
+    recipesObserver,
+    sharedRecipesObserver,
   } = useLogic();
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <Loading />;
+    }
+
+    return (
+      <>
+        <Content recipes={recipes} />
+        {recipesObserver}
+      </>
+    );
+  };
+
+  const renderSharedContent = () => {
+    if (isSharedLoading) {
+      return <Loading />;
+    }
+
+    if (!sharedRecipes.length) return null;
+
+    return (
+      <>
+        <div className={css.title}>Shared with me</div>
+        <Content recipes={sharedRecipes} />
+        {sharedRecipesObserver}
+      </>
+    );
+  };
 
   return (
     <div className={css.container({ withSide: isMenuOpen && wideScreen })}>
@@ -26,7 +59,8 @@ export const MainPage = () => {
         onTagSelect={setTags}
       />
 
-      {isLoading ? <Loading /> : <Content recipes={filteredRecipes} />}
+      {renderContent()}
+      {renderSharedContent()}
     </div>
   );
 };

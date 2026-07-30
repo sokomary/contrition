@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const DropUpIcon = (props: any) => (
+export const IconDropUp = (props: any) => (
   <svg
     {...props}
     width='24'

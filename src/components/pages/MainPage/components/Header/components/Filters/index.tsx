@@ -1,4 +1,4 @@
-import { DropDownIcon, DropUpIcon } from 'src/assets';
+import { IconDropDown, IconDropUp } from 'src/assets';
 import React from 'react';
 import { Tag } from 'src/types/domain';
 import { Search } from './components/Search';
@@ -22,7 +22,7 @@ export const Filters = ({
   infoOpen,
   toggleInfoOpen,
 }: FiltersProps) => {
-  const Icon = infoOpen ? DropUpIcon : DropDownIcon;
+  const Icon = infoOpen ? IconDropUp : IconDropDown;
 
   return (
     <div className={css.container}>

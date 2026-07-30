@@ -1,34 +1,15 @@
 import { style } from '@vanilla-extract/css';
 import { MEDIA, px } from 'src/theme';
 
-export const interactiveFields = style({
+export const rowFields = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: px(15),
-  width: '100%',
+  gap: px(7),
 
   '@media': {
-    [MEDIA.ipadh]: {
-      display: 'contents',
-    },
-  },
-});
-
-export const linkWeightFields = style({
-  display: 'flex',
-  gap: 7,
-});
-
-export const linkField = style({
-  flex: 1,
-});
-
-export const numberField = style({
-  width: 104,
-
-  '@media': {
-    [MEDIA.ipadh]: {
-      width: 72,
+    [MEDIA.ipadv]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     },
   },
 });
@@ -47,7 +28,8 @@ export const content = style({
 
   '@media': {
     [MEDIA.ipadv]: {
-      flexDirection: 'row',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
     },
   },
 });

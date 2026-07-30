@@ -1,8 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, MEDIA, px } from 'src/theme';
-
-const REGULAR_SIZE = 360;
-const SMALL_SIZE = 300;
+import { color, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -11,18 +8,11 @@ export const container = style({
 });
 
 export const content = style({
-  height: `${REGULAR_SIZE}px`,
-  width: `${REGULAR_SIZE}px`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      height: `${SMALL_SIZE}px`,
-      width: `${SMALL_SIZE}px`,
-    },
-  },
+  width: 'auto',
+  aspectRatio: '1 / 1',
 });
 
 export const hiddenInput = style({

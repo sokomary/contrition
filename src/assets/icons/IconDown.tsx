@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const DownIcon = (props: any) => (
+export const IconDown = (props: any) => (
   <svg
     {...props}
     width='24'

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ClearIcon = (props: any) => (
+export const IconClear = (props: any) => (
   <svg {...props} width='20' height='20' viewBox='0 0 20 20' fill='none'>
     <circle cx='10' cy='10' r='10' fill='grey' />
     <path

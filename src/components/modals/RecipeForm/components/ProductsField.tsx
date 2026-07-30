@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar, Dropdown, FieldError } from 'src/components/features';
 import { Tooltip } from 'react-tooltip';
-import { DeleteIcon } from 'src/assets';
+import { IconDelete } from 'src/assets';
 import { Options, useLogic } from './ProductsField.useLogic';
 import * as css from './ProductsField.css';
 
@@ -46,7 +46,7 @@ export const ProductsField = (props: Options) => {
               className={css.tooltip}
               id={`product-delete${product.id}`}
             >
-              <DeleteIcon className={css.icon} onClick={() => remove(index)} />
+              <IconDelete className={css.icon} onClick={() => remove(index)} />
             </Tooltip>
           </div>
         ))}

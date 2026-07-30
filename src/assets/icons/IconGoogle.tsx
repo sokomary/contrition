@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const GoogleIcon = (props: any) => (
+export const IconGoogle = (props: any) => (
   <svg
     {...props}
     width='24'

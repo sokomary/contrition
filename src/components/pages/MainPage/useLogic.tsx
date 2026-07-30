@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getRecipes } from 'src/api';
+import { useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getRecipes, getSharedRecipes, LIMIT } from 'src/api';
 import { useRouteModal } from 'src/router';
 import { Tag } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme';
+import { useAppearObserver } from 'src/utils';
 
 export const useLogic = () => {
   const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
@@ -11,21 +12,52 @@ export const useLogic = () => {
   const [tags, setTags] = useState<Tag[]>([]);
   const [query, setQuery] = useState('');
 
-  const { data: recipes, isLoading } = useQuery({
-    queryKey: ['recipes', tags],
-    queryFn: () => getRecipes(tags.map((tag) => tag.id)),
+  const recipesQuery = useInfiniteQuery({
+    queryKey: ['recipes', tags, query],
+    queryFn: ({ pageParam }) =>
+      getRecipes(
+        tags.map((tag) => tag.id),
+        LIMIT,
+        pageParam,
+        query,
+      ),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      const limit = lastPage.limit || LIMIT;
+      const count = (lastPage.content || []).length;
+      return count < limit ? undefined : lastPage.offset + limit;
+    },
+    getPreviousPageParam: (firstPage) =>
+      firstPage.offset <= 0
+        ? undefined
+        : Math.max(0, firstPage.offset - (firstPage.limit || LIMIT)),
+    select: (data) => data.pages.flatMap((page) => page.content || []),
   });
 
-  const filteredRecipes =
-    useMemo(
-      () =>
-        query?.length
-          ? recipes?.filter((r) =>
-              r.name.toLowerCase().includes(query.toLowerCase()),
-            )
-          : recipes,
-      [query, recipes],
-    ) || [];
+  const sharedRecipesQuery = useInfiniteQuery({
+    queryKey: ['recipes', 'shared', tags, query],
+    queryFn: ({ pageParam }) =>
+      getSharedRecipes(
+        tags.map((tag) => tag.id),
+        LIMIT,
+        pageParam,
+        query,
+      ),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      const limit = lastPage.limit || LIMIT;
+      const count = (lastPage.content || []).length;
+      return count < limit ? undefined : lastPage.offset + limit;
+    },
+    getPreviousPageParam: (firstPage) =>
+      firstPage.offset <= 0
+        ? undefined
+        : Math.max(0, firstPage.offset - (firstPage.limit || LIMIT)),
+    select: (data) => data.pages.flatMap((page) => page.content || []),
+  });
+
+  const recipes = recipesQuery.data || [];
+  const sharedRecipes = sharedRecipesQuery.data || [];
 
   const screen = useDeviceScreen();
   const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
@@ -33,10 +65,14 @@ export const useLogic = () => {
   return {
     wideScreen,
     isMenuOpen,
-    filteredRecipes,
+    recipes,
+    sharedRecipes,
     query,
     setQuery,
-    isLoading,
+    isLoading: recipesQuery.isLoading,
+    isSharedLoading: sharedRecipesQuery.isLoading,
+    recipesObserver: useAppearObserver(recipesQuery),
+    sharedRecipesObserver: useAppearObserver(sharedRecipesQuery),
     tags,
     setTags: (tag: Tag) =>
       setTags((prev) =>

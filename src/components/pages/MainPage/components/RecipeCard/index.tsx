@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Recipe } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { Link } from 'react-router-dom';
-import { FavoriteIcon, LinkIcon } from 'src/assets';
+import { IconFavorite, IconLink } from 'src/assets';
 import { Button } from 'src/components/features';
 import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
@@ -46,7 +46,7 @@ export const RecipeCard = ({
     >
       <div className={css.container}>
         <div className={css.content({ displayInfo, small })}>
-          {recipe.favorite && <FavoriteIcon className={css.favoriteIcon} />}
+          {recipe.favorite && <IconFavorite className={css.favoriteIcon} />}
           {showTooltip && (
             <Button
               className={css.toMenuButton}
@@ -74,7 +74,7 @@ export const RecipeCard = ({
               <div className={css.recipeName}>{recipe.name}</div>
               {recipe.link.length > 1 && (
                 <Link className={css.link} to={recipe.link}>
-                  <LinkIcon className={css.linkIcon} />
+                  <IconLink className={css.linkIcon} />
                 </Link>
               )}
             </div>

@@ -147,9 +147,11 @@ globalStyle(`${recipeNameContainer} > div:first-of-type`, {
 });
 
 export const recipeName = style({
-  width: px(248),
+  // Tracks the card width now that it is fluid, instead of a fixed 248px that
+  // overflowed narrow cards and truncated early on wide ones.
+  flex: 1,
+  minWidth: 0,
   overflow: 'hidden',
-  display: 'inline-block',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
@@ -194,16 +196,16 @@ export const content = recipe({
     overflow: 'hidden',
     flexShrink: 0,
     borderRadius: px(15),
-    ...CARD_SIZES.iphone,
   },
   variants: {
     small: {
+      // The header favourites strip is a horizontal row, not the grid, so
+      // there is no track to fill — keep a fixed square.
+      true: CARD_SIZES.iphone,
+      // Fill the grid track; aspectRatio holds the square as it widens.
       false: {
-        '@media': {
-          [MEDIA.ipadh]: CARD_SIZES.ipadh,
-          [MEDIA.ipadv]: CARD_SIZES.ipadv,
-          [MEDIA.mac]: CARD_SIZES.mac,
-        },
+        width: '100%',
+        aspectRatio: '1',
       },
     },
     displayInfo: {

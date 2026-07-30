@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { EnterIcon, SearchIcon } from 'src/assets';
+import { IconEnter, IconSearch } from 'src/assets';
 import { useLogic, Options } from './Dropdown.useLogic';
 import { Button } from './Button';
 import * as css from './Dropdown.css';
@@ -46,7 +46,7 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
   return (
     <div className={css.container} ref={dropdownRef}>
       <div className={css.content({ open })}>
-        <SearchIcon />
+        <IconSearch />
         <input
           className={css.input}
           autoComplete='off'
@@ -55,7 +55,7 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <EnterIcon />
+        <IconEnter />
       </div>
 
       {open && <div className={css.contentContainer}>{renderContent()}</div>}

@@ -19,7 +19,6 @@ export const container = style({
 
   '@media': {
     [MEDIA.ipadh]: {
-      padding: px(8),
       borderRadius: px(15),
     },
   },

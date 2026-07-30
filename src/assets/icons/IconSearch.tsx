@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SearchIcon = (props: any) => (
+export const IconSearch = (props: any) => (
   <svg
     {...props}
     width='16'

@@ -6,6 +6,13 @@ import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import {
+  IconEdit,
+  IconFavorite,
+  IconNonFavorite,
+  IconShare,
+  IconTrash,
+} from '../../assets';
 
 type Options = {
   recipe: Recipe;
@@ -84,6 +91,7 @@ export const useRecipeActions = ({
       kind: 'ghost',
       onClick: open,
       label: t('startpage.recipes.actions.edit'),
+      startGraphic: <IconEdit />,
     },
     {
       kind: 'ghost',
@@ -91,6 +99,7 @@ export const useRecipeActions = ({
       label: t('startpage.recipes.actions.toFavorites'),
       display: !recipe.favorite,
       isLoading: toFavoritesMutation.isPending,
+      startGraphic: <IconFavorite />,
     },
     {
       kind: 'ghost',
@@ -98,17 +107,20 @@ export const useRecipeActions = ({
       label: t('startpage.recipes.actions.fromFavorites'),
       display: recipe.favorite,
       isLoading: fromFavoritesMutation.isPending,
+      startGraphic: <IconNonFavorite />,
     },
     {
       kind: 'ghost',
       onClick: openShare,
       label: t('startpage.recipes.actions.share'),
+      startGraphic: <IconShare />,
     },
     {
       kind: 'ghost',
       onClick: () => removeConfirmation.open(),
       label: t('startpage.recipes.actions.delete'),
       isLoading: removeMutation.isPending,
+      startGraphic: <IconTrash />,
     },
   ];
 };

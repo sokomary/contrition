@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from 'src/types/domain';
-import { LinkIcon } from 'src/assets';
+import { IconLink } from 'src/assets';
 import * as css from './Header.css';
 
 type Props = {
@@ -15,7 +15,7 @@ export const Header = ({ recipe }: Props) => (
 
       {!!recipe.link.length && (
         <Link className={css.link} to={recipe.link}>
-          <LinkIcon className={css.icon} />
+          <IconLink className={css.icon} />
         </Link>
       )}
     </div>

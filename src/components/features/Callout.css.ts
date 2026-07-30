@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { px, vars } from '../../theme';
+import { px } from '../../theme';
 
 export const container = style({
   position: 'relative',
@@ -18,7 +18,6 @@ export const content = style({
   overflow: 'hidden',
   padding: 0,
   background: 'transparent',
-  borderRadius: vars['radius-03'],
   positionTryFallbacks:
     '--below-right, ' +
     '--above-left, ' +

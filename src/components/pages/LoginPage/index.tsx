@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { GoogleIcon } from 'src/assets';
+import { IconGoogle } from 'src/assets';
 import { Button } from 'src/components/features';
 import { useLogic } from './useLogic';
 import { Navigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const LoginPage = () => {
     <div className={css.container}>
       <Button className={css.button} onClick={login} size='large'>
         <div className={css.loginButtonContent}>
-          <GoogleIcon />
+          <IconGoogle />
           <div>{t('loginpage.actions.login.google')}</div>
         </div>
       </Button>

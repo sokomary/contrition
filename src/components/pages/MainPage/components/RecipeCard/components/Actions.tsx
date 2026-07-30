@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Recipe } from 'src/types/domain';
-import { ActionBar, Button } from 'src/components/features';
+import { ActionBar, Callout } from 'src/components/features';
 import { useRecipeActions } from 'src/components/atoms/useRecipeActions';
 import * as css from './Actions.css';
 
@@ -8,42 +8,36 @@ type Props = {
   recipe: Recipe;
 };
 
-// todo move to popover
 export const Actions = ({ recipe }: Props) => {
-  const [open, setOpen] = useState(false);
+  const calloutRef = useRef<HTMLDivElement>(null);
 
-  const menuRef = useRef<HTMLDivElement>(null);
-  const toggleMenu = () => {
-    setOpen(!open);
+  // Light dismiss covers outside clicks and Esc; this is only for closing
+  // after an action succeeds. Deleting light-dismisses the popover when the
+  // confirmation modal takes over, so it can already be closed by then.
+  const closeCallout = () => {
+    const callout = calloutRef.current;
+    if (callout?.matches(':popover-open')) {
+      callout.hidePopover();
+    }
   };
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuRef]);
 
-  const actions = useRecipeActions({ recipe, onSuccess: toggleMenu });
+  const actions = useRecipeActions({ recipe, onSuccess: closeCallout });
 
   return (
-    <div ref={menuRef} className={css.container}>
-      <Button
-        onClick={toggleMenu}
-        size='small'
-        className={css.dots}
-        key={recipe.id}
-      >
-        <div className={css.dot} />
-        <div className={css.dot} />
-        <div className={css.dot} />
-      </Button>
-
-      {open && <ActionBar className={css.actions} actions={actions} />}
-    </div>
+    <Callout
+      calloutRef={calloutRef}
+      buttonProps={{
+        size: 'small',
+        className: css.dots,
+        children: (
+          <>
+            <div className={css.dot} />
+            <div className={css.dot} />
+            <div className={css.dot} />
+          </>
+        ),
+      }}
+      content={<ActionBar className={css.actions} actions={actions} />}
+    />
   );
 };

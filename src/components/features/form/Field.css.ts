@@ -9,6 +9,7 @@ export const input = style({
   backgroundColor: color('field'),
   height: px(42),
   padding: `${px(5)} ${px(10)}`,
+  minWidth: px(10),
 
   selectors: {
     '&::-webkit-inner-spin-button': {

@@ -30,10 +30,44 @@ instanceAxios.interceptors.response.use(
   },
 );
 
-export const getRecipes = (tags?: number[]) =>
-  instanceAxios.get<any, Recipe[]>('/api/recipes', {
-    params: { tags: tags?.join(',') },
-  });
+export const getRecipes = (
+  tags?: number[],
+  limit?: number,
+  offset?: number,
+  query?: string,
+) =>
+  instanceAxios.get<any, { content: Recipe[]; limit: number; offset: number }>(
+    '/api/recipes',
+    {
+      params: { tags: tags?.join(','), limit, offset, query },
+    },
+  );
+
+export const getFavoriteRecipes = (
+  tags?: number[],
+  limit?: number,
+  offset?: number,
+  query?: string,
+) =>
+  instanceAxios.get<any, { content: Recipe[]; limit: number; offset: number }>(
+    '/api/recipes/favorite',
+    {
+      params: { tags: tags?.join(','), limit, offset, query },
+    },
+  );
+
+export const getSharedRecipes = (
+  tags?: number[],
+  limit?: number,
+  offset?: number,
+  query?: string,
+) =>
+  instanceAxios.get<any, { content: Recipe[]; limit: number; offset: number }>(
+    '/api/recipes/shared',
+    {
+      params: { tags: tags?.join(','), limit, offset, query },
+    },
+  );
 
 export const getMenu = () => instanceAxios.get<any, Menu[]>('/api/menu', {});
 export const getKinds = () => instanceAxios.get<any, Kind[]>('/api/kinds');
@@ -46,7 +80,9 @@ export const addRecipe = (recipe: Recipe) =>
   instanceAxios.post('/api/recipes', recipe);
 
 export const addMenu = (
-  menu: Omit<Menu, 'id' | 'meals'> & { meals: Omit<Meal, 'id'>[] },
+  menu: Omit<Menu, 'id' | 'meals'> & {
+    meals: (Omit<Meal, 'id' | 'recipe'> & { recipeId: number })[];
+  },
 ) => instanceAxios.post('/api/menu', menu);
 
 export const getMenuProducts = (menuId: number) =>

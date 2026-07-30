@@ -36,11 +36,6 @@ export const Content = ({ recipes }: Props) => {
           onAddToMenu={() => updateMenu(recipe.id)}
         />
       ))}
-      <div className={css.fakeCard} />
-      <div className={css.fakeCard} />
-      <div className={css.fakeCard} />
-      <div className={css.fakeCard} />
-      <div className={css.fakeCard} />
     </div>
   );
 };

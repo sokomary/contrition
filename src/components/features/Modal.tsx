@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactNode, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { ClearIcon } from 'src/assets';
+import { IconClear } from 'src/assets';
 import { Button } from './Button';
 import { useLogic } from './Modal.useLogic';
 import * as css from './Modal.css';
@@ -57,7 +57,7 @@ export const Modal = ({
               <div>{header}</div>
               <Button
                 kind='ghost'
-                startGraphic={<ClearIcon />}
+                startGraphic={<IconClear />}
                 onClick={onClose}
               />
             </div>

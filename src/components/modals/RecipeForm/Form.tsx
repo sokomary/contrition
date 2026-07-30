@@ -28,25 +28,25 @@ export const Form = (props: Options) => {
         <form onSubmit={onSubmit} className={css.container}>
           <div className={css.content}>
             <div className={css.basicFields}>
-              <Field
-                name='name'
-                register={register}
-                label={t('domain.recipe.name')}
-                error={errors.name}
-                errorText={t('forms.fields.errors.required')}
-                required
-              />
-              <div className={css.linkWeightFields}>
+              <div className={css.rowFields}>
+                <Field
+                  name='name'
+                  register={register}
+                  label={t('domain.recipe.name')}
+                  error={errors.name}
+                  errorText={t('forms.fields.errors.required')}
+                  required
+                />
                 <Field
                   name='link'
-                  className={css.linkField}
                   register={register}
                   label={t('domain.recipe.link')}
                   error={errors.link}
                   errorText={t('forms.fields.errors.required')}
                 />
+              </div>
+              <div className={css.rowFields}>
                 <Field
-                  className={css.numberField}
                   type='number'
                   step='0.01'
                   name='size'
@@ -56,20 +56,20 @@ export const Form = (props: Options) => {
                   errorText={t('forms.fields.errors.required')}
                   required
                 />
+                <Field
+                  required
+                  name='portionSize'
+                  register={register}
+                  label={t('domain.recipe.portionSize')}
+                  error={errors.portionSize}
+                  errorText={t('forms.fields.errors.required')}
+                />
               </div>
               <Field
                 name='comment'
                 register={register}
                 label={t('domain.recipe.comment')}
                 error={errors.comment}
-                errorText={t('forms.fields.errors.required')}
-              />
-              <Field
-                required
-                name='portionSize'
-                register={register}
-                label={t('domain.recipe.portionSize')}
-                error={errors.portionSize}
                 errorText={t('forms.fields.errors.required')}
               />
               <ImageField
@@ -80,10 +80,8 @@ export const Form = (props: Options) => {
               />
             </div>
 
-            <div className={css.interactiveFields}>
-              <InstructionsField control={control} register={register} />
-              <ProductsField register={register} control={control} />
-            </div>
+            <InstructionsField control={control} register={register} />
+            <ProductsField register={register} control={control} />
           </div>
 
           <TagsField control={control} name='tags' />

@@ -2,6 +2,20 @@ import { recipe } from '@vanilla-extract/recipes';
 import { color, MEDIA, px } from 'src/theme';
 import { globalStyle } from '@vanilla-extract/css';
 
+// An inset overlay rather than a palette swap: it tints whichever background
+// the kind already has, so one value covers every filled kind and both colour
+// schemes, and it stays visually distinct from :active, which replaces the
+// background outright. First entry is the fallback for engines without
+// light-dark(), mirroring what theme's color() emits.
+const HOVER_TINT = [
+  'inset 0 0 0 999px rgba(0, 0, 0, 0.07)',
+  'inset 0 0 0 999px light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1))',
+];
+
+// hover: hover keeps the state off touch devices, where it would otherwise
+// stick to the last tapped button.
+const CAN_HOVER = '(hover: hover)';
+
 export const button = recipe({
   base: {
     border: 'none',
@@ -16,6 +30,7 @@ export const button = recipe({
     alignItems: 'center',
     gap: px(7),
     justifyContent: 'center',
+    transition: 'box-shadow 120ms ease, color 120ms ease, opacity 120ms ease',
   },
   variants: {
     size: {
@@ -41,6 +56,14 @@ export const button = recipe({
             backgroundColor: color('accent-light'),
           },
         },
+
+        '@media': {
+          [CAN_HOVER]: {
+            selectors: {
+              '&:hover:not(:disabled)': { boxShadow: HOVER_TINT },
+            },
+          },
+        },
       },
       primary: {
         color: color('primary'),
@@ -57,6 +80,11 @@ export const button = recipe({
           [MEDIA.ipadv]: {
             width: 'fit-content',
           },
+          [CAN_HOVER]: {
+            selectors: {
+              '&:hover:not(:disabled)': { boxShadow: HOVER_TINT },
+            },
+          },
         },
       },
       secondary: {
@@ -68,6 +96,14 @@ export const button = recipe({
             backgroundColor: color('background-transparent'),
           },
         },
+
+        '@media': {
+          [CAN_HOVER]: {
+            selectors: {
+              '&:hover:not(:disabled)': { boxShadow: HOVER_TINT },
+            },
+          },
+        },
       },
       ghost: {
         color: color('primary'),
@@ -77,6 +113,16 @@ export const button = recipe({
         selectors: {
           '&:active': {
             color: color('primary-disabled'),
+          },
+        },
+
+        // No background to tint, and padding is 0 so an overlay would hug the
+        // text — fade instead, which also reads on icon-only ghost buttons.
+        '@media': {
+          [CAN_HOVER]: {
+            selectors: {
+              '&:hover:not(:disabled)': { opacity: 0.65 },
+            },
           },
         },
       },
