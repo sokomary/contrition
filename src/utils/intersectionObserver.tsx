@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   UseSuspenseInfiniteQueryResult,
   UseInfiniteQueryResult,
@@ -12,22 +12,25 @@ export const useAppearObserver = <T,>(
     | UseInfiniteQueryResult<T[], any>,
 ) => {
   const constsRef = useValueRef(query);
-  const targetRef = useRef<HTMLDivElement>(null);
+
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const target = targetRef.current;
     if (!target) {
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const { fetchNextPage } = constsRef.current;
+        const { fetchNextPage, hasNextPage, isFetchingNextPage } =
+          constsRef.current;
         for (const entry of entries) {
           if (!entry.isIntersecting) {
             continue;
           }
-          fetchNextPage();
+          if (hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
           break;
         }
       },
@@ -39,11 +42,11 @@ export const useAppearObserver = <T,>(
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, [constsRef]);
+  }, [constsRef, target]);
 
   return (
     <>
-      <div ref={targetRef} />
+      <div ref={setTarget} />
       {constsRef.current.isFetchingNextPage && <Loading />}
     </>
   );

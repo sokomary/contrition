@@ -5,8 +5,8 @@ import { MEDIA, px, text } from '../../../theme';
 
 export const container = recipe({
   base: {
-    height: '100vh',
     width: '100%',
+    paddingBlockEnd: px(40),
   },
   variants: {
     withSide: {

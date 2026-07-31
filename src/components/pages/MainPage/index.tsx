@@ -29,7 +29,7 @@ export const MainPage = () => {
     return (
       <>
         <Content recipes={recipes} />
-        {recipesObserver}
+        <div>{recipesObserver}</div>
       </>
     );
   };
@@ -45,7 +45,7 @@ export const MainPage = () => {
       <>
         <div className={css.title}>Shared with me</div>
         <Content recipes={sharedRecipes} />
-        {sharedRecipesObserver}
+        <div>{sharedRecipesObserver}</div>
       </>
     );
   };
