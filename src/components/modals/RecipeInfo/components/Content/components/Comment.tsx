@@ -6,5 +6,5 @@ type Props = {
 };
 
 export const Comment = ({ comment }: Props) => (
-  <div className={css.container}>{comment}</div>
+  <p className={css.container}>{comment}</p>
 );

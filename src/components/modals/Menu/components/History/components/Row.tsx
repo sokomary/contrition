@@ -9,16 +9,16 @@ export const Row = ({ menu }: Options) => {
 
   return (
     <div className={css.container}>
-      <div className={css.content}>
+      <ul className={css.content}>
         {dates.map((date) => (
-          <div key={date} className={css.recipe}>
+          <li key={date} className={css.recipe}>
             {menu.meals
               ?.filter((meal) => meal.date === date)
               .map((meal) => meal.recipe.name)
               .join(', ')}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <div>
         <ActionBar actions={actions} />

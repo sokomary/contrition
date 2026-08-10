@@ -58,19 +58,19 @@ export const NewMenu = (props: Options) => {
       <PeriodPicker value={period} onChange={setPeriod} />
 
       {period.start && period.end && (
-        <div className={css.container}>
-          <div className={css.row}>
-            <div className={css.dateLabel} />
+        <div className={css.container} role='table'>
+          <div className={css.row} role='row'>
+            <div className={css.dateLabel} role='columnheader' />
             {kinds.map((kind) => (
-              <div key={kind.id} className={css.kindLabel}>
+              <div key={kind.id} className={css.kindLabel} role='columnheader'>
                 {upperFirst(kind.name)}
               </div>
             ))}
           </div>
 
           {dates?.map((date) => (
-            <div key={date} className={css.row}>
-              <div className={css.dateLabel}>
+            <div key={date} className={css.row} role='row'>
+              <div className={css.dateLabel} role='rowheader'>
                 {format({
                   kind: 'date',
                   value: date,
@@ -80,10 +80,8 @@ export const NewMenu = (props: Options) => {
               </div>
 
               {kinds?.map((kind) => (
-                <div key={`${date}${kind.id}`}>
-                  <div className={css.empty} key={`${date}${kind}`}>
-                    {renderItem(date, kind)}
-                  </div>
+                <div key={`${date}${kind.id}`} role='cell'>
+                  <div className={css.empty}>{renderItem(date, kind)}</div>
                 </div>
               ))}
             </div>

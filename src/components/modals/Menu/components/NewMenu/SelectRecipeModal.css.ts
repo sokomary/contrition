@@ -8,17 +8,6 @@ export const container = style({
   gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.iphone.width}, 1fr))`,
   gap: px(10),
   paddingTop: px(20),
-
-  '@media': {
-    [MEDIA.ipadv]: {
-      gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.ipadv.width}, 1fr))`,
-      gap: px(20),
-    },
-    [MEDIA.mac]: {
-      gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.mac.width}, 1fr))`,
-      gap: px(40),
-    },
-  },
 });
 
 export const content = style({
@@ -47,4 +36,9 @@ export const filters = style({
 });
 globalStyle(`${filters} > div:first-of-type`, {
   flex: 1,
+  '@media': {
+    [MEDIA.ipadv]: {
+      flexDirection: 'row',
+    },
+  },
 });

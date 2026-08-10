@@ -7,3 +7,9 @@ export const container = style({
   gap: px(10),
 });
 export const title = style({ ...text.text3b, lineHeight: '100%' });
+
+export const list = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: px(10),
+});

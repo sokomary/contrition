@@ -15,19 +15,19 @@ export const Table = ({ kinds, dates, data }: Props) => {
   const format = useFormat();
 
   return (
-    <div className={css.container}>
-      <div className={css.content}>
-        <div className={css.dateLabel} />
+    <div className={css.container} role='table'>
+      <div className={css.content} role='row'>
+        <div className={css.dateLabel} role='columnheader' />
         {kinds.map((kind, i) => (
-          <div key={i} className={css.kindLabel}>
+          <div key={i} className={css.kindLabel} role='columnheader'>
             {upperFirst(kind.name)}
           </div>
         ))}
       </div>
 
       {dates.map((date, dateIndex) => (
-        <div key={date.toString()} className={css.content}>
-          <div className={css.dateLabel}>
+        <div key={date.toString()} className={css.content} role='row'>
+          <div className={css.dateLabel} role='rowheader'>
             {format({
               kind: 'date',
               value: date.toString(),
@@ -36,8 +36,12 @@ export const Table = ({ kinds, dates, data }: Props) => {
             })}
           </div>
           {kinds.map((kind, kindIndex) => (
-            <div className={css.recipe} key={`${kindIndex}${dateIndex}`}>
-              {data[date.toString()][kind.id].name}
+            <div
+              className={css.recipe}
+              role='cell'
+              key={`${kindIndex}${dateIndex}`}
+            >
+              {data[date.toString()][kind.id]?.name}
             </div>
           ))}
         </div>

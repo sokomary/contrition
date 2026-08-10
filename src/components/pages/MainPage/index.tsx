@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Loading } from 'src/components/features';
 import { Header } from './components/Header';
 import { useLogic } from './useLogic';
@@ -6,6 +7,8 @@ import { Content } from './components/Content';
 import * as css from './index.css';
 
 export const MainPage = () => {
+  const { t } = useTranslation();
+  const sharedTitleId = useId();
   const {
     recipes,
     sharedRecipes,
@@ -40,11 +43,13 @@ export const MainPage = () => {
     if (!sharedRecipes.length) return null;
 
     return (
-      <>
-        <div className={css.title}>Shared with me</div>
+      <section aria-labelledby={sharedTitleId}>
+        <h2 className={css.title} id={sharedTitleId}>
+          {t('startpage.recipes.shared.title')}
+        </h2>
         <Content recipes={sharedRecipes} />
         <div>{sharedRecipesObserver}</div>
-      </>
+      </section>
     );
   };
 
@@ -57,8 +62,10 @@ export const MainPage = () => {
         onTagSelect={setTags}
       />
 
-      {renderContent()}
-      {renderSharedContent()}
+      <main>
+        {renderContent()}
+        {renderSharedContent()}
+      </main>
     </div>
   );
 };

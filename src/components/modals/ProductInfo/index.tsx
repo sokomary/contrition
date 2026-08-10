@@ -16,7 +16,7 @@ export const ProductInfo = () => {
       isActive={isOpen}
       onClose={onClose}
     >
-      <div className={css.container}>
+      <dl className={css.container}>
         <Value
           label={`${t('domain.recipe.calories')}:`}
           content={product?.calories}
@@ -30,7 +30,7 @@ export const ProductInfo = () => {
           label={`${t('domain.recipe.carbohydrates')}:`}
           content={product?.carbohydrates}
         />
-      </div>
+      </dl>
     </Dialog>
   );
 };

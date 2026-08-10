@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar, Button, Dialog, Field } from 'src/components/features';
 import { useLogic } from './useLogic';
@@ -6,6 +6,9 @@ import * as css from './index.css';
 
 export const ViewSharings = () => {
   const { t } = useTranslation();
+  const continuousTitleId = useId();
+  const recipientsTitleId = useId();
+  const friendsLabelId = useId();
   const {
     isOpen,
     onClose,
@@ -40,11 +43,11 @@ export const ViewSharings = () => {
         onClose={onClose}
       >
         <div className={css.container}>
-          <div className={css.section}>
+          <section className={css.section} aria-labelledby={continuousTitleId}>
             <div className={css.sectionHeader}>
-              <div className={css.sectionTitle}>
+              <h3 className={css.sectionTitle} id={continuousTitleId}>
                 {t('startpage.sharings.continuous.title')}
-              </div>
+              </h3>
               <Button
                 kind='ghost'
                 className={css.addButton}
@@ -53,63 +56,67 @@ export const ViewSharings = () => {
               />
             </div>
             {continuousFriends?.length ? (
-              continuousFriends.map((friend) => (
-                <div className={css.row} key={friend.id}>
-                  <div className={css.friendName}>{friend.email}</div>
-                  <Button
-                    kind='ghost'
-                    className={css.cancelButton}
-                    onClick={() => setCancelTarget(friend)}
-                  >
-                    {t('startpage.sharings.continuous.cancel')}
-                  </Button>
-                </div>
-              ))
+              <ul className={css.section}>
+                {continuousFriends.map((friend) => (
+                  <li className={css.row} key={friend.id}>
+                    <span className={css.friendName}>{friend.email}</span>
+                    <Button
+                      kind='ghost'
+                      className={css.cancelButton}
+                      onClick={() => setCancelTarget(friend)}
+                    >
+                      {t('startpage.sharings.continuous.cancel')}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
             ) : (
-              <div className={css.emptyState}>
-                {t('startpage.sharings.empty')}
-              </div>
+              <p className={css.emptyState}>{t('startpage.sharings.empty')}</p>
             )}
-          </div>
+          </section>
 
-          <div className={css.section}>
-            <div className={css.sectionTitle}>
+          <section className={css.section} aria-labelledby={recipientsTitleId}>
+            <h3 className={css.sectionTitle} id={recipientsTitleId}>
               {t('startpage.sharings.recipients.title')}
-            </div>
+            </h3>
             {recipients?.length ? (
-              recipients.map((friend) => (
-                <div className={css.friendBlock} key={friend.friend.id}>
-                  <div className={css.friendName}>{friend.friend.email}</div>
-                  {friend.recipes.length ? (
-                    friend.recipes.map((recipe) => (
-                      <div className={css.recipeRow} key={recipe.id}>
-                        <div className={css.recipeName}>{recipe.name}</div>
-                        <Button
-                          kind='ghost'
-                          label={t('startpage.sharings.recipients.remove')}
-                          className={css.removeButton}
-                          onClick={() =>
-                            setRemoveTarget({
-                              recipe,
-                              email: friend.friend.email,
-                            })
-                          }
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <div className={css.emptyState}>
-                      {t('startpage.sharings.empty')}
-                    </div>
-                  )}
-                </div>
-              ))
+              <ul className={css.section}>
+                {recipients.map((friend) => (
+                  <li className={css.friendBlock} key={friend.friend.id}>
+                    <h4 className={css.friendName}>{friend.friend.email}</h4>
+                    {friend.recipes.length ? (
+                      <ul className={css.friendBlock}>
+                        {friend.recipes.map((recipe) => (
+                          <li className={css.recipeRow} key={recipe.id}>
+                            <span className={css.recipeName}>
+                              {recipe.name}
+                            </span>
+                            <Button
+                              kind='ghost'
+                              label={t('startpage.sharings.recipients.remove')}
+                              className={css.removeButton}
+                              onClick={() =>
+                                setRemoveTarget({
+                                  recipe,
+                                  email: friend.friend.email,
+                                })
+                              }
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={css.emptyState}>
+                        {t('startpage.sharings.empty')}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
             ) : (
-              <div className={css.emptyState}>
-                {t('startpage.sharings.empty')}
-              </div>
+              <p className={css.emptyState}>{t('startpage.sharings.empty')}</p>
             )}
-          </div>
+          </section>
         </div>
       </Dialog>
 
@@ -132,29 +139,30 @@ export const ViewSharings = () => {
             />
           )}
 
-          <div>
-            <div className={css.label}>
+          <section aria-labelledby={friendsLabelId}>
+            <h3 className={css.label} id={friendsLabelId}>
               {t('startpage.recipes.share.friends')}
-            </div>
-            <div className={css.friends}>
-              {candidates?.length ? (
-                candidates.map((friend) => (
-                  <Button
-                    key={friend.id}
-                    className={css.friend({
-                      selected: selectedFriend?.id === friend.id,
-                    })}
-                    label={friend.email}
-                    onClick={() => toggleFriend(friend)}
-                  />
-                ))
-              ) : (
-                <div className={css.emptyState}>
-                  {t('features.dropdown.emptyState.text')}
-                </div>
-              )}
-            </div>
-          </div>
+            </h3>
+            {candidates?.length ? (
+              <ul className={css.friends}>
+                {candidates.map((friend) => (
+                  <li key={friend.id}>
+                    <Button
+                      className={css.friend({
+                        selected: selectedFriend?.id === friend.id,
+                      })}
+                      label={friend.email}
+                      onClick={() => toggleFriend(friend)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className={css.emptyState}>
+                {t('features.dropdown.emptyState.text')}
+              </p>
+            )}
+          </section>
 
           <ActionBar actions={addActions} className={css.actions} />
         </form>
@@ -165,7 +173,7 @@ export const ViewSharings = () => {
         isActive={!!cancelTarget}
         onClose={() => setCancelTarget(null)}
       >
-        <div>{t('startpage.sharings.cancelConfirm.description')}</div>
+        <p>{t('startpage.sharings.cancelConfirm.description')}</p>
         <ActionBar
           className={css.actions}
           actions={[
@@ -195,7 +203,7 @@ export const ViewSharings = () => {
         isActive={!!removeTarget}
         onClose={() => setRemoveTarget(null)}
       >
-        <div>{t('startpage.sharings.removeConfirm.description')}</div>
+        <p>{t('startpage.sharings.removeConfirm.description')}</p>
         <ActionBar
           className={css.actions}
           actions={[

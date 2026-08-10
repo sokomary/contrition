@@ -41,12 +41,6 @@ export const card = recipe({
   },
 });
 
-export const linkIcon = style({
-  height: px(16),
-  width: px(16),
-  marginBottom: px(1),
-});
-
 export const container = style({
   width: '100%',
   height: 'fit-content',

@@ -15,13 +15,13 @@ export const LoginPage = () => {
   }
 
   return (
-    <div className={css.container}>
+    <main className={css.container}>
       <Button className={css.button} onClick={login} size='large'>
-        <div className={css.loginButtonContent}>
+        <span className={css.loginButtonContent}>
           <IconGoogle />
-          <div>{t('loginpage.actions.login.google')}</div>
-        </div>
+          <span>{t('loginpage.actions.login.google')}</span>
+        </span>
       </Button>
-    </div>
+    </main>
   );
 };

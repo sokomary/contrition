@@ -77,7 +77,10 @@ export const useLogic = (props: Options) => {
           addMutation.mutate({
             dateStart: period.start.toString(),
             dateEnd: period.end.toString(),
-            meals,
+            meals: meals.map((meal) => ({
+              ...meal,
+              kindId: meal.kind.id,
+            })),
           });
         }
       },

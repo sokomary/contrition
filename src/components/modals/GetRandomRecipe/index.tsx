@@ -17,20 +17,22 @@ export const GetRandomRecipe = () => {
       size='small'
     >
       <div className={css.container}>
-        <div className={css.content}>
+        <ul className={css.content}>
           {tags.map((tag, index) => (
-            <Button
-              kind='ghost'
-              className={css.tag({ selected: isSelected(tag) })}
-              key={index}
-              onClick={() => onSelect(tag)}
-            >
-              {tag.name}
-            </Button>
+            <li key={index}>
+              <Button
+                kind='ghost'
+                className={css.tag({ selected: isSelected(tag) })}
+                aria-pressed={isSelected(tag)}
+                onClick={() => onSelect(tag)}
+              >
+                {tag.name}
+              </Button>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className={css.name}>{data?.name}</div>
+        <p className={css.name}>{data?.name}</p>
       </div>
 
       <ActionBar actions={actions} className={css.actions} />

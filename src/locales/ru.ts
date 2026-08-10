@@ -49,6 +49,9 @@ export const ru = {
       new: {
         header: 'Новый рецепт',
       },
+      shared: {
+        title: 'Поделились со мной',
+      },
       favorites: {
         title: 'Избранные рецепты',
         added: 'Рецепт добавлен в избранное',

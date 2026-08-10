@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar, Dropdown, FieldError } from 'src/components/features';
 import { Tooltip } from 'react-tooltip';
@@ -10,12 +10,15 @@ export const ProductsField = (props: Options) => {
   const { t } = useTranslation();
   const { actions, options, remove, onSelect, fields, error, value } =
     useLogic(props);
+  const labelId = useId();
 
   return (
-    <div className={css.container}>
+    <section className={css.container} aria-labelledby={labelId}>
       <div className={css.field}>
         <div className={css.header}>
-          <div className={css.label}>{t('domain.recipe.recipeProducts')}</div>
+          <h3 className={css.label} id={labelId}>
+            {t('domain.recipe.recipeProducts')}
+          </h3>
           <ActionBar actions={actions} />
         </div>
 
@@ -23,9 +26,9 @@ export const ProductsField = (props: Options) => {
         {error && <FieldError text={t('startpage.recipes.errors.products')} />}
       </div>
 
-      <div className={css.products}>
+      <ul className={css.products}>
         {fields.map(({ product, id }, index) => (
-          <div className={css.product} key={product.id}>
+          <li className={css.product} key={product.id}>
             <input
               key={id}
               type='number'
@@ -48,9 +51,9 @@ export const ProductsField = (props: Options) => {
             >
               <IconDelete className={css.icon} onClick={() => remove(index)} />
             </Tooltip>
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 };

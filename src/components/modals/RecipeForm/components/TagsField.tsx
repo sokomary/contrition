@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar, Button, FieldError } from 'src/components/features';
 import { find } from 'lodash';
@@ -8,39 +8,46 @@ import * as css from './TagsField.css';
 export const TagsField = (props: Options) => {
   const { t } = useTranslation();
   const { fields, remove, tags, append, actions, error } = useLogic(props);
+  const labelId = useId();
 
   return (
-    <div className={css.container}>
+    <section className={css.container} aria-labelledby={labelId}>
       <div className={css.header}>
-        <div className={css.label}>{t('domain.recipe.tags')}</div>
+        <h3 className={css.label} id={labelId}>
+          {t('domain.recipe.tags')}
+        </h3>
         <ActionBar actions={actions} />
       </div>
 
-      <div className={css.content}>
-        {fields.map((t, index) => (
-          <Button
-            className={css.tag({ selected: true })}
-            key={t.id}
-            onClick={() => remove(index)}
-          >
-            #{t.name}
-          </Button>
+      <ul className={css.content}>
+        {fields.map((tag, index) => (
+          <li key={tag.id}>
+            <Button
+              className={css.tag({ selected: true })}
+              aria-pressed={true}
+              onClick={() => remove(index)}
+            >
+              #{tag.name}
+            </Button>
+          </li>
         ))}
 
         {tags
           ?.filter((unselected) => !find(fields, unselected))
-          .map((t) => (
-            <Button
-              key={t.id}
-              className={css.tag({ selected: false })}
-              onClick={() => append(t)}
-            >
-              #{t.name}
-            </Button>
+          .map((tag) => (
+            <li key={tag.id}>
+              <Button
+                className={css.tag({ selected: false })}
+                aria-pressed={false}
+                onClick={() => append(tag)}
+              >
+                #{tag.name}
+              </Button>
+            </li>
           ))}
-      </div>
+      </ul>
 
       {error && <FieldError text={t('startpage.recipes.errors.tags')} />}
-    </div>
+    </section>
   );
 };

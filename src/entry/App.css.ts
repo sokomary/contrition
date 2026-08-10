@@ -11,6 +11,20 @@ export const root = style({
   color: color('font'),
 });
 
+globalStyle(`${root} :where(h1, h2, h3, h4, h5, h6)`, {
+  margin: 0,
+  fontSize: 'inherit',
+  fontWeight: 'inherit',
+});
+globalStyle(`${root} :where(ul, ol)`, {
+  margin: 0,
+  padding: 0,
+  listStyle: 'none',
+});
+globalStyle(`${root} :where(p, figure, dl, dd)`, {
+  margin: 0,
+});
+
 globalStyle('body', {
   backgroundColor: 'rgb(255, 255, 255, 1)',
 

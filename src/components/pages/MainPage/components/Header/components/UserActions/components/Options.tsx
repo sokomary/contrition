@@ -18,7 +18,7 @@ export const Options = () => {
   });
 
   return (
-    <div className={css.container}>
+    <nav className={css.container}>
       <Button kind='ghost' className={css.option} onClick={openSharings}>
         {t('startpage.sharings.action')}
       </Button>
@@ -29,6 +29,6 @@ export const Options = () => {
       >
         {t('startpage.actions.logout')}
       </Button>
-    </div>
+    </nav>
   );
 };

@@ -3,7 +3,8 @@ import { color, px } from 'src/theme';
 
 export const content = style({
   display: 'flex',
-  gap: px(4),
+  gap: px(10),
+  alignItems: 'center',
 });
 
 export const name = style({
@@ -20,12 +21,6 @@ export const container = style({
   justifyContent: 'space-between',
   flexDirection: 'column',
   gap: px(7),
-});
-
-export const link = style({
-  height: px(18),
-  alignSelf: 'flex-start',
-  marginTop: px(5),
 });
 
 export const icon = style({

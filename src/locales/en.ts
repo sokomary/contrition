@@ -49,6 +49,9 @@ export const en = {
       new: {
         header: 'New recipe',
       },
+      shared: {
+        title: 'Shared with me',
+      },
       favorites: {
         title: 'Favorite recipes',
         added: 'Recipe added to favorites',

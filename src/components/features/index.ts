@@ -1,4 +1,5 @@
 export * from './ActionBar';
+export * from './ActionBase';
 export * from './Button';
 export * from './Callout';
 export * from './DatesPicker';

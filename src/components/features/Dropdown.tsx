@@ -23,9 +23,9 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
   const renderContent = () => {
     if (!options.length) {
       return (
-        <div className={css.emptyState}>
+        <p className={css.emptyState}>
           {t('features.dropdown.emptyState.text')}
-        </div>
+        </p>
       );
     }
 

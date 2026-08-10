@@ -9,8 +9,8 @@ export const PortionSize = ({ portionSize }: Props) => {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <p>
       {t('domain.recipe.portionSize')}: {portionSize}
-    </div>
+    </p>
   );
 };

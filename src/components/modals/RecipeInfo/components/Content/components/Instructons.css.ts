@@ -19,6 +19,12 @@ export const container = style({
   gap: px(10),
 });
 
+export const instruction = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: px(10),
+});
+
 export const steps = style({
   display: 'flex',
   flexDirection: 'column',

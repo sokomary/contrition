@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode } from 'react';
+import React, { ReactNode, useId } from 'react';
 import { Action, ActionBar } from 'src/components/features';
 import * as css from './Card.css';
 
@@ -16,24 +16,30 @@ export const Card = ({
   actions,
   className,
   layout = 'vertical',
-}: Props) => (
-  <div className={`${className}`}>
-    <div className={css.container}>
-      <div className={css.content}>
-        <div className={css.header}>
-          <div className={css.title}>{title}</div>
-          <div className={css.divider} />
-          <div>{items.length}</div>
+}: Props) => {
+  const titleId = useId();
+
+  return (
+    <section className={`${className}`} aria-labelledby={titleId}>
+      <div className={css.container}>
+        <div className={css.content}>
+          <div className={css.header}>
+            <h2 className={css.title} id={titleId}>
+              {title}
+            </h2>
+            <div className={css.divider} />
+            <div>{items.length}</div>
+          </div>
+
+          {actions && <ActionBar actions={actions} />}
         </div>
 
-        {actions && <ActionBar actions={actions} />}
+        <ul className={css.list({ layout })}>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
       </div>
-
-      <div className={css.list({ layout })}>
-        {items.map((item, index) => (
-          <Fragment key={index}>{item}</Fragment>
-        ))}
-      </div>
-    </div>
-  </div>
-);
+    </section>
+  );
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RecipeProduct } from 'src/types/domain';
 import { CrossOutAble } from 'src/components/features';
@@ -10,22 +10,27 @@ type Props = {
 
 export const Products = ({ products }: Props) => {
   const { t } = useTranslation();
+  const titleId = useId();
 
   return (
-    <div className={css.container}>
-      <div className={css.title}>{t('domain.recipe.recipeProducts')}</div>
+    <section className={css.container} aria-labelledby={titleId}>
+      <h3 className={css.title} id={titleId}>
+        {t('domain.recipe.recipeProducts')}
+      </h3>
 
       <div className={css.content}>
         {products.map(({ id, quantity, product }) => (
           <div className={css.product} key={id}>
             <span className={css.quantity}>{quantity}</span>
-            <div className={css.divider}>|</div>
+            <span className={css.divider} aria-hidden='true'>
+              |
+            </span>
             <div className={css.name}>
               <CrossOutAble content={product.name} />
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

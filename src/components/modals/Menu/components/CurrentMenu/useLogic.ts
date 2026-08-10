@@ -29,7 +29,7 @@ export const useLogic = ({ menu }: Options) => {
     menu?.meals?.forEach((meal) => {
       result[meal.date] = {
         ...result[meal.date],
-        [meal.kind.id]: meal.recipe,
+        [meal.kind?.id]: meal.recipe,
       };
     });
     return result;

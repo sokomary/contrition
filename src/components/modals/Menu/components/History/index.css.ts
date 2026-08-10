@@ -14,3 +14,9 @@ export const content = style({
 });
 
 export const header = style(text.text3b);
+
+export const list = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: px(25),
+});

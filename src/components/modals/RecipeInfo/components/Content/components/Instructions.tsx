@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Instruction } from 'src/types/domain';
 import { CrossOutAble } from 'src/components/features';
@@ -10,28 +10,29 @@ type Props = {
 
 export const Instructions = ({ instructions }: Props) => {
   const { t } = useTranslation();
+  const titleId = useId();
 
   return (
-    <div className={css.container}>
-      <div className={css.title}>
+    <section className={css.container} aria-labelledby={titleId}>
+      <h3 className={css.title} id={titleId}>
         {t('startpage.recipes.instructions.title')}
-      </div>
+      </h3>
 
-      <div className={css.content}>
+      <ul className={css.content}>
         {instructions.map((instruction) => (
-          <Fragment key={instruction.id}>
-            <div className={css.name}>{instruction.name}</div>
+          <li className={css.instruction} key={instruction.id}>
+            <h4 className={css.name}>{instruction.name}</h4>
 
-            <div className={css.steps}>
+            <ol className={css.steps}>
               {instruction.steps.map((step, index) => (
-                <div className={css.step} key={step.id}>
+                <li className={css.step} key={step.id}>
                   <CrossOutAble content={`${index + 1}. ${step.description}`} />
-                </div>
+                </li>
               ))}
-            </div>
-          </Fragment>
+            </ol>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 };

@@ -28,17 +28,18 @@ export const Instruction = ({ register, ...props }: Props) => {
         <ActionBar actions={[actions[0]]} />
       </div>
 
-      <div className={css.content}>
+      <ol className={css.content}>
         {fields.map((_, index) => (
-          <Step
-            key={index}
-            index={index}
-            name={`${name}.steps.${index}.description`}
-            register={register}
-            onRemove={() => remove(index)}
-          />
+          <li key={index}>
+            <Step
+              index={index}
+              name={`${name}.steps.${index}.description`}
+              register={register}
+              onRemove={() => remove(index)}
+            />
+          </li>
         ))}
-      </div>
+      </ol>
 
       <ActionBar actions={[actions[1]]} />
     </div>

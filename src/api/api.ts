@@ -81,7 +81,10 @@ export const addRecipe = (recipe: Recipe) =>
 
 export const addMenu = (
   menu: Omit<Menu, 'id' | 'meals'> & {
-    meals: (Omit<Meal, 'id' | 'recipe'> & { recipeId: number })[];
+    meals: (Omit<Meal, 'id' | 'recipe' | 'kind'> & {
+      recipeId: number;
+      kindId: number;
+    })[];
   },
 ) => instanceAxios.post('/api/menu', menu);
 

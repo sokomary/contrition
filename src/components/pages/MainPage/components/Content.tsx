@@ -12,7 +12,7 @@ export const Content = ({ recipes }: Props) => {
   const { t } = useTranslation();
 
   if (!recipes.length) {
-    return <div className={css.emptyState}>{t('startpage.recipes.empty')}</div>;
+    return <p className={css.emptyState}>{t('startpage.recipes.empty')}</p>;
   }
 
   return (

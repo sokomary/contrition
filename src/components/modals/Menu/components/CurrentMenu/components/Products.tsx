@@ -15,18 +15,20 @@ export const Products = ({ products, header }: Props) => {
   return (
     <div className={css.container}>
       {header && (
-        <div className={css.title}>{t('startpage.menu.products.title')}:</div>
+        <h3 className={css.title}>{t('startpage.menu.products.title')}:</h3>
       )}
 
-      {products
-        .sort((a, b) => (b.quantity < a.quantity ? -1 : 1))
-        .map((product) => (
-          <div key={product.id}>
-            <CrossOutAble
-              content={`${product.product.name} - ${product.quantity}`}
-            />
-          </div>
-        ))}
+      <ul className={css.list}>
+        {products
+          .sort((a, b) => (b.quantity < a.quantity ? -1 : 1))
+          .map((product) => (
+            <li key={product.id}>
+              <CrossOutAble
+                content={`${product.product.name} - ${product.quantity}`}
+              />
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };

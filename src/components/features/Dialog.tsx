@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren,
   ReactNode,
   useEffect,
+  useId,
   useRef,
   useState,
 } from 'react';
@@ -18,11 +19,15 @@ type Options = PropsWithChildren & {
   size?: 'small' | 'medium' | 'large';
 };
 
+export const isPlainText = (node: ReactNode): boolean =>
+  typeof node === 'string' || typeof node === 'number';
+
 export const Dialog = (options: Options) => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
 
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const headingId = useId();
 
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(options.isActive);
@@ -58,6 +63,7 @@ export const Dialog = (options: Options) => {
   return createPortal(
     <dialog
       ref={dialogRef}
+      aria-labelledby={headingId}
       onTransitionEnd={(e) => {
         if (!optionsRef.current.isActive && e.target === dialogRef.current) {
           setMounted(false);
@@ -70,7 +76,7 @@ export const Dialog = (options: Options) => {
     >
       <div className={css.container}>
         <div className={css.header}>
-          <div>{optionsRef.current.header}</div>
+          <h2>{optionsRef.current.header}</h2>
           <Button
             kind='ghost'
             onClick={() => {

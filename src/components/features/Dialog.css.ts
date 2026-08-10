@@ -1,6 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { MEDIA, vars, px, color } from 'src/theme';
+import { MEDIA, vars, px, color, text } from 'src/theme';
 
 export const dialog = recipe({
   base: {
@@ -152,8 +152,7 @@ export const header = style({
   display: 'flex',
   width: '100%',
   justifyContent: 'space-between',
-  fontWeight: 'bold',
-  fontSize: px(20),
+  ...text.header3,
   alignItems: 'center',
   gap: px(12),
 });

@@ -1,12 +1,12 @@
 import React, { ReactNode, useRef } from 'react';
 import { Recipe } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
-import { Link } from 'react-router-dom';
 import { IconFavorite, IconLink } from 'src/assets';
 import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
 import { useAuthenticate } from 'src/api';
+import { ActionBase } from 'src/components/features';
 import * as css from './index.css';
 
 const VISIBLE_TAGS_COUNT = 2;
@@ -31,7 +31,7 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
   const ref = useRef<HTMLImageElement>(null);
 
   return (
-    <div
+    <article
       className={css.card({ displayInfo })}
       data-tooltip-id={`recipe-${recipe.id}`}
     >
@@ -58,11 +58,13 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
 
           <div className={css.recipeNameContainer}>
             <div>
-              <div className={css.recipeName}>{recipe.name}</div>
+              <h3 className={css.recipeName}>{recipe.name}</h3>
               {recipe.link.length > 1 && (
-                <Link className={css.link} to={recipe.link}>
-                  <IconLink className={css.linkIcon} />
-                </Link>
+                <ActionBase
+                  as='a'
+                  startGraphic={<IconLink />}
+                  href={recipe.link}
+                />
               )}
             </div>
           </div>
@@ -95,16 +97,16 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
                     )}
                   </div>
                 </div>
-                <div className={css.tags}>
+                <ul className={css.tags}>
                   {visibleTags.map((t) => (
-                    <div className={css.tag} key={t.id}>
+                    <li className={css.tag} key={t.id}>
                       #{t.name}
-                    </div>
+                    </li>
                   ))}
                   {restTagsCount > 0 && (
-                    <div className={css.restTagsCount}>+{restTagsCount}</div>
+                    <li className={css.restTagsCount}>+{restTagsCount}</li>
                   )}
-                </div>
+                </ul>
               </div>
             </div>
 
@@ -112,6 +114,6 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
           </div>
         )}
       </div>
-    </div>
+    </article>
   );
 };

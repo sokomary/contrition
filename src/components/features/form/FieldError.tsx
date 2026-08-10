@@ -6,5 +6,7 @@ type Props = {
 };
 
 export const FieldError = ({ text }: Props) => (
-  <div className={css.text}>{text}</div>
+  <p className={css.text} role='alert'>
+    {text}
+  </p>
 );

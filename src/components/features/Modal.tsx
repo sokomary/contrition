@@ -1,8 +1,9 @@
-import React, { PropsWithChildren, ReactNode, Suspense } from 'react';
+import React, { PropsWithChildren, ReactNode, Suspense, useId } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { IconClear } from 'src/assets';
 import { Button } from './Button';
+import { isPlainText } from './Dialog';
 import { useLogic } from './Modal.useLogic';
 import * as css from './Modal.css';
 
@@ -27,6 +28,7 @@ export const Modal = ({
   side,
 }: Props) => {
   const { t } = useTranslation();
+  const headingId = useId();
   const { isRendered, zIndex, modalRoot } = useLogic({ isActive, onClose });
 
   if (!isRendered || !modalRoot) {
@@ -45,6 +47,9 @@ export const Modal = ({
           style={{ zIndex: zIndex + 1 }}
         >
           <div
+            role='dialog'
+            aria-modal={overlay || undefined}
+            aria-labelledby={headingId}
             style={{
               width:
                 (position === 'center' || position === 'right') && width
@@ -54,7 +59,11 @@ export const Modal = ({
             className={css.children({ position })}
           >
             <div className={css.header}>
-              <div>{header}</div>
+              {isPlainText(header) ? (
+                <h2 id={headingId}>{header}</h2>
+              ) : (
+                <div id={headingId}>{header}</div>
+              )}
               <Button
                 kind='ghost'
                 startGraphic={<IconClear />}

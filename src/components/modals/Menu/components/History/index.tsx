@@ -15,20 +15,22 @@ export const History = ({ menu }: Props) => {
 
   return (
     <div className={css.container}>
-      {!menu.length && <div>{t('startpage.menu.history.empty')}</div>}
+      {!menu.length && <p>{t('startpage.menu.history.empty')}</p>}
 
-      {menu.map((m, i) => (
-        <div key={i} className={css.content}>
-          <div className={css.header}>
-            {format({
-              kind: 'period',
-              value: { from: m.dateStart, till: m.dateEnd },
-            })}
-          </div>
+      <ul className={css.list}>
+        {menu.map((m, i) => (
+          <li key={i} className={css.content}>
+            <h3 className={css.header}>
+              {format({
+                kind: 'period',
+                value: { from: m.dateStart, till: m.dateEnd },
+              })}
+            </h3>
 
-          <Row menu={m} />
-        </div>
-      ))}
+            <Row menu={m} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

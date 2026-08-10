@@ -8,7 +8,7 @@ type Props = {
 
 export const Value = ({ label, content }: Props) => (
   <div className={css.container}>
-    <div>{label}</div>
-    <div>{content}</div>
+    <dt>{label}</dt>
+    <dd>{content}</dd>
   </div>
 );

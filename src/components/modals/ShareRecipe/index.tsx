@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar, Button, Dialog, Field } from 'src/components/features';
 import { useLogic } from './useLogic';
@@ -6,6 +6,7 @@ import * as css from './index.css';
 
 export const ShareRecipe = () => {
   const { t } = useTranslation();
+  const friendsLabelId = useId();
   const {
     isOpen,
     onClose,
@@ -38,30 +39,32 @@ export const ShareRecipe = () => {
           />
         )}
 
-        <div>
-          <div className={css.label}>
+        <section aria-labelledby={friendsLabelId}>
+          <h3 className={css.label} id={friendsLabelId}>
             {t('startpage.recipes.share.friends')}
-          </div>
-          <div className={css.friends}>
-            {friends?.length ? (
-              friends.map((friend) => (
-                <Button
-                  key={friend.friend.id}
-                  className={css.friend({
-                    selected: selectedUser?.id === friend.friend.id,
-                  })}
-                  onClick={() => toggleFriend(friend.friend)}
-                >
-                  {friend.friend.email}
-                </Button>
-              ))
-            ) : (
-              <div className={css.emptyState}>
-                {t('features.dropdown.emptyState.text')}
-              </div>
-            )}
-          </div>
-        </div>
+          </h3>
+          {friends?.length ? (
+            <ul className={css.friends}>
+              {friends.map((friend) => (
+                <li key={friend.friend.id}>
+                  <Button
+                    className={css.friend({
+                      selected: selectedUser?.id === friend.friend.id,
+                    })}
+                    aria-pressed={selectedUser?.id === friend.friend.id}
+                    onClick={() => toggleFriend(friend.friend)}
+                  >
+                    {friend.friend.email}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={css.emptyState}>
+              {t('features.dropdown.emptyState.text')}
+            </p>
+          )}
+        </section>
 
         <ActionBar actions={actions} className={css.actions} />
       </form>

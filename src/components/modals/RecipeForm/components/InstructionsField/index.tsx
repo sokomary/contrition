@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionBar } from 'src/components/features';
 import { Instruction } from './components/Instruction';
@@ -8,39 +8,41 @@ import * as css from './index.css';
 export const InstructionsField = (props: Options) => {
   const { t } = useTranslation();
   const { fields, remove, actions } = useLogic(props);
+  const titleId = useId();
 
   const renderContent = () => {
     if (!fields.length) {
       return (
-        <div className={css.emptyState}>
+        <p className={css.emptyState}>
           {t('startpage.recipes.instructions.empty')}
-        </div>
+        </p>
       );
     }
 
     return (
-      <div className={css.content}>
+      <ol className={css.content}>
         {fields.map((_, index) => (
-          <Instruction
-            key={index}
-            name={`instructions.${index}`}
-            register={props.register}
-            control={props.control}
-            onRemove={() => remove(index)}
-          />
+          <li key={index}>
+            <Instruction
+              name={`instructions.${index}`}
+              register={props.register}
+              control={props.control}
+              onRemove={() => remove(index)}
+            />
+          </li>
         ))}
-      </div>
+      </ol>
     );
   };
 
   return (
-    <div className={css.container}>
+    <section className={css.container} aria-labelledby={titleId}>
       <div className={css.header}>
-        {t('startpage.recipes.instructions.title')}
+        <h3 id={titleId}>{t('startpage.recipes.instructions.title')}</h3>
         <ActionBar actions={actions} />
       </div>
 
       {renderContent()}
-    </div>
+    </section>
   );
 };

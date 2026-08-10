@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError } from 'react-hook-form';
 import { FieldError as Error } from './FieldError';
@@ -28,17 +28,25 @@ export const Field = ({
   label,
   error,
   errorText,
-}: Props) => (
-  <div className={`${css.container} ${className}`}>
-    <div className={css.label}>{label}</div>
-    <input
-      className={css.input}
-      type={type || 'text'}
-      step={step}
-      autoComplete='new-password'
-      {...register(name, { required })}
-      placeholder={placeholder}
-    />
-    {error && <Error text={errorText || ''} />}
-  </div>
-);
+}: Props) => {
+  const inputId = useId();
+
+  return (
+    <div className={`${css.container} ${className}`}>
+      <label className={css.label} htmlFor={inputId}>
+        {label}
+      </label>
+      <input
+        id={inputId}
+        className={css.input}
+        type={type || 'text'}
+        step={step}
+        autoComplete='new-password'
+        aria-invalid={error ? true : undefined}
+        {...register(name, { required })}
+        placeholder={placeholder}
+      />
+      {error && <Error text={errorText || ''} />}
+    </div>
+  );
+};
