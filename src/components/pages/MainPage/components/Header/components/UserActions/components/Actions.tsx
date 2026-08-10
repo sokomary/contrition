@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Action, ActionBar } from 'src/components/features';
 import { IconCreate, IconRandom } from 'src/assets';
 import { useDeviceScreen } from 'src/theme';
-import { useRouteModal } from 'src/router';
 import { useToggleModal } from 'src/components/modals';
 import * as css from './Actions.css';
 
@@ -12,7 +11,6 @@ export const Actions = () => {
   const screen = useDeviceScreen();
   const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
 
-  const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
   const { open: openMenu } = useToggleModal('menu', 'true');
   const { open: openRecipeNew } = useToggleModal('recipe-new', 'true');
   const { open: openRandom } = useToggleModal('random-recipe', 'true');
@@ -35,7 +33,6 @@ export const Actions = () => {
       onClick: openMenu,
       kind: 'primary',
       size: 'regular',
-      display: !isMenuOpen,
     },
   ];
 

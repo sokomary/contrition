@@ -152,7 +152,7 @@ export const ru = {
       created: 'Меню успешно создано',
       actions: {
         add: 'Добавить меню',
-        addRecipe: 'Добавить в меню',
+        addRecipe: 'Выбрать',
       },
       current: {
         empty: 'Нет текущего меню',

@@ -152,7 +152,7 @@ export const en = {
       created: 'Menu created',
       actions: {
         add: 'Add menu',
-        addRecipe: 'Add to menu',
+        addRecipe: 'Select',
       },
       current: {
         empty: 'No current menu',

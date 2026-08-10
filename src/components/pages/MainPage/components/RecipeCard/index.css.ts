@@ -59,12 +59,6 @@ export const favoriteIcon = style({
   top: px(10),
 });
 
-export const toMenuButton = style({
-  position: 'absolute',
-  left: px(55),
-  top: px(10),
-});
-
 export const calories = style({
   padding: `${px(5)} ${px(10)}`,
   borderRadius: px(15),
@@ -147,8 +141,6 @@ globalStyle(`${recipeNameContainer} > div:first-of-type`, {
 });
 
 export const recipeName = style({
-  // Tracks the card width now that it is fluid, instead of a fixed 248px that
-  // overflowed narrow cards and truncated early on wide ones.
   flex: 1,
   minWidth: 0,
   overflow: 'hidden',
@@ -199,10 +191,7 @@ export const content = recipe({
   },
   variants: {
     small: {
-      // The header favourites strip is a horizontal row, not the grid, so
-      // there is no track to fill — keep a fixed square.
       true: CARD_SIZES.iphone,
-      // Fill the grid track; aspectRatio holds the square as it widens.
       false: {
         width: '100%',
         aspectRatio: '1',

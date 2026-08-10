@@ -10,7 +10,6 @@ export const container = style({
   fontSize: px(18),
   color: color('primary'),
   backgroundColor: color('background'),
-  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
   padding: `${px(3)} ${px(5)}`,
   borderRadius: px(10),
   maxWidth: '100%',

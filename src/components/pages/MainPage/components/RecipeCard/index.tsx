@@ -1,10 +1,8 @@
-import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { ReactNode, useRef } from 'react';
 import { Recipe } from 'src/types/domain';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { Link } from 'react-router-dom';
 import { IconFavorite, IconLink } from 'src/assets';
-import { Button } from 'src/components/features';
 import { useToggleModal } from 'src/components/modals';
 import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
@@ -15,18 +13,11 @@ const VISIBLE_TAGS_COUNT = 2;
 
 type Props = {
   recipe: Recipe;
-  showTooltip?: boolean;
-  onAddToMenu?: () => void;
+  bottom?: ReactNode;
   small?: boolean;
 };
 
-export const RecipeCard = ({
-  recipe,
-  small = false,
-  showTooltip,
-  onAddToMenu,
-}: Props) => {
-  const { t } = useTranslation();
+export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
   const screen = useDeviceScreen();
   const displayInfo = screen !== 'iphone' && !small;
 
@@ -47,16 +38,11 @@ export const RecipeCard = ({
       <div className={css.container}>
         <div className={css.content({ displayInfo, small })}>
           {recipe.favorite && <IconFavorite className={css.favoriteIcon} />}
-          {showTooltip && (
-            <Button
-              className={css.toMenuButton}
-              label={t('startpage.menu.actions.addRecipe')}
-              onClick={onAddToMenu}
-            />
-          )}
+
           {!displayInfo && (
             <div className={css.calories}>{recipe.calories.toFixed(0)}</div>
           )}
+
           <img
             alt='recipe'
             className={css.img}
@@ -69,6 +55,7 @@ export const RecipeCard = ({
             src={recipe.pressignedUrl || NoImage}
             onClick={open}
           />
+
           <div className={css.recipeNameContainer}>
             <div>
               <div className={css.recipeName}>{recipe.name}</div>
@@ -80,6 +67,8 @@ export const RecipeCard = ({
             </div>
           </div>
         </div>
+
+        {bottom}
 
         {displayInfo && (
           <div className={css.info}>

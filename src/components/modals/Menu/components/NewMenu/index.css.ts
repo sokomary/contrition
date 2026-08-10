@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, px } from 'src/theme';
-import { recipe } from '@vanilla-extract/recipes';
+import { MEDIA, px } from 'src/theme';
 
 export const container = style({
   boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
@@ -37,22 +36,20 @@ export const dateLabel = style({
   justifyContent: 'flex-end',
 });
 
-export const empty = recipe({
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: px(100),
-    width: px(100),
-    border: `${px(1)} dashed gray`,
-    borderRadius: px(5),
-  },
-  variants: {
-    selected: {
-      true: {
-        borderColor: color('accent'),
-      },
+export const empty = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: px(65),
+  width: px(65),
+  border: `${px(1)} dashed gray`,
+  borderRadius: px(5),
+
+  '@media': {
+    [MEDIA.ipadv]: {
+      height: px(100),
+      width: px(100),
     },
   },
 });

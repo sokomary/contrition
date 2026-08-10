@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRecipes, getSharedRecipes, LIMIT } from 'src/api';
-import { useRouteModal } from 'src/router';
 import { Tag } from 'src/types/domain';
-import { useDeviceScreen } from 'src/theme';
 import { useAppearObserver } from 'src/utils';
 
 export const useLogic = () => {
-  const { isOpen: isMenuOpen } = useRouteModal({ key: 'menu' });
-
   const [tags, setTags] = useState<Tag[]>([]);
   const [query, setQuery] = useState('');
 
@@ -59,12 +55,7 @@ export const useLogic = () => {
   const recipes = recipesQuery.data || [];
   const sharedRecipes = sharedRecipesQuery.data || [];
 
-  const screen = useDeviceScreen();
-  const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
-
   return {
-    wideScreen,
-    isMenuOpen,
     recipes,
     sharedRecipes,
     query,

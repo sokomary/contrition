@@ -5,6 +5,7 @@ import { upperFirst } from 'lodash';
 import { Kind } from 'src/types/domain';
 import { useLogic, Options } from './useLogic';
 import { useFormat } from 'src/utils';
+import { SelectRecipeModal } from './SelectRecipeModal';
 import * as css from './index.css';
 
 export const NewMenu = (props: Options) => {
@@ -16,20 +17,18 @@ export const NewMenu = (props: Options) => {
     period,
     setPeriod,
     actions,
-    selecting,
-    onSelect,
-    onCancel,
     onRemove,
-    isSelected,
+    selectRecipe,
+    modalData,
+    setModalData,
   } = useLogic(props);
 
   const renderItem = (date: string, kind: Kind) => {
-    const recipe = findMeal(date.toString(), kind.id)?.recipeId;
+    const recipe = findMeal(date.toString(), kind.id)?.recipeName;
 
     if (recipe) {
       return (
         <div className={css.meal}>
-          {/* todo get recipe name */}
           {recipe}
           <Button
             kind='ghost'
@@ -41,22 +40,13 @@ export const NewMenu = (props: Options) => {
       );
     }
 
-    if (isSelected(date, kind)) {
-      return (
-        <Button
-          kind='ghost'
-          label={t('modals.confirmation.actions.cancel.label')}
-          onClick={() => onCancel()}
-        />
-      );
-    }
-
     return (
       <Button
         kind='ghost'
         label={t('voc.select')}
-        disabled={!!selecting}
-        onClick={() => onSelect(date.toString(), kind.id)}
+        onClick={() => {
+          setModalData({ date, kindId: kind.id });
+        }}
       />
     );
   };
@@ -78,8 +68,8 @@ export const NewMenu = (props: Options) => {
             ))}
           </div>
 
-          {dates?.map((date, i) => (
-            <div key={i} className={css.row}>
+          {dates?.map((date) => (
+            <div key={date} className={css.row}>
               <div className={css.dateLabel}>
                 {format({
                   kind: 'date',
@@ -90,19 +80,25 @@ export const NewMenu = (props: Options) => {
               </div>
 
               {kinds?.map((kind) => (
-                <div key={kind.id}>
-                  <div
-                    className={css.empty({
-                      selected: isSelected(date, kind),
-                    })}
-                    key={`${date}${kind}`}
-                  >
+                <div key={`${date}${kind.id}`}>
+                  <div className={css.empty} key={`${date}${kind}`}>
                     {renderItem(date, kind)}
                   </div>
                 </div>
               ))}
             </div>
           ))}
+
+          {!!modalData && (
+            <SelectRecipeModal
+              isActive={!!modalData}
+              onClose={() => setModalData(null)}
+              onSelect={(id, name) => {
+                selectRecipe(modalData?.date, id, modalData.kindId, name);
+                setModalData(null);
+              }}
+            />
+          )}
         </div>
       )}
       <ActionBar actions={actions} />

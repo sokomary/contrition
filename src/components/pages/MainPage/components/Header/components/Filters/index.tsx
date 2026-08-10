@@ -3,6 +3,7 @@ import React from 'react';
 import { Tag } from 'src/types/domain';
 import { Search } from './components/Search';
 import { Tags } from './components/Tags';
+import { Button } from 'src/components/features';
 import * as css from './index.css';
 
 export type FiltersProps = {
@@ -11,7 +12,7 @@ export type FiltersProps = {
   query: string;
   onQueryChange: (newQuery: string) => void;
   infoOpen: boolean;
-  toggleInfoOpen: () => void;
+  toggleInfoOpen?: () => void;
 };
 
 export const Filters = ({
@@ -26,9 +27,13 @@ export const Filters = ({
 
   return (
     <div className={css.container}>
-      <div className={css.action}>
-        <Icon className={css.icon} onClick={toggleInfoOpen} />
-      </div>
+      {toggleInfoOpen && (
+        <Button
+          startGraphic={<Icon className={css.icon} />}
+          onClick={toggleInfoOpen}
+          className={css.action}
+        />
+      )}
       <div className={css.content}>
         <Tags value={selectedTags} onChange={onTagSelect} />
         <Search value={query} onChange={onQueryChange} />

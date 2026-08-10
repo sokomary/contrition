@@ -25,6 +25,7 @@ export const action = style({
   height: 'fit-content',
   width: 'fit-content',
   flexShrink: 0,
+  paddingInline: 0,
   borderRadius: px(20),
 });
 globalStyle(action, {
@@ -42,7 +43,6 @@ export const icon = style({
 });
 
 export const content = style({
-  // maxWidth: '100%',
   padding: '0',
   gap: px(10),
   display: 'flex',

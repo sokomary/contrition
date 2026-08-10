@@ -1,13 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Loading, Modal } from 'src/components/features';
+import { Button, Dialog, Loading } from 'src/components/features';
 import { useLogic } from './useLogic';
 import { CurrentMenu } from './components/CurrentMenu';
 import { NewMenu } from './components/NewMenu';
 import { History } from './components/History';
 import * as css from './index.css';
-
-export const SIDE_MODAL_WIDTH = 577;
 
 export const Menu = () => {
   const { t } = useTranslation();
@@ -23,7 +21,6 @@ export const Menu = () => {
     onCancel,
     currentMenu,
     isLoading,
-    wideScreen,
   } = useLogic();
 
   const renderContent = () => {
@@ -52,10 +49,8 @@ export const Menu = () => {
   };
 
   return (
-    <Modal
-      side={wideScreen}
-      position={wideScreen ? 'right' : 'bottom'}
-      width={wideScreen ? SIDE_MODAL_WIDTH : undefined}
+    <Dialog
+      size='medium'
       header={
         <div className={css.header}>
           <Button
@@ -75,6 +70,6 @@ export const Menu = () => {
       onClose={onClose}
     >
       <div className={css.content}>{renderContent()}</div>
-    </Modal>
+    </Dialog>
   );
 };

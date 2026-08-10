@@ -1,0 +1,36 @@
+import { style } from '@vanilla-extract/css';
+import { CARD_SIZES } from 'src/components/pages/MainPage/components/RecipeCard/index.css';
+import { color, MEDIA, px } from 'src/theme';
+
+export const container = style({
+  width: '100%',
+  display: 'grid',
+  gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.iphone.width}, 1fr))`,
+  gap: px(10),
+  paddingTop: px(20),
+  paddingInline: px(15),
+
+  '@media': {
+    [MEDIA.ipadv]: {
+      gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.ipadv.width}, 1fr))`,
+      gap: px(20),
+    },
+    [MEDIA.mac]: {
+      gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.mac.width}, 1fr))`,
+      gap: px(40),
+    },
+  },
+});
+
+export const content = style({
+  background: color('field'),
+  paddingInline: px(13),
+  paddingBlockStart: px(23),
+  paddingBlockEnd: px(13),
+  marginBlockStart: px(-13),
+  borderRadius: `0 0 ${px(10)}  ${px(10)}`,
+  boxSizing: 'border-box',
+  width: CARD_SIZES.iphone.width,
+  display: 'flex',
+  justifyContent: 'center',
+});

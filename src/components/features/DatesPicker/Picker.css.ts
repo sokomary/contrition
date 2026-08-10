@@ -15,7 +15,6 @@ export const picker = style({
   borderRadius: vars['radius-03'],
   flexDirection: 'column',
   gap: px(15),
-  boxShadow: `0 0 ${px(20)}  ${px(5)} rgba(8, 8, 8, 0.10)`,
   display: 'flex',
 
   '@media': {

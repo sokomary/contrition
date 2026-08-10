@@ -7,22 +7,20 @@ export const container = style({
 });
 
 export const content = style({
-  position: 'absolute',
+  position: 'fixed',
   top: 'anchor(bottom)',
   left: 'anchor(left)',
+  bottom: 'auto',
+  right: 'auto',
+  positionTryFallbacks: 'flip-block, flip-inline, flip-block flip-inline',
+  maxHeight: `calc(100dvh - ${px(20)})`,
+  maxWidth: '100dvw',
+  overflow: 'auto',
+  overscrollBehavior: 'contain',
   margin: 0,
-  border: 'none',
   marginBlock: px(5),
+  border: 'none',
   boxSizing: 'border-box',
-  maxWidth: '100vw',
-  overflow: 'hidden',
   padding: 0,
   background: 'transparent',
-  positionTryFallbacks:
-    '--below-right, ' +
-    '--above-left, ' +
-    '--below-left, ' +
-    '--above-right, ' +
-    '--above-center, ' +
-    '--below-center',
 });

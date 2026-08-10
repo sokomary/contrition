@@ -45,10 +45,7 @@ export const useLogic = () => {
     [menu],
   );
 
-  const wideScreen = screen !== 'iphone' && screen !== 'ipadv';
-
   return {
-    wideScreen,
     isLoading: isMenuLoading || isKindsLoading,
     mode,
     screen,
@@ -67,7 +64,6 @@ export const useLogic = () => {
         kind: 'primary' as const,
         label: t('startpage.menu.actions.add'),
         onClick: () => setMode('new'),
-        display: wideScreen,
       },
     ],
   };

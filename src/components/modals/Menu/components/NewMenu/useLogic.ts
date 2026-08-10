@@ -1,17 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMenu } from 'src/api';
-import { Meal, Kind } from 'src/types/domain';
-import { isEqual, omit, parseInt } from 'lodash';
+import { Kind, Meal } from 'src/types/domain';
+import { isEqual } from 'lodash';
 import { Action } from 'src/components/features';
 import { Period } from 'src/types/Period';
-import { useLocation, useNavigate } from 'src/router';
 import { toast } from 'react-toastify';
 import { generateDates } from 'src/components/features/DatesPicker/helpers';
-
-// todo update menu design and logic considering recipes pagination
-// todo it is weird BE requires the whole recipe object
 
 export type Options = {
   kinds: Kind[];
@@ -21,14 +17,12 @@ export type Options = {
 
 export const useLogic = (props: Options) => {
   const { t } = useTranslation();
-  const { search } = useLocation();
-  const { navigate } = useNavigate();
 
   const [period, setPeriod] = useState<Period>({ start: null, end: null });
   const [meals, setMeals] = useState<
-    (Omit<Meal, 'id' | 'recipe'> & { recipeId: number })[]
+    (Omit<Meal, 'id' | 'recipe'> & { recipeId: number; recipeName: string })[]
   >([]);
-  const [selecting, setSelecting] = useState<{
+  const [modalData, setModalData] = useState<{
     date: string;
     kindId: number;
   } | null>(null);
@@ -50,29 +44,22 @@ export const useLogic = (props: Options) => {
     [meals],
   );
 
-  useEffect(() => {
-    const date = search.select?.[0];
-    const kindId = search.select?.[1]
-      ? parseInt(search.select[1], 10)
-      : undefined;
-    const recipeId = search.select?.[2]
-      ? parseInt(search.select[2], 10)
-      : undefined;
+  const selectRecipe = (
+    date: string,
+    recipeId: number,
+    kindId: number,
+    recipeName: string,
+  ) => {
+    const meal = findMeal(date, kindId);
+    const mealRecipeId = meal?.recipeId;
 
-    if (recipeId && kindId) {
-      const meal = findMeal(date, kindId);
-      const mealRecipeId = meal?.recipeId;
-
-      if (meal && mealRecipeId !== recipeId) {
-        setMeals((prev) => [
-          ...prev.filter((m) => !isEqual(m, meal)),
-          { ...meal, recipeId },
-        ]);
-        setSelecting(null);
-        navigate({ search: { ...omit(search, 'select') } });
-      }
+    if (meal && mealRecipeId !== recipeId) {
+      setMeals((prev) => [
+        ...prev.filter((m) => !isEqual(m, meal)),
+        { ...meal, recipeId, recipeName },
+      ]);
     }
-  }, [findMeal, props.kinds, navigate, search]);
+  };
 
   const actions: Action[] = [
     {
@@ -109,6 +96,7 @@ export const useLogic = (props: Options) => {
             date: date.toString(),
             kind,
             recipeId: null as unknown as number,
+            recipeName: '',
           })),
         )
         .flat(1);
@@ -123,28 +111,17 @@ export const useLogic = (props: Options) => {
     kinds: props.kinds,
     period,
     setPeriod: onPeriodUpdate,
-    isSelected: (date: string, kind: Kind) =>
-      selecting?.date === date.toString() && selecting?.kindId === kind.id,
     actions,
-    selecting,
-    onSelect: (date: string, kindId: number) => {
-      navigate({
-        search: { select: [date, kindId] },
-        keepPreviousSearch: true,
-      });
-      setSelecting({ date, kindId });
-    },
-    onCancel: () => {
-      navigate({ search: omit(search, 'select') });
-      setSelecting(null);
-    },
+    selectRecipe,
+    modalData,
+    setModalData,
     onRemove: (date: string, kindId: number) => {
       const meal = findMeal(date, kindId);
 
       if (meal?.recipeId) {
         setMeals((prev) => [
           ...prev.filter((m) => !isEqual(m, meal)),
-          { ...meal, recipeId: null as unknown as number },
+          { ...meal, recipeId: null as unknown as number, recipeName: '' },
         ]);
       }
     },

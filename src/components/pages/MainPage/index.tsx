@@ -9,14 +9,12 @@ export const MainPage = () => {
   const {
     recipes,
     sharedRecipes,
-    isMenuOpen,
     isLoading,
     isSharedLoading,
     query,
     setQuery,
     tags,
     setTags,
-    wideScreen,
     recipesObserver,
     sharedRecipesObserver,
   } = useLogic();
@@ -51,7 +49,7 @@ export const MainPage = () => {
   };
 
   return (
-    <div className={css.container({ withSide: isMenuOpen && wideScreen })}>
+    <div className={css.container}>
       <Header
         query={query}
         onQueryChange={setQuery}

@@ -1,18 +1,9 @@
-import { recipe } from '@vanilla-extract/recipes';
-import { SIDE_MODAL_WIDTH } from '../../modals';
 import { style } from '@vanilla-extract/css';
-import { MEDIA, px, text } from '../../../theme';
+import { MEDIA, px, text } from 'src/theme';
 
-export const container = recipe({
-  base: {
-    width: '100%',
-    paddingBlockEnd: px(40),
-  },
-  variants: {
-    withSide: {
-      true: { width: `calc(100% - ${SIDE_MODAL_WIDTH}px)` },
-    },
-  },
+export const container = style({
+  width: '100%',
+  paddingBlockEnd: px(40),
 });
 
 export const title = style({
