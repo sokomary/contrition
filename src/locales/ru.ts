@@ -154,6 +154,9 @@ export const ru = {
         add: 'Добавить меню',
         addRecipe: 'Выбрать',
       },
+      selectRecipe: {
+        header: 'Выбрать рецепт',
+      },
       current: {
         empty: 'Нет текущего меню',
       },

@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { CARD_SIZES } from 'src/components/pages/MainPage/components/RecipeCard/index.css';
 import { color, MEDIA, px } from 'src/theme';
 
@@ -8,7 +8,6 @@ export const container = style({
   gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_SIZES.iphone.width}, 1fr))`,
   gap: px(10),
   paddingTop: px(20),
-  paddingInline: px(15),
 
   '@media': {
     [MEDIA.ipadv]: {
@@ -33,4 +32,19 @@ export const content = style({
   width: CARD_SIZES.iphone.width,
   display: 'flex',
   justifyContent: 'center',
+});
+
+export const header = style({
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  gap: px(15),
+});
+
+export const filters = style({
+  paddingInline: 0,
+  justifyContent: 'center',
+});
+globalStyle(`${filters} > div:first-of-type`, {
+  flex: 1,
 });

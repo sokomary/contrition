@@ -32,19 +32,21 @@ export const SelectRecipeModal = ({ isActive, onClose, onSelect }: Props) => {
     <Dialog
       size='large'
       isActive={isActive}
-      header='Select recipe'
+      header={t('startpage.menu.selectRecipe.header')}
       onClose={onClose}
     >
-      <Filters
-        infoOpen={false}
-        selectedTags={tags}
-        onTagSelect={setTags}
-        toggleInfoOpen={undefined}
-        query={query}
-        onQueryChange={setQuery}
-      />
-
-      <Button label='New recipe' onClick={open} />
+      <div className={css.header}>
+        <Button label={t('startpage.recipes.new.header')} onClick={open} />
+        <Filters
+          infoOpen={false}
+          selectedTags={tags}
+          onTagSelect={setTags}
+          toggleInfoOpen={undefined}
+          query={query}
+          onQueryChange={setQuery}
+          className={css.filters}
+        />
+      </div>
 
       <div className={css.container}>
         {[...recipes, ...sharedRecipes].map((recipe) => (

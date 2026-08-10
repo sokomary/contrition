@@ -154,6 +154,9 @@ export const en = {
         add: 'Add menu',
         addRecipe: 'Select',
       },
+      selectRecipe: {
+        header: 'Select recipe',
+      },
       current: {
         empty: 'No current menu',
       },

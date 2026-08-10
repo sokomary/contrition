@@ -13,6 +13,7 @@ export type FiltersProps = {
   onQueryChange: (newQuery: string) => void;
   infoOpen: boolean;
   toggleInfoOpen?: () => void;
+  className?: string;
 };
 
 export const Filters = ({
@@ -22,11 +23,12 @@ export const Filters = ({
   onQueryChange,
   infoOpen,
   toggleInfoOpen,
+  className,
 }: FiltersProps) => {
   const Icon = infoOpen ? IconDropUp : IconDropDown;
 
   return (
-    <div className={css.container}>
+    <div className={`${css.container} ${className}`}>
       {toggleInfoOpen && (
         <Button
           startGraphic={<Icon className={css.icon} />}
