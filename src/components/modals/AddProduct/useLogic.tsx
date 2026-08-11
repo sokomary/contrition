@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addProduct } from 'src/api';
+import { productsApi } from 'src/api';
 import { Product } from 'src/types/domain';
 import { Action } from 'src/components/features';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ export const useLogic = () => {
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
-    mutationFn: addProduct,
+    mutationFn: productsApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       reset();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouteModal } from 'src/router';
 import { useQuery } from '@tanstack/react-query';
-import { getInstructions, getRecipe } from 'src/api';
+import { instructionsApi, recipesApi } from 'src/api';
 import { Form } from './Form';
 
 export const RecipeEdit = () => {
@@ -13,12 +13,12 @@ export const RecipeEdit = () => {
 
   const { data: defaultValues } = useQuery({
     queryKey: [`recipe-${id}`],
-    queryFn: () => getRecipe(id),
+    queryFn: () => recipesApi.getItem({ id }),
     enabled: !Number.isNaN(id),
   });
   const { data: instructions } = useQuery({
     queryKey: [`instructions-${id}`],
-    queryFn: () => getInstructions(id),
+    queryFn: () => instructionsApi.getList({ recipeId: id }),
     enabled: !Number.isNaN(id),
   });
 

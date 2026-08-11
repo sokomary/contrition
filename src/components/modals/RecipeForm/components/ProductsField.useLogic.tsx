@@ -1,7 +1,7 @@
 import { Control, useController, useFieldArray } from 'react-hook-form';
 import { Product, Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from 'src/api';
+import { productsApi } from 'src/api';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { useToggleModal } from 'src/components/modals';
 import { find } from 'lodash';
@@ -17,7 +17,7 @@ export const useLogic = (props: Options) => {
   const { t } = useTranslation();
   const { data: products } = useQuery({
     queryKey: ['products'],
-    queryFn: () => getProducts(),
+    queryFn: productsApi.getList,
   });
 
   const { fieldState } = useController({

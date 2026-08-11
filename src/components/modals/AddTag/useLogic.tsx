@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Tag } from 'src/types/domain';
-import { addTag } from 'src/api';
+import { tagsApi } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ export const useLogic = () => {
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
-    mutationFn: addTag,
+    mutationFn: tagsApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tags'] });
       reset();

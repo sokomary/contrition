@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getRandomRecipe, getTags } from 'src/api';
+import { recipesApi, tagsApi } from 'src/api';
 import { Action } from 'src/components/features';
 import { useTranslation } from 'react-i18next';
 import { find, isEqual } from 'lodash';
@@ -15,13 +15,14 @@ export const useLogic = () => {
 
   const { data: tags } = useQuery({
     queryKey: ['tags'],
-    queryFn: () => getTags(),
+    queryFn: tagsApi.getList,
   });
   const [selectedTags, setSelectedTags] = useState(tags || []);
 
   const { data, refetch, isFetching } = useQuery({
     queryKey: ['random-recipe'],
-    queryFn: () => getRandomRecipe(selectedTags.map((r) => r.id)),
+    queryFn: () =>
+      recipesApi.getRandom({ tags: selectedTags.map((r) => r.id) }),
   });
 
   const actions: Action[] = [

@@ -1,6 +1,6 @@
 import { Menu, Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
-import { getMenuProducts } from 'src/api';
+import { recipeProductsApi } from 'src/api';
 import { useMemo } from 'react';
 import { Temporal } from 'temporal-polyfill';
 import { Period } from 'src/types';
@@ -12,7 +12,7 @@ export type Options = {
 
 export const useLogic = ({ menu }: Options) => {
   const { data: products, isLoading } = useQuery({
-    queryFn: () => getMenuProducts(menu?.id as number),
+    queryFn: () => recipeProductsApi.getList({ menuId: menu?.id as number }),
     queryKey: ['menu-products'],
     enabled: !!menu,
   });

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getKinds, getMenu } from 'src/api';
+import { kindsApi, menuApi } from 'src/api';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouteModal } from 'src/router';
@@ -19,11 +19,11 @@ export const useLogic = () => {
 
   const { data: menu, isLoading: isMenuLoading } = useQuery({
     queryKey: ['menu'],
-    queryFn: () => getMenu(),
+    queryFn: menuApi.getList,
   });
   const { data: kinds, isLoading: isKindsLoading } = useQuery({
     queryKey: ['kinds'],
-    queryFn: () => getKinds(),
+    queryFn: kindsApi.getList,
   });
 
   const currentMenu = useMemo(

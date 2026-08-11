@@ -3,7 +3,7 @@ import { useRecipeActions } from 'src/components/atoms/useRecipeActions';
 import { ActionBar } from 'src/components/features';
 import { Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
-import { getInstructions, useAuthenticate } from 'src/api';
+import { instructionsApi, useAuthenticate } from 'src/api';
 import { useDeviceScreen } from 'src/theme';
 import { Comment } from './components/Comment';
 import { PortionSize } from './components/PortionSize';
@@ -21,7 +21,7 @@ export const Content = ({ recipe }: Props) => {
 
   const { data: instructions } = useQuery({
     queryKey: [`instructions-${recipe?.id}`],
-    queryFn: () => getInstructions(recipe?.id as number),
+    queryFn: () => instructionsApi.getList({ recipeId: recipe?.id as number }),
     enabled: !!recipe,
   });
 

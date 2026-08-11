@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getFavoriteRecipes, MAX_LIMIT, useAuthenticate } from 'src/api';
+import { recipesApi, MAX_LIMIT, useAuthenticate } from 'src/api';
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 
 export const useLogic = () => {
@@ -8,7 +8,7 @@ export const useLogic = () => {
 
   const { data: recipes } = useQuery({
     queryKey: ['recipes', 'favorite'],
-    queryFn: () => getFavoriteRecipes(undefined, MAX_LIMIT),
+    queryFn: () => recipesApi.getFavourites({ limit: MAX_LIMIT }),
     select: (data) => data.content,
   });
 

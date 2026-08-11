@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useConfirmation, useToggleModal } from 'src/components/modals';
 import { Recipe } from 'src/types/domain';
-import { deleteRecipe, fromFavorites, toFavorites } from 'src/api';
+import { recipesApi } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
@@ -50,7 +50,7 @@ export const useRecipeActions = ({
   };
 
   const removeMutation = useMutation({
-    mutationFn: deleteRecipe,
+    mutationFn: recipesApi.remove,
     onSuccess: () => {
       removeConfirmation.close();
       toast(t('startpage.recipes.removed'));
@@ -71,7 +71,7 @@ export const useRecipeActions = ({
   });
 
   const toFavoritesMutation = useMutation({
-    mutationFn: toFavorites,
+    mutationFn: recipesApi.toFavourites,
     onSuccess: () => {
       toast(t('startpage.recipes.favorites.added'));
       onSuccess();
@@ -79,7 +79,7 @@ export const useRecipeActions = ({
   });
 
   const fromFavoritesMutation = useMutation({
-    mutationFn: fromFavorites,
+    mutationFn: recipesApi.fromFavourites,
     onSuccess: () => {
       toast(t('startpage.recipes.favorites.removed'));
       onSuccess();
@@ -95,7 +95,7 @@ export const useRecipeActions = ({
     },
     {
       kind: 'ghost',
-      onClick: () => toFavoritesMutation.mutate(recipe.id),
+      onClick: () => toFavoritesMutation.mutate({ recipeId: recipe.id }),
       label: t('startpage.recipes.actions.toFavorites'),
       display: !recipe.favorite,
       isLoading: toFavoritesMutation.isPending,
@@ -103,7 +103,7 @@ export const useRecipeActions = ({
     },
     {
       kind: 'ghost',
-      onClick: () => fromFavoritesMutation.mutate(recipe.id),
+      onClick: () => fromFavoritesMutation.mutate({ recipeId: recipe.id }),
       label: t('startpage.recipes.actions.fromFavorites'),
       display: recipe.favorite,
       isLoading: fromFavoritesMutation.isPending,

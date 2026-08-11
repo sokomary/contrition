@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { useToggleModal } from 'src/components/modals';
-import { getTags } from 'src/api';
+import { tagsApi } from 'src/api';
 import { Card } from './Card';
 import * as css from './Tags.css';
 
@@ -11,7 +11,7 @@ export const Tags = () => {
   const { open: openAddTag } = useToggleModal(`tag-new`, 'true');
   const { data: tags } = useQuery({
     queryKey: ['tags'],
-    queryFn: () => getTags(),
+    queryFn: tagsApi.getList,
   });
 
   return (

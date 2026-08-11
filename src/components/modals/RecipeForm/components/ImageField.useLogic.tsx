@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { upload } from 'src/api';
+import { imagesApi } from 'src/api';
 import { Recipe } from 'src/types/domain';
 
 export type Options = UseControllerProps<Recipe> & {
@@ -23,7 +23,7 @@ export const useLogic = (props: Options) => {
   };
 
   const uploadMutation = useMutation({
-    mutationFn: upload,
+    mutationFn: imagesApi.upload,
     onSuccess: field.onChange,
     onError: clear,
   });
@@ -32,7 +32,7 @@ export const useLogic = (props: Options) => {
     if (ref.current?.files?.length) {
       const newFiles = Array.from(ref.current?.files || []);
       setFiles(newFiles);
-      uploadMutation.mutate(newFiles[0]);
+      uploadMutation.mutate({ file: newFiles[0] });
       field.onChange(newFiles);
     }
   };

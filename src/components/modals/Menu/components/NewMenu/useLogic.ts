@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addMenu } from 'src/api';
+import { menuApi } from 'src/api';
 import { Kind, Meal } from 'src/types/domain';
 import { isEqual } from 'lodash';
 import { Action } from 'src/components/features';
@@ -29,7 +29,7 @@ export const useLogic = (props: Options) => {
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
-    mutationFn: addMenu,
+    mutationFn: menuApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['menu'] });
       toast(t('startpage.menu.created'));

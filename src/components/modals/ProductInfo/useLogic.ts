@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouteModal } from 'src/router';
-import { getProduct } from 'src/api';
+import { productsApi } from 'src/api';
 
 export const useLogic = () => {
   const { isOpen, value, onClose } = useRouteModal({
@@ -11,7 +11,7 @@ export const useLogic = () => {
 
   const { data: product } = useQuery({
     queryKey: [`product-${id}`],
-    queryFn: () => getProduct(id),
+    queryFn: () => productsApi.getItem({ id }),
     enabled: !Number.isNaN(id),
   });
   return {

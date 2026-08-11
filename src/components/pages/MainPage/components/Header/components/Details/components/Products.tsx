@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useToggleModal } from 'src/components/modals';
-import { getProducts } from 'src/api';
+import { productsApi } from 'src/api';
 import { Product } from 'src/types/domain';
 import { Button } from 'src/components/features';
 import { Card } from './Card';
@@ -13,7 +13,7 @@ export const Products = () => {
   const { open: openAddProduct } = useToggleModal(`product-new`, 'true');
   const { data: products } = useSuspenseQuery({
     queryKey: ['products'],
-    queryFn: () => getProducts(),
+    queryFn: productsApi.getList,
   });
 
   return (

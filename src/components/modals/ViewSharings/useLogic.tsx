@@ -3,13 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Recipe, User } from 'src/types/domain';
-import {
-  disableContinuousSharing,
-  getContinuousFriends,
-  getFriends,
-  shareRecipesCountinuously,
-  unshareRecipe,
-} from 'src/api';
+import { recipesApi, friendRecipesApi, usersApi } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { toast } from 'react-toastify';
@@ -26,13 +20,13 @@ export const useLogic = () => {
 
   const { data: continuousFriends } = useQuery({
     queryKey: ['continuous-friends'],
-    queryFn: getContinuousFriends,
+    queryFn: usersApi.getContinuousFriends,
     enabled: isOpen,
   });
 
   const { data: recipients } = useQuery({
     queryKey: ['shared-recipients'],
-    queryFn: getFriends,
+    queryFn: friendRecipesApi.getList,
     enabled: isOpen,
   });
 
@@ -66,7 +60,7 @@ export const useLogic = () => {
 
   const removeMutation = useMutation({
     mutationFn: ({ recipe, email }: RemoveTarget) =>
-      unshareRecipe(recipe.id, email),
+      recipesApi.unshare({ recipeId: recipe.id, email }),
     onSuccess: () => {
       toast(t('startpage.sharings.removed'));
       setRemoveTarget(null);
@@ -82,7 +76,7 @@ export const useLogic = () => {
     }: {
       email: string;
       removeShared: boolean;
-    }) => disableContinuousSharing(email, removeShared),
+    }) => recipesApi.disableContinuousSharing({ email, removeShared }),
     onSuccess: () => {
       toast(t('startpage.sharings.cancelled'));
       setCancelTarget(null);
@@ -93,7 +87,7 @@ export const useLogic = () => {
 
   const addMutation = useMutation({
     mutationFn: (recipientEmail: string) =>
-      shareRecipesCountinuously(recipientEmail),
+      recipesApi.shareCountinuously({ email: recipientEmail }),
     onSuccess: () => {
       toast(t('startpage.sharings.continuous.added'));
       closeAdd();

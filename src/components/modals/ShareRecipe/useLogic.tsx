@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { User } from 'src/types/domain';
-import { getFriends, shareRecipe, useAuthenticate } from 'src/api';
+import { friendRecipesApi, recipesApi, useAuthenticate } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
@@ -23,7 +23,7 @@ export const useLogic = () => {
 
   const { data: friends } = useQuery({
     queryKey: ['friends', user?.id],
-    queryFn: getFriends,
+    queryFn: friendRecipesApi.getList,
     enabled: isOpen && !!user?.id,
   });
 
@@ -39,7 +39,7 @@ export const useLogic = () => {
 
   const shareMutation = useMutation({
     mutationFn: (recipientEmail: string) =>
-      shareRecipe(recipeId, recipientEmail),
+      recipesApi.share({ recipeId, email: recipientEmail }),
     onSuccess: () => {
       toast(t('startpage.recipes.share.success'));
       close();

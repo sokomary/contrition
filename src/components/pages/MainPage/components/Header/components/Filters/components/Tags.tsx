@@ -2,7 +2,7 @@ import React from 'react';
 import { Tag } from 'src/types/domain';
 import { Button } from 'src/components/features';
 import { useQuery } from '@tanstack/react-query';
-import { getTags } from 'src/api';
+import { tagsApi } from 'src/api';
 import * as css from './Tags.css';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export const Tags = ({ value, onChange }: Props) => {
   const { data: tags } = useQuery({
     queryKey: ['tags'],
-    queryFn: () => getTags(),
+    queryFn: tagsApi.getList,
   });
 
   return (

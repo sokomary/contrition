@@ -5,7 +5,7 @@ import {
 } from 'react-hook-form';
 import { Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
-import { getTags } from 'src/api';
+import { tagsApi } from 'src/api';
 import { useToggleModal } from 'src/components/modals';
 import { Action } from 'src/components/features';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ export const useLogic = (props: Options) => {
   const { t } = useTranslation();
   const { data: tags } = useQuery({
     queryKey: ['tags'],
-    queryFn: () => getTags(),
+    queryFn: tagsApi.getList,
   });
 
   const { fieldState } = useController(props);

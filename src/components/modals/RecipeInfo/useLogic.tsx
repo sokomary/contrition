@@ -1,7 +1,7 @@
 import { useDeviceScreen } from 'src/theme/useDeviceScreen';
 import { useRouteModal } from 'src/router';
 import { useQuery } from '@tanstack/react-query';
-import { getRecipe } from 'src/api';
+import { recipesApi } from 'src/api';
 
 export const useLogic = () => {
   const screen = useDeviceScreen();
@@ -16,7 +16,7 @@ export const useLogic = () => {
   //  потому нельзя использовать useSuspenseQuery
   const { data: recipe, isLoading } = useQuery({
     queryKey: [`recipe-${id}`],
-    queryFn: () => getRecipe(id),
+    queryFn: () => recipesApi.getItem({ id }),
     enabled: !Number.isNaN(id),
   });
 

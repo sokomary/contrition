@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addRecipe } from 'src/api';
+import { recipesApi } from 'src/api';
 import { Recipe } from 'src/types/domain';
 import { useTranslation } from 'react-i18next';
 import { Action } from 'src/components/features';
@@ -19,7 +19,7 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
 
   const queryClient = useQueryClient();
   const addMutation = useMutation({
-    mutationFn: addRecipe,
+    mutationFn: recipesApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recipes'] });
       if (defaultValues) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getRecipes, getSharedRecipes, LIMIT } from 'src/api';
+import { recipesApi, LIMIT } from 'src/api';
 import { Tag } from 'src/types/domain';
 import { useAppearObserver } from 'src/utils';
 
@@ -11,12 +11,12 @@ export const useLogic = () => {
   const recipesQuery = useInfiniteQuery({
     queryKey: ['recipes', tags, query],
     queryFn: ({ pageParam }) =>
-      getRecipes(
-        tags.map((tag) => tag.id),
-        LIMIT,
-        pageParam,
+      recipesApi.getList({
+        tags: tags.map((tag) => tag.id),
+        limit: LIMIT,
+        offset: pageParam,
         query,
-      ),
+      }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       const limit = lastPage.limit || LIMIT;
@@ -33,12 +33,12 @@ export const useLogic = () => {
   const sharedRecipesQuery = useInfiniteQuery({
     queryKey: ['recipes', 'shared', tags, query],
     queryFn: ({ pageParam }) =>
-      getSharedRecipes(
-        tags.map((tag) => tag.id),
-        LIMIT,
-        pageParam,
+      recipesApi.getShared({
+        tags: tags.map((tag) => tag.id),
+        limit: LIMIT,
+        offset: pageParam,
         query,
-      ),
+      }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
       const limit = lastPage.limit || LIMIT;
