@@ -1,45 +1,41 @@
-import { keyframes, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { color, MEDIA, px } from 'src/theme';
 
-export const container = style({
+export const trigger = style({
+  width: '100%',
+  height: px(42),
+  padding: `${px(8)} ${px(16)}`,
+  cursor: 'pointer',
   display: 'flex',
-  gap: 1,
-  flexDirection: 'column',
-  position: 'relative',
-});
+  justifyContent: 'space-between',
+  fontSize: px(16),
+  alignItems: 'center',
+  background: color('background'),
+  color: color('font'),
+  borderRadius: px(10),
+  boxShadow: `0 0 ${px(10)} ${px(5)} rgba(8, 8, 8, 0.07)`,
 
-export const content = recipe({
-  base: {
-    width: '100%',
-    height: px(42),
-    padding: `${px(8)} ${px(16)}`,
-    zIndex: 99,
-
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'space-between',
-    fontSize: px(16),
-    alignItems: 'center',
-    background: color('background'),
-
-    '@media': {
-      [MEDIA.ipadh]: {
-        height: px(34),
-        padding: `${px(4)} ${px(8)}`,
-      },
+  '@media': {
+    [MEDIA.ipadh]: {
+      height: px(34),
+      padding: `${px(4)} ${px(8)}`,
     },
   },
-  variants: {
-    open: {
-      true: {
-        borderRadius: `${px(10)} ${px(10)} 0 0`,
-        boxShadow: 'none',
-      },
-      false: {
-        borderRadius: px(10),
-        boxShadow: `0 0 ${px(10)} ${px(5)} rgba(8, 8, 8, 0.07)`,
-      },
+});
+
+export const search = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: px(8),
+  height: px(42),
+  padding: `${px(8)} ${px(8)}`,
+  boxSizing: 'border-box',
+
+  '@media': {
+    [MEDIA.ipadh]: {
+      height: px(34),
+      padding: `${px(4)} ${px(8)}`,
     },
   },
 });
@@ -51,6 +47,7 @@ export const input = style({
   fontSize: px(16),
   padding: `0 ${px(8)}`,
   background: color('background'),
+  color: color('font'),
 });
 
 export const emptyState = style({
@@ -60,42 +57,26 @@ export const emptyState = style({
   padding: px(18),
 });
 
-const itemsappears = keyframes({
-  '0%': {
-    transform: 'scaleY(0)',
-    transformOrigin: 'top center',
-  },
-  '100%': {
-    transform: 'scaleY(1)',
-    transformOrigin: 'top center',
-  },
-});
 export const contentContainer = style({
   background: color('background'),
+  boxSizing: 'border-box',
   width: '100%',
+  minWidth: px(170),
   borderRadius: px(10),
   display: 'flex',
   flexDirection: 'column',
   gap: px(5),
-  position: 'absolute',
-  zIndex: 98,
-  padding: `${px(34)} ${px(8)} ${px(8)} ${px(8)}`,
-  animationDuration: '0.3s',
-  animationName: itemsappears,
-  animationDirection: 'alternate',
-  boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
-  maxHeight: px(250),
-  overflowY: 'scroll',
+  padding: px(8),
+});
+
+export const options = style({
+  maxHeight: px(140),
+  overflowY: 'auto',
   overflowX: 'hidden',
 
   '::-webkit-scrollbar': {
     display: 'none',
   },
-});
-
-export const options = style({
-  maxHeight: px(140),
-  overflowY: 'scroll',
 });
 
 export const label = style({
@@ -148,8 +129,9 @@ export const option = recipe({
 export const dot = style({
   height: px(7),
   width: px(7),
-  borderRadius: px(3.5),
-  backgroundColor: color('accent'),
+  borderRadius: '50%',
+  background: color('primary'),
   alignSelf: 'center',
-  marginRight: px(4),
+  marginInlineEnd: px(4),
+  flexShrink: 0,
 });

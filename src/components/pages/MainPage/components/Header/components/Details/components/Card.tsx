@@ -24,9 +24,9 @@ export const Card = ({
       <div className={css.container}>
         <div className={css.content}>
           <div className={css.header}>
-            <h2 className={css.title} id={titleId}>
+            <h5 className={css.title} id={titleId}>
               {title}
-            </h2>
+            </h5>
             <div className={css.divider} />
             <div>{items.length}</div>
           </div>

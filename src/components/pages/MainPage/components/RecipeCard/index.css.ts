@@ -118,13 +118,11 @@ export const recipeNameContainer = style({
   bottom: '0',
   width: '100%',
   backgroundColor: color('field'),
-  fontSize: px(14),
   height: px(40),
   padding: px(10),
 
   '@media': {
     [MEDIA.ipadv]: {
-      fontSize: px(16),
       height: 'fit-content',
       padding: `${px(15)} ${px(10)}`,
     },

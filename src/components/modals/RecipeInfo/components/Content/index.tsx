@@ -28,6 +28,16 @@ export const Content = ({ recipe }: Props) => {
   return (
     <div className={css.wrapper}>
       <div className={css.container}>
+        <div className={css.content}>
+          {(['calories', 'protein', 'fats', 'carbohydrates'] as const).map(
+            (field, index) => (
+              <div key={index} className={css.element}>
+                {recipe[field].toFixed(recipe[field] % 1 > 0 ? 0 : undefined)}
+              </div>
+            ),
+          )}
+        </div>
+
         {recipe.comment && <Comment comment={recipe.comment} />}
         {recipe.portionSize && <PortionSize portionSize={recipe.portionSize} />}
         <Products products={recipe.recipeProducts} />

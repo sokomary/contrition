@@ -73,7 +73,6 @@ export const cancelButton = style({
 
 export const actions = style({
   justifyContent: 'flex-end',
-  marginBlockStart: px(20),
 });
 
 export const addForm = style({

@@ -12,6 +12,8 @@ export const useLogic = () => {
 
   const id = parseInt(value, 10);
 
+  // todo модалка рендерится всегда даже если id рецепта нет в search,
+  //  потому нельзя использовать useSuspenseQuery
   const { data: recipe, isLoading } = useQuery({
     queryKey: [`recipe-${id}`],
     queryFn: () => getRecipe(id),
@@ -25,9 +27,4 @@ export const useLogic = () => {
     isOpen,
     recipe,
   };
-};
-
-export const WIDTHS: { [key: string]: number } = {
-  mac: 500,
-  ipadh: 500,
 };

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { color, px } from 'src/theme';
+import { px } from 'src/theme';
 
 export const content = style({
   display: 'flex',
@@ -27,18 +27,4 @@ export const icon = style({
   height: px(20),
   width: px(20),
   marginBottom: px(1),
-});
-
-export const element = style({
-  borderRadius: px(7),
-  height: px(25),
-  padding: `0 ${px(10)}`,
-  flexShrink: 0,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: px(14),
-  backgroundColor: color('accent-light'),
-  color: color('accent'),
-  fontWeight: 'bold',
 });

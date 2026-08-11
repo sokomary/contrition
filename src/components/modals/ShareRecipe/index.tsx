@@ -39,32 +39,27 @@ export const ShareRecipe = () => {
           />
         )}
 
-        <section aria-labelledby={friendsLabelId}>
-          <h3 className={css.label} id={friendsLabelId}>
-            {t('startpage.recipes.share.friends')}
-          </h3>
-          {friends?.length ? (
-            <ul className={css.friends}>
+        {!!friends?.length && (
+          <section aria-labelledby={friendsLabelId}>
+            <h5 className={css.label} id={friendsLabelId}>
+              {t('startpage.recipes.share.friends')}
+            </h5>
+            <div className={css.friends}>
               {friends.map((friend) => (
-                <li key={friend.friend.id}>
-                  <Button
-                    className={css.friend({
-                      selected: selectedUser?.id === friend.friend.id,
-                    })}
-                    aria-pressed={selectedUser?.id === friend.friend.id}
-                    onClick={() => toggleFriend(friend.friend)}
-                  >
-                    {friend.friend.email}
-                  </Button>
-                </li>
+                <Button
+                  key={friend.friend.id}
+                  className={css.friend({
+                    selected: selectedUser?.id === friend.friend.id,
+                  })}
+                  aria-pressed={selectedUser?.id === friend.friend.id}
+                  onClick={() => toggleFriend(friend.friend)}
+                >
+                  {friend.friend.email}
+                </Button>
               ))}
-            </ul>
-          ) : (
-            <p className={css.emptyState}>
-              {t('features.dropdown.emptyState.text')}
-            </p>
-          )}
-        </section>
+            </div>
+          </section>
+        )}
 
         <ActionBar actions={actions} className={css.actions} />
       </form>

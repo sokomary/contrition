@@ -44,9 +44,9 @@ export const MainPage = () => {
 
     return (
       <section aria-labelledby={sharedTitleId}>
-        <h2 className={css.title} id={sharedTitleId}>
+        <h4 className={css.title} id={sharedTitleId}>
           {t('startpage.recipes.shared.title')}
-        </h2>
+        </h4>
         <Content recipes={sharedRecipes} />
         <div>{sharedRecipesObserver}</div>
       </section>

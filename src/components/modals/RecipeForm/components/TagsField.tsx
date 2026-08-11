@@ -13,9 +13,7 @@ export const TagsField = (props: Options) => {
   return (
     <section className={css.container} aria-labelledby={labelId}>
       <div className={css.header}>
-        <h3 className={css.label} id={labelId}>
-          {t('domain.recipe.tags')}
-        </h3>
+        <h5 id={labelId}>{t('domain.recipe.tags')}</h5>
         <ActionBar actions={actions} />
       </div>
 

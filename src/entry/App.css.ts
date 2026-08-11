@@ -13,9 +13,32 @@ export const root = style({
 
 globalStyle(`${root} :where(h1, h2, h3, h4, h5, h6)`, {
   margin: 0,
-  fontSize: 'inherit',
-  fontWeight: 'inherit',
 });
+globalStyle(`${root} :where(h1)`, {
+  fontSize: px(48),
+  fontWeight: 600,
+});
+globalStyle(`${root} :where(h2)`, {
+  fontSize: px(36),
+  fontWeight: 600,
+});
+globalStyle(`${root} :where(h3)`, {
+  fontSize: px(24),
+  fontWeight: 600,
+});
+globalStyle(`${root} :where(h4)`, {
+  fontSize: px(20),
+  fontWeight: 600,
+});
+globalStyle(`${root} :where(h5)`, {
+  fontSize: px(16),
+  fontWeight: 600,
+});
+globalStyle(`${root} :where(h6)`, {
+  fontSize: px(14),
+  fontWeight: 600,
+});
+
 globalStyle(`${root} :where(ul, ol)`, {
   margin: 0,
   padding: 0,

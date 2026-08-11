@@ -19,11 +19,6 @@ export const friends = style({
   gap: px(5),
 });
 
-export const emptyState = style({
-  fontSize: px(14),
-  color: color('primary'),
-});
-
 export const friend = recipe({
   base: {
     borderRadius: px(7),

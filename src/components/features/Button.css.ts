@@ -116,8 +116,6 @@ export const button = recipe({
           },
         },
 
-        // No background to tint, and padding is 0 so an overlay would hug the
-        // text — fade instead, which also reads on icon-only ghost buttons.
         '@media': {
           [CAN_HOVER]: {
             selectors: {

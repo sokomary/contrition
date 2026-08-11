@@ -22,7 +22,6 @@ export const header = style({
   gap: px(10),
   alignItems: 'center',
   color: color('label'),
-  height: px(32),
 });
 
 export const list = recipe({
@@ -52,7 +51,6 @@ export const list = recipe({
 
 export const title = style({
   alignItems: 'center',
-  fontSize: px(16),
   color: color('label'),
 });
 

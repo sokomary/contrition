@@ -6,13 +6,14 @@ type Props = {
   buttonProps: ButtonProps;
   content: ReactNode;
   calloutRef?: RefObject<HTMLDivElement | null>;
+  width?: 'fit' | 'full';
 };
 
-export const Callout = ({ buttonProps, calloutRef, content }: Props) => {
+export const Callout = ({ buttonProps, calloutRef, content, width }: Props) => {
   const id = useId();
 
   return (
-    <div className={css.container}>
+    <div className={css.container({ width })}>
       <Button
         {...buttonProps}
         popoverTarget={id}
@@ -23,7 +24,7 @@ export const Callout = ({ buttonProps, calloutRef, content }: Props) => {
         id={id}
         popover='auto'
         ref={calloutRef}
-        className={css.content}
+        className={css.content({ width })}
         style={{ positionAnchor: `--open-button-${id}` }}
       >
         {content}

@@ -58,7 +58,7 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
 
           <div className={css.recipeNameContainer}>
             <div>
-              <h3 className={css.recipeName}>{recipe.name}</h3>
+              <h5 className={css.recipeName}>{recipe.name}</h5>
               {recipe.link.length > 1 && (
                 <ActionBase
                   as='a'

@@ -76,7 +76,7 @@ export const Dialog = (options: Options) => {
     >
       <div className={css.container}>
         <div className={css.header}>
-          <h2>{optionsRef.current.header}</h2>
+          <h4>{optionsRef.current.header}</h4>
           <Button
             kind='ghost'
             onClick={() => {

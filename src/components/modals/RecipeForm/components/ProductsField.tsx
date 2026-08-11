@@ -16,13 +16,16 @@ export const ProductsField = (props: Options) => {
     <section className={css.container} aria-labelledby={labelId}>
       <div className={css.field}>
         <div className={css.header}>
-          <h3 className={css.label} id={labelId}>
-            {t('domain.recipe.recipeProducts')}
-          </h3>
+          <h5 id={labelId}>{t('domain.recipe.recipeProducts')}</h5>
           <ActionBar actions={actions} />
         </div>
 
-        <Dropdown options={options || []} value={value} onSelect={onSelect} />
+        <Dropdown
+          label='Select ingredients'
+          options={options || []}
+          value={value}
+          onSelect={onSelect}
+        />
         {error && <FieldError text={t('startpage.recipes.errors.products')} />}
       </div>
 

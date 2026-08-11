@@ -14,25 +14,26 @@ export const Instructions = ({ instructions }: Props) => {
 
   return (
     <section className={css.container} aria-labelledby={titleId}>
-      <h3 className={css.title} id={titleId}>
+      <h5 className={css.title} id={titleId}>
         {t('startpage.recipes.instructions.title')}
-      </h3>
+      </h5>
 
-      <ul className={css.content}>
+      <div className={css.content}>
         {instructions.map((instruction) => (
-          <li className={css.instruction} key={instruction.id}>
-            <h4 className={css.name}>{instruction.name}</h4>
+          <div className={css.instruction} key={instruction.id}>
+            <h6 className={css.name}>{instruction.name}</h6>
 
-            <ol className={css.steps}>
+            <div className={css.steps}>
               {instruction.steps.map((step, index) => (
-                <li className={css.step} key={step.id}>
-                  <CrossOutAble content={`${index + 1}. ${step.description}`} />
-                </li>
+                <CrossOutAble
+                  key={step.id}
+                  content={`${index + 1}. ${step.description}`}
+                />
               ))}
-            </ol>
-          </li>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 };

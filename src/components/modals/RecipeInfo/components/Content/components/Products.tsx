@@ -14,9 +14,9 @@ export const Products = ({ products }: Props) => {
 
   return (
     <section className={css.container} aria-labelledby={titleId}>
-      <h3 className={css.title} id={titleId}>
+      <h5 className={css.title} id={titleId}>
         {t('domain.recipe.recipeProducts')}
-      </h3>
+      </h5>
 
       <div className={css.content}>
         {products.map(({ id, quantity, product }) => (

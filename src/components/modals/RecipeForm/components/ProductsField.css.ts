@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color, MEDIA, px } from 'src/theme';
+import { color, MEDIA, px, text } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -21,7 +21,9 @@ export const tooltip = style({
 });
 
 export const label = style({
-  fontSize: px(16),
+  // fontSize: px(16),
+  ...text.text1,
+  color: 'red',
 });
 
 export const field = style({

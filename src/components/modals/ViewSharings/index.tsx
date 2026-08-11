@@ -45,9 +45,9 @@ export const ViewSharings = () => {
         <div className={css.container}>
           <section className={css.section} aria-labelledby={continuousTitleId}>
             <div className={css.sectionHeader}>
-              <h3 className={css.sectionTitle} id={continuousTitleId}>
+              <h5 className={css.sectionTitle} id={continuousTitleId}>
                 {t('startpage.sharings.continuous.title')}
-              </h3>
+              </h5>
               <Button
                 kind='ghost'
                 className={css.addButton}
@@ -76,14 +76,14 @@ export const ViewSharings = () => {
           </section>
 
           <section className={css.section} aria-labelledby={recipientsTitleId}>
-            <h3 className={css.sectionTitle} id={recipientsTitleId}>
+            <h5 className={css.sectionTitle} id={recipientsTitleId}>
               {t('startpage.sharings.recipients.title')}
-            </h3>
+            </h5>
             {recipients?.length ? (
               <ul className={css.section}>
                 {recipients.map((friend) => (
                   <li className={css.friendBlock} key={friend.friend.id}>
-                    <h4 className={css.friendName}>{friend.friend.email}</h4>
+                    <h6 className={css.friendName}>{friend.friend.email}</h6>
                     {friend.recipes.length ? (
                       <ul className={css.friendBlock}>
                         {friend.recipes.map((recipe) => (
@@ -139,30 +139,26 @@ export const ViewSharings = () => {
             />
           )}
 
-          <section aria-labelledby={friendsLabelId}>
-            <h3 className={css.label} id={friendsLabelId}>
-              {t('startpage.recipes.share.friends')}
-            </h3>
-            {candidates?.length ? (
-              <ul className={css.friends}>
+          {!!candidates?.length && (
+            <section aria-labelledby={friendsLabelId}>
+              <h5 className={css.label} id={friendsLabelId}>
+                {t('startpage.recipes.share.friends')}
+              </h5>
+
+              <div className={css.friends}>
                 {candidates.map((friend) => (
-                  <li key={friend.id}>
-                    <Button
-                      className={css.friend({
-                        selected: selectedFriend?.id === friend.id,
-                      })}
-                      label={friend.email}
-                      onClick={() => toggleFriend(friend)}
-                    />
-                  </li>
+                  <Button
+                    key={friend.id}
+                    className={css.friend({
+                      selected: selectedFriend?.id === friend.id,
+                    })}
+                    label={friend.email}
+                    onClick={() => toggleFriend(friend)}
+                  />
                 ))}
-              </ul>
-            ) : (
-              <p className={css.emptyState}>
-                {t('features.dropdown.emptyState.text')}
-              </p>
-            )}
-          </section>
+              </div>
+            </section>
+          )}
 
           <ActionBar actions={addActions} className={css.actions} />
         </form>

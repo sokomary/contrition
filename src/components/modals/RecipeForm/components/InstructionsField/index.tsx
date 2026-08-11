@@ -20,25 +20,24 @@ export const InstructionsField = (props: Options) => {
     }
 
     return (
-      <ol className={css.content}>
+      <div className={css.content}>
         {fields.map((_, index) => (
-          <li key={index}>
-            <Instruction
-              name={`instructions.${index}`}
-              register={props.register}
-              control={props.control}
-              onRemove={() => remove(index)}
-            />
-          </li>
+          <Instruction
+            key={index}
+            name={`instructions.${index}`}
+            register={props.register}
+            control={props.control}
+            onRemove={() => remove(index)}
+          />
         ))}
-      </ol>
+      </div>
     );
   };
 
   return (
     <section className={css.container} aria-labelledby={titleId}>
       <div className={css.header}>
-        <h3 id={titleId}>{t('startpage.recipes.instructions.title')}</h3>
+        <h5 id={titleId}>{t('startpage.recipes.instructions.title')}</h5>
         <ActionBar actions={actions} />
       </div>
 

@@ -15,7 +15,7 @@ export const Products = ({ products, header }: Props) => {
   return (
     <div className={css.container}>
       {header && (
-        <h3 className={css.title}>{t('startpage.menu.products.title')}:</h3>
+        <h6 className={css.title}>{t('startpage.menu.products.title')}:</h6>
       )}
 
       <ul className={css.list}>

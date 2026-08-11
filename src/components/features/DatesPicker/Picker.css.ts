@@ -16,13 +16,6 @@ export const picker = style({
   flexDirection: 'column',
   gap: px(15),
   display: 'flex',
-
-  '@media': {
-    '(prefers-color-scheme: light)': {
-      border: `${px(0.5)} solid`,
-      borderColor: color('label'),
-    },
-  },
 });
 
 export const header = style({

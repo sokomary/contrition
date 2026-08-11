@@ -20,12 +20,12 @@ export const History = ({ menu }: Props) => {
       <ul className={css.list}>
         {menu.map((m, i) => (
           <li key={i} className={css.content}>
-            <h3 className={css.header}>
+            <h6 className={css.header}>
               {format({
                 kind: 'period',
                 value: { from: m.dateStart, till: m.dateEnd },
               })}
-            </h3>
+            </h6>
 
             <Row menu={m} />
           </li>
