@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { User } from 'src/types/domain';
 
 export type Options = {
@@ -6,28 +6,18 @@ export type Options = {
 };
 
 export const useLogic = ({ user }: Options) => {
-  const [userOptionsOpen, setUserOptionsOpen] = useState(false);
+  const calloutRef = useRef<HTMLDivElement>(null);
 
-  const userOptionsRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        userOptionsRef.current &&
-        !userOptionsRef.current.contains(event.target as Node)
-      ) {
-        setUserOptionsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [userOptionsRef]);
+  const closeOptions = () => {
+    const callout = calloutRef.current;
+    if (callout?.matches(':popover-open')) {
+      callout.hidePopover();
+    }
+  };
 
   return {
-    userOptionsRef,
-    userOptionsOpen,
-    toggleOptions: () => setUserOptionsOpen(!userOptionsOpen),
+    calloutRef,
+    closeOptions,
     imageAlt: user?.name.slice(0, 2).toUpperCase(),
   };
 };

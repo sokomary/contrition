@@ -6,7 +6,11 @@ import { useToggleModal } from 'src/components/modals';
 import { unscopedApi } from 'src/api';
 import * as css from './Options.css';
 
-export const Options = () => {
+type Props = {
+  onAction?: () => void;
+};
+
+export const Options = ({ onAction }: Props) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { open: openSharings } = useToggleModal('view-sharings', 'true');
@@ -19,13 +23,23 @@ export const Options = () => {
 
   return (
     <nav className={css.container}>
-      <Button kind='ghost' className={css.option} onClick={openSharings}>
+      <Button
+        kind='ghost'
+        className={css.option}
+        onClick={() => {
+          onAction?.();
+          openSharings();
+        }}
+      >
         {t('startpage.sharings.action')}
       </Button>
       <Button
         kind='ghost'
         className={css.option}
-        onClick={() => logoutMutation.mutate()}
+        onClick={() => {
+          onAction?.();
+          logoutMutation.mutate();
+        }}
       >
         {t('startpage.actions.logout')}
       </Button>
