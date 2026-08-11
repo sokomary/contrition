@@ -25,8 +25,6 @@ export const AddProduct = () => {
               register={register}
               placeholder={t('domain.recipe.name')}
               error={errors.name}
-              errorText={t('forms.fields.errors.required')}
-              required
             />
             <NumberField
               name='calories'

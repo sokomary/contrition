@@ -135,7 +135,6 @@ export const ViewSharings = () => {
               label={t('startpage.sharings.continuous.add.newFriend')}
               placeholder={t('startpage.recipes.share.emailPlaceholder')}
               error={errors.email}
-              errorText={t('forms.fields.errors.required')}
             />
           )}
 

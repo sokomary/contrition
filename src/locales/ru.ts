@@ -30,6 +30,8 @@ export const ru = {
     fields: {
       errors: {
         required: 'Oбязательное поле',
+        email: 'Введите корректный email',
+        number: 'Введите число',
       },
     },
   },

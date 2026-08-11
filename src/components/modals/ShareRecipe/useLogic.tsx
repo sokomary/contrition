@@ -1,13 +1,22 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
+import { z } from 'zod';
 import { User } from 'src/types/domain';
 import { friendRecipesApi, recipesApi, useAuthenticate } from 'src/api';
 import { Action } from 'src/components/features';
 import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
+import { requiredEmail } from 'src/utils';
 import { toast } from 'react-toastify';
+
+export const schema = (t: TFunction<'translation'>, friendSelected: boolean) =>
+  z.object({
+    email: friendSelected ? z.string() : requiredEmail(t),
+  });
 
 type FormValues = { email: string };
 
@@ -28,7 +37,10 @@ export const useLogic = () => {
   });
 
   const { register, handleSubmit, formState, reset, watch } =
-    useForm<FormValues>();
+    useForm<FormValues>({
+      resolver: zodResolver(schema(t, !!selectedUser)),
+      defaultValues: { email: '' },
+    });
   const email = watch('email');
 
   const close = () => {

@@ -12,9 +12,7 @@ type Props = {
   register: UseFormRegister<any>;
   placeholder?: string;
   label?: string;
-  required?: boolean;
   error?: FieldError;
-  errorText?: string;
 };
 
 export const Field = ({
@@ -22,12 +20,10 @@ export const Field = ({
   type,
   step,
   className,
-  required,
   register,
   placeholder,
   label,
   error,
-  errorText,
 }: Props) => {
   const inputId = useId();
 
@@ -43,10 +39,10 @@ export const Field = ({
         step={step}
         autoComplete='new-password'
         aria-invalid={error ? true : undefined}
-        {...register(name, { required })}
+        {...register(name)}
         placeholder={placeholder}
       />
-      {error && <Error text={errorText || ''} />}
+      {error?.message && <Error text={error.message} />}
     </div>
   );
 };

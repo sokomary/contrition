@@ -34,15 +34,12 @@ export const Form = (props: Options) => {
                   register={register}
                   label={t('domain.recipe.name')}
                   error={errors.name}
-                  errorText={t('forms.fields.errors.required')}
-                  required
                 />
                 <Field
                   name='link'
                   register={register}
                   label={t('domain.recipe.link')}
                   error={errors.link}
-                  errorText={t('forms.fields.errors.required')}
                 />
               </div>
               <div className={css.rowFields}>
@@ -53,16 +50,12 @@ export const Form = (props: Options) => {
                   register={register}
                   label={t('domain.recipe.size')}
                   error={errors.size}
-                  errorText={t('forms.fields.errors.required')}
-                  required
                 />
                 <Field
-                  required
                   name='portionSize'
                   register={register}
                   label={t('domain.recipe.portionSize')}
                   error={errors.portionSize}
-                  errorText={t('forms.fields.errors.required')}
                 />
               </div>
               <Field
@@ -70,7 +63,6 @@ export const Form = (props: Options) => {
                 register={register}
                 label={t('domain.recipe.comment')}
                 error={errors.comment}
-                errorText={t('forms.fields.errors.required')}
               />
               <ImageField
                 name='img'

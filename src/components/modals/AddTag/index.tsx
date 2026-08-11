@@ -22,8 +22,6 @@ export const AddTag = () => {
           register={register}
           placeholder={t('domain.recipe.name')}
           error={errors.name}
-          errorText={t('forms.fields.errors.required')}
-          required
         />
         <ActionBar actions={actions} className={css.actions} />
       </form>

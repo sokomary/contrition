@@ -30,6 +30,8 @@ export const en = {
     fields: {
       errors: {
         required: 'Required field',
+        email: 'Enter a valid email',
+        number: 'Enter a number',
       },
     },
   },

@@ -1,11 +1,28 @@
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { recipesApi } from 'src/api';
 import { Recipe } from 'src/types/domain';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
+import { z } from 'zod';
 import { Action } from 'src/components/features';
 import { useDeviceScreen } from 'src/theme';
+import { optionalNumber, requiredNumber, requiredString } from 'src/utils';
 import { toast } from 'react-toastify';
+
+export const schema = (t: TFunction<'translation'>) =>
+  z.looseObject({
+    name: requiredString(t),
+    link: z.string().optional(),
+    comment: z.string().optional(),
+    size: requiredNumber(t),
+    portionSize: optionalNumber(t),
+    recipeProducts: z
+      .array(z.unknown())
+      .min(1, t('startpage.recipes.errors.products')),
+    tags: z.array(z.unknown()).min(1, t('startpage.recipes.errors.tags')),
+  });
 
 export type Options = {
   isOpen: boolean;
@@ -43,6 +60,7 @@ export const useLogic = ({ defaultValues, isOpen, onClose }: Options) => {
 
   const { register, handleSubmit, control, reset, formState } = useForm<Recipe>(
     {
+      resolver: zodResolver(schema(t)) as unknown as Resolver<Recipe>,
       defaultValues: defaultValues || {
         recipeProducts: [],
         tags: [],

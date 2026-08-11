@@ -35,7 +35,6 @@ export const ShareRecipe = () => {
             label={t('startpage.recipes.share.newFriend')}
             placeholder={t('startpage.recipes.share.emailPlaceholder')}
             error={errors.email}
-            errorText={t('forms.fields.errors.required')}
           />
         )}
 
