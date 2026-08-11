@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'src/components/features';
+import { LanguageSwitcher } from 'src/components/atoms/LanguageSwitcher';
 import { Options as UserOptions } from './components/Options';
 import { useLogic, Options } from './useLogic';
 import { Actions } from './components/Actions';
@@ -17,6 +18,8 @@ export const UserActions = ({ user }: ActionsProps) => {
       <Actions />
 
       <div className={css.content}>
+        <LanguageSwitcher />
+
         <div className={css.name}>{user?.name}</div>
         <div className={css.photo}>
           <div ref={userOptionsRef}>

@@ -1,11 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { isEqual } from 'lodash';
+import { ButtonKind } from './Button';
+
+export const SEARCHABLE_FROM = 5;
+
+export type DropdownOption<T> = {
+  value: T;
+  label: string;
+  startGraphic?: ReactNode;
+};
 
 export type Options<T> = {
-  options: { value: T; label: string }[];
+  options: DropdownOption<T>[];
   value: T[];
   onSelect: (value: T) => void;
-  label: string;
+  label: ReactNode;
+  width?: 'fit' | 'full';
+  kind?: ButtonKind;
 };
 
 export const useLogic = <T = unknown>(props: Options<T>) => {
@@ -22,19 +33,20 @@ export const useLogic = <T = unknown>(props: Options<T>) => {
 
   const popoverRef = useRef<HTMLDivElement>(null);
 
-  const onSelect = (option: { value: T; label: string }) => {
+  const onSelect = (option: DropdownOption<T>) => {
     props.onSelect(option.value);
     setQuery('');
     popoverRef.current?.hidePopover();
   };
 
-  const isSelected = (option: { value: T; label: string }) =>
+  const isSelected = (option: DropdownOption<T>) =>
     !!value.find((v) => isEqual(v, option.value));
 
   return {
     query,
     setQuery,
     options: filteredOptions,
+    searchable: props.options.length > SEARCHABLE_FROM,
     popoverRef,
     onSelect,
     isSelected,

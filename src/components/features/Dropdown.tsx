@@ -8,8 +8,15 @@ import * as css from './Dropdown.css';
 
 export const Dropdown = <T = unknown>(props: Options<T>) => {
   const { t } = useTranslation();
-  const { query, setQuery, options, popoverRef, onSelect, isSelected } =
-    useLogic(props);
+  const {
+    query,
+    setQuery,
+    options,
+    searchable,
+    popoverRef,
+    onSelect,
+    isSelected,
+  } = useLogic(props);
 
   const renderOptions = () => {
     if (!options.length) {
@@ -27,10 +34,10 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
             <Button
               kind='ghost'
               className={css.option({ selected: isSelected(o) })}
+              startGraphic={o.startGraphic}
+              label={o.label}
               onClick={() => onSelect(o)}
-            >
-              {o.label}
-            </Button>
+            />
             {isSelected(o) && <div className={css.dot} />}
           </div>
         ))}
@@ -38,27 +45,31 @@ export const Dropdown = <T = unknown>(props: Options<T>) => {
     );
   };
 
+  const fieldAppearance = !props.kind;
+
   return (
     <Callout
-      width='full'
+      width={props.width || 'full'}
       calloutRef={popoverRef}
       buttonProps={{
-        kind: 'ghost',
-        className: css.trigger,
+        kind: props.kind || 'ghost',
+        className: fieldAppearance ? css.trigger : '',
         endGraphic: <IconDropDown />,
         label: props.label,
       }}
       content={
         <div className={css.contentContainer}>
-          <div className={css.search}>
-            <IconSearch />
-            <input
-              className={css.input}
-              autoComplete='off'
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
+          {searchable && (
+            <div className={css.search}>
+              <IconSearch />
+              <input
+                className={css.input}
+                autoComplete='off'
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+          )}
 
           {renderOptions()}
         </div>

@@ -1,5 +1,5 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { color, px } from 'src/theme';
+import { color, MEDIA, px } from 'src/theme';
 
 export const container = style({
   width: '100%',
@@ -18,9 +18,16 @@ globalStyle(container, {
 });
 
 export const name = style({
+  display: 'none',
   alignSelf: 'center',
   fontSize: px(16),
   paddingLeft: px(5),
+
+  '@media': {
+    [MEDIA.ipadv]: {
+      display: 'block',
+    },
+  },
 });
 
 export const photo = style({
