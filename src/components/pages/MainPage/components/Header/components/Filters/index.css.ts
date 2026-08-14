@@ -1,5 +1,5 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_V_WIDTH, px } from 'src/theme';
+import { style } from '@vanilla-extract/css';
+import { MEDIA, px } from 'src/theme';
 
 export const container = style({
   display: 'flex',
@@ -8,38 +8,13 @@ export const container = style({
   padding: `${px(6)} ${px(15)}`,
   gap: px(15),
 });
-globalStyle(container, {
-  '@container': {
-    [`(min-width: ${IPAD_V_WIDTH})`]: {
-      display: 'contents',
-    },
-  },
-});
 
 export const action = style({
-  display: 'flex',
-  justifyItems: 'center',
-  alignItems: 'center',
-  justifyContent: 'center',
   backgroundColor: 'transparent',
   height: 'fit-content',
   width: 'fit-content',
   flexShrink: 0,
   paddingInline: 0,
-  borderRadius: px(20),
-});
-globalStyle(action, {
-  '@container': {
-    [`(min-width: ${IPAD_V_WIDTH})`]: {
-      backgroundColor: color('accent-light'),
-      height: px(62),
-      width: px(62),
-    },
-  },
-});
-
-export const icon = style({
-  cursor: 'pointer',
 });
 
 export const content = style({
@@ -49,12 +24,11 @@ export const content = style({
   flexDirection: 'column',
   boxSizing: 'border-box',
   overflow: 'hidden',
-});
-globalStyle(content, {
-  '@container': {
-    [`(min-width: ${590}px)`]: {
+  flex: 1,
+
+  '@media': {
+    [MEDIA.ipadv]: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
     },
   },
 });

@@ -11,9 +11,6 @@ type Props = {
 export const Actions = ({ recipe }: Props) => {
   const calloutRef = useRef<HTMLDivElement>(null);
 
-  // Light dismiss covers outside clicks and Esc; this is only for closing
-  // after an action succeeds. Deleting light-dismisses the popover when the
-  // confirmation modal takes over, so it can already be closed by then.
   const closeCallout = () => {
     const callout = calloutRef.current;
     if (callout?.matches(':popover-open')) {

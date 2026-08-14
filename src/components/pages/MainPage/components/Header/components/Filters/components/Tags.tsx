@@ -24,9 +24,8 @@ export const Tags = ({ value, onChange }: Props) => {
           className={css.tag({ selected: value.includes(tag) })}
           onClick={() => onChange(tag)}
           key={tag.id}
-        >
-          {tag.name}
-        </Button>
+          label={tag.name}
+        />
       ))}
     </div>
   );

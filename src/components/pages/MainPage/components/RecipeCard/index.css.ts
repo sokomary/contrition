@@ -163,12 +163,6 @@ export const restTagsCount = style({
   backgroundColor: color('accent'),
 });
 
-export const link = style({
-  height: px(18),
-  alignSelf: 'flex-start',
-  marginTop: px(2),
-});
-
 export const info = style({
   display: 'flex',
   justifyContent: 'space-between',

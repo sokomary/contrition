@@ -1,25 +1,19 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_H_WIDTH, MAC_WIDTH, px } from 'src/theme';
+import { style } from '@vanilla-extract/css';
+import { color, MEDIA, px } from 'src/theme';
 
 export const PADDING_IPHONE = 15;
 export const PADDING_IPAD = 20;
 export const PADDING_MAC = 40;
 
-export const actionBar = style({});
-globalStyle(actionBar, {
-  containerType: 'inline-size',
-});
-
 export const container = style({
-  padding: `${PADDING_IPHONE}px ${PADDING_IPHONE}px 0px ${PADDING_IPHONE}px`,
-});
-globalStyle(container, {
-  '@container': {
-    [`(min-width: ${IPAD_H_WIDTH}px)`]: {
-      padding: `${PADDING_IPAD}px ${PADDING_IPAD}px 0px ${PADDING_IPAD}px`,
+  padding: `${px(PADDING_IPHONE)} ${px(PADDING_IPHONE)} 0 ${px(PADDING_IPHONE)}`,
+
+  '@media': {
+    [MEDIA.ipadv]: {
+      padding: `${px(PADDING_IPAD)} ${px(PADDING_IPAD)} 0 ${px(PADDING_IPAD)}`,
     },
-    [`(min-width: ${MAC_WIDTH}px)`]: {
-      padding: `${PADDING_MAC}px ${PADDING_MAC}px 0px ${PADDING_MAC}px`,
+    [MEDIA.ipadh]: {
+      padding: `${px(PADDING_MAC)} ${px(PADDING_MAC)} 0 ${px(PADDING_MAC)}`,
     },
   },
 });
@@ -31,10 +25,9 @@ export const content = style({
   boxShadow: `0 0 ${px(20)} ${px(5)} rgba(8, 8, 8, 0.10)`,
   backgroundColor: color('basic'),
   gap: 0,
-});
-globalStyle(content, {
-  '@container': {
-    [`(min-width: ${IPAD_H_WIDTH - PADDING_IPAD * 2}px)`]: {
+
+  '@media': {
+    [MEDIA.ipadh]: {
       flexDirection: 'row',
     },
   },

@@ -12,7 +12,7 @@ export const Header = (props: Props) => {
   const { user, infoOpen, toggleInfoOpen, recipes } = useLogic();
 
   return (
-    <header className={css.actionBar}>
+    <header>
       <div className={css.container}>
         <div className={css.content}>
           <Filters

@@ -1,19 +1,10 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_H_WIDTH, px } from 'src/theme';
-import { PADDING_IPAD } from '../../../index.css';
+import { style } from '@vanilla-extract/css';
+import { color, px } from 'src/theme';
 
 export const container = style({
-  height: '100%',
   borderRadius: px(20),
   backgroundColor: color('favorite'),
-});
-globalStyle(container, {
-  '@container': {
-    [`(min-width: ${IPAD_H_WIDTH - PADDING_IPAD * 2}px)`]: {
-      minWidth: px(260),
-      height: px(240),
-    },
-  },
+  flex: 1,
 });
 
 export const item = style({

@@ -11,16 +11,16 @@ type Props = {
 };
 
 export const Details: FC<Props> = ({ recipes, open }) => (
-  <div className={css.container({ open })}>
-    <div>
-      <div className={css.content}>
-        <div className={css.controls}>
-          <Tags />
-          <Products />
-        </div>
+    <div className={css.container({ open })}>
+      <div>
+        <div className={css.content}>
+          <div className={css.controls}>
+            <Tags />
+            <Products />
+          </div>
 
-        <Favorites recipes={recipes} />
+          <Favorites recipes={recipes} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );

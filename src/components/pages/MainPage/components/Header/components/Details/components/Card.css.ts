@@ -6,13 +6,11 @@ export const container = style({
   display: 'flex',
   padding: `${px(7)} ${px(15)} ${px(15)} ${px(15)}`,
   flexDirection: 'column',
-  maxHeight: '100%',
+  maxHeight: px(250),
   gap: 10,
 });
 
 export const content = style({
-  width: '100%',
-  height: '100%',
   display: 'flex',
   justifyContent: 'space-between',
 });
@@ -22,6 +20,7 @@ export const header = style({
   gap: px(10),
   alignItems: 'center',
   color: color('label'),
+  height: px(32),
 });
 
 export const list = recipe({
@@ -30,7 +29,6 @@ export const list = recipe({
     flexWrap: 'wrap',
     gap: 6,
     rowGap: px(10),
-    height: '100%',
     overflowY: 'auto',
     '::-webkit-scrollbar': {
       display: 'none',

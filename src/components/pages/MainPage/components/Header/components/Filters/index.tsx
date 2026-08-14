@@ -31,7 +31,7 @@ export const Filters = ({
     <div className={`${css.container} ${className}`}>
       {toggleInfoOpen && (
         <Button
-          startGraphic={<Icon className={css.icon} />}
+          startGraphic={<Icon />}
           onClick={toggleInfoOpen}
           className={css.action}
         />

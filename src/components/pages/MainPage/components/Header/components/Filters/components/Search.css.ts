@@ -16,7 +16,7 @@ export const input = style({
   padding: `0 ${px(15)}`,
   alignSelf: 'center',
   fontSize: px(16),
-  width: '100%',
+  flex: 1,
   backgroundColor: color('field'),
   color: color('label'),
 

@@ -1,22 +1,11 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { color, IPAD_H_WIDTH, IPAD_V_WIDTH, px } from 'src/theme';
-import { PADDING_IPAD } from '../../../index.css';
+import { style } from '@vanilla-extract/css';
+import { color, px } from 'src/theme';
 
 export const container = style({
   backgroundColor: color('accent-light'),
   borderRadius: px(20),
-  height: px(174),
+  minHeight: px(142),
   flex: 1,
-});
-globalStyle(container, {
-  '@container': {
-    [`(min-width: ${IPAD_V_WIDTH - PADDING_IPAD * 2}px)`]: {
-      height: px(142),
-    },
-    [`(min-width:  ${IPAD_H_WIDTH - PADDING_IPAD * 2}px)`]: {
-      height: px(240),
-    },
-  },
 });
 
 export const item = style({
