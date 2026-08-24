@@ -16,6 +16,7 @@ export const recipe = style({
   borderRadius: px(15),
   height: '100%',
   wordBreak: 'break-word',
+  width: '100%',
 });
 
 export const content = style({

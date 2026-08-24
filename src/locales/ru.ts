@@ -171,6 +171,7 @@ export const ru = {
       },
       products: {
         title: 'Список продуктов',
+        excludeRecipes: 'Исключить рецепты',
       },
     },
   },

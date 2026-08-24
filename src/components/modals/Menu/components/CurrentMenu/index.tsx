@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Action, ActionBar, Loading } from 'src/components/features';
+import { Action, ActionBar, Dropdown, Loading } from 'src/components/features';
 import { Kind } from 'src/types/domain';
 import { useLogic, Options } from './useLogic';
 import { Products } from './components/Products';
@@ -15,7 +15,15 @@ type Props = Options & {
 
 export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
   const { t } = useTranslation();
-  const { tableData, dates, period, isLoading, products } = useLogic({
+  const {
+    tableData,
+    dates,
+    period,
+    isLoading,
+    products,
+    excludeRecipes,
+    setExcludeRecipes,
+  } = useLogic({
     menu,
   });
 
@@ -47,9 +55,35 @@ export const CurrentMenu = ({ kinds, menu, actions }: Props) => {
 
       {menu && (
         <>
-          {dates && <Table kinds={kinds} dates={dates} data={tableData} />}
+          {dates && (
+            <Table kinds={kinds} dates={dates} data={tableData.table} />
+          )}
           {isLoading && <Loading />}
-          {products && <Products products={products} />}
+          {products && (
+            <div className={css.products}>
+              <h6>{t('startpage.menu.products.title')}</h6>
+              <div>
+                <Dropdown
+                  options={tableData.recipes.map((recipe) => ({
+                    value: recipe,
+                    label: recipe.name,
+                  }))}
+                  value={excludeRecipes}
+                  onSelect={(recipe) => {
+                    if (excludeRecipes.find((r) => r.id === recipe.id)) {
+                      setExcludeRecipes((prev) =>
+                        prev.filter((r) => r.id !== recipe.id),
+                      );
+                    } else {
+                      setExcludeRecipes((prev) => [...prev, recipe]);
+                    }
+                  }}
+                  label={t('startpage.menu.products.excludeRecipes')}
+                />
+              </div>
+              <Products products={products} />
+            </div>
+          )}
         </>
       )}
     </div>

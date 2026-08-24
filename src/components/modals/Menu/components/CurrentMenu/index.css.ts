@@ -7,6 +7,12 @@ export const container = style({
   gap: px(30),
 });
 
+export const products = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: px(15),
+});
+
 export const header = style({
   display: 'flex',
   justifyContent: 'space-between',

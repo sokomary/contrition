@@ -1,7 +1,7 @@
 import { Menu, Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
 import { recipeProductsApi } from 'src/api';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Temporal } from 'temporal-polyfill';
 import { Period } from 'src/types';
 import { generateDates } from 'src/components/features/DatesPicker/helpers';
@@ -11,9 +11,16 @@ export type Options = {
 };
 
 export const useLogic = ({ menu }: Options) => {
+  const [excludeRecipes, setExcludeRecipes] = useState<Recipe[]>([]);
+  const excludeRecipeIds = excludeRecipes.map(({ id }) => id);
+
   const { data: products, isLoading } = useQuery({
-    queryFn: () => recipeProductsApi.getList({ menuId: menu?.id as number }),
-    queryKey: ['menu-products'],
+    queryFn: () =>
+      recipeProductsApi.getList({
+        menuId: menu?.id as number,
+        excludeRecipeIds: excludeRecipeIds,
+      }),
+    queryKey: ['menu-products', excludeRecipeIds],
     enabled: !!menu,
   });
 
@@ -26,13 +33,20 @@ export const useLogic = ({ menu }: Options) => {
 
   const tableData = useMemo(() => {
     const result: Record<string, Record<number, Recipe>> = {};
+    const map = new Map<number, Recipe>();
+
     menu?.meals?.forEach((meal) => {
       result[meal.date] = {
         ...result[meal.date],
         [meal.kind?.id]: meal.recipe,
       };
+
+      if (!map.has(meal.recipe.id)) {
+        map.set(meal.recipe.id, meal.recipe);
+      }
     });
-    return result;
+
+    return { table: result, recipes: Array.from(map.values()) };
   }, [menu?.meals]);
 
   return {
@@ -41,5 +55,7 @@ export const useLogic = ({ menu }: Options) => {
     dates,
     products,
     isLoading,
+    excludeRecipes,
+    setExcludeRecipes,
   };
 };

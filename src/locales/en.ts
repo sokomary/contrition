@@ -171,6 +171,7 @@ export const en = {
       },
       products: {
         title: 'Shopping list',
+        excludeRecipes: 'Exclude recipes',
       },
     },
   },
