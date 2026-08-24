@@ -7,17 +7,20 @@ import * as css from './index.css';
 
 type Props = {
   recipes: Recipe[];
+  open: boolean;
 };
 
-export const Details: FC<Props> = ({ recipes }) => (
-  <div>
-    <div className={css.content}>
-      <div className={css.controls}>
-        <Tags />
-        <Products />
-      </div>
+export const Details: FC<Props> = ({ recipes, open }) => (
+  <div className={css.wrapper({ open })}>
+    <div className={css.inner}>
+      <div className={css.content}>
+        <div className={css.controls}>
+          <Tags />
+          <Products />
+        </div>
 
-      <Favorites recipes={recipes} />
+        <Favorites recipes={recipes} />
+      </div>
     </div>
   </div>
 );

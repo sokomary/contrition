@@ -1,6 +1,34 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 import { MEDIA, px } from 'src/theme';
 import { PADDING_IPAD, PADDING_IPHONE, PADDING_MAC } from '../../index.css';
+
+export const wrapper = recipe({
+  base: {
+    display: 'grid',
+    gridTemplateRows: '0fr',
+    visibility: 'hidden',
+    transition: 'grid-template-rows 0.3s ease, visibility 0.3s',
+  },
+
+  variants: {
+    open: {
+      true: {
+        gridTemplateRows: '1fr',
+        visibility: 'visible',
+      },
+    },
+  },
+
+  defaultVariants: {
+    open: false,
+  },
+});
+
+export const inner = style({
+  minHeight: 0,
+  overflow: 'hidden',
+});
 
 export const content = style({
   display: 'flex',

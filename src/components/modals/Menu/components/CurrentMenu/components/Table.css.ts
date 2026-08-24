@@ -12,9 +12,10 @@ export const container = style({
 
 export const recipe = style({
   backgroundColor: color('accent-light'),
-  padding: `${px(5)} ${px(10)}`,
+  padding: px(5),
   borderRadius: px(15),
   height: '100%',
+  wordBreak: 'break-word',
 });
 
 export const content = style({

@@ -19,9 +19,6 @@ type Options = PropsWithChildren & {
   size?: 'small' | 'medium' | 'large';
 };
 
-export const isPlainText = (node: ReactNode): boolean =>
-  typeof node === 'string' || typeof node === 'number';
-
 export const Dialog = (options: Options) => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
