@@ -3,6 +3,8 @@ import React from 'react';
 import { Temporal } from 'temporal-polyfill';
 import { Kind, Recipe } from 'src/types/domain';
 import { useFormat } from 'src/utils';
+import { Button } from 'src/components/features';
+import { useToggleModal } from '../../../../useToggleModal';
 import * as css from './Table.css';
 
 type Props = {
@@ -35,17 +37,25 @@ export const Table = ({ kinds, dates, data }: Props) => {
               year: false,
             })}
           </div>
+
           {kinds.map((kind, kindIndex) => (
-            <div
-              className={css.recipe}
-              role='cell'
+            <Item
               key={`${kindIndex}${dateIndex}`}
-            >
-              {data[date.toString()][kind.id]?.name}
-            </div>
+              recipe={data[date.toString()][kind.id]}
+            />
           ))}
         </div>
       ))}
     </div>
+  );
+};
+
+const Item = ({ recipe }: { recipe: Recipe }) => {
+  const { open } = useToggleModal('recipe-info', recipe.id.toString());
+
+  return (
+    <Button className={css.recipe} role='cell' onClick={open}>
+      {recipe.name}
+    </Button>
   );
 };
