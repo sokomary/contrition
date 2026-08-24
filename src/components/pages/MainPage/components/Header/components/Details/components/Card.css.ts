@@ -6,7 +6,8 @@ export const container = style({
   display: 'flex',
   padding: `${px(7)} ${px(15)} ${px(15)} ${px(15)}`,
   flexDirection: 'column',
-  maxHeight: px(250),
+  maxHeight: '100%',
+  minWidth: px(200),
   gap: 10,
 });
 
@@ -28,6 +29,8 @@ export const list = recipe({
     display: 'flex',
     flexWrap: 'wrap',
     gap: 6,
+    flex: 1,
+    maxHeight: px(200),
     rowGap: px(10),
     overflowY: 'auto',
     '::-webkit-scrollbar': {

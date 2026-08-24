@@ -32,12 +32,6 @@ export const tag = recipe({
     cursor: 'pointer',
     color: color('primary'),
     padding: `0 ${px(5)}`,
-
-    '@media': {
-      [MEDIA.ipadv]: {
-        padding: `${px(3)} ${px(10)}`,
-      },
-    },
   },
   variants: {
     selected: {

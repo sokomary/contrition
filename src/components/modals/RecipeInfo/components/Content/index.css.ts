@@ -2,12 +2,8 @@ import { style } from '@vanilla-extract/css';
 import { color, px } from 'src/theme';
 
 export const wrapper = style({
-  width: px(500),
-  maxWidth: '100%',
   flexDirection: 'column',
   display: 'flex',
-  height: '100%',
-  justifyContent: 'space-between',
   gap: px(24),
 });
 

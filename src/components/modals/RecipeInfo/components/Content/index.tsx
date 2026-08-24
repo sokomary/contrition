@@ -4,7 +4,6 @@ import { ActionBar } from 'src/components/features';
 import { Recipe } from 'src/types/domain';
 import { useQuery } from '@tanstack/react-query';
 import { instructionsApi, useAuthenticate } from 'src/api';
-import { useDeviceScreen } from 'src/theme';
 import { Comment } from './components/Comment';
 import { PortionSize } from './components/PortionSize';
 import { Products } from './components/Products';
@@ -16,7 +15,6 @@ type Props = {
 };
 export const Content = ({ recipe }: Props) => {
   const actions = useRecipeActions({ recipe });
-  const screen = useDeviceScreen();
   const user = useAuthenticate();
 
   const { data: instructions } = useQuery({
@@ -44,7 +42,7 @@ export const Content = ({ recipe }: Props) => {
         {!!instructions?.length && <Instructions instructions={instructions} />}
       </div>
 
-      {screen === 'iphone' && user.id === recipe.ownerId && (
+      {user.id === recipe.ownerId && (
         <ActionBar className={css.actions} actions={actions} />
       )}
     </div>

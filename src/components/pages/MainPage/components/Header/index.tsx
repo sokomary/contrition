@@ -25,7 +25,7 @@ export const Header = (props: Props) => {
         </div>
       </div>
 
-      {recipes && <Details open={infoOpen} recipes={recipes} />}
+      {recipes && infoOpen && <Details recipes={recipes} />}
     </header>
   );
 };
