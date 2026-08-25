@@ -3,8 +3,6 @@ import { color, px } from 'src/theme';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const container = style({
-  display: 'flex',
-  padding: `${px(7)} ${px(15)} ${px(15)} ${px(15)}`,
   flexDirection: 'column',
   maxHeight: '100%',
   minWidth: px(200),
@@ -14,6 +12,8 @@ export const container = style({
 export const content = style({
   display: 'flex',
   justifyContent: 'space-between',
+  paddingInline: px(15),
+  paddingBlockStart: px(7),
 });
 
 export const header = style({
@@ -32,11 +32,15 @@ export const list = recipe({
     flex: 1,
     maxHeight: px(200),
     rowGap: px(10),
+    paddingInline: px(15),
+    paddingBlockEnd: px(15),
+
     overflowY: 'auto',
     '::-webkit-scrollbar': {
       display: 'none',
     },
   },
+
   variants: {
     layout: {
       vertical: {},

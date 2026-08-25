@@ -34,11 +34,11 @@ export const Card = ({
           {actions && <ActionBar actions={actions} />}
         </div>
 
-        <ul className={css.list({ layout })}>
+        <div className={css.list({ layout })}>
           {items.map((item, index) => (
-            <li key={index}>{item}</li>
+            <div key={index}>{item}</div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
