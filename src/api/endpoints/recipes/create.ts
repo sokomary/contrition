@@ -5,18 +5,18 @@ type CreateRecipeParams = {
   name: string;
   comment?: string;
   link: string;
-  calories: number;
-  protein: number;
-  fats: number;
-  carbohydrates: number;
+  calories: number | null;
+  protein: number | null;
+  fats: number | null;
+  carbohydrates: number | null;
   tags: Tag[];
-  size: number;
+  size: number | null;
   img?: string;
   pressignedUrl?: string;
   recipeProducts: RecipeProduct[];
   instructions?: Instruction[];
   favorite?: boolean;
-  portionSize?: number;
+  portionSize?: number | null;
   ownerId: number;
 };
 

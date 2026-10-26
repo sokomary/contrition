@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecipeActions } from 'src/components/atoms/useRecipeActions';
 import { ActionBar } from 'src/components/features';
 import { Recipe } from 'src/types/domain';
+import { formatNutrient } from 'src/utils';
 import { useQuery } from '@tanstack/react-query';
 import { instructionsApi, useAuthenticate } from 'src/api';
 import { Comment } from './components/Comment';
@@ -30,7 +31,7 @@ export const Content = ({ recipe }: Props) => {
           {(['calories', 'protein', 'fats', 'carbohydrates'] as const).map(
             (field, index) => (
               <div key={index} className={css.element}>
-                {recipe[field].toFixed(recipe[field] % 1 > 0 ? 0 : undefined)}
+                {formatNutrient(recipe[field])}
               </div>
             ),
           )}
@@ -38,7 +39,9 @@ export const Content = ({ recipe }: Props) => {
 
         {recipe.comment && <Comment comment={recipe.comment} />}
         {recipe.portionSize && <PortionSize portionSize={recipe.portionSize} />}
-        <Products products={recipe.recipeProducts} />
+        {!!recipe.recipeProducts?.length && (
+          <Products products={recipe.recipeProducts} />
+        )}
         {!!instructions?.length && <Instructions instructions={instructions} />}
       </div>
 

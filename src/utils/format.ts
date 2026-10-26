@@ -81,3 +81,8 @@ const format =
         return '';
     }
   };
+
+export const formatNutrient = (value?: number | null) =>
+  typeof value === 'number'
+    ? value.toFixed(value % 1 > 0 ? 0 : undefined)
+    : '—';

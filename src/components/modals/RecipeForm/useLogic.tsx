@@ -8,7 +8,7 @@ import { TFunction } from 'i18next';
 import { z } from 'zod';
 import { Action } from 'src/components/features';
 import { useDeviceScreen } from 'src/theme';
-import { optionalNumber, requiredNumber, requiredString } from 'src/utils';
+import { optionalNumber, requiredString } from 'src/utils';
 import { toast } from 'react-toastify';
 
 export const schema = (t: TFunction<'translation'>) =>
@@ -16,11 +16,9 @@ export const schema = (t: TFunction<'translation'>) =>
     name: requiredString(t),
     link: z.string().optional(),
     comment: z.string().optional(),
-    size: requiredNumber(t),
+    size: optionalNumber(t),
     portionSize: optionalNumber(t),
-    recipeProducts: z
-      .array(z.unknown())
-      .min(1, t('startpage.recipes.errors.products')),
+    recipeProducts: z.array(z.unknown()),
     tags: z.array(z.unknown()).min(1, t('startpage.recipes.errors.tags')),
   });
 

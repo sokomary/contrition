@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 type T = TFunction<'translation'>;
 
-const isBlank = (value: string | number | undefined) =>
-  value === undefined || value === '';
+const isBlank = (value: string | number | null | undefined) =>
+  value === undefined || value === null || value === '';
 
 export const requiredString = (t: T) =>
   z.string().min(1, t('forms.fields.errors.required'));
@@ -23,7 +23,7 @@ export const requiredNumber = (t: T) =>
 export const optionalNumber = (t: T) =>
   z
     .union([z.string(), z.number()])
-    .optional()
+    .nullish()
     .refine((value) => isBlank(value) || !Number.isNaN(Number(value)), {
       message: t('forms.fields.errors.number'),
     })

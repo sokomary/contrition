@@ -7,6 +7,7 @@ import { NoImage } from '../../assets';
 import { Actions } from './components/Actions';
 import { useAuthenticate } from 'src/api';
 import { ActionBase } from 'src/components/features';
+import { formatNutrient } from 'src/utils';
 import * as css from './index.css';
 
 const VISIBLE_TAGS_COUNT = 2;
@@ -40,7 +41,11 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
           {recipe.favorite && <IconFavorite className={css.favoriteIcon} />}
 
           {!displayInfo && (
-            <div className={css.calories}>{recipe.calories.toFixed(0)}</div>
+            <div className={css.calories}>
+              {typeof recipe.calories === 'number'
+                ? recipe.calories.toFixed(0)
+                : '—'}
+            </div>
           )}
 
           <img
@@ -76,25 +81,19 @@ export const RecipeCard = ({ recipe, small = false, bottom }: Props) => {
           <div className={css.info}>
             <div className={css.infoFirstPart}>
               <div className={css.bigElement}>
-                {recipe.calories.toFixed(
-                  recipe.calories % 1 > 0 ? 0 : undefined,
-                )}
+                {formatNutrient(recipe.calories)}
               </div>
 
               <div className={css.infoFooter}>
                 <div className={css.elements}>
                   <div className={css.element}>
-                    {recipe.protein.toFixed(
-                      recipe.protein % 1 > 0 ? 0 : undefined,
-                    )}
+                    {formatNutrient(recipe.protein)}
                   </div>
                   <div className={css.element}>
-                    {recipe.fats.toFixed(recipe.fats % 1 > 0 ? 0 : undefined)}
+                    {formatNutrient(recipe.fats)}
                   </div>
                   <div className={css.element}>
-                    {recipe.carbohydrates.toFixed(
-                      recipe.carbohydrates % 1 > 0 ? 0 : undefined,
-                    )}
+                    {formatNutrient(recipe.carbohydrates)}
                   </div>
                 </div>
                 <ul className={css.tags}>
