@@ -1,11 +1,13 @@
 import { api } from 'src/api';
 
 type CreateMenuParams = {
+  id?: number;
   dateStart: string;
   dateEnd: string;
   meals: {
+    id?: number;
     date: string;
-    recipeId: number;
+    recipeId: number | null;
     kindId: number;
   }[];
 };

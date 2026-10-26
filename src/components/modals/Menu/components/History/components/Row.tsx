@@ -14,7 +14,7 @@ export const Row = ({ menu }: Options) => {
           <li key={date} className={css.recipe}>
             {menu.meals
               ?.filter((meal) => meal.date === date)
-              .map((meal) => meal.recipe.name)
+              .flatMap((meal) => (meal.recipe ? [meal.recipe.name] : []))
               .join(', ')}
           </li>
         ))}

@@ -10,7 +10,7 @@ import * as css from './Table.css';
 type Props = {
   kinds: Kind[];
   dates: Temporal.PlainDate[];
-  data: Record<string, Record<number, Recipe>>;
+  data: Record<string, Record<number, Recipe | null>>;
 };
 
 export const Table = ({ kinds, dates, data }: Props) => {
@@ -41,7 +41,7 @@ export const Table = ({ kinds, dates, data }: Props) => {
           {kinds.map((kind, kindIndex) => (
             <Item
               key={`${kindIndex}${dateIndex}`}
-              recipe={data[date.toString()][kind.id]}
+              recipe={data[date.toString()]?.[kind.id]}
             />
           ))}
         </div>
@@ -50,7 +50,15 @@ export const Table = ({ kinds, dates, data }: Props) => {
   );
 };
 
-const Item = ({ recipe }: { recipe: Recipe }) => {
+const Item = ({ recipe }: { recipe?: Recipe | null }) => {
+  if (!recipe) {
+    return <div role='cell' />;
+  }
+
+  return <RecipeItem recipe={recipe} />;
+};
+
+const RecipeItem = ({ recipe }: { recipe: Recipe }) => {
   const { open } = useToggleModal('recipe-info', recipe.id.toString());
 
   return (

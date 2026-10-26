@@ -155,8 +155,10 @@ export const en = {
     menu: {
       title: 'Menu',
       created: 'Menu created',
+      updated: 'Menu updated',
       actions: {
         add: 'Add menu',
+        edit: 'Edit menu',
         addRecipe: 'Select',
       },
       selectRecipe: {

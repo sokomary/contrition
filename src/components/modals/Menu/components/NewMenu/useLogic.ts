@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Temporal } from 'temporal-polyfill';
 import { menuApi } from 'src/api';
-import { Kind, Meal } from 'src/types/domain';
-import { isEqual } from 'lodash';
+import { Kind, Menu } from 'src/types/domain';
 import { Action } from 'src/components/features';
 import { Period } from 'src/types/Period';
 import { toast } from 'react-toastify';
@@ -11,28 +11,87 @@ import { generateDates } from 'src/components/features/DatesPicker/helpers';
 
 export type Options = {
   kinds: Kind[];
+  menu?: Menu;
   onSave: () => void;
   onCancel: () => void;
 };
 
+type MealDraft = {
+  id?: number;
+  date: string;
+  kind: Kind;
+  recipeId: number | null;
+  recipeName: string;
+};
+
+const isSlot = (meal: MealDraft, date: string, kindId: number) =>
+  meal.date === date && meal.kind.id === kindId;
+
+const buildMeals = (period: Period, kinds: Kind[], existing: MealDraft[]) => {
+  const dates = generateDates(period);
+  if (!dates) {
+    return [];
+  }
+
+  return kinds.flatMap((kind) =>
+    dates.map((plainDate) => {
+      const date = plainDate.toString();
+      return (
+        existing.find((meal) => isSlot(meal, date, kind.id)) ?? {
+          date,
+          kind,
+          recipeId: null,
+          recipeName: '',
+        }
+      );
+    }),
+  );
+};
+
+const toPeriod = (menu?: Menu): Period =>
+  menu
+    ? {
+        start: Temporal.PlainDate.from(menu.dateStart),
+        end: Temporal.PlainDate.from(menu.dateEnd),
+      }
+    : { start: null, end: null };
+
+const toDrafts = (menu?: Menu): MealDraft[] =>
+  menu?.meals?.flatMap((meal) =>
+    meal.kind
+      ? [
+          {
+            id: meal.id,
+            date: meal.date,
+            kind: meal.kind,
+            recipeId: meal.recipe?.id ?? null,
+            recipeName: meal.recipe?.name ?? '',
+          },
+        ]
+      : [],
+  ) ?? [];
+
 export const useLogic = (props: Options) => {
   const { t } = useTranslation();
 
-  const [period, setPeriod] = useState<Period>({ start: null, end: null });
-  const [meals, setMeals] = useState<
-    (Omit<Meal, 'id' | 'recipe'> & { recipeId: number; recipeName: string })[]
-  >([]);
+  const [period, setPeriod] = useState<Period>(() => toPeriod(props.menu));
+  const [meals, setMeals] = useState<MealDraft[]>(() =>
+    buildMeals(toPeriod(props.menu), props.kinds, toDrafts(props.menu)),
+  );
   const [modalData, setModalData] = useState<{
     date: string;
     kindId: number;
   } | null>(null);
 
   const queryClient = useQueryClient();
-  const addMutation = useMutation({
+  const saveMutation = useMutation({
     mutationFn: menuApi.create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['menu'] });
-      toast(t('startpage.menu.created'));
+      queryClient.invalidateQueries({ queryKey: ['menu-products'] });
+      toast(
+        t(props.menu ? 'startpage.menu.updated' : 'startpage.menu.created'),
+      );
       props.onSave();
     },
     onError: () => toast(t('errors.somethingWentWrong')),
@@ -40,26 +99,21 @@ export const useLogic = (props: Options) => {
 
   const findMeal = useCallback(
     (date: string, kindId: number) =>
-      meals.filter((m) => m.date === date).find((m) => m.kind.id === kindId),
+      meals.find((meal) => isSlot(meal, date, kindId)),
     [meals],
   );
 
-  const selectRecipe = (
+  const updateMeal = (
     date: string,
-    recipeId: number,
     kindId: number,
+    recipeId: number | null,
     recipeName: string,
-  ) => {
-    const meal = findMeal(date, kindId);
-    const mealRecipeId = meal?.recipeId;
-
-    if (meal && mealRecipeId !== recipeId) {
-      setMeals((prev) => [
-        ...prev.filter((m) => !isEqual(m, meal)),
-        { ...meal, recipeId, recipeName },
-      ]);
-    }
-  };
+  ) =>
+    setMeals((prev) =>
+      prev.map((meal) =>
+        isSlot(meal, date, kindId) ? { ...meal, recipeId, recipeName } : meal,
+      ),
+    );
 
   const actions: Action[] = [
     {
@@ -68,44 +122,32 @@ export const useLogic = (props: Options) => {
       onClick: props.onCancel,
     },
     {
-      display:
-        !!period.start && !!period.end && !meals.find((meal) => !meal.recipeId),
+      display: !!period.start && !!period.end,
       kind: 'primary',
       label: t('startpage.recipes.actions.save'),
       onClick: () => {
         if (period.start && period.end) {
-          addMutation.mutate({
+          saveMutation.mutate({
+            id: props.menu?.id,
             dateStart: period.start.toString(),
             dateEnd: period.end.toString(),
             meals: meals.map((meal) => ({
-              ...meal,
+              id: meal.id,
+              date: meal.date,
+              recipeId: meal.recipeId,
               kindId: meal.kind.id,
             })),
           });
         }
       },
 
-      isLoading: addMutation.isPending,
+      isLoading: saveMutation.isPending,
     },
   ];
 
   const onPeriodUpdate = (newPeriod: Period) => {
     setPeriod(newPeriod);
-    const dates = generateDates(newPeriod);
-    if (dates && props.kinds) {
-      const newMeals = props.kinds
-        .map((kind) =>
-          dates.map((date) => ({
-            date: date.toString(),
-            kind,
-            recipeId: null as unknown as number,
-            recipeName: '',
-          })),
-        )
-        .flat(1);
-
-      setMeals(newMeals);
-    }
+    setMeals((prev) => buildMeals(newPeriod, props.kinds, prev));
   };
 
   return {
@@ -115,18 +157,15 @@ export const useLogic = (props: Options) => {
     period,
     setPeriod: onPeriodUpdate,
     actions,
-    selectRecipe,
+    selectRecipe: (
+      date: string,
+      recipeId: number,
+      kindId: number,
+      recipeName: string,
+    ) => updateMeal(date, kindId, recipeId, recipeName),
     modalData,
     setModalData,
-    onRemove: (date: string, kindId: number) => {
-      const meal = findMeal(date, kindId);
-
-      if (meal?.recipeId) {
-        setMeals((prev) => [
-          ...prev.filter((m) => !isEqual(m, meal)),
-          { ...meal, recipeId: null as unknown as number, recipeName: '' },
-        ]);
-      }
-    },
+    onRemove: (date: string, kindId: number) =>
+      updateMeal(date, kindId, null, ''),
   };
 };

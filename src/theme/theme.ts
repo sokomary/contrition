@@ -1,3 +1,5 @@
+// todo hcl + variables -> easier defining disabled, pressed etc. colors
+
 type ColorSchema =
   | 'basic'
   | 'background'

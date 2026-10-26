@@ -6,7 +6,7 @@ import { useRouteModal } from 'src/router';
 import { useDeviceScreen } from 'src/theme';
 import { Temporal } from 'temporal-polyfill';
 
-type Mode = 'current' | 'new' | 'history';
+type Mode = 'current' | 'new' | 'edit' | 'history';
 
 export const useLogic = () => {
   const { t } = useTranslation();
@@ -64,6 +64,12 @@ export const useLogic = () => {
         kind: 'primary' as const,
         label: t('startpage.menu.actions.add'),
         onClick: () => setMode('new'),
+      },
+      {
+        display: !!currentMenu,
+        kind: 'primary' as const,
+        label: t('startpage.menu.actions.edit'),
+        onClick: () => setMode('edit'),
       },
     ],
   };

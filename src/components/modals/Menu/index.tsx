@@ -38,6 +38,18 @@ export const Menu = () => {
         return <NewMenu kinds={kinds} onCancel={onCancel} onSave={onSave} />;
       }
 
+      case 'edit': {
+        return (
+          <NewMenu
+            key={currentMenu?.id}
+            kinds={kinds}
+            menu={currentMenu}
+            onCancel={onCancel}
+            onSave={onSave}
+          />
+        );
+      }
+
       case 'history': {
         return <History menu={menu} />;
       }

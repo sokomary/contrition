@@ -32,7 +32,7 @@ export const useLogic = ({ menu }: Options) => {
   const dates = generateDates(period);
 
   const tableData = useMemo(() => {
-    const result: Record<string, Record<number, Recipe>> = {};
+    const result: Record<string, Record<number, Recipe | null>> = {};
     const map = new Map<number, Recipe>();
 
     menu?.meals?.forEach((meal) => {
@@ -41,7 +41,7 @@ export const useLogic = ({ menu }: Options) => {
         [meal.kind?.id]: meal.recipe,
       };
 
-      if (!map.has(meal.recipe.id)) {
+      if (meal.recipe && !map.has(meal.recipe.id)) {
         map.set(meal.recipe.id, meal.recipe);
       }
     });

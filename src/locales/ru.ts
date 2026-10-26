@@ -155,8 +155,10 @@ export const ru = {
     menu: {
       title: 'Меню',
       created: 'Меню успешно создано',
+      updated: 'Меню успешно обновлено',
       actions: {
         add: 'Добавить меню',
+        edit: 'Редактировать меню',
         addRecipe: 'Выбрать',
       },
       selectRecipe: {

@@ -4,6 +4,6 @@ import { Kind } from './Kind';
 export type Meal = {
   id: number;
   date: string;
-  recipe: Recipe;
+  recipe: Recipe | null;
   kind: Kind;
 };
