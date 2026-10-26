@@ -1,4 +1,4 @@
-FROM node:20-bullseye-slim AS build
+FROM node:20-bookworm-slim AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends git \
     && rm -rf /var/lib/apt/lists/*
